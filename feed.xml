@@ -22,13 +22,13 @@
 
 &lt;p&gt;Check it out!&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="http://metalabdesign.com"&gt;&lt;img src="http://awardwinningfjords.com/images/metalab.jpg"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://metalabdesign.com"&gt;&lt;img src="http://src.sencha.io/http://awardwinningfjords.com/images/metalab.jpg"&gt;&lt;/a&gt;&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;I'm happy to announce the latest version of the Metalab Design website is live! I worked on the initial development, interaction and code. Then &lt;a href="http://twitter.com/#!/alibosworth"&gt;Ali Bosworth&lt;/a&gt; and &lt;a href="http://twitter.com/#!/jasonswebster"&gt;Jason Webster&lt;/a&gt;, of &lt;a href="http://www.getflow.com/"&gt;Flow&lt;/a&gt; fame, did the hard work of polishing the animations and getting things looking great cross-browser.&lt;/p&gt;
 
 &lt;p&gt;Check it out!&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="http://metalabdesign.com"&gt;&lt;img src="http://awardwinningfjords.com/images/metalab.jpg"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://metalabdesign.com"&gt;&lt;img src="http://src.sencha.io/http://awardwinningfjords.com/images/metalab.jpg"&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;
 
@@ -890,13 +890,13 @@ Person A: Ah, man, you should have told me you were looking.
 
 &lt;p&gt;The site is very simple. Go to the homepage, enter your twitter username and see if anyone has expressed interest in working with you. If they have and you're looking for a new gig, it's up to you two to figure it out.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="http://wouldhire.com"&gt;&lt;img src="http://awardwinningfjords.com/images/WouldHire-homepage.png" alt="Homepage"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://wouldhire.com"&gt;&lt;img src="http://src.sencha.io/http://awardwinningfjords.com/images/WouldHire-homepage.png" alt="Homepage"&gt;&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="http://who.wouldhire.com/pixelmatrix"&gt;&lt;img src="http://awardwinningfjords.com/images/WouldHire-who.png" alt="Who WouldHire @pixelmatrix"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://who.wouldhire.com/pixelmatrix"&gt;&lt;img src="http://src.sencha.io/http://awardwinningfjords.com/images/WouldHire-who.png" alt="Who WouldHire @pixelmatrix"&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;Finally, if you're looking to let someone know that you're interested, simply login (using Twitter) and add some Twitter usernames to your &amp;quot;dream team.&amp;quot;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src="http://awardwinningfjords.com/images/WouldHire-admin.png" alt="WouldHire Admin"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://src.sencha.io/http://awardwinningfjords.com/images/WouldHire-admin.png" alt="WouldHire Admin"&gt;&lt;/p&gt;
 
 &lt;p&gt;Pretty cool, eh? Please check it out, email me your ideas/comments and hopefully this will help someone, somewhere end up with their dream job.&lt;/p&gt;
 </content>
@@ -998,7 +998,7 @@ Person A: Ah, man, you should have told me you were looking.
 
 &lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src="http://awardwinningfjords.com/images/SecondStoryJS-StateMachine.png" alt="SecondStoryJS State Machine" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://src.sencha.io/http://awardwinningfjords.com/images/SecondStoryJS-StateMachine.png" alt="SecondStoryJS State Machine" /&gt;&lt;/p&gt;
 </summary>
     <content type="html"></content>
   </entry>
@@ -1071,7 +1071,7 @@ Person A: Ah, man, you should have told me you were looking.
 
 &lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src="http://awardwinningfjords.com/images/SecondStoryJS-Router.png" alt="SecondStoryJS Router" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://src.sencha.io/http://awardwinningfjords.com/images/SecondStoryJS-Router.png" alt="SecondStoryJS Router" /&gt;&lt;/p&gt;
 </summary>
     <content type="html"></content>
   </entry>
@@ -1213,13 +1213,9 @@ Person A: Ah, man, you should have told me you were looking.
     </author>
     <summary type="html">&lt;p&gt;Apple's effect looks like this:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src="http://dl.dropbox.com/u/102356/Screenshot.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://src.sencha.io/http://dl.dropbox.com/u/102356/Screenshot.png" /&gt;&lt;/p&gt;
 
 &lt;p&gt;This effect only works in Webkit-based browsers like Safari and Chrome at this time and requires Sass 3 and the most recent version of Compass:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;h1 {
-  @include linear-gradient(color-stops(#999, black));
-&lt;/code&gt;&lt;/pre&gt;
 </summary>
     <content type="html"></content>
   </entry>
