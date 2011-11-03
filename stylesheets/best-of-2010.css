@@ -115,8 +115,8 @@ Backtrace:
 /Users/tdreyno/.rbenv/versions/1.9.2-p290/lib/ruby/gems/1.9.1/gems/middleman-2.0.13.1/bin/middleman:47:in `did_locate_middleman_project'
 /Users/tdreyno/.rbenv/versions/1.9.2-p290/lib/ruby/gems/1.9.1/gems/middleman-2.0.13.1/bin/middleman:20:in `locate_middleman_root!'
 /Users/tdreyno/.rbenv/versions/1.9.2-p290/lib/ruby/gems/1.9.1/gems/middleman-2.0.13.1/bin/middleman:70:in `<top (required)>'
-/Users/tdreyno/.rbenv/versions/1.9.2-p290/lib/ruby/gems/1.9.1/bin/middleman:19:in `load'
-/Users/tdreyno/.rbenv/versions/1.9.2-p290/lib/ruby/gems/1.9.1/bin/middleman:19:in `<main>'
+/Users/tdreyno/.rbenv/versions/1.9.2-p290/bin/middleman:19:in `load'
+/Users/tdreyno/.rbenv/versions/1.9.2-p290/bin/middleman:19:in `<main>'
 */
 body:before {
   white-space: pre;
