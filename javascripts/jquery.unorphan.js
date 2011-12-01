@@ -1,0 +1,1 @@
+$.fn.unorphan=function(){$(this).each(function(){var a=this.lastChild;a&&a.nodeType==3&&(a.nodeValue=a.nodeValue.replace(/\s+([^\s]+\s*)$/g," $1"))})}
