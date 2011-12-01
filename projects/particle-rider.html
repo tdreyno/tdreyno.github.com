@@ -3,16 +3,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>HTML5 Particle Rider by Thomas Reynolds</title>
+<style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+<script src="particle-rider/javascripts/paper.js"></script>
 </head>
 <body>
 
-<canvas id="myCanvas" resize></canvas><style>
-  body {
-    margin: 0;
-    padding: 0;
-  }
-</style>
-<script src="particle-rider/javascripts/paper.js"></script><script type="text/paperscript" canvas="myCanvas">
+<canvas id="myCanvas" resize></canvas><script type="text/paperscript" canvas="myCanvas">
   var path = new Path();
   path.add(view.center);
   path.selected = true;
@@ -33,7 +34,6 @@
     circle.fillColor = new HsbColor(Math.random() * 360, 1, 1);
     circle.strokeColor = "black";
     circle.strokeWidth = 1;
-    // circle.blendMode = i % 2 ? 'screen' : 'multiply';
     
     particles.push({
       view: circle,
@@ -80,58 +80,27 @@
       if (nearestIndex !== null) {
         var nearestPoint = path.segments[nearestIndex].getPoint();
         
-        // var debugPath = new Path();
-        // debugPath.add(particle.view.position);
-        // debugPath.add(nearestPoint);
-        // debugPath.strokeColor = "blue";
-        // debugPath.strokeWidth = 2;
-        // debugPaths.push(debugPath);
         direction += nearestPoint - particle.view.position;
         
         var nextPoint;
         if (nearestIndex < path.segments.length-1){
           nextPoint = path.segments[nearestIndex+1].getPoint();
           
-          // var debugPath = new Path();
-          // debugPath.add(particle.view.position);
-          // debugPath.add(nextPoint);
-          // debugPath.strokeColor = "green";
-          // debugPath.strokeWidth = 2;
-          // debugPaths.push(debugPath);
           direction += (nextPoint - particle.view.position) * 2;
         }
         
         if (nearestIndex+1 < path.segments.length-1){
           nextPoint = path.segments[nearestIndex+2].getPoint();
           
-          // var debugPath = new Path();
-          // debugPath.add(particle.view.position);
-          // debugPath.add(nextPoint);
-          // debugPath.strokeColor = "green";
-          // debugPath.strokeWidth = 2;
-          // debugPaths.push(debugPath);
           direction += (nextPoint - particle.view.position) * 3;
         }
         
         if (nearestIndex+2 < path.segments.length-1){
           nextPoint = path.segments[nearestIndex+3].getPoint();
           
-          // var debugPath = new Path();
-          // debugPath.add(particle.view.position);
-          // debugPath.add(nextPoint);
-          // debugPath.strokeColor = "green";
-          // debugPath.strokeWidth = 2;
-          // debugPaths.push(debugPath);
           direction += (nextPoint - particle.view.position) * 4;
         }
       }
-      
-      // var debugPath = new Path();
-      // debugPath.add(particle.view.position);
-      // debugPath.add(direction);
-      // debugPath.strokeColor = "red";
-      // debugPath.strokeWidth = 2;
-      // debugPaths.push(debugPath);
       
       particle.view.position += (direction + particle.offset - particle.view.position) * (particle.speed);
     }
@@ -149,17 +118,7 @@
     
     for (var i = 0; i < particles.length; i++) {
       var particle = particles[i];
-      // var diffVec  = (event.point - particle.view.position).normalize();
-      // console.debug(diffVec.x, diffVec.y);
-      // particle.velocity += diffVec;
-      // particle.target = event.point + ((Point.random() * 20.0) - 10.0);
-      // console.debug(particle.velocity.x, particle.velocity.y);
-      // 
-      // particle.acceleration += diffVec;
-      // var nearest = path.getNearestPoint(particle.view.position);
-      // particle.target = nearest;
-      // console.debug(nearest.x, nearest.y)
-      // console.debug("p", particle.view.position.x, particle.view.position.y);
+      
       var direction = particle.view.position;
       var distances = [];
       for (var j = 0; j < path.segments.length; j++) {
@@ -168,6 +127,19 @@
     }
   }
   
+</script><!-- Google Analytics --><script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-90027-9']);
+  _gaq.push(['_trackPageview']);
+  _gaq.push(['_trackPageLoadTime']);
+
+  (function() {
+  var ga = document.createElement('script');
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 
+    'http://www') + '.google-analytics.com/ga.js';
+  ga.setAttribute('async', 'true');
+  document.documentElement.firstChild.appendChild(ga);
+  })();
 </script>
 </body>
 </html>
