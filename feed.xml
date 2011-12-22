@@ -232,7 +232,7 @@ middleman migrate
 
 &lt;h2&gt;Support&lt;/h2&gt;
 
-&lt;p&gt;If there are any issues or regressions, please log bugs on the &lt;a href="https://github.com/tdreyno/middleman/issues"&gt;Github Issue Tracker&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;If there are any issues or regressions, please log bugs on the &lt;a href="https://github.com/middleman/middleman/issues"&gt;Github Issue Tracker&lt;/a&gt;.&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -684,7 +684,7 @@ It&#8217;s with a whole lot of pride that we announce today the launch of Pixel 
     </author>
     <summary type="html">&lt;p&gt;&lt;strong&gt;Update: &lt;a href="/2011/08/08/middleman-2-0.html"&gt;Middleman version 2.0 has been released&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;It&amp;#39;s been a long time since &lt;a href="/2009/10/22/middleman"&gt;I introduced Middleman on this blog&lt;/a&gt; in 2009. Since then, RubyGems reports that there have been 27,518 downloads, &lt;a href="https://github.com/tdreyno/middleman/contributors"&gt;several great contributors&lt;/a&gt; to the source code and even a mention in a printed book.&lt;/p&gt;
+&lt;p&gt;It&amp;#39;s been a long time since &lt;a href="/2009/10/22/middleman"&gt;I introduced Middleman on this blog&lt;/a&gt; in 2009. Since then, RubyGems reports that there have been 27,518 downloads, &lt;a href="https://github.com/middleman/middleman/contributors"&gt;several great contributors&lt;/a&gt; to the source code and even a mention in a printed book.&lt;/p&gt;
 
 &lt;p&gt;I&amp;#39;ve been working hard on documentation as it was the most requested feature from the &lt;a href="/2011/02/06/future-of-middleman-survey"&gt;&amp;quot;Future of Middleman Survey&amp;quot;&lt;/a&gt;. I&amp;#39;m a developer and I&amp;#39;m sorry to admit that my first documentation target is the code and generated documentation. Available at: &lt;a href="http://middlemanapp.com/"&gt;http:&amp;#47;&amp;#47;middlemanapp.com&amp;#47;&lt;/a&gt;&lt;/p&gt;
 
@@ -708,7 +708,7 @@ It&#8217;s with a whole lot of pride that we announce today the launch of Pixel 
 </summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Update: &lt;a href="/2011/08/08/middleman-2-0.html"&gt;Middleman version 2.0 has been released&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;It&amp;#39;s been a long time since &lt;a href="/2009/10/22/middleman"&gt;I introduced Middleman on this blog&lt;/a&gt; in 2009. Since then, RubyGems reports that there have been 27,518 downloads, &lt;a href="https://github.com/tdreyno/middleman/contributors"&gt;several great contributors&lt;/a&gt; to the source code and even a mention in a printed book.&lt;/p&gt;
+&lt;p&gt;It&amp;#39;s been a long time since &lt;a href="/2009/10/22/middleman"&gt;I introduced Middleman on this blog&lt;/a&gt; in 2009. Since then, RubyGems reports that there have been 27,518 downloads, &lt;a href="https://github.com/middleman/middleman/contributors"&gt;several great contributors&lt;/a&gt; to the source code and even a mention in a printed book.&lt;/p&gt;
 
 &lt;p&gt;I&amp;#39;ve been working hard on documentation as it was the most requested feature from the &lt;a href="/2011/02/06/future-of-middleman-survey"&gt;&amp;quot;Future of Middleman Survey&amp;quot;&lt;/a&gt;. I&amp;#39;m a developer and I&amp;#39;m sorry to admit that my first documentation target is the code and generated documentation. Available at: &lt;a href="http://middlemanapp.com/"&gt;http:&amp;#47;&amp;#47;middlemanapp.com&amp;#47;&lt;/a&gt;&lt;/p&gt;
 
@@ -873,7 +873,7 @@ run Middleman::Server
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Please direct all questions and bugs to Github:
-&lt;a href="https://github.com/tdreyno/middleman"&gt;https:&amp;#47;&amp;#47;github.com&amp;#47;tdreyno&amp;#47;middleman&lt;/a&gt;&lt;/p&gt;
+&lt;a href="https://github.com/middleman/middleman"&gt;https:&amp;#47;&amp;#47;github.com&amp;#47;middleman&amp;#47;middleman&lt;/a&gt;&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -3997,9 +3997,9 @@ Generating with build generator:
 
 &lt;h2&gt;Source &amp;amp; bug reports&lt;/h2&gt;
 
-&lt;p&gt;The code, as always, is on GitHub at: &lt;a href="http://github.com/tdreyno/middleman"&gt;http:&amp;#47;&amp;#47;github.com&amp;#47;tdreyno&amp;#47;middleman&lt;/a&gt;.&lt;br /&gt;
-There is also a wiki at: &lt;a href="http://wiki.github.com/tdreyno/middleman"&gt;http:&amp;#47;&amp;#47;wiki.github.com&amp;#47;tdreyno&amp;#47;middleman&lt;/a&gt;.&lt;br /&gt;
-And finally, please report bugs to: &lt;a href="http://github.com/tdreyno/middleman/issues"&gt;http:&amp;#47;&amp;#47;github.com&amp;#47;tdreyno&amp;#47;middleman&amp;#47;issues&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The code, as always, is on GitHub at: &lt;a href="http://github.com/middleman/middleman"&gt;http:&amp;#47;&amp;#47;github.com&amp;#47;middleman&amp;#47;middleman&lt;/a&gt;.&lt;br /&gt;
+There is also a wiki at: &lt;a href="http://wiki.github.com/middleman/middleman"&gt;http:&amp;#47;&amp;#47;wiki.github.com&amp;#47;middleman&amp;#47;middleman&lt;/a&gt;.&lt;br /&gt;
+And finally, please report bugs to: &lt;a href="http://github.com/middleman/middleman/issues"&gt;http:&amp;#47;&amp;#47;github.com&amp;#47;middleman&amp;#47;middleman&amp;#47;issues&lt;/a&gt;.&lt;/p&gt;
 </content>
   </entry>
   <entry>
