@@ -5,10 +5,103 @@
   <id>http://awardwinningfjords.com/</id>
   <link href="http://awardwinningfjords.com/"/>
   <link href="http://awardwinningfjords.com/feed.xml" rel="self"/>
-  <updated>2011-11-30T00:00:00-08:00</updated>
+  <updated>2011-12-25T00:00:00-08:00</updated>
   <author>
     <name>Thomas Reynolds</name>
   </author>
+  <entry>
+    <title>Kindle Dots</title>
+    <link href="/2011/12/25/kindle-dots.html" rel="alternate"/>
+    <id>/2011/12/25/kindle-dots.html</id>
+    <published>2011-12-25T00:00:00-08:00</published>
+    <updated>2011-12-25T00:00:00-08:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;p&gt;I used to tear through several books at a time. I&amp;#39;d collect and organize as many as I could get my hands on and keep them in as pristine condition as possible.&lt;/p&gt;
+
+&lt;p&gt;My dad loved comics and sci-fi, so I started there. Then, I became interested in pop-science biology and cosmology. In school, I studied computer science and comparative religion. At some point after college, I exhausted the genres I was interested in.&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;I used to tear through several books at a time. I&amp;#39;d collect and organize as many as I could get my hands on and keep them in as pristine condition as possible.&lt;/p&gt;
+
+&lt;p&gt;My dad loved comics and sci-fi, so I started there. Then, I became interested in pop-science biology and cosmology. In school, I studied computer science and comparative religion. At some point after college, I exhausted the genres I was interested in.&lt;/p&gt;
+
+&lt;p&gt;Not having something to read was frustrating, but nothing I picked up would hold my interest. Eventually, I got tired of lugging dozens of boxes of books around and sold them all back to Amazon. &lt;/p&gt;
+
+&lt;p&gt;Last Christmas, I got a 3rd generation Kindle from my wife. Suddenly my library was infinite and accessible anywhere. I started reading the &lt;em&gt;Song of Ice and Fire&lt;/em&gt; books in preparation for the HBO series and discovered something rather amazing about the Kindle. Because the Kindle allows different font face and size settings, it does keep a page count, rather it shows your relative position in the book with highlighted dots. This means the 1200 page fantasy novel that I would have found daunting and awkward to carry around is suddenly small and portable. The mental weight of all those pages was reduced to &amp;quot;do I want to read the next page.&amp;quot;&lt;/p&gt;
+
+&lt;p&gt;I read a lot of long books this year, mostly fantasy, some sci-fi and some steampunk. I decided to check Amazon for the actual printed page lengths of these books.&lt;/p&gt;
+
+&lt;table&gt;&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Title&lt;/th&gt;
+&lt;th&gt;Pages&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;A Storm of Swords&lt;/td&gt;
+&lt;td&gt;1216&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;A Feast for Crows&lt;/td&gt;
+&lt;td&gt;784&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;A Dance with Dragons&lt;/td&gt;
+&lt;td&gt;1040&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Windup Girl&lt;/td&gt;
+&lt;td&gt;300&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Half-Made World&lt;/td&gt;
+&lt;td&gt;480&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Magicians&lt;/td&gt;
+&lt;td&gt;416&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Magician King&lt;/td&gt;
+&lt;td&gt;416&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Black Company&lt;/td&gt;
+&lt;td&gt;320&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Shadows Linger&lt;/td&gt;
+&lt;td&gt;319&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The White Rose&lt;/td&gt;
+&lt;td&gt;320&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Name of the Wind&lt;/td&gt;
+&lt;td&gt;672&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Dresden Files: Storm Front&lt;/td&gt;
+&lt;td&gt;384&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Old Man&amp;#39;s War&lt;/td&gt;
+&lt;td&gt;320&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Wise Man&amp;#39;s Fear&lt;/td&gt;
+&lt;td&gt;993&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Total Pages: &lt;strong&gt;7980&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Average Pages per Day: &lt;strong&gt;21.8&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+  </entry>
   <entry>
     <title>Experiment: Particle Rider</title>
     <link href="/2011/11/30/particle-rider-experiment.html" rel="alternate"/>
@@ -1647,26 +1740,6 @@ $.ajax({
 </content>
   </entry>
   <entry>
-    <title>Middleman Feature: Config.rb can setup Rack middleware</title>
-    <link href="/2010/10/11/middleman-feature-configrb-can-setup-rack-middleware.html" rel="alternate"/>
-    <id>/2010/10/11/middleman-feature-configrb-can-setup-rack-middleware.html</id>
-    <published>2010-10-11T00:00:00-07:00</published>
-    <updated>2010-10-11T00:00:00-07:00</updated>
-    <author>
-      <name>Thomas Reynolds</name>
-    </author>
-    <summary type="html">&lt;p&gt;Did you know that since &lt;a href="http://middlemanapp.com"&gt;Middleman&lt;/a&gt;&amp;#39;s &lt;tt&gt;config.rb&lt;/tt&gt; is evaluated by Sinatra that it can initialize Rack middleware?&lt;/p&gt;
-
-&lt;p&gt;In the code sample below, I use the &lt;a href="http://github.com/wbzyl/rack-codehighlighter"&gt;rack-codehighlighter&lt;/a&gt; middleware to add syntax highlighting to a Middleman project.&lt;/p&gt;
-</summary>
-    <content type="html">&lt;p&gt;Did you know that since &lt;a href="http://middlemanapp.com"&gt;Middleman&lt;/a&gt;&amp;#39;s &lt;tt&gt;config.rb&lt;/tt&gt; is evaluated by Sinatra that it can initialize Rack middleware?&lt;/p&gt;
-
-&lt;p&gt;In the code sample below, I use the &lt;a href="http://github.com/wbzyl/rack-codehighlighter"&gt;rack-codehighlighter&lt;/a&gt; middleware to add syntax highlighting to a Middleman project.&lt;/p&gt;
-
-&lt;script src="http://gist.github.com/621390.js?file=config.rb"&gt;&lt;/script&gt;
-</content>
-  </entry>
-  <entry>
     <title>SecondStoryJS Router now has a documentation website</title>
     <link href="/2010/10/11/secondstoryjs-router-now-has-a-documentation-website.html" rel="alternate"/>
     <id>/2010/10/11/secondstoryjs-router-now-has-a-documentation-website.html</id>
@@ -1686,6 +1759,26 @@ $.ajax({
 &lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/SecondStoryJS-Router.png" alt="SecondStoryJS Router" /&gt;&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Middleman Feature: Config.rb can setup Rack middleware</title>
+    <link href="/2010/10/11/middleman-feature-configrb-can-setup-rack-middleware.html" rel="alternate"/>
+    <id>/2010/10/11/middleman-feature-configrb-can-setup-rack-middleware.html</id>
+    <published>2010-10-11T00:00:00-07:00</published>
+    <updated>2010-10-11T00:00:00-07:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;p&gt;Did you know that since &lt;a href="http://middlemanapp.com"&gt;Middleman&lt;/a&gt;&amp;#39;s &lt;tt&gt;config.rb&lt;/tt&gt; is evaluated by Sinatra that it can initialize Rack middleware?&lt;/p&gt;
+
+&lt;p&gt;In the code sample below, I use the &lt;a href="http://github.com/wbzyl/rack-codehighlighter"&gt;rack-codehighlighter&lt;/a&gt; middleware to add syntax highlighting to a Middleman project.&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;Did you know that since &lt;a href="http://middlemanapp.com"&gt;Middleman&lt;/a&gt;&amp;#39;s &lt;tt&gt;config.rb&lt;/tt&gt; is evaluated by Sinatra that it can initialize Rack middleware?&lt;/p&gt;
+
+&lt;p&gt;In the code sample below, I use the &lt;a href="http://github.com/wbzyl/rack-codehighlighter"&gt;rack-codehighlighter&lt;/a&gt; middleware to add syntax highlighting to a Middleman project.&lt;/p&gt;
+
+&lt;script src="http://gist.github.com/621390.js?file=config.rb"&gt;&lt;/script&gt;
 </content>
   </entry>
   <entry>
@@ -4095,6 +4188,36 @@ $(document).bind(&amp;#39;changingPage&amp;#39;, function(anchor_name) {
 </content>
   </entry>
   <entry>
+    <title>Simplifying CSS with Sass Presentation</title>
+    <link href="/2009/07/22/simplifying-css-presentation.html" rel="alternate"/>
+    <id>/2009/07/22/simplifying-css-presentation.html</id>
+    <published>2009-07-22T00:00:00-07:00</published>
+    <updated>2009-07-22T00:00:00-07:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;p&gt;Here are my slides from tonight&amp;#39;s Refresh PDX presentation on Sass and Compass.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="http://www.slideshare.net/tdreyno/simplifying-css-with-sass"&gt;Simplifying CSS With Sass&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;div class='flash'&gt;
+  &lt;object height='355' style='margin:0px' width='425'&gt;&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;Here are my slides from tonight&amp;#39;s Refresh PDX presentation on Sass and Compass.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="http://www.slideshare.net/tdreyno/simplifying-css-with-sass"&gt;Simplifying CSS With Sass&lt;/a&gt;&lt;/p&gt;
+
+&lt;div class='flash'&gt;
+  &lt;object height='355' style='margin:0px' width='425'&gt;
+    &lt;param name='movie' value='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=simplifyingcsswithsass-090724010510-phpapp02&amp;amp;rel=0&amp;amp;stripped_title=simplifying-css-with-sass' /&gt;
+    &lt;param name='allowFullScreen' value='true' /&gt;
+    &lt;param name='allowScriptAccess' value='always' /&gt;
+    &lt;embed allowfullscreen='true' allowscriptaccess='always' height='355' src='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=simplifyingcsswithsass-090724010510-phpapp02&amp;amp;rel=0&amp;amp;stripped_title=simplifying-css-with-sass' type='application/x-shockwave-flash' width='425'&gt;&lt;/embed&gt;
+  &lt;/object&gt;
+&lt;/div&gt;
+</content>
+  </entry>
+  <entry>
     <title>Easy Google Maps with jQuery</title>
     <link href="/2009/07/22/google-maps-with-jquery.html" rel="alternate"/>
     <id>/2009/07/22/google-maps-with-jquery.html</id>
@@ -4174,36 +4297,6 @@ $.fn.googleMap = function(address, options) {
     <content type="html">&lt;p&gt;It&amp;#39;s late notice, but I&amp;#39;ll be speaking on Sass and Compass at &lt;a href="http://refreshpdx.org/"&gt;Refresh Portland&lt;/a&gt;  on Thursday, July 23rd at  &lt;a href="http://maps.google.com/maps?f=q&amp;amp;hl=en&amp;amp;q=915+SW+Stark+St,+Portland,+Multnomah,+Oregon+97205,+United+States&amp;amp;sll=37.0625,-95.677068&amp;amp;sspn=49.176833,77.519531&amp;amp;ie=UTF8&amp;amp;cd=1&amp;amp;geocode=0,45.521796,-122.680205&amp;amp;ll=45.521804,-122.680206&amp;amp;spn=0.021408,0.037851&amp;amp;t=p&amp;amp;z=15&amp;amp;iwloc=addr"&gt;Jive Software&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;The presentation should be streamed (and then archived) on Ustream and I&amp;#39;ll post the slides here on Friday.&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Simplifying CSS with Sass Presentation</title>
-    <link href="/2009/07/22/simplifying-css-presentation.html" rel="alternate"/>
-    <id>/2009/07/22/simplifying-css-presentation.html</id>
-    <published>2009-07-22T00:00:00-07:00</published>
-    <updated>2009-07-22T00:00:00-07:00</updated>
-    <author>
-      <name>Thomas Reynolds</name>
-    </author>
-    <summary type="html">&lt;p&gt;Here are my slides from tonight&amp;#39;s Refresh PDX presentation on Sass and Compass.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href="http://www.slideshare.net/tdreyno/simplifying-css-with-sass"&gt;Simplifying CSS With Sass&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;div class='flash'&gt;
-  &lt;object height='355' style='margin:0px' width='425'&gt;&lt;/p&gt;
-</summary>
-    <content type="html">&lt;p&gt;Here are my slides from tonight&amp;#39;s Refresh PDX presentation on Sass and Compass.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href="http://www.slideshare.net/tdreyno/simplifying-css-with-sass"&gt;Simplifying CSS With Sass&lt;/a&gt;&lt;/p&gt;
-
-&lt;div class='flash'&gt;
-  &lt;object height='355' style='margin:0px' width='425'&gt;
-    &lt;param name='movie' value='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=simplifyingcsswithsass-090724010510-phpapp02&amp;amp;rel=0&amp;amp;stripped_title=simplifying-css-with-sass' /&gt;
-    &lt;param name='allowFullScreen' value='true' /&gt;
-    &lt;param name='allowScriptAccess' value='always' /&gt;
-    &lt;embed allowfullscreen='true' allowscriptaccess='always' height='355' src='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=simplifyingcsswithsass-090724010510-phpapp02&amp;amp;rel=0&amp;amp;stripped_title=simplifying-css-with-sass' type='application/x-shockwave-flash' width='425'&gt;&lt;/embed&gt;
-  &lt;/object&gt;
-&lt;/div&gt;
 </content>
   </entry>
   <entry>
