@@ -158,7 +158,7 @@ gem install middleman
 &lt;p&gt;Sprockets is a tool for Javascript dependency management. Using Sprockets you can include other Javascript and CoffeeScript files into your scripts. &lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;:::javascript
-&amp;#47;&amp;#47;= require &amp;quot;another_file&amp;quot;
+//= require &amp;quot;another_file&amp;quot;
 
 function my_javascript() {
 
@@ -173,7 +173,7 @@ function my_javascript() {
 
 &lt;pre&gt;&lt;code&gt;:::ruby
 [&amp;quot;tom&amp;quot;, &amp;quot;dick&amp;quot;, &amp;quot;harry&amp;quot;].each do |name|
-  page &amp;quot;&amp;#47;about&amp;#47;#{name}.html&amp;quot;, :proxy =&amp;gt; &amp;quot;&amp;#47;about&amp;#47;template.html&amp;quot; do
+  page &amp;quot;/about/#{name}.html&amp;quot;, :proxy =&amp;gt; &amp;quot;/about/template.html&amp;quot; do
     @person_name = name
   end
 end
@@ -189,7 +189,7 @@ end
 activate :directory_indexes
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Now &lt;code&gt;source&amp;#47;my-page.html&lt;/code&gt; will generate &lt;code&gt;build&amp;#47;my-page&amp;#47;index.html&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Now &lt;code&gt;source/my-page.html&lt;/code&gt; will generate &lt;code&gt;build/my-page/index.html&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;Read more in the &lt;a href="http://middlemanapp.com/guides/pretty-urls"&gt;Pretty URLs&lt;/a&gt; guide.&lt;/p&gt;
 
@@ -203,7 +203,7 @@ layout: &amp;quot;login&amp;quot;
 page_name: &amp;quot;Login&amp;quot;
 ---
 
-&amp;lt;h1&amp;gt;&amp;lt;%= data.page.page_name %&amp;gt;&amp;lt;&amp;#47;h1&amp;gt;
+&amp;lt;h1&amp;gt;&amp;lt;%= data.page.page_name %&amp;gt;&amp;lt;/h1&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;The above &lt;code&gt;login.html.erb&lt;/code&gt; file will be rendered using the &lt;code&gt;login.erb&lt;/code&gt; layout file.&lt;/p&gt;
@@ -256,7 +256,8 @@ middleman migrate
 
 &lt;p&gt;Here&amp;#39;s a simple piece of jQuery and a test case in plain Javascript.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;var elem = $(&amp;quot;#myselector&amp;quot;).addClass(&amp;quot;testing&amp;quot;);
+&lt;pre&gt;&lt;code&gt;:::javascript
+var elem = $(&amp;quot;#myselector&amp;quot;).addClass(&amp;quot;testing&amp;quot;);
 expect(elem.id).toEqual(&amp;quot;myselector&amp;quot;);
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -268,7 +269,7 @@ expect(elem.id).toEqual(&amp;quot;myselector&amp;quot;);
 expect(elem.id).toEqual(&amp;quot;myselector&amp;quot;)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2&gt;Lisp-y Function Grouping&amp;#47;Calling &amp;amp; Omitting Final parentheses&lt;/h2&gt;
+&lt;h2&gt;Lisp-y Function Grouping/Calling &amp;amp; Omitting Final parentheses&lt;/h2&gt;
 
 &lt;p&gt;First, remember that CoffeeScript doesn&amp;#39;t require parentheses when calling functions. These two lines are rendered identically:&lt;/p&gt;
 
@@ -312,7 +313,7 @@ expect(elem.id).toEqual &amp;quot;myselector&amp;quot;
 
 &lt;h2&gt;The Two Types of HTML Applications&lt;/h2&gt;
 
-&lt;p&gt;It is useful to denominate the two kinds of web applications that exist on the web. First, there is the traditional &amp;quot;Progressive Enhancement&amp;quot; apps. These use Javascript to bring additional interaction, animation and life to static HTML&amp;#47;CSS. The benefit is that even if the client has problems with Javascript due to some esoteric IE bug, or their phone doesn&amp;#39;t support Javascript, that they can still interact with the site normally. The majority of large sites using jQuery act in this way. They output HTML from the backend and then jQuery adds interaction.&lt;/p&gt;
+&lt;p&gt;It is useful to denominate the two kinds of web applications that exist on the web. First, there is the traditional &amp;quot;Progressive Enhancement&amp;quot; apps. These use Javascript to bring additional interaction, animation and life to static HTML/CSS. The benefit is that even if the client has problems with Javascript due to some esoteric IE bug, or their phone doesn&amp;#39;t support Javascript, that they can still interact with the site normally. The majority of large sites using jQuery act in this way. They output HTML from the backend and then jQuery adds interaction.&lt;/p&gt;
 
 &lt;p&gt;The second type is the MVC application. These frameworks start from a blank slate and use their own Views (templates) to build up the components of an app. This view layer certainly adds complexity (and lines of code) to the framework, but the result is usually a more Desktop-like user experience. The big frameworks of this type are &lt;a href="http://blog.sproutcore.com/"&gt;Sproutcore&lt;/a&gt;, &lt;a href="http://cappuccino.org/"&gt;Cappuccino&lt;/a&gt; and to a lesser degree, &lt;a href="http://documentcloud.github.com/backbone/"&gt;Backbone.js&lt;/a&gt;. &lt;a href="http://skilldrick.co.uk/2011/05/javascript-and-the-end-of-progressive-enhancement/comment-page-1/"&gt;Nick Morgan argues that these types of app are the future&lt;/a&gt;.&lt;/p&gt;
 
@@ -354,7 +355,7 @@ expect(elem.id).toEqual &amp;quot;myselector&amp;quot;
 &lt;li&gt;DOM Attributes (16k)&lt;/li&gt;
 &lt;li&gt;DOM Data Storage (9k)&lt;/li&gt;
 &lt;li&gt;Core Helpers and Plugin Framework: $.each, $.extend, etc (23k)&lt;/li&gt;
-&lt;li&gt;CSS reading&amp;#47;writing&amp;#47;animating (26k)&lt;/li&gt;
+&lt;li&gt;CSS reading/writing/animating (26k)&lt;/li&gt;
 &lt;li&gt;AJAX (26k)&lt;/li&gt;
 &lt;li&gt;Events (32k)&lt;/li&gt;
 &lt;li&gt;Deferreds (5k)&lt;/li&gt;
@@ -376,7 +377,7 @@ expect(elem.id).toEqual &amp;quot;myselector&amp;quot;
 &lt;li&gt;DOM Attributes (Bonzo)&lt;/li&gt;
 &lt;li&gt;DOM Data Storage (Bonzo)&lt;/li&gt;
 &lt;li&gt;Core Helpers and Plugin Framework: $.each, $.extend, etc (Underscore &amp;amp; Klass)&lt;/li&gt;
-&lt;li&gt;CSS reading&amp;#47;writing&amp;#47;animating (&#201;mile)&lt;/li&gt;
+&lt;li&gt;CSS reading/writing/animating (&#201;mile)&lt;/li&gt;
 &lt;li&gt;AJAX (Reqwest)&lt;/li&gt;
 &lt;li&gt;Events (Bean)&lt;/li&gt;
 &lt;/ul&gt;
@@ -439,17 +440,17 @@ expect(elem.id).toEqual &amp;quot;myselector&amp;quot;
 };
 
 $(elem).css({ pirateBackground: &amp;#39;red&amp;#39; });
-&amp;#47;&amp;#47; elem now has a red background and the pirates.png pattern
+// elem now has a red background and the pirates.png pattern
 
 $(elem).css(&amp;#39;pirateBackground&amp;#39;) == &amp;quot;yaarrr&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Included in David DeSandro&amp;#39;s excellent &lt;a href="http://isotope.metafizzy.co/"&gt;Isotope&lt;/a&gt; library are &lt;a href="https://github.com/desandro/isotope/blob/a2a238968347199842dd7e2d552741d5a63c90b9/jquery.isotope.js"&gt;csshooks for CSS3 scale and translate&lt;/a&gt;. These hooks correctly use the fast 3d-transforms if available. I&amp;#39;ve included the full implementation below, but the important part is that you can include the following gist and use it like this:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;&amp;#47;&amp;#47; Double the size using CSS3 transform scale 
+&lt;pre&gt;&lt;code&gt;// Double the size using CSS3 transform scale 
 $(elem).css({ scale: [2] })
 
-&amp;#47;&amp;#47; Move the element 100px right and 200px down
+// Move the element 100px right and 200px down
 $(elem).css({ translate: [ 100, 200 ] })
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -476,7 +477,7 @@ $(&amp;#39;.left&amp;#39;).click(function() {
 
 &lt;h2&gt;Full Implementation&lt;/h2&gt;
 
-&lt;p&gt;Download: https:&amp;#47;&amp;#47;gist.github.com&amp;#47;959860&lt;/p&gt;
+&lt;p&gt;Download: https://gist.github.com/959860&lt;/p&gt;
 
 &lt;script src="https://gist.github.com/959860.js?file=isoTransform.js"&gt;&lt;/script&gt;
 </content>
@@ -515,7 +516,7 @@ var loadImage = function(imageSrc) {
 
 &lt;p&gt;Requires jQuery 1.5 or newer:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;loadImage(&amp;quot;http:&amp;#47;&amp;#47;my&amp;#47;image.jpg&amp;quot;).then(function(url) {
+&lt;pre&gt;&lt;code&gt;loadImage(&amp;quot;http://my/image.jpg&amp;quot;).then(function(url) {
   alert(url + &amp;#39; is preloaded&amp;#39;);
 });
 &lt;/code&gt;&lt;/pre&gt;
@@ -593,7 +594,7 @@ It&#8217;s with a whole lot of pride that we announce today the launch of Pixel 
 &lt;ul&gt;
 &lt;li&gt;Bodyweight Exercises (Pullups, pushups, etc)&lt;/li&gt;
 &lt;li&gt;Olympic Weightlifting (Snatch, Clean &amp;amp; Jerk) &lt;/li&gt;
-&lt;li&gt;Cardio&amp;#47;Metabolic Conditioning (Rowing, sprinting, jump rope)&lt;/li&gt;
+&lt;li&gt;Cardio/Metabolic Conditioning (Rowing, sprinting, jump rope)&lt;/li&gt;
 &lt;li&gt;Gymnastic Movements (Handstands, gymnastics rings)&lt;/li&gt;
 &lt;li&gt;Strongman Lifting (Flipping tires, Atlas stones)&lt;/li&gt;
 &lt;li&gt;Strength Training (Heavy squats, benchpress)&lt;/li&gt;
@@ -608,7 +609,7 @@ It&#8217;s with a whole lot of pride that we announce today the launch of Pixel 
 
 &lt;p&gt;Most of these gyms are run in small, garage-like buildings filled with barbells and weights. The limited space encourages small communities and direct interaction between the clients and the owners. They are the ultimate startup. Small, focused, unable to afford fancy offices, but dedicated to their small (but growing) group of users. It&amp;#39;s hard to describe the incredibly tight sense of community at every CrossFit gym (or &amp;quot;box&amp;quot;) I&amp;#39;ve visited. &lt;/p&gt;
 
-&lt;p&gt;Interestingly, these gyms&amp;#47;communities follow &lt;a href="http://en.wikipedia.org/wiki/Dunbar&amp;#x27;s_number"&gt;Dunbar&amp;#39;s number&lt;/a&gt; pretty closely. About the time a gym nears 150 members, usually some segment will break off and start another gym to return the community to a smaller, more focused state.&lt;/p&gt;
+&lt;p&gt;Interestingly, these gyms/communities follow &lt;a href="http://en.wikipedia.org/wiki/Dunbar&amp;#x27;s_number"&gt;Dunbar&amp;#39;s number&lt;/a&gt; pretty closely. About the time a gym nears 150 members, usually some segment will break off and start another gym to return the community to a smaller, more focused state.&lt;/p&gt;
 
 &lt;h2&gt;Stats, Charts &amp;amp; Data-points&lt;/h2&gt;
 
@@ -686,7 +687,7 @@ It&#8217;s with a whole lot of pride that we announce today the launch of Pixel 
 
 &lt;p&gt;It&amp;#39;s been a long time since &lt;a href="/2009/10/22/middleman"&gt;I introduced Middleman on this blog&lt;/a&gt; in 2009. Since then, RubyGems reports that there have been 27,518 downloads, &lt;a href="https://github.com/middleman/middleman/contributors"&gt;several great contributors&lt;/a&gt; to the source code and even a mention in a printed book.&lt;/p&gt;
 
-&lt;p&gt;I&amp;#39;ve been working hard on documentation as it was the most requested feature from the &lt;a href="/2011/02/06/future-of-middleman-survey"&gt;&amp;quot;Future of Middleman Survey&amp;quot;&lt;/a&gt;. I&amp;#39;m a developer and I&amp;#39;m sorry to admit that my first documentation target is the code and generated documentation. Available at: &lt;a href="http://middlemanapp.com/"&gt;http:&amp;#47;&amp;#47;middlemanapp.com&amp;#47;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I&amp;#39;ve been working hard on documentation as it was the most requested feature from the &lt;a href="/2011/02/06/future-of-middleman-survey"&gt;&amp;quot;Future of Middleman Survey&amp;quot;&lt;/a&gt;. I&amp;#39;m a developer and I&amp;#39;m sorry to admit that my first documentation target is the code and generated documentation. Available at: &lt;a href="http://middlemanapp.com/"&gt;http://middlemanapp.com/&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;I know, I need better, more tutorial-style written documentation for actual people. I&amp;#39;ll be working on it as time permits, but I&amp;#39;d also love any assistance.&lt;/p&gt;
 
@@ -695,7 +696,7 @@ It&#8217;s with a whole lot of pride that we announce today the launch of Pixel 
 &lt;ul&gt;
 &lt;li&gt;Now running on Sinatra 1.2&lt;/li&gt;
 &lt;li&gt;Sass 3.1 beta &amp;amp; Compass 0.11 beta&lt;/li&gt;
-&lt;li&gt;Feature&amp;#47;Extension API (&lt;a href="#features"&gt;see below&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Feature/Extension API (&lt;a href="#features"&gt;see below&lt;/a&gt;)&lt;/li&gt;
 &lt;li&gt;Simple YAML-based data for reusable content (&lt;a href="#yaml"&gt;see below&lt;/a&gt;)&lt;/li&gt;
 &lt;li&gt;mm-build &amp;amp; mm-init now use Thor for templating&lt;/li&gt;
 &lt;li&gt;Lorem Ipsum &amp;amp; placehold.it helpers (&lt;a href="#lorem"&gt;see below&lt;/a&gt;)&lt;/li&gt;
@@ -710,7 +711,7 @@ It&#8217;s with a whole lot of pride that we announce today the launch of Pixel 
 
 &lt;p&gt;It&amp;#39;s been a long time since &lt;a href="/2009/10/22/middleman"&gt;I introduced Middleman on this blog&lt;/a&gt; in 2009. Since then, RubyGems reports that there have been 27,518 downloads, &lt;a href="https://github.com/middleman/middleman/contributors"&gt;several great contributors&lt;/a&gt; to the source code and even a mention in a printed book.&lt;/p&gt;
 
-&lt;p&gt;I&amp;#39;ve been working hard on documentation as it was the most requested feature from the &lt;a href="/2011/02/06/future-of-middleman-survey"&gt;&amp;quot;Future of Middleman Survey&amp;quot;&lt;/a&gt;. I&amp;#39;m a developer and I&amp;#39;m sorry to admit that my first documentation target is the code and generated documentation. Available at: &lt;a href="http://middlemanapp.com/"&gt;http:&amp;#47;&amp;#47;middlemanapp.com&amp;#47;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I&amp;#39;ve been working hard on documentation as it was the most requested feature from the &lt;a href="/2011/02/06/future-of-middleman-survey"&gt;&amp;quot;Future of Middleman Survey&amp;quot;&lt;/a&gt;. I&amp;#39;m a developer and I&amp;#39;m sorry to admit that my first documentation target is the code and generated documentation. Available at: &lt;a href="http://middlemanapp.com/"&gt;http://middlemanapp.com/&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;I know, I need better, more tutorial-style written documentation for actual people. I&amp;#39;ll be working on it as time permits, but I&amp;#39;d also love any assistance.&lt;/p&gt;
 
@@ -719,7 +720,7 @@ It&#8217;s with a whole lot of pride that we announce today the launch of Pixel 
 &lt;ul&gt;
 &lt;li&gt;Now running on Sinatra 1.2&lt;/li&gt;
 &lt;li&gt;Sass 3.1 beta &amp;amp; Compass 0.11 beta&lt;/li&gt;
-&lt;li&gt;Feature&amp;#47;Extension API (&lt;a href="#features"&gt;see below&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Feature/Extension API (&lt;a href="#features"&gt;see below&lt;/a&gt;)&lt;/li&gt;
 &lt;li&gt;Simple YAML-based data for reusable content (&lt;a href="#yaml"&gt;see below&lt;/a&gt;)&lt;/li&gt;
 &lt;li&gt;mm-build &amp;amp; mm-init now use Thor for templating&lt;/li&gt;
 &lt;li&gt;Lorem Ipsum &amp;amp; placehold.it helpers (&lt;a href="#lorem"&gt;see below&lt;/a&gt;)&lt;/li&gt;
@@ -736,11 +737,11 @@ It&#8217;s with a whole lot of pride that we announce today the launch of Pixel 
 
 &lt;p&gt;&lt;a name="features"&gt;&lt;/a&gt;&lt;/p&gt;
 
-&lt;h2&gt;Feature&amp;#47;Extension API&lt;/h2&gt;
+&lt;h2&gt;Feature/Extension API&lt;/h2&gt;
 
 &lt;p&gt;All the &amp;quot;features&amp;quot; of Middleman can be enabled or disabled from your &lt;tt&gt;config.rb&lt;/tt&gt; file. These features are now all using the Sinatra extension API which means it is very easy to add your own features or include features from other RubyGems. Here is an example Feature:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;# In your config.rb or an external file&amp;#47;gem required in config.rb
+&lt;pre&gt;&lt;code&gt;# In your config.rb or an external file/gem required in config.rb
 module MyMiddlemanFeature
   class &amp;lt;&amp;lt; self
     def registered(app)
@@ -778,13 +779,13 @@ activate MyMiddlemanFeature
 
 &lt;p&gt;For example:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;&amp;#47;&amp;#47; In PROJECT_ROOT&amp;#47;data&amp;#47;people.yml
+&lt;pre&gt;&lt;code&gt;// In PROJECT_ROOT/data/people.yml
 friends:
   - tom
   - dick
   - harry
 
-&amp;#47;&amp;#47; In my template
+// In my template
 %h1 Friends
 %ul
   - data.people.friends.each do |f|
@@ -812,45 +813,45 @@ lorem.email
 &lt;p&gt;And to use placeholder images:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;lorem.image(&amp;#39;300x400&amp;#39;)
-#=&amp;gt; http:&amp;#47;&amp;#47;placehold.it&amp;#47;300x400
+#=&amp;gt; http://placehold.it/300x400
 
 lorem.image(&amp;#39;300x400&amp;#39;, :background_color =&amp;gt; &amp;#39;333&amp;#39;, :color =&amp;gt; &amp;#39;fff&amp;#39;)
-#=&amp;gt; http:&amp;#47;&amp;#47;placehold.it&amp;#47;300x400&amp;#47;333&amp;#47;fff
+#=&amp;gt; http://placehold.it/300x400/333/fff
 
 lorem.image(&amp;#39;300x400&amp;#39;, :random_color =&amp;gt; true)
-#=&amp;gt; http:&amp;#47;&amp;#47;placehold.it&amp;#47;300x400&amp;#47;f47av7&amp;#47;9fbc34d
+#=&amp;gt; http://placehold.it/300x400/f47av7/9fbc34d
 
 lorem.image(&amp;#39;300x400&amp;#39;, :text =&amp;gt; &amp;#39;blah&amp;#39;)
-#=&amp;gt; http:&amp;#47;&amp;#47;placehold.it&amp;#47;300x400&amp;amp;text=blah
+#=&amp;gt; http://placehold.it/300x400&amp;amp;text=blah
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;&lt;a name="boilerplate"&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2&gt;New Project Templates (HTML5 Boilerplate)&lt;/h2&gt;
 
-&lt;p&gt;I&amp;#39;ve abstracted the templates used in &lt;tt&gt;mm-init&lt;/tt&gt; so that it is easy to add new ones, but right now those templates have to live in the Middleman gem to work. In the future, I&amp;#39;ll add support for extra templates in external gems or somewhere on the local machine like &lt;tt&gt;~&amp;#47;.middleman&lt;/tt&gt;. For now, enjoy the new template option, the wonderful &lt;a href="http://html5boilerplate.com/"&gt;HTML5 Boilerplate&lt;/a&gt;. It is used like this:&lt;/p&gt;
+&lt;p&gt;I&amp;#39;ve abstracted the templates used in &lt;tt&gt;mm-init&lt;/tt&gt; so that it is easy to add new ones, but right now those templates have to live in the Middleman gem to work. In the future, I&amp;#39;ll add support for extra templates in external gems or somewhere on the local machine like &lt;tt&gt;~/.middleman&lt;/tt&gt;. For now, enjoy the new template option, the wonderful &lt;a href="http://html5boilerplate.com/"&gt;HTML5 Boilerplate&lt;/a&gt;. It is used like this:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;$ mm-init my_boilerplate_project --template=html5
-    create  my_boilerplate_project&amp;#47;config.rb
-    create  my_boilerplate_project&amp;#47;public
-    create  my_boilerplate_project&amp;#47;public&amp;#47;404.html
-    create  my_boilerplate_project&amp;#47;public&amp;#47;apple-touch-icon.png
-    create  my_boilerplate_project&amp;#47;public&amp;#47;crossdomain.xml
-    create  my_boilerplate_project&amp;#47;public&amp;#47;css&amp;#47;handheld.css
-    create  my_boilerplate_project&amp;#47;public&amp;#47;css&amp;#47;style.css
-    create  my_boilerplate_project&amp;#47;public&amp;#47;favicon.ico
-    create  my_boilerplate_project&amp;#47;public&amp;#47;humans.txt
-    create  my_boilerplate_project&amp;#47;public&amp;#47;images&amp;#47;.gitignore
-    create  my_boilerplate_project&amp;#47;public&amp;#47;index.html
-    create  my_boilerplate_project&amp;#47;public&amp;#47;js&amp;#47;libs&amp;#47;dd_belatedpng.js
-    create  my_boilerplate_project&amp;#47;public&amp;#47;js&amp;#47;libs&amp;#47;jquery-1.5.0.js
-    create  my_boilerplate_project&amp;#47;public&amp;#47;js&amp;#47;libs&amp;#47;jquery-1.5.0.min.js
-    create  my_boilerplate_project&amp;#47;public&amp;#47;js&amp;#47;libs&amp;#47;modernizr-1.6.min.js
-    create  my_boilerplate_project&amp;#47;public&amp;#47;js&amp;#47;mylibs&amp;#47;.gitignore
-    create  my_boilerplate_project&amp;#47;public&amp;#47;js&amp;#47;plugins.js
-    create  my_boilerplate_project&amp;#47;public&amp;#47;js&amp;#47;script.js
-    create  my_boilerplate_project&amp;#47;public&amp;#47;robots.txt
-    create  my_boilerplate_project&amp;#47;views
+    create  my_boilerplate_project/config.rb
+    create  my_boilerplate_project/public
+    create  my_boilerplate_project/public/404.html
+    create  my_boilerplate_project/public/apple-touch-icon.png
+    create  my_boilerplate_project/public/crossdomain.xml
+    create  my_boilerplate_project/public/css/handheld.css
+    create  my_boilerplate_project/public/css/style.css
+    create  my_boilerplate_project/public/favicon.ico
+    create  my_boilerplate_project/public/humans.txt
+    create  my_boilerplate_project/public/images/.gitignore
+    create  my_boilerplate_project/public/index.html
+    create  my_boilerplate_project/public/js/libs/dd_belatedpng.js
+    create  my_boilerplate_project/public/js/libs/jquery-1.5.0.js
+    create  my_boilerplate_project/public/js/libs/jquery-1.5.0.min.js
+    create  my_boilerplate_project/public/js/libs/modernizr-1.6.min.js
+    create  my_boilerplate_project/public/js/mylibs/.gitignore
+    create  my_boilerplate_project/public/js/plugins.js
+    create  my_boilerplate_project/public/js/script.js
+    create  my_boilerplate_project/public/robots.txt
+    create  my_boilerplate_project/views
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2&gt;Rack-support by Default&lt;/h2&gt;
@@ -873,7 +874,7 @@ run Middleman::Server
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Please direct all questions and bugs to Github:
-&lt;a href="https://github.com/middleman/middleman"&gt;https:&amp;#47;&amp;#47;github.com&amp;#47;middleman&amp;#47;middleman&lt;/a&gt;&lt;/p&gt;
+&lt;a href="https://github.com/middleman/middleman"&gt;https://github.com/middleman/middleman&lt;/a&gt;&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -919,7 +920,7 @@ run Middleman::Server
 &lt;p&gt;Here we have a little animating square, a slider to control the duration and a bunch of easing options. Go ahead, play around and find the &amp;quot;sweet spot.&amp;quot;&lt;/p&gt;
 
 &lt;p&gt;&lt;script type="text/javascript" charset="utf-8"&gt;
-  $.getScript(&amp;quot;&amp;#47;javascripts&amp;#47;jquery.easing.1.3.js&amp;quot;, function() {&lt;/p&gt;
+  $.getScript(&amp;quot;/javascripts/jquery.easing.1.3.js&amp;quot;, function() {&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;$(function($) {
   $(&amp;quot;.range&amp;quot;).change(function() {
@@ -1018,7 +1019,7 @@ Person A: Ah, man, you should have told me you were looking.
           I&amp;#39;d love to work with you.
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Somehow, despite all of our constant communication and over-sharing on Twitter, we still like to avoid &amp;quot;serious&amp;quot; conversations about jobs, salaries and what it would take to get your friend&amp;#47;buddy&amp;#47;idol to work with you. So, to scratch this itch, &lt;a href="http://pixelmatrixdesign.com/"&gt;Josh Pyles&lt;/a&gt; and I spent the last weekend putting together &lt;a href="http://wouldhire.com"&gt;WouldHire.com&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Somehow, despite all of our constant communication and over-sharing on Twitter, we still like to avoid &amp;quot;serious&amp;quot; conversations about jobs, salaries and what it would take to get your friend/buddy/idol to work with you. So, to scratch this itch, &lt;a href="http://pixelmatrixdesign.com/"&gt;Josh Pyles&lt;/a&gt; and I spent the last weekend putting together &lt;a href="http://wouldhire.com"&gt;WouldHire.com&lt;/a&gt;.&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;This year at SXSW I was either involved in or overheard the same conversation several times. &lt;/p&gt;
 
@@ -1028,7 +1029,7 @@ Person A: Ah, man, you should have told me you were looking.
           I&amp;#39;d love to work with you.
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Somehow, despite all of our constant communication and over-sharing on Twitter, we still like to avoid &amp;quot;serious&amp;quot; conversations about jobs, salaries and what it would take to get your friend&amp;#47;buddy&amp;#47;idol to work with you. So, to scratch this itch, &lt;a href="http://pixelmatrixdesign.com/"&gt;Josh Pyles&lt;/a&gt; and I spent the last weekend putting together &lt;a href="http://wouldhire.com"&gt;WouldHire.com&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Somehow, despite all of our constant communication and over-sharing on Twitter, we still like to avoid &amp;quot;serious&amp;quot; conversations about jobs, salaries and what it would take to get your friend/buddy/idol to work with you. So, to scratch this itch, &lt;a href="http://pixelmatrixdesign.com/"&gt;Josh Pyles&lt;/a&gt; and I spent the last weekend putting together &lt;a href="http://wouldhire.com"&gt;WouldHire.com&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;
 
@@ -1042,7 +1043,7 @@ Person A: Ah, man, you should have told me you were looking.
 
 &lt;p&gt;&lt;img src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/WouldHire-admin.png" alt="WouldHire Admin"&gt;&lt;/p&gt;
 
-&lt;p&gt;Pretty cool, eh? Please check it out, email me your ideas&amp;#47;comments and hopefully this will help someone, somewhere end up with their dream job.&lt;/p&gt;
+&lt;p&gt;Pretty cool, eh? Please check it out, email me your ideas/comments and hopefully this will help someone, somewhere end up with their dream job.&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -1066,30 +1067,30 @@ Person A: Ah, man, you should have told me you were looking.
 
 &lt;p&gt;Compared to the Sencha and Sproutcore&amp;#39;s robust data packages, JavascriptMVC&amp;#39;s is somewhat simple. It embraces jQuery&amp;#39;s AJAX methods and even places its classes on the jQuery &amp;quot;$&amp;quot; object. First, let&amp;#39;s take a look at a model who&amp;#39;s only goal is to represent a client-side object. We&amp;#39;ll use it for organizing data and generating DOM elements, but save backend connectivity for later.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;&amp;#47;&amp;#47; Setup the model definition
+&lt;pre&gt;&lt;code&gt;// Setup the model definition
 $.Model.extend(&amp;quot;Project&amp;quot;,
 {
-  &amp;#47;&amp;#47; Static methods.
-  &amp;#47;&amp;#47; The following will appear as Project.fooBar()
+  // Static methods.
+  // The following will appear as Project.fooBar()
   fooBar: function() {
-    &amp;#47;&amp;#47; Do something;
+    // Do something;
   }
 },
 {
-  &amp;#47;&amp;#47; Instance methods
-  &amp;#47;&amp;#47; The following will appear as myProject.similarProjects()
+  // Instance methods
+  // The following will appear as myProject.similarProjects()
   similarProjects: function() {
-    &amp;#47;&amp;#47; Loop over all projects and find similar ones
+    // Loop over all projects and find similar ones
   }
 });
 
-&amp;#47;&amp;#47; Create an instance
+// Create an instance
 var myProject = new Project({ 
   name:  &amp;quot;Project 1&amp;quot;,
   owner: &amp;quot;me&amp;quot;
 });
 
-&amp;#47;&amp;#47; Get some values
+// Get some values
 console.debug(&amp;quot;My name is: &amp;quot; + myProject.name);
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -1100,17 +1101,17 @@ console.debug(&amp;quot;My name is: &amp;quot; + myProject.name);
 },
 {
   setTitle: function(newTitle) {
-    &amp;#47;&amp;#47; Optionally set some other attribute at the same time,
-    &amp;#47;&amp;#47; like a subtitle.
+    // Optionally set some other attribute at the same time,
+    // like a subtitle.
 
-    &amp;#47;&amp;#47; Makes sure the title is always uppercase.
+    // Makes sure the title is always uppercase.
     return newTitle.toUpperCase();
   }
 });
 
 var myProject = new Project();
 myProject.attr(&amp;quot;title&amp;quot;, &amp;quot;my title&amp;quot;);
-console.debug(&amp;quot;My title is: &amp;quot; + myProject.attr(&amp;quot;title&amp;quot;)); &amp;#47;&amp;#47; MY TITLE
+console.debug(&amp;quot;My title is: &amp;quot; + myProject.attr(&amp;quot;title&amp;quot;)); // MY TITLE
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Now, whenever you use the &lt;tt&gt;attr&lt;/tt&gt; helper to get or set the title, it will run through the &lt;tt&gt;setTitle&lt;/tt&gt; method first. Alternatively, you could setup this conversion at the class level.&lt;/p&gt;
@@ -1137,10 +1138,10 @@ console.debug(&amp;quot;My title is: &amp;quot; + myProject.attr(&amp;quot;title
 &lt;pre&gt;&lt;code&gt;$.Model.extend(&amp;#39;Project&amp;#39;,
 { 
   findAll: &amp;quot;projects&amp;quot;, 
-  findOne: &amp;quot;projects&amp;#47;{id}&amp;quot;, 
+  findOne: &amp;quot;projects/{id}&amp;quot;, 
   create:  &amp;quot;projects&amp;quot;, 
-  destroy: &amp;quot;projects&amp;#47;{id}&amp;quot;, 
-  update:  &amp;quot;projects&amp;#47;{id}&amp;quot; 
+  destroy: &amp;quot;projects/{id}&amp;quot;, 
+  update:  &amp;quot;projects/{id}&amp;quot; 
 },
 {
 });
@@ -1148,30 +1149,30 @@ console.debug(&amp;quot;My title is: &amp;quot; + myProject.attr(&amp;quot;title
 
 &lt;p&gt;Now you can interact with your server-side models very easily. For example:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;&amp;#47;&amp;#47; Let&amp;#39;s assume this returns the following JSON from &amp;quot;&amp;#47;projects&amp;quot;:
-&amp;#47;&amp;#47; [{ id: 1, name: &amp;quot;My Project&amp;quot; }]
+&lt;pre&gt;&lt;code&gt;// Let&amp;#39;s assume this returns the following JSON from &amp;quot;/projects&amp;quot;:
+// [{ id: 1, name: &amp;quot;My Project&amp;quot; }]
 Project.findAll({ }, function(allProjects) {
-  &amp;#47;&amp;#47; An array of Project models
+  // An array of Project models
   allProjects;
 });
 
-&amp;#47;&amp;#47; Let&amp;#39;s assume this returns the following JSON from &amp;quot;&amp;#47;projects&amp;#47;1&amp;quot;:
-&amp;#47;&amp;#47; { id: 1, name: &amp;quot;My Project&amp;quot; }
+// Let&amp;#39;s assume this returns the following JSON from &amp;quot;/projects/1&amp;quot;:
+// { id: 1, name: &amp;quot;My Project&amp;quot; }
 Project.findOne({ id: 1 }, function(myProject) {
-  &amp;#47;&amp;#47; Returns &amp;quot;My Project
+  // Returns &amp;quot;My Project
   myProject.attr(&amp;#39;name&amp;#39;);
 
-  &amp;#47;&amp;#47; Triggers HTTP PUT to &amp;quot;projects&amp;#47;1&amp;quot;
+  // Triggers HTTP PUT to &amp;quot;projects/1&amp;quot;
   myProject.update(&amp;#39;name&amp;#39;, &amp;#39;New name&amp;#39;);
 
-  &amp;#47;&amp;#47; Triggers HTTP DELETE to &amp;quot;projects&amp;#47;1&amp;quot;
+  // Triggers HTTP DELETE to &amp;quot;projects/1&amp;quot;
   myProject.destroy();
 });
 
-&amp;#47;&amp;#47; Create new instance
+// Create new instance
 var newProject = new Project({ name: &amp;quot;New Project&amp;quot; });
 
-&amp;#47;&amp;#47; Triggers HTTP POST to &amp;quot;&amp;#47;projects&amp;quot;
+// Triggers HTTP POST to &amp;quot;/projects&amp;quot;
 newProject.save();
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -1188,11 +1189,11 @@ newProject.save();
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;Sammy and the &#8216;#&#8217; are for applications. It provides a way to maintain state in a world where you can require JavaScript and even require the presence of certain browsers. If you&#8217;re an application, that requires login&amp;#47;signup you can make a number of demands of your users. You also probably dont even want the crawlability. You&#8217;re using &#8216;#&#8217; to maintain state for a specific user in a specific session.&lt;/p&gt;
+&lt;p&gt;Sammy and the &#8216;#&#8217; are for applications. It provides a way to maintain state in a world where you can require JavaScript and even require the presence of certain browsers. If you&#8217;re an application, that requires login/signup you can make a number of demands of your users. You also probably dont even want the crawlability. You&#8217;re using &#8216;#&#8217; to maintain state for a specific user in a specific session.&lt;/p&gt;
 &lt;/blockquote&gt;
 </summary>
     <content type="html">&lt;blockquote&gt;
-&lt;p&gt;Sammy and the &#8216;#&#8217; are for applications. It provides a way to maintain state in a world where you can require JavaScript and even require the presence of certain browsers. If you&#8217;re an application, that requires login&amp;#47;signup you can make a number of demands of your users. You also probably dont even want the crawlability. You&#8217;re using &#8216;#&#8217; to maintain state for a specific user in a specific session.&lt;/p&gt;
+&lt;p&gt;Sammy and the &#8216;#&#8217; are for applications. It provides a way to maintain state in a world where you can require JavaScript and even require the presence of certain browsers. If you&#8217;re an application, that requires login/signup you can make a number of demands of your users. You also probably dont even want the crawlability. You&#8217;re using &#8216;#&#8217; to maintain state for a specific user in a specific session.&lt;/p&gt;
 
 &lt;p&gt;Outside of the world of the &#8216;application&#8217; you really, really shouldn&#8217;t rely on JavaScript being there for your site to work (at least at a basic level).&lt;br /&gt;
 &lt;strong&gt;- Aaron Quint&lt;/strong&gt;&lt;/p&gt;
@@ -1213,11 +1214,11 @@ newProject.save();
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;By taking the professional-to-client approach for what should be a merchant-to-customer context, Mr. Chimero has abdicated ownership of his idea&amp;#47;genius and the results that will come of it. Having bought and paid for it, the collective investors now own his genius in this project. By selling out first before he created the product he promises, he&#8217;s now working for the investors instead of working for himself.&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;By taking the professional-to-client approach for what should be a merchant-to-customer context, Mr. Chimero has abdicated ownership of his idea/genius and the results that will come of it. Having bought and paid for it, the collective investors now own his genius in this project. By selling out first before he created the product he promises, he&#8217;s now working for the investors instead of working for himself.&lt;br /&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 </summary>
     <content type="html">&lt;blockquote&gt;
-&lt;p&gt;By taking the professional-to-client approach for what should be a merchant-to-customer context, Mr. Chimero has abdicated ownership of his idea&amp;#47;genius and the results that will come of it. Having bought and paid for it, the collective investors now own his genius in this project. By selling out first before he created the product he promises, he&#8217;s now working for the investors instead of working for himself.&lt;br /&gt;
+&lt;p&gt;By taking the professional-to-client approach for what should be a merchant-to-customer context, Mr. Chimero has abdicated ownership of his idea/genius and the results that will come of it. Having bought and paid for it, the collective investors now own his genius in this project. By selling out first before he created the product he promises, he&#8217;s now working for the investors instead of working for himself.&lt;br /&gt;
 &lt;strong&gt;- Andy Rutledge&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -1235,11 +1236,11 @@ newProject.save();
     </author>
     <summary type="html">&lt;p&gt;I&amp;#39;ve created a brief survey about &lt;a href="http://middlemanapp.com"&gt;Middleman&lt;/a&gt;. If you&amp;#39;ve used the project, I would love your input. Thanks!&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="http://www.surveymonkey.com/s/5P9B92Q"&gt;http:&amp;#47;&amp;#47;www.surveymonkey.com&amp;#47;s&amp;#47;5P9B92Q&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.surveymonkey.com/s/5P9B92Q"&gt;http://www.surveymonkey.com/s/5P9B92Q&lt;/a&gt;&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;I&amp;#39;ve created a brief survey about &lt;a href="http://middlemanapp.com"&gt;Middleman&lt;/a&gt;. If you&amp;#39;ve used the project, I would love your input. Thanks!&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="http://www.surveymonkey.com/s/5P9B92Q"&gt;http:&amp;#47;&amp;#47;www.surveymonkey.com&amp;#47;s&amp;#47;5P9B92Q&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.surveymonkey.com/s/5P9B92Q"&gt;http://www.surveymonkey.com/s/5P9B92Q&lt;/a&gt;&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -1251,13 +1252,13 @@ newProject.save();
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;I&amp;#39;m in the process of writing up how the Model and Data Store works in JavascriptMVC and Sproutcore. In the mean-time, check out Ed Spencer&amp;#39;s fantastic article about the ExtJS&amp;#47;Sencha Data Package on the official Sencha blog.&lt;/p&gt;
+    <summary type="html">&lt;p&gt;I&amp;#39;m in the process of writing up how the Model and Data Store works in JavascriptMVC and Sproutcore. In the mean-time, check out Ed Spencer&amp;#39;s fantastic article about the ExtJS/Sencha Data Package on the official Sencha blog.&lt;/p&gt;
 
-&lt;p&gt;[http:&amp;#47;&amp;#47;www.sencha.com&amp;#47;blog&amp;#47;ext-js-4-anatomy-of-a-model&amp;#47;]&lt;/p&gt;
+&lt;p&gt;[http://www.sencha.com/blog/ext-js-4-anatomy-of-a-model/]&lt;/p&gt;
 </summary>
-    <content type="html">&lt;p&gt;I&amp;#39;m in the process of writing up how the Model and Data Store works in JavascriptMVC and Sproutcore. In the mean-time, check out Ed Spencer&amp;#39;s fantastic article about the ExtJS&amp;#47;Sencha Data Package on the official Sencha blog.&lt;/p&gt;
+    <content type="html">&lt;p&gt;I&amp;#39;m in the process of writing up how the Model and Data Store works in JavascriptMVC and Sproutcore. In the mean-time, check out Ed Spencer&amp;#39;s fantastic article about the ExtJS/Sencha Data Package on the official Sencha blog.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="http://www.sencha.com/blog/ext-js-4-anatomy-of-a-model/"&gt;http:&amp;#47;&amp;#47;www.sencha.com&amp;#47;blog&amp;#47;ext-js-4-anatomy-of-a-model&amp;#47;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.sencha.com/blog/ext-js-4-anatomy-of-a-model/"&gt;http://www.sencha.com/blog/ext-js-4-anatomy-of-a-model/&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src="http://src.sencha.io/-30/http://www.sencha.com/assets/images/20110126-model.png" style="padding: 0; border: 0; box-shadow: white 0 0 0; -webkit-box-shadow: white 0 0 0; -moz-box-shadow: white 0 0 0; -o-box-shadow: white 0 0 0;" width=580 /&gt;&lt;/p&gt;
 </content>
@@ -1281,7 +1282,7 @@ newProject.save();
 
 &lt;p&gt;Client-side models have two important pieces. First is the traditional model which has some attributes (like name, date updated, etc) and allows you to update those attributes. The generic Javascript object handles this role perfectly. If you&amp;rsquo;re getting data from JSON, you&amp;rsquo;re getting a JavaScript Object Model (JSOM?) of the data. For example:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;{ name: &amp;quot;Object 1&amp;quot;, updated_at: &amp;quot;2011&amp;#47;01&amp;#47;25&amp;quot; }
+&lt;pre&gt;&lt;code&gt;{ name: &amp;quot;Object 1&amp;quot;, updated_at: &amp;quot;2011/01/25&amp;quot; }
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;At some point you will want to have some helper functions that are related to each model. Maybe you want to get the name in all caps. A simple Javascript Class for this model would look like:&lt;/p&gt;
@@ -1302,13 +1303,13 @@ myProject.allCapsName() =&amp;gt; &amp;quot;MINE&amp;quot;
 
 &lt;h2&gt;Data Store&lt;/h2&gt;
 
-&lt;p&gt;The second part of the Model is the Data Store&amp;#47;Source. At some point, you will need a way of getting models from a server, working with a list of models and sending updates to the server. If you have each model handle communication with the server itself, you will end up with a lot of duplication. So let&amp;rsquo;s make a data store that gets a list of project using a plain javascript model from above. I&amp;rsquo;m going to use jQuery for the AJAX portion because &lt;/p&gt;
+&lt;p&gt;The second part of the Model is the Data Store/Source. At some point, you will need a way of getting models from a server, working with a list of models and sending updates to the server. If you have each model handle communication with the server itself, you will end up with a lot of duplication. So let&amp;rsquo;s make a data store that gets a list of project using a plain javascript model from above. I&amp;rsquo;m going to use jQuery for the AJAX portion because &lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;var ProjectList = {
   all: [],
   fetch: function(myCallback) {
     var self = this;
-    $.get(&amp;quot;&amp;#47;projects.json&amp;quot;, function(data) {
+    $.get(&amp;quot;/projects.json&amp;quot;, function(data) {
       for (var i = 0; i &amp;lt; data.length; i++) {
         var model = new Project(data[i]);
         self.all.push(model);
@@ -1328,7 +1329,7 @@ ProjectList.fetch(function(data) {
 
 &lt;p&gt;&lt;a href="http://www.sproutcore.com/"&gt;Sproutcore&lt;/a&gt; and &lt;a href="http://www.sencha.com/products/touch/"&gt;Sencha Touch&lt;/a&gt; provide robust data source libraries for interacting with a wide variety of backends such as REST, XML, JSON or YQL. Their model systems also track which attributes have changed on each object and can intelligently sync with the backend. Still, even without using a framework, this abstraction is very useful.&lt;/p&gt;
 
-&lt;p&gt;Ed Spencer has &lt;a href="http://www.sencha.com/blog/2011/01/21/countdown-to-ext-js-4-data-package/"&gt;a great write-up of the Sencha&amp;#47;ExtJS Data Package&lt;/a&gt;. I highly suggest reading it if only to get a grasp on the importance of having solid client-side models.&lt;/p&gt;
+&lt;p&gt;Ed Spencer has &lt;a href="http://www.sencha.com/blog/2011/01/21/countdown-to-ext-js-4-data-package/"&gt;a great write-up of the Sencha/ExtJS Data Package&lt;/a&gt;. I highly suggest reading it if only to get a grasp on the importance of having solid client-side models.&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -1342,13 +1343,13 @@ ProjectList.fetch(function(data) {
     </author>
     <summary type="html">&lt;p&gt;You can now learn everything you wanted to know about the JavascriptMVC3 state machine on the project website at:&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http:&amp;#47;&amp;#47;secondstory.github.com&amp;#47;secondstoryjs-statemachine&amp;#47;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/SecondStoryJS-StateMachine.png" alt="SecondStoryJS State Machine" /&gt;&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;You can now learn everything you wanted to know about the JavascriptMVC3 state machine on the project website at:&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http:&amp;#47;&amp;#47;secondstory.github.com&amp;#47;secondstoryjs-statemachine&amp;#47;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/SecondStoryJS-StateMachine.png" alt="SecondStoryJS State Machine" /&gt;&lt;/p&gt;
 </content>
@@ -1362,24 +1363,20 @@ ProjectList.fetch(function(data) {
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;&lt;link rel="stylesheet" href="/stylesheets/best-of-2010.css?v2" type="text/css" media="screen" /&gt;&lt;/p&gt;
-
-&lt;p&gt;It&amp;#39;s that time of year again! I don&amp;#39;t want a personal live journal all year, but damnit this is the one exception. I document my opinions because I think it will be really fun to look back and see what I was listening to in Ye Olde 2010. I suppose this should be a &amp;quot;Top 14&amp;quot; list, but instead it&amp;#39;s &amp;quot;Top 10&amp;quot; and some honorable mentions. Let&amp;#39;s  get started.&lt;/p&gt;
+    <summary type="html">&lt;p&gt;It&amp;#39;s that time of year again! I don&amp;#39;t want a personal live journal all year, but damnit this is the one exception. I document my opinions because I think it will be really fun to look back and see what I was listening to in Ye Olde 2010. I suppose this should be a &amp;quot;Top 14&amp;quot; list, but instead it&amp;#39;s &amp;quot;Top 10&amp;quot; and some honorable mentions. Let&amp;#39;s  get started.&lt;/p&gt;
 </summary>
-    <content type="html">&lt;p&gt;&lt;link rel="stylesheet" href="/stylesheets/best-of-2010.css?v2" type="text/css" media="screen" /&gt;&lt;/p&gt;
-
-&lt;p&gt;It&amp;#39;s that time of year again! I don&amp;#39;t want a personal live journal all year, but damnit this is the one exception. I document my opinions because I think it will be really fun to look back and see what I was listening to in Ye Olde 2010. I suppose this should be a &amp;quot;Top 14&amp;quot; list, but instead it&amp;#39;s &amp;quot;Top 10&amp;quot; and some honorable mentions. Let&amp;#39;s  get started.&lt;/p&gt;
+    <content type="html">&lt;p&gt;It&amp;#39;s that time of year again! I don&amp;#39;t want a personal live journal all year, but damnit this is the one exception. I document my opinions because I think it will be really fun to look back and see what I was listening to in Ye Olde 2010. I suppose this should be a &amp;quot;Top 14&amp;quot; list, but instead it&amp;#39;s &amp;quot;Top 10&amp;quot; and some honorable mentions. Let&amp;#39;s  get started.&lt;/p&gt;
 
 &lt;h2&gt;Top 10:&lt;/h2&gt;
 
-&lt;ul&gt;
+&lt;ul class="albums"&gt;
   &lt;li&gt;
     &lt;div class='cover'&gt;
       &lt;img src='http://awardwinningfjords.com/albums/2010/10.jpg' /&gt;&lt;div&gt;&lt;/div&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
       &lt;h6&gt;United Nations&lt;/h6&gt;
-      &lt;h2&gt;Nevermind The Bombings, Here's Your Six Figures&lt;/h2&gt;
+      &lt;h4&gt;Nevermind The Bombings, Here's Your Six Figures&lt;/h4&gt;
       &lt;p&gt;This hardcore supergroup creates loud, in-your-face music that you survive until the album is over. This EP is short, but it's a great palette cleanser after hearing some bullshit Glee single.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -1392,7 +1389,7 @@ ProjectList.fetch(function(data) {
     &lt;/div&gt;
     &lt;div class='content'&gt;
       &lt;h6&gt;Envy&lt;/h6&gt;
-      &lt;h2&gt;Recitation&lt;/h2&gt;
+      &lt;h4&gt;Recitation&lt;/h4&gt;
       &lt;p&gt;This classic Japanese hardcore band has slowly become more melodic, trading in hardcore-riffs for post-rock landscapes. The one thing that hasn't changed are the vocals. The interaction between the absolutely beatiful music and the tortured vocals works amazingly. The vocals don't grate because the music is inspiring, but the post-rock doesn't get slow, boring and repetitive because at any moment the peace could be broken by screams.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -1405,7 +1402,7 @@ ProjectList.fetch(function(data) {
     &lt;/div&gt;
     &lt;div class='content'&gt;
       &lt;h6&gt;Portugal. The Man&lt;/h6&gt;
-      &lt;h2&gt;American Ghetto&lt;/h2&gt;
+      &lt;h4&gt;American Ghetto&lt;/h4&gt;
       &lt;p&gt;Another year, another great Portugal. The Man album. The psychadelic sounds of last year's album are still present, but the edges are rougher. More guitars, more big rock moments and yet another perfectly sized record. The album is exactly as long as it should be, no filler.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -1418,7 +1415,7 @@ ProjectList.fetch(function(data) {
     &lt;/div&gt;
     &lt;div class='content'&gt;
       &lt;h6&gt;B.o.B&lt;/h6&gt;
-      &lt;h2&gt;B.o.B Presents: The Adventures of Bobby Ray &lt;/h2&gt;
+      &lt;h4&gt;B.o.B Presents: The Adventures of Bobby Ray &lt;/h4&gt;
       &lt;p&gt;Lots of hip hop on my list this year. B.o.B came out of nowhere and released a very radio-friendly album with some great guest appearances, a glimpse of his skills as an MC and a lot of really clever lyrics. I put B.o.B in the same bucket as Lupe Fiasco. These guys are smart, eloquent and know what they want to say. There isn't any fake drug game bravado or wasted breaths. The songs have a purpose and it is focused rather than the scattershot someone like Lil Wayne excretes.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -1431,7 +1428,7 @@ ProjectList.fetch(function(data) {
     &lt;/div&gt;
     &lt;div class='content'&gt;
       &lt;h6&gt;Cee Lo Green&lt;/h6&gt;
-      &lt;h2&gt;The Lady Killer&lt;/h2&gt;
+      &lt;h4&gt;The Lady Killer&lt;/h4&gt;
       &lt;p&gt;Cee Lo finally let loose, brought the energy over from the first Gnarls Barkley album and created an incredibly fun, modern soul record. Thankfully the huge single "Fuck You" isn't the only highlight. You can tell Cee Lo wanted to have fun, croon his heart out and just do what he wants, even if the result is a heavily censored music video (and appearance on Glee).&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -1444,7 +1441,7 @@ ProjectList.fetch(function(data) {
     &lt;/div&gt;
     &lt;div class='content'&gt;
       &lt;h6&gt;Big Boi&lt;/h6&gt;
-      &lt;h2&gt;Sir Lucious Left Foot: The Son of Chico Dusty&lt;/h2&gt;
+      &lt;h4&gt;Sir Lucious Left Foot: The Son of Chico Dusty&lt;/h4&gt;
       &lt;p&gt;This is the best hip hop album in a long while. Kanye doesn't count, he did something entirely different. No, this is a classic hip hop album. Lots of range in both the production and Big Boi's styles, but obviously the product of the Dirty South and one of the most talented rappers alive. Too bad the label removed the songs featuring Andre 3000 due to the boys of Outkast being signed to separate labels.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -1457,7 +1454,7 @@ ProjectList.fetch(function(data) {
     &lt;/div&gt;
     &lt;div class='content'&gt;
       &lt;h6&gt;Girl Talk&lt;/h6&gt;
-      &lt;h2&gt;All Day&lt;/h2&gt;
+      &lt;h4&gt;All Day&lt;/h4&gt;
       &lt;p&gt;Did anyone even know this album was coming out this year? It took me all of 2 days to fall in love with the most recent "best mashup album ever." Of course, it took the title again. Check out &lt;a href="http://mashupbreakdown.com/"&gt;this visual player&lt;/a&gt; and it's easy to be amazed by the complexity of the album.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -1470,7 +1467,7 @@ ProjectList.fetch(function(data) {
     &lt;/div&gt;
     &lt;div class='content'&gt;
       &lt;h6&gt;Fang Island&lt;/h6&gt;
-      &lt;h2&gt;Fang Island&lt;/h2&gt;
+      &lt;h4&gt;Fang Island&lt;/h4&gt;
       &lt;p&gt;Last year I listened to a lot of Post Rock and eventually I hit the end of my interest in the same atmosphere of dread. Fang Island flips is all around and has created a fantastically fun instrumental album which a suprising amount of complexity for something you can nod-along to. I saw the band live and the 5! guitars were pretty impressive.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -1483,7 +1480,7 @@ ProjectList.fetch(function(data) {
     &lt;/div&gt;
     &lt;div class='content'&gt;
       &lt;h6&gt;Kanye West&lt;/h6&gt;
-      &lt;h2&gt;My Beautiful Dark Twisted Fantasy &lt;/h2&gt;
+      &lt;h4&gt;My Beautiful Dark Twisted Fantasy &lt;/h4&gt;
       &lt;p&gt;This album is the culmination of everything Kanye is, everything he has been through and everything he has been working on. Who is Kanye? He's a super popular rapper, he changing the speed and pitch of female vocalists to sounds somewhat whiny, he produced songs for Jay Z, he has had public women problems, his mother passed away, he played with drum machines and auto-tune, he loves fashion and has a flair for the ornate. Take all that, mix it up and you get a perfect album.&lt;/p&gt;
       &lt;p&gt;Emotional, bragging, massive strings, Jay Z twice, 30-minute music videos, still got that pitch shifting, artistic use of auto-tune, cohesive mood and a supreme feeling of confidence. This is not a hip hop album, it's a statement of art. Any portion which works differently than the rest of the album, such as Monster, just shows Kanye's balls in that experimentation. Finally, I love the way Kanye retreats on many songs, letting his music and his guests handle the rest of the song after his initial verse.&lt;/p&gt;
     &lt;/div&gt;
@@ -1497,7 +1494,7 @@ ProjectList.fetch(function(data) {
     &lt;/div&gt;
     &lt;div class='content'&gt;
       &lt;h6&gt;Gorillaz&lt;/h6&gt;
-      &lt;h2&gt;Plastic Beach&lt;/h2&gt;
+      &lt;h4&gt;Plastic Beach&lt;/h4&gt;
       &lt;p&gt;If you had asked me when I began writing this article if Plastic Beach was my favorite album of the year, I would have said no. But during the process of organizing these albums and looking at my Last.fm stats for the past year, it's clear that I listened to this album more often by any other. In fact, I listened to it 200% more than the second most-listened-to album. I love everything on this list, but Plastic Beach definitely has staying power.&lt;/p&gt;
       &lt;p&gt;Also surprising is the fact that I felt the album was a sad departure from the Danger Mouse produced Demon Days, which I loved. Plastic Beach had less interesting songs, a more deliberate pace, weird-ass songs like Superfast Jellyfish and a bit too much electronic influence for me. But you know the way it is, the difficult albums become your favorites. The impenetrable surface gives way to reveal depth. I now consider this album nearly perfect. The primary sign of that is when my iPhone loops back to the beginning of the album after it finishes and I neither notice or become bored by the repetition.&lt;/p&gt;
     &lt;/div&gt;
@@ -1516,7 +1513,7 @@ ProjectList.fetch(function(data) {
     &lt;/div&gt;
     &lt;div class='content_small'&gt;
       &lt;h6&gt;Amia Venera Landscape&lt;/h6&gt;
-      &lt;h2&gt;The Long Procession&lt;/h2&gt;
+      &lt;h4&gt;The Long Procession&lt;/h4&gt;
       &lt;p&gt;Absolutely huge metal album. If it'd been released earlier in the year, it would probably be in my top 10.&lt;/p&gt;
     &lt;/div&gt;
   &lt;/li&gt;
@@ -1526,7 +1523,7 @@ ProjectList.fetch(function(data) {
     &lt;/div&gt;
     &lt;div class='content_small'&gt;
       &lt;h6&gt;Gogol Bordello&lt;/h6&gt;
-      &lt;h2&gt;Trans-Continental Hustle&lt;/h2&gt;
+      &lt;h4&gt;Trans-Continental Hustle&lt;/h4&gt;
       &lt;p&gt;Most accessible Gogol Bordello album yet.&lt;/p&gt;
     &lt;/div&gt;
   &lt;/li&gt;
@@ -1536,7 +1533,7 @@ ProjectList.fetch(function(data) {
     &lt;/div&gt;
     &lt;div class='content_small'&gt;
       &lt;h6&gt;Janelle Mon&#225;e&lt;/h6&gt;
-      &lt;h2&gt;The ArchAndroid&lt;/h2&gt;
+      &lt;h4&gt;The ArchAndroid&lt;/h4&gt;
       &lt;p&gt;Fantastically inventive hip hop album. It's all over the place and most of it works. Janelle is destined to be a superstar.&lt;/p&gt;
     &lt;/div&gt;
   &lt;/li&gt;
@@ -1546,7 +1543,7 @@ ProjectList.fetch(function(data) {
     &lt;/div&gt;
     &lt;div class='content_small'&gt;
       &lt;h6&gt;The Black Keys&lt;/h6&gt;
-      &lt;h2&gt;Brothers&lt;/h2&gt;
+      &lt;h4&gt;Brothers&lt;/h4&gt;
       &lt;p&gt;Another departure from a Danger Mouse produced album I loved, also great.&lt;/p&gt;
     &lt;/div&gt;
   &lt;/li&gt;
@@ -1556,7 +1553,7 @@ ProjectList.fetch(function(data) {
     &lt;/div&gt;
     &lt;div class='content_small'&gt;
       &lt;h6&gt;Broken Bells&lt;/h6&gt;
-      &lt;h2&gt;Broken Bells&lt;/h2&gt;
+      &lt;h4&gt;Broken Bells&lt;/h4&gt;
       &lt;p&gt;Danger Mouse gets his due. Abandonded by two of my favorites, but still able to turn out a fantastic album with the help of The Shins' James Mercer.&lt;/p&gt;
     &lt;/div&gt;
   &lt;/li&gt;
@@ -1581,12 +1578,12 @@ ProjectList.fetch(function(data) {
 &lt;p&gt;PubSub is short for &amp;quot;Publish and Subscribe.&amp;quot; Any piece of code can publish an event, or message, and any other piece of code can listen for that event. This allows code that responds to events to be easily decoupled from the code that creates an event. Here&amp;#39;s an example using jQuery&amp;#39;s &lt;tt&gt;$.ajax&lt;/tt&gt; functionality. Without PubSub you might write an AJAX request like this:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;$.ajax({ 
-  url: &amp;quot;&amp;#47;api&amp;#47;login.json&amp;quot;, 
+  url: &amp;quot;/api/login.json&amp;quot;, 
   success: function(data) {
-    &amp;#47;&amp;#47; Update some HTML classes
-    &amp;#47;&amp;#47; Show the person who logged in
-    &amp;#47;&amp;#47; Refresh some lists of data
-    &amp;#47;&amp;#47; etc.
+    // Update some HTML classes
+    // Show the person who logged in
+    // Refresh some lists of data
+    // etc.
   }
 });
 &lt;/code&gt;&lt;/pre&gt;
@@ -1597,18 +1594,18 @@ ProjectList.fetch(function(data) {
 
 &lt;p&gt;For this example, we&amp;#39;ll use a very naive version of PubSub. We&amp;#39;ll use &lt;tt&gt;$.fn.trigger&lt;/tt&gt; and &lt;tt&gt;$.fn.bind&lt;/tt&gt; on the root document object. jQuery&amp;#39;s event api already handles the nuts and bolts of allowing multiple anonymous functions to respond to a single event, like &amp;quot;click&amp;quot; or &amp;quot;hover.&amp;quot; Using this technique, we can organize the AJAX success code like this:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;&amp;#47;&amp;#47; Update some HTML classes
+&lt;pre&gt;&lt;code&gt;// Update some HTML classes
 $(document).bind(&amp;quot;userDidLogin&amp;quot;, function(event, data) {
   $(&amp;quot;#loginButton&amp;quot;).hide();
   $(&amp;quot;#logoutButton&amp;quot;).show();
 });
 
-&amp;#47;&amp;#47; Show the person who logged in
+// Show the person who logged in
 $(document).bind(&amp;quot;userDidLogin&amp;quot;, function(event, data) {
   $(&amp;quot;#header #user&amp;quot;).html(data.username);
 });
 
-&amp;#47;&amp;#47; Refresh some lists of data
+// Refresh some lists of data
 $(document).bind(&amp;quot;userDidLogin&amp;quot;, function(event, data) {
   $.each(data.items, function() {
     $(&amp;quot;#items&amp;quot;).append(this);
@@ -1616,9 +1613,9 @@ $(document).bind(&amp;quot;userDidLogin&amp;quot;, function(event, data) {
 });
 
 $.ajax({ 
-  url: &amp;quot;&amp;#47;api&amp;#47;login.json&amp;quot;, 
+  url: &amp;quot;/api/login.json&amp;quot;, 
   success: function(data) {
-    &amp;#47;&amp;#47; Publish the event with the data
+    // Publish the event with the data
     $(document).trigger(&amp;quot;userDidLogin&amp;quot;, data);
   }
 });
@@ -1650,28 +1647,6 @@ $.ajax({
 </content>
   </entry>
   <entry>
-    <title>SecondStoryJS Router now has a documentation website</title>
-    <link href="/2010/10/11/secondstoryjs-router-now-has-a-documentation-website.html" rel="alternate"/>
-    <id>/2010/10/11/secondstoryjs-router-now-has-a-documentation-website.html</id>
-    <published>2010-10-11T00:00:00-07:00</published>
-    <updated>2010-10-11T00:00:00-07:00</updated>
-    <author>
-      <name>Thomas Reynolds</name>
-    </author>
-    <summary type="html">&lt;p&gt;Like the title says, you can now learn everything you wanted to know about the JavascriptMVC3 router on the project website at:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http:&amp;#47;&amp;#47;secondstory.github.com&amp;#47;secondstoryjs-router&amp;#47;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/SecondStoryJS-Router.png" alt="SecondStoryJS Router" /&gt;&lt;/p&gt;
-</summary>
-    <content type="html">&lt;p&gt;Like the title says, you can now learn everything you wanted to know about the JavascriptMVC3 router on the project website at:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http:&amp;#47;&amp;#47;secondstory.github.com&amp;#47;secondstoryjs-router&amp;#47;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/SecondStoryJS-Router.png" alt="SecondStoryJS Router" /&gt;&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
     <title>Middleman Feature: Config.rb can setup Rack middleware</title>
     <link href="/2010/10/11/middleman-feature-configrb-can-setup-rack-middleware.html" rel="alternate"/>
     <id>/2010/10/11/middleman-feature-configrb-can-setup-rack-middleware.html</id>
@@ -1689,6 +1664,28 @@ $.ajax({
 &lt;p&gt;In the code sample below, I use the &lt;a href="http://github.com/wbzyl/rack-codehighlighter"&gt;rack-codehighlighter&lt;/a&gt; middleware to add syntax highlighting to a Middleman project.&lt;/p&gt;
 
 &lt;script src="http://gist.github.com/621390.js?file=config.rb"&gt;&lt;/script&gt;
+</content>
+  </entry>
+  <entry>
+    <title>SecondStoryJS Router now has a documentation website</title>
+    <link href="/2010/10/11/secondstoryjs-router-now-has-a-documentation-website.html" rel="alternate"/>
+    <id>/2010/10/11/secondstoryjs-router-now-has-a-documentation-website.html</id>
+    <published>2010-10-11T00:00:00-07:00</published>
+    <updated>2010-10-11T00:00:00-07:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;p&gt;Like the title says, you can now learn everything you wanted to know about the JavascriptMVC3 router on the project website at:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/SecondStoryJS-Router.png" alt="SecondStoryJS Router" /&gt;&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;Like the title says, you can now learn everything you wanted to know about the JavascriptMVC3 router on the project website at:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/SecondStoryJS-Router.png" alt="SecondStoryJS Router" /&gt;&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -1713,7 +1710,7 @@ $.ajax({
 
 &lt;p&gt;Finally, you&amp;#39;ll need to write the glue:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::JavaScript
+&lt;pre&gt;&lt;code&gt;:::javascript
 $.fn.handleSwipes = function() {
   return this.each(function() {
     var api = $(this).data(&amp;quot;scrollable&amp;quot;);
@@ -1731,7 +1728,7 @@ $.fn.handleSwipes = function() {
 
 &lt;p&gt;Once you have all three of these components on a page, initialize them like so:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::JavaScript
+&lt;pre&gt;&lt;code&gt;:::javascript
 $(&amp;quot;.scrollable&amp;quot;).scrollable().handleSwipes();
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -1775,24 +1772,24 @@ $(&amp;quot;.scrollable&amp;quot;).scrollable().handleSwipes();
 
 &lt;p&gt;There are two ways of grabbing the code. If you have a very recent version of JavascriptMVC 3 you can use the new &lt;tt&gt;getjs&lt;/tt&gt; method of installing plugins. The command, from your project folder, looks like this:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;.&amp;#47;steal&amp;#47;js steal&amp;#47;getjs mustache
+&lt;pre&gt;&lt;code&gt;./steal/js steal/getjs mustache
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Alternatively, you can grab the code from &lt;a href="http://github.com/tdreyno/mustache-javascriptmvc"&gt;the Github repository&lt;/a&gt;:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;git clone git:&amp;#47;&amp;#47;github.com&amp;#47;tdreyno&amp;#47;mustache-javascriptmvc.git mustache
+&lt;pre&gt;&lt;code&gt;git clone git://github.com/tdreyno/mustache-javascriptmvc.git mustache
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Include it in your app:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::JavaScript
+&lt;pre&gt;&lt;code&gt;:::javascript
 steal.plugins(&amp;quot;mustache&amp;quot;)
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Create some &lt;tt&gt;.mustache&lt;/tt&gt; files and use them normally:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::JavaScript
-$(&amp;quot;#elem&amp;quot;).html(&amp;quot;&amp;#47;&amp;#47;views&amp;#47;template.mustache&amp;quot;, { variable: &amp;quot;Value&amp;quot; })
+&lt;pre&gt;&lt;code&gt;:::javascript
+$(&amp;quot;#elem&amp;quot;).html(&amp;quot;//views/template.mustache&amp;quot;, { variable: &amp;quot;Value&amp;quot; })
 &lt;/code&gt;&lt;/pre&gt;
 </content>
   </entry>
@@ -1808,7 +1805,7 @@ $(&amp;quot;#elem&amp;quot;).html(&amp;quot;&amp;#47;&amp;#47;views&amp;#47;temp
     <summary type="html"></summary>
     <content type="html">&lt;p&gt;A common pattern for initializing jQuery plugins is by selecting all the instances of the target in the DOM and running the plugin once. For example:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::JavaScript
+&lt;pre&gt;&lt;code&gt;:::javascript
 $(&amp;quot;:input&amp;quot;).myPlugin();
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -1816,11 +1813,11 @@ $(&amp;quot;:input&amp;quot;).myPlugin();
 
 &lt;p&gt;Here&amp;#39;s how they run their scrollable plugin when called by jQuery:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::JavaScript
-  &amp;#47;&amp;#47; jQuery plugin implementation
+&lt;pre&gt;&lt;code&gt;:::javascript
+  // jQuery plugin implementation
   $.fn.scrollable = function(conf) { 
 
-      &amp;#47;&amp;#47; already constructed --&amp;gt; return API
+      // already constructed --&amp;gt; return API
       var el = this.data(&amp;quot;scrollable&amp;quot;);
       if (el) { return el; }         
 
@@ -1838,22 +1835,22 @@ $(&amp;quot;:input&amp;quot;).myPlugin();
 
 &lt;p&gt;The &lt;tt&gt;Scrollable&lt;/tt&gt; function handles plugin initialization on a per-element basis and returns scoped methods for interacting with that object. Its implementation looks like this:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::JavaScript
+&lt;pre&gt;&lt;code&gt;:::javascript
   function Scrollable(root, conf) {   
-      &amp;#47;&amp;#47; Setup variables
+      // Setup variables
 
-      &amp;#47;&amp;#47; methods
+      // methods
       $.extend(self, {
           getConf: function() {
               return conf;  
           },            
-        &amp;#47;&amp;#47; et cetera
+        // et cetera
       });
 
-      &amp;#47;&amp;#47; callbacks  
+      // callbacks  
       $.each([&amp;#39;onBeforeSeek&amp;#39;, &amp;#39;onSeek&amp;#39;, &amp;#39;onAddItem&amp;#39;], function(i, name) {
 
-          &amp;#47;&amp;#47; configuration
+          // configuration
           if ($.isFunction(conf[name])) { 
               $(self).bind(name, conf[name]); 
           }
@@ -1864,31 +1861,31 @@ $(&amp;quot;:input&amp;quot;).myPlugin();
           };
       });  
 
-      &amp;#47;&amp;#47; run methods
+      // run methods
     }
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Now, let&amp;#39;s assume we have applied this pattern to our &lt;tt&gt;myPlugin&lt;/tt&gt; plugin. The interaction would look like this.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::JavaScript
+&lt;pre&gt;&lt;code&gt;:::javascript
 $(&amp;quot;:input&amp;quot;).myPlugin();
 
 var specificInput = $(&amp;quot;#myinput&amp;quot;);
 var api = specificInput.data(&amp;quot;myPlugin&amp;quot;);
 
-api.getConf()     &amp;#47;&amp;#47; See the original config variables
-api.doSomething() &amp;#47;&amp;#47; run some code
-api.destroy()     &amp;#47;&amp;#47; remove the plugin
+api.getConf()     // See the original config variables
+api.doSomething() // run some code
+api.destroy()     // remove the plugin
 
-&amp;#47;&amp;#47; Run a callback on this specific instance
+// Run a callback on this specific instance
 api.onClick(function() { 
-  &amp;#47;&amp;#47; Click handler
+  // Click handler
 });
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;The pattern would also handle accidently running the plugin twice on a single element. For example, in the following script the plugin would only initialize the &lt;tt&gt;#myinput&lt;/tt&gt; element once:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::JavaScript
+&lt;pre&gt;&lt;code&gt;:::javascript
 $(&amp;quot;#myinput&amp;quot;).myPlugin();
 $(&amp;quot;:input&amp;quot;).myPlugin();
 &lt;/code&gt;&lt;/pre&gt;
@@ -1992,7 +1989,7 @@ $dark-grey:        #4b4b48
 
 &lt;p&gt;Here&amp;#39;s the resulting CSS output:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::CSS
+&lt;pre&gt;&lt;code&gt;:::css
 .sg-heading-1, .sg-heading-2, .sg-heading-3, .info-box h2 {
   font-family: &amp;quot;Droid Sans&amp;quot;;
   font-weight: normal;
@@ -2057,7 +2054,7 @@ $dark-grey:        #4b4b48
   padding: 10px
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Now, any &lt;tt&gt;div&lt;/tt&gt; element we assign a class of &lt;tt&gt;sidebar-box&lt;/tt&gt; will be cleared, have a bottom margin, a background color, rounded-corners and an internal padding. Now let&amp;#39;s develop a login&amp;#47;logout box which has some specifics for form controls.&lt;/p&gt;
+&lt;p&gt;Now, any &lt;tt&gt;div&lt;/tt&gt; element we assign a class of &lt;tt&gt;sidebar-box&lt;/tt&gt; will be cleared, have a bottom margin, a background color, rounded-corners and an internal padding. Now let&amp;#39;s develop a login/logout box which has some specifics for form controls.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;.sidebar-auth-box
   @extend .sidebar-box
@@ -2084,7 +2081,7 @@ $dark-grey:        #4b4b48
 
 &lt;p&gt;This requires only an &lt;tt&gt;id&lt;/tt&gt; on the three boxes, but we don&amp;#39;t repeat ourselves. You&amp;#39;ll also notice that the plain CSS classes are still available to place on &lt;tt&gt;div&lt;/tt&gt; elements for rapid development or if custom id attributes are not needed. For those who are curious what the output looks like, here it is: &lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::CSS
+&lt;pre&gt;&lt;code&gt;:::css
 .sidebar-box, 
 .sidebar-auth-box, 
 #login-box, 
@@ -2129,19 +2126,19 @@ $dark-grey:        #4b4b48
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html"></summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS Router now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http:&amp;#47;&amp;#47;secondstory.github.com&amp;#47;secondstoryjs-router&amp;#47;&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS Router now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;Modern web applications should function as naturally as their static page-based predecessors. As developers, we may need to store state in the location bar, but the user shouldn&amp;#39;t be able to tell the difference, except, hopefully, the Ajaxified version should be faster and smoother.&lt;/p&gt;
 
-&lt;p&gt;To accomplish this, we need to move a lot of the libraries we&amp;#39;ve used on the backend into the world of Javascript. JavascriptMVC handles models, views and controllers, but it doesn&amp;#39;t provide a router. A router takes a string which contains state, such as &lt;tt&gt;&amp;#47;articles&amp;#47;my-first-article&lt;/tt&gt; and activates a specific piece of code which can respond to the request.&lt;/p&gt;
+&lt;p&gt;To accomplish this, we need to move a lot of the libraries we&amp;#39;ve used on the backend into the world of Javascript. JavascriptMVC handles models, views and controllers, but it doesn&amp;#39;t provide a router. A router takes a string which contains state, such as &lt;tt&gt;/articles/my-first-article&lt;/tt&gt; and activates a specific piece of code which can respond to the request.&lt;/p&gt;
 
 &lt;p&gt;At &lt;a href="http://secondstory.com/"&gt;Secondstory&lt;/a&gt;, we&amp;#39;ve been building upon JavascriptMVC and &lt;a href="http://github.com/joshbuddy/sherpa"&gt;Joshua Hull&amp;#39;s wonderful Sherpa route recognizer&lt;/a&gt;. Originally intended for usage in a NodeJS environment, Sherpa can take complex route definitions (as seen in Ruby on Rails) and map them to a destination while extracting variables from the route.&lt;/p&gt;
 
 &lt;p&gt;Here&amp;#39;s a matching example from the Sherpa docs:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::JavaScript
-Router.add(&amp;#39;&amp;#47;test&amp;#47;:variable&amp;#39;).to(&amp;#39;testing&amp;#39;)
-Router.recognize(&amp;#39;&amp;#47;test&amp;#47;iloveyou&amp;#39;) -&amp;gt;
+&lt;pre&gt;&lt;code&gt;:::javascript
+Router.add(&amp;#39;/test/:variable&amp;#39;).to(&amp;#39;testing&amp;#39;)
+Router.recognize(&amp;#39;/test/iloveyou&amp;#39;) -&amp;gt;
   {
     &amp;quot;destination&amp;quot;: &amp;quot;testing&amp;quot;,
     &amp;quot;params&amp;quot;: {
@@ -2152,17 +2149,17 @@ Router.recognize(&amp;#39;&amp;#47;test&amp;#47;iloveyou&amp;#39;) -&amp;gt;
 
 &lt;p&gt;You can also generate routes from parameters if you give the route a name:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::JavaScript
-Router.add(&amp;#39;&amp;#47;test&amp;#47;:variable&amp;#39;).to(&amp;#39;testing&amp;#39;).name(&amp;#39;testRoute&amp;#39;)
+&lt;pre&gt;&lt;code&gt;:::javascript
+Router.add(&amp;#39;/test/:variable&amp;#39;).to(&amp;#39;testing&amp;#39;).name(&amp;#39;testRoute&amp;#39;)
 Router.generate(&amp;#39;testRoute&amp;#39;, { &amp;quot;variable&amp;quot;: &amp;quot;iloveyou&amp;quot; }) -&amp;gt;
-  &amp;quot;&amp;#47;test&amp;#47;iloveyou&amp;quot;
+  &amp;quot;/test/iloveyou&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2&gt;Using in JavascriptMVC&lt;/h2&gt;
 
 &lt;p&gt;First, grab a copy of the Sherpa library and put it in your resources directory. Then, in your JavascriptMVC project file you intialize Sherpa:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::JavaScript
+&lt;pre&gt;&lt;code&gt;:::javascript
 steal.resources(&amp;quot;sherpa&amp;quot;)
      .then(function($) {
 
@@ -2174,8 +2171,8 @@ steal.resources(&amp;quot;sherpa&amp;quot;)
 
 &lt;p&gt;First, you can initialize a new controller on the document element when the route is matched:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::JavaScript
-Router.add(&amp;quot;&amp;#47;articles&amp;#47;:article_name&amp;quot;).to(&amp;quot;project_article&amp;quot;);
+&lt;pre&gt;&lt;code&gt;:::javascript
+Router.add(&amp;quot;/articles/:article_name&amp;quot;).to(&amp;quot;project_article&amp;quot;);
 
 var key        = window.location.pathname,
     foundRoute = Router.recognize(key);
@@ -2187,8 +2184,8 @@ if (foundRoute &amp;amp;&amp;amp; $(document)[foundRoute.destination]) {
 
 &lt;p&gt;Alternatively, you could fire an OpenAjax event instead:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::JavaScript
-Router.add(&amp;quot;&amp;#47;articles&amp;#47;:article_name&amp;quot;).to(&amp;quot;project_article&amp;quot;);
+&lt;pre&gt;&lt;code&gt;:::javascript
+Router.add(&amp;quot;/articles/:article_name&amp;quot;).to(&amp;quot;project_article&amp;quot;);
 
 var key        = window.location.pathname,
     foundRoute = Router.recognize(key);
@@ -2198,28 +2195,28 @@ if (foundRoute) {
 }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Unfortunately, this will only run once, during the inital load of your project. In reality, you will want to watch the location bar throughout the usage of your application and either run controllers or publish events for each location change. JavascriptMVC provides the &lt;tt&gt;jquery&amp;#47;controller&amp;#47;history&lt;/tt&gt; which publishes &lt;tt&gt;history.&amp;#47;current&amp;#47;url&lt;/tt&gt; OpenAjax events when the location changes. You could wire this up on your own, or you could use the class we&amp;#39;ve developed and written tests for.&lt;/p&gt;
+&lt;p&gt;Unfortunately, this will only run once, during the inital load of your project. In reality, you will want to watch the location bar throughout the usage of your application and either run controllers or publish events for each location change. JavascriptMVC provides the &lt;tt&gt;jquery/controller/history&lt;/tt&gt; which publishes &lt;tt&gt;history./current/url&lt;/tt&gt; OpenAjax events when the location changes. You could wire this up on your own, or you could use the class we&amp;#39;ve developed and written tests for.&lt;/p&gt;
 
 &lt;h2&gt;SS.Router&lt;/h2&gt;
 
-&lt;p&gt;The Secondstory router class uses &lt;tt&gt;jquery&amp;#47;controller&amp;#47;history&lt;/tt&gt; to listen to the location change events, then it matches against the Routes you have setup and finally sends a new OpenAjax event containing the value of the &lt;tt&gt;.to()&lt;/tt&gt; method you setup when definition the route. It also contains logic for making sure multiple events aren&amp;#39;t published for the same location if a user clicks the same link twice, for example.&lt;/p&gt;
+&lt;p&gt;The Secondstory router class uses &lt;tt&gt;jquery/controller/history&lt;/tt&gt; to listen to the location change events, then it matches against the Routes you have setup and finally sends a new OpenAjax event containing the value of the &lt;tt&gt;.to()&lt;/tt&gt; method you setup when definition the route. It also contains logic for making sure multiple events aren&amp;#39;t published for the same location if a user clicks the same link twice, for example.&lt;/p&gt;
 
 &lt;p&gt;First, grab the code using JavascriptMVC&amp;#39;s built-in &lt;tt&gt;getjs&lt;/tt&gt; command:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;.&amp;#47;steal&amp;#47;js steal&amp;#47;getjs ss&amp;#47;router
+&lt;pre&gt;&lt;code&gt;./steal/js steal/getjs ss/router
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;So let&amp;#39;s go back to our project configuration file:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::JavaScript
-steal.plugins(&amp;quot;ss&amp;#47;router&amp;quot;)
+&lt;pre&gt;&lt;code&gt;:::javascript
+steal.plugins(&amp;quot;ss/router&amp;quot;)
      .then(function($) {
 
-  Router.add(&amp;quot;&amp;#47;articles&amp;#47;:article_name&amp;quot;).to(&amp;quot;project_article&amp;quot;);
+  Router.add(&amp;quot;/articles/:article_name&amp;quot;).to(&amp;quot;project_article&amp;quot;);
 });
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;That&amp;#39;s it! When &lt;tt&gt;#&amp;#47;articles&amp;#47;my-first-article&lt;/tt&gt; is accessed, OpenAjax will publish a &lt;tt&gt;project&lt;em&gt;article&lt;/tt&gt; event with &amp;quot;my-first-article&amp;quot; as the &amp;quot;article&lt;/em&gt;name&amp;quot; parameter.&lt;/p&gt;
+&lt;p&gt;That&amp;#39;s it! When &lt;tt&gt;#/articles/my-first-article&lt;/tt&gt; is accessed, OpenAjax will publish a &lt;tt&gt;project&lt;em&gt;article&lt;/tt&gt; event with &amp;quot;my-first-article&amp;quot; as the &amp;quot;article&lt;/em&gt;name&amp;quot; parameter.&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -2243,25 +2240,25 @@ steal.plugins(&amp;quot;ss&amp;#47;router&amp;quot;)
 
 &lt;h2&gt;How to use PanelStack&lt;/h2&gt;
 
-&lt;pre&gt;&lt;code&gt;:::JavaScript
+&lt;pre&gt;&lt;code&gt;:::javascript
 var bottomLevel = new Ext.Panel({ title: &amp;quot;Start page&amp;quot; });
 var firstLevel  = new Ext.Panel({ title: &amp;quot;Tier 1&amp;quot; });
 var secondLevel = new Ext.Panel({ title: &amp;quot;Tier 2&amp;quot; });
 
 var controller  = new PanelStack({ items: [bottomLevel] });
-&amp;#47;&amp;#47; Showing the bottomLevel, a title of &amp;quot;Start page&amp;quot; and no back button
+// Showing the bottomLevel, a title of &amp;quot;Start page&amp;quot; and no back button
 
 controller.pushPanel(firstLevel);
-&amp;#47;&amp;#47; Showing the firstLevel, a title of &amp;quot;Tier 1&amp;quot; and a &amp;quot;back&amp;quot; button
+// Showing the firstLevel, a title of &amp;quot;Tier 1&amp;quot; and a &amp;quot;back&amp;quot; button
 
 controller.pushPanel(secondLevel);
-&amp;#47;&amp;#47; Showing the secondLevel, a title of &amp;quot;Tier 2&amp;quot; and a &amp;quot;back&amp;quot; button
+// Showing the secondLevel, a title of &amp;quot;Tier 2&amp;quot; and a &amp;quot;back&amp;quot; button
 
 controller.popPanel();
-&amp;#47;&amp;#47; Showing the firstLevel, a title of &amp;quot;Tier 1&amp;quot; and a &amp;quot;back&amp;quot; button
+// Showing the firstLevel, a title of &amp;quot;Tier 1&amp;quot; and a &amp;quot;back&amp;quot; button
 
-&amp;#47;&amp;#47; Manually tapping the &amp;quot;back&amp;quot; button
-&amp;#47;&amp;#47; Showing the bottomLevel, a title of &amp;quot;Start page&amp;quot; and no back button
+// Manually tapping the &amp;quot;back&amp;quot; button
+// Showing the bottomLevel, a title of &amp;quot;Start page&amp;quot; and no back button
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2&gt;The current code for the class is below.&lt;/h2&gt;
@@ -2279,9 +2276,9 @@ controller.popPanel();
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html"></summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The repository has moved to http:&amp;#47;&amp;#47;github.com&amp;#47;secondstory&amp;#47;secondstoryjs-statemachine. The main class has been renamed to SS.Controller.StateMachine&lt;/strong&gt;&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The repository has moved to http://github.com/secondstory/secondstoryjs-statemachine. The main class has been renamed to SS.Controller.StateMachine&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS State Machine now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-statemachine/"&gt;http:&amp;#47;&amp;#47;secondstory.github.com&amp;#47;secondstoryjs-statemachine&amp;#47;&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS State Machine now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-statemachine/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;I&amp;#39;ve been attempting to write this article for a week, but I&amp;#39;ve been unable to justify the usefulness of Finite State Machines in words. I tried written up some typical examples, such as the classic vending machine, but it kept getting very obtuse very quickly. Instead, let me just say, that I love Finite State Machines. I think they are the only technique I learned at school and when I am able to replace dozens of &lt;tt&gt;if&lt;/tt&gt; statements with a Finite State Machine, it makes me very happy and feel secure. Being able to monitor an object&amp;#39;s state, rather than just querying its instance variables, makes testing simpler and helps me find bugs.&lt;/p&gt;
 
@@ -2293,14 +2290,14 @@ controller.popPanel();
 
 &lt;p&gt;A state machine can respond to jQuery events, global OpenAjax messages and internal &amp;quot;publishState&amp;quot; commands. The destination states define which state we are moved into on an event. Finally, &amp;quot;onEnter&amp;quot; and &amp;quot;onExit&amp;quot; can point to either instance methods or global OpenAjax messages.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::JavaScript
+&lt;pre&gt;&lt;code&gt;:::javascript
 SS.Controller.StateMachine.extend(&amp;quot;MyNavigation&amp;quot;, {}, {
   states: {
-    &amp;#47;&amp;#47; Any click of the a.close element will close everything
+    // Any click of the a.close element will close everything
     global:         { &amp;quot;a.close click&amp;quot;:            &amp;quot;initial&amp;quot; },
 
-    &amp;#47;&amp;#47; Initial is the default state.
-    &amp;#47;&amp;#47; It will also represent &amp;quot;all closed&amp;quot;
+    // Initial is the default state.
+    // It will also represent &amp;quot;all closed&amp;quot;
     initial:        { onEnter:                    &amp;quot;closeDrawers&amp;quot;,
                       &amp;quot;#header-thread a click&amp;quot;:   &amp;quot;threadIsOpen&amp;quot;,
                       &amp;quot;#header-timeline a click&amp;quot;: &amp;quot;timelineIsOpen&amp;quot; },
@@ -2339,20 +2336,20 @@ steal.js INFO: FSM (MyNavigation.instance0): timelineOpen -&amp;gt; initial
 
 &lt;p&gt;Second, grab the code using JavascriptMVC&amp;#39;s built-in &lt;tt&gt;getjs&lt;/tt&gt; command:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;.&amp;#47;steal&amp;#47;js steal&amp;#47;getjs ss&amp;#47;state_machine
+&lt;pre&gt;&lt;code&gt;./steal/js steal/getjs ss/state_machine
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Next, create a Site and a Controller (see the &lt;a href="http://v3.javascriptmvc.com/index.html#&amp;amp;who=getstarted"&gt;JavascriptMVC Getting Started Guide&lt;/a&gt;).&lt;/p&gt;
 
 &lt;p&gt;We need to add our new plugin to the site. In appname.js, add the following to your &lt;tt&gt;steal&lt;/tt&gt; command:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::JavaScript
-.plugins(&amp;quot;ss&amp;#47;controller&amp;#47;state_machine&amp;quot;)
+&lt;pre&gt;&lt;code&gt;:::javascript
+.plugins(&amp;quot;ss/controller/state_machine&amp;quot;)
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Now you can extend your Controllers from &lt;tt&gt;SS.Controller.StateMachine&lt;/tt&gt;.&lt;/p&gt;
 
-&lt;h2&gt;Other&amp;#47;Better Examples?&lt;/h2&gt;
+&lt;h2&gt;Other/Better Examples?&lt;/h2&gt;
 
 &lt;p&gt;I would love a chance to show how this works will a less contrived example. If you&amp;#39;ve a complex controller and think something like this would be useful, then please email me and I&amp;#39;ll port your code to using a state machine.&lt;/p&gt;
 </content>
@@ -2367,7 +2364,7 @@ steal.js INFO: FSM (MyNavigation.instance0): timelineOpen -&amp;gt; initial
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html"></summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The new Github repository location is: http:&amp;#47;&amp;#47;github.com&amp;#47;secondstory&amp;#47;secondstoryjs-html5storage. The new class names are SS.Model.HTML5Store.Local and SS.Model.HTML5Store.Session&lt;/strong&gt;&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The new Github repository location is: http://github.com/secondstory/secondstoryjs-html5storage. The new class names are SS.Model.HTML5Store.Local and SS.Model.HTML5Store.Session&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;For those who don&amp;#39;t know, JavascriptMVC 3 is a framework for building complex web applications based on jQuery. jQuery is a wonderful tool for manipulating the DOM, but it doesn&amp;#39;t provide any system for dependency resolution, file organization or a separation of concerns. JavascriptMVC 3, which is currently in a very solid alpha form, provides a strong MVC foundation for oragnizing your code.&lt;/p&gt;
 
@@ -2377,7 +2374,7 @@ steal.js INFO: FSM (MyNavigation.instance0): timelineOpen -&amp;gt; initial
 
 &lt;p&gt;Finally, the Model component is basically just a Class which you can wire into your existing REST API with the help of some plugins and a little code. The Model component comes with a backing data store that can be swapped out. The default is an in-memory object that&amp;#39;s provided as a placeholder for future data stores.&lt;/p&gt;
 
-&lt;p&gt;I suggest reading this &lt;a href="http://jupiterjs.com/pages/javascriptmvc#news/too-enterprisey"&gt;blog post on JavascriptMVC&amp;#39;s impressed unit&amp;#47;functional testing system&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I suggest reading this &lt;a href="http://jupiterjs.com/pages/javascriptmvc#news/too-enterprisey"&gt;blog post on JavascriptMVC&amp;#39;s impressed unit/functional testing system&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;HTML5 is the new hotness and so I&amp;#39;ve implemented &lt;tt&gt;localStorage&lt;/tt&gt; and &lt;tt&gt;sessionStorage&lt;/tt&gt; backends for the JavascriptMVC 3 Model system. This means that once data is loaded into your model (via Ajax) it can be cached on the local machine until the end of the session or &amp;quot;forever&amp;quot; (until the localStorage cache is cleared). The difference between &lt;tt&gt;sessionStorage&lt;/tt&gt; and browser cookies is that cookies are sent on every request so they are not well suited for storing lots of data. &lt;/p&gt;
 
@@ -2387,24 +2384,24 @@ steal.js INFO: FSM (MyNavigation.instance0): timelineOpen -&amp;gt; initial
 
 &lt;p&gt;Second, grab the code using JavascriptMVC&amp;#39;s built-in &lt;tt&gt;getjs&lt;/tt&gt; command:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;.&amp;#47;steal&amp;#47;js steal&amp;#47;getjs ss&amp;#47;model&amp;#47;html5store
+&lt;pre&gt;&lt;code&gt;./steal/js steal/getjs ss/model/html5store
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Next, create a Site and a Model (see the &lt;a href="http://v3.javascriptmvc.com/index.html#&amp;amp;who=getstarted"&gt;JavascriptMVC Getting Started Guide&lt;/a&gt;).&lt;/p&gt;
 
 &lt;p&gt;We need to add our new plugin to the site. In appname.js, add the following to your &lt;tt&gt;steal&lt;/tt&gt; command:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::JavaScript
-.plugins(&amp;quot;ss&amp;#47;model&amp;#47;html5store&amp;quot;)
+&lt;pre&gt;&lt;code&gt;:::javascript
+.plugins(&amp;quot;ss/model/html5store&amp;quot;)
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Okay, so we have a model and now we need to add the new store system:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::JavaScript
+&lt;pre&gt;&lt;code&gt;:::javascript
 jQuery.Model.extend(&amp;quot;MyModel&amp;quot;,
 {
   setup: function(){
-    &amp;#47;&amp;#47; Alternatively, use SS.Model.HTML5Store.Local
+    // Alternatively, use SS.Model.HTML5Store.Local
     this.storeType = SS.Model.HTML5Store.Session; 
     this._super.apply(this, arguments);
   }
@@ -2416,7 +2413,7 @@ jQuery.Model.extend(&amp;quot;MyModel&amp;quot;,
 
 &lt;p&gt;Now, whenever you create a MyModel with a unique id, it will be added to the HTML5 sessionStorage. You&amp;#39;re responsible for updating the store if the model changes and for querying the store to see if it has a copy of the model we&amp;#39;re looking for. Here&amp;#39;s some boilerplate code to do that:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::JavaScript
+&lt;pre&gt;&lt;code&gt;:::javascript
 function updateModel(params) {
   MyModel.store.destroy(params.id);
   MyModel.store.create(params);
@@ -2468,7 +2465,7 @@ function isInStore(id) {
 
 &lt;p&gt;Or, if you prefer plain CSS:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::CSS
+&lt;pre&gt;&lt;code&gt;:::css
 h1 {
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, 
                     color-stop(0%, #999999), 
@@ -2536,7 +2533,7 @@ $link-color:         #af512c
 
 &lt;pre&gt;&lt;code&gt;@import &amp;quot;compass&amp;quot;;
 @import &amp;quot;blueprint&amp;quot;;
-@import &amp;quot;blueprint&amp;#47;fancy_type&amp;quot;;
+@import &amp;quot;blueprint/fancy_type&amp;quot;;
 
 $blueprint-grid-columns:     5;
 $blueprint-grid-width:       150px;
@@ -3066,14 +3063,14 @@ if ( (typeof mind !== &amp;quot;undefined&amp;quot; &amp;amp;&amp;amp; mind !== 
 &lt;pre&gt;&lt;code&gt;html: &amp;#39;&amp;#39;&amp;#39;
       &amp;lt;strong&amp;gt;
         cup of coffeescript
-      &amp;lt;&amp;#47;strong&amp;gt;
+      &amp;lt;/strong&amp;gt;
       &amp;#39;&amp;#39;&amp;#39;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Compiles to:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;var html;
-html = &amp;quot;&amp;lt;strong&amp;gt;\n  cup of coffeescript\n&amp;lt;&amp;#47;strong&amp;gt;&amp;quot;;
+html = &amp;quot;&amp;lt;strong&amp;gt;\n  cup of coffeescript\n&amp;lt;/strong&amp;gt;&amp;quot;;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2&gt;Conclusion&lt;/h2&gt;
@@ -3087,18 +3084,18 @@ html = &amp;quot;&amp;lt;strong&amp;gt;\n  cup of coffeescript\n&amp;lt;&amp;#47
     {   {  }  }             
      }   }{  {               
     {  }{  }  }                    _____       __  __           
-   ( }{ }{  { )                   &amp;#47; ____|     &amp;#47; _|&amp;#47; _|          
+   ( }{ }{  { )                   / ____|     / _|/ _|          
  .- { { }  { }} -.               | |     ___ | |_| |_ ___  ___ 
-(  ( } { } { } }  )              | |    &amp;#47; _ \|  _|  _&amp;#47; _ \&amp;#47; _ \ 
-|`-..________ ..-&amp;#39;|              | |___| (_) | | | ||  __&amp;#47;  __&amp;#47; 
-|                 |               \_____\___&amp;#47;|_| |_| \___|\___|
+(  ( } { } { } }  )              | |    / _ \|  _|  _/ _ \/ _ \ 
+|`-..________ ..-&amp;#39;|              | |___| (_) | | | ||  __/  __/ 
+|                 |               \_____\___/|_| |_| \___|\___|
 |                 ;--.           
 |                (__  \            _____           _       _   
-|                 | )  )          &amp;#47; ____|         (_)     | |  
-|                 |&amp;#47;  &amp;#47;          | (___   ___ _ __ _ _ __ | |_ 
-|                 (  &amp;#47;            \___ \ &amp;#47; __| &amp;#39;__| | &amp;#39;_ \| __|
-|                 |&amp;#47;              ____) | (__| |  | | |_) | |_ 
-|                 |              |_____&amp;#47; \___|_|  |_| .__&amp;#47; \__|
+|                 | )  )          / ____|         (_)     | |  
+|                 |/  /          | (___   ___ _ __ _ _ __ | |_ 
+|                 (  /            \___ \ / __| &amp;#39;__| | &amp;#39;_ \| __|
+|                 |/              ____) | (__| |  | | |_) | |_ 
+|                 |              |_____/ \___|_|  |_| .__/ \__|
  `-.._________..-&amp;#39;                                  | |        
                                                     |_|
 &lt;/code&gt;&lt;/pre&gt;
@@ -3139,15 +3136,15 @@ macruby: My custom-compiled MacRuby
 
 &lt;p&gt;Follow instructions and append the output of the install to your terminal profile&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;In ~&amp;#47;.profile
+&lt;pre&gt;&lt;code&gt;In ~/.profile
 Add to the bottom:
 
-if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm ]] ; then source &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm ; fi
+if [[ -s /Users/tdreyno/.rvm/scripts/rvm ]] ; then source /Users/tdreyno/.rvm/scripts/rvm ; fi
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Then, save and close ~&amp;#47;.profile and run:&lt;/p&gt;
+&lt;p&gt;Then, save and close ~/.profile and run:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;source ~&amp;#47;.profile
+&lt;pre&gt;&lt;code&gt;source ~/.profile
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Now, you are ready to go.&lt;/p&gt;
@@ -3201,24 +3198,24 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;&lt;link rel="stylesheet" href="/stylesheets/best-of-2010.css?v2" type="text/css" media="screen" /&gt;
-&lt;p&gt;And now for the top 25.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;div class='cover'&gt;
-      &lt;img src='http://awardwinningfjords.com/albums/25.jpg' /&gt;
-    &lt;/div&gt;
-    &lt;div class='content'&gt;&lt;/p&gt;
-</summary>
-    <content type="html">&lt;p&gt;&lt;link rel="stylesheet" href="/stylesheets/best-of-2010.css?v2" type="text/css" media="screen" /&gt;
-&lt;p&gt;And now for the top 25.&lt;/p&gt;
-&lt;ul&gt;
+    <summary type="html">&lt;p&gt;And now for the top 25.&lt;/p&gt;
+&lt;ul class="albums"&gt;
   &lt;li&gt;
     &lt;div class='cover'&gt;
       &lt;img src='http://awardwinningfjords.com/albums/25.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2008&lt;/h6&gt;&lt;h2&gt;Of Montreal - Skeletal Lamping&lt;/h2&gt;
+      &lt;h6&gt;2008&lt;/h6&gt;&lt;h4&gt;Of Montreal - Skeletal Lamping&lt;/h4&gt;
+      &lt;p&gt;I flip-flopped on the position of the two Of Montreal albums several times. As bizarre and cross-genre as the band is, this album feels like "more of the same" from Hissing Fauna. However, it's also much better and maybe even easier to sing along to if you can parse the words.&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;&lt;p&gt;And now for the top 25.&lt;/p&gt;
+&lt;ul class="albums"&gt;
+  &lt;li&gt;
+    &lt;div class='cover'&gt;
+      &lt;img src='http://awardwinningfjords.com/albums/25.jpg' /&gt;
+    &lt;/div&gt;
+    &lt;div class='content'&gt;
+      &lt;h6&gt;2008&lt;/h6&gt;&lt;h4&gt;Of Montreal - Skeletal Lamping&lt;/h4&gt;
       &lt;p&gt;I flip-flopped on the position of the two Of Montreal albums several times. As bizarre and cross-genre as the band is, this album feels like &amp;quot;more of the same&amp;quot; from Hissing Fauna. However, it&amp;#39;s also much better and maybe even easier to sing along to if you can parse the words.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3230,7 +3227,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/24.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2007&lt;/h6&gt;&lt;h2&gt;Menomena - Friend and Foe&lt;/h2&gt;
+      &lt;h6&gt;2007&lt;/h6&gt;&lt;h4&gt;Menomena - Friend and Foe&lt;/h4&gt;
       &lt;p&gt;Local Portland three-piece who sound like a cross between a Jazz band and The Mars Volta. Given the amount of instruments on the album, I was blown away to see the three of them pull it off live. It&amp;#39;s my understanding that they&amp;#39;re working on a follow-up album. I can&amp;#39;t wait.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3242,7 +3239,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/23.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2006&lt;/h6&gt;&lt;h2&gt;Gospel - The Moon is a Dead World&lt;/h2&gt;
+      &lt;h6&gt;2006&lt;/h6&gt;&lt;h4&gt;Gospel - The Moon is a Dead World&lt;/h4&gt;
       &lt;p&gt;I&amp;#39;ve fallen hard for post-hardcore and for some reason I really enjoy listening to it in unexpected locations. I feel asleep on the plane listening to Maths on repeat. I wandered around the beach in Hawaii listening to Gospel. Something about it feels so epic, even if it&amp;#39;s just some guy screaming. Unfortunately the band is not longer together.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3254,7 +3251,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/22.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2006&lt;/h6&gt;&lt;h2&gt;Brand New - The Devil and God Are Raging Inside Me&lt;/h2&gt;
+      &lt;h6&gt;2006&lt;/h6&gt;&lt;h4&gt;Brand New - The Devil and God Are Raging Inside Me&lt;/h4&gt;
       &lt;p&gt;I&amp;#39;m not sure I actually like this band as I don&amp;#39;t like their previous work and I don&amp;#39;t like their follow-up album &amp;quot;Daisy.&amp;quot; Still, I put this on when I&amp;#39;m in a bad mood. The title seems to fit perfectly.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3266,7 +3263,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/21.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2000&lt;/h6&gt;&lt;h2&gt;A.F.I. - The Art of Drowning&lt;/h2&gt;
+      &lt;h6&gt;2000&lt;/h6&gt;&lt;h4&gt;A.F.I. - The Art of Drowning&lt;/h4&gt;
       &lt;p&gt;
         I&amp;#39;ve been listening to this album for 10 years. Unlike a lot of the stuff on this list which I discovered later, I think The Art of Drowning might have been my first real punk purchase. Blink 182 and Green Day don&amp;#39;t count. The album further refines Black Sails in the Sunset and is the last decent AFI album until this year&amp;#39;s Crash Love. Still, even the best parts of Crash Love make me want to put The Art of Drowning on instead.
       &lt;/p&gt;
@@ -3280,7 +3277,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/20.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2005&lt;/h6&gt;&lt;h2&gt;Gorillaz - Demon Days&lt;/h2&gt;
+      &lt;h6&gt;2005&lt;/h6&gt;&lt;h4&gt;Gorillaz - Demon Days&lt;/h4&gt;
       &lt;p&gt;How awesome is Danger Mouse? I liked the first Gorillaz album and I love Dan the Automator, but Demon Days is on a whole other level. The album alternates between poppy tracks with hip-hop guests and spacey electronic songs. If you hate diversity, Damon&amp;#39;s The Good, the Bad &amp;amp; the Queen is basically an entire album of the spacey songs. Furthermore, Fire Coming Out of a Monkey&amp;#39;s Head might be the most enjoyable spoken-word track of all time. It doesn&amp;#39;t hurt that King Koopa is reading it.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3292,7 +3289,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/19.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2007&lt;/h6&gt;&lt;h2&gt;The World&amp;#47;Inferno Friendship Society - Addicted to Bad Ideas&lt;/h2&gt;
+      &lt;h6&gt;2007&lt;/h6&gt;&lt;h4&gt;The World/Inferno Friendship Society - Addicted to Bad Ideas&lt;/h4&gt;
       &lt;p&gt;These gypsy punk-rockers from NY have always created enjoyable albums, but their energy and multitude of artists and instruments have always been a bit out of control. This concept album (and possible musical) about the life of Peter Lorre reins them in and gives the album an easy narrative to follow all the way up to the sad finale &amp;quot;Heart Attack &amp;#39;64.&amp;quot;&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3304,7 +3301,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/18.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2001&lt;/h6&gt;&lt;h2&gt;Rx Bandits - Progress&lt;/h2&gt;
+      &lt;h6&gt;2001&lt;/h6&gt;&lt;h4&gt;Rx Bandits - Progress&lt;/h4&gt;
       &lt;p&gt;My favorite band, probably one of my first concerts and definitely my driving soundtrack for 3-4 years. Progress began the transition from generic 3rd wave ska band to progressive rock gods. I don&amp;#39;t think the Rx Bandits have rocked this hard until some of the guitar-driven stuff on 2009&amp;#39;s Mandala. This is also Steve Choi&amp;#39;s first with the band. Despite the fact that he didn&amp;#39;t actually record on the album, it&amp;#39;s nice to know he was around. His influence on the later albums completes the bands transition.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3316,7 +3313,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/17.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2005&lt;/h6&gt;&lt;h2&gt;Death Cab for Cutie - Plans&lt;/h2&gt;
+      &lt;h6&gt;2005&lt;/h6&gt;&lt;h4&gt;Death Cab for Cutie - Plans&lt;/h4&gt;
       &lt;p&gt;For what sounds like an incredibly depressing album, I usually finish it feeling uplifted. The Postal Service wrenches my heart a little ever time, but Plans makes me smile. I can&amp;#39;t really get into Transatlanticism and Narrow Stairs was a misfire in my opinion, but Plans is something I imagine I&amp;#39;ll be listening to long into the next few decades.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3328,7 +3325,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/16.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2008&lt;/h6&gt;&lt;h2&gt;La Dispute - Somewhere at the Bottom of the River Between Vega and Altair&lt;/h2&gt;
+      &lt;h6&gt;2008&lt;/h6&gt;&lt;h4&gt;La Dispute - Somewhere at the Bottom of the River Between Vega and Altair&lt;/h4&gt;
       &lt;p&gt;Does anyone else know this band exists? The band fulfills all my 2000s requirements: post-hardcore, concept album and a cohesive listen all the way through. I don&amp;#39;t think they&amp;#39;ve toured in Portland yet, but I&amp;#39;m still hopeful. I imagine the live show must be epic. This album is all about loss and anger. Here&amp;#39;s hoping I&amp;#39;m never in a position where this becomes my soundtrack, but atleast it should be cathartic to scream along.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3340,7 +3337,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/15.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2008&lt;/h6&gt;&lt;h2&gt;Girl Talk - Feed the Animals&lt;/h2&gt;
+      &lt;h6&gt;2008&lt;/h6&gt;&lt;h4&gt;Girl Talk - Feed the Animals&lt;/h4&gt;
       &lt;p&gt;A perfect, polished improvement over Night Ripper. This is the definitive mash-up album. Greg uses a lot more classic songs and rock samples while still maintaining the perfect balance and juxtaposition with various rappers on top. Lil Wayne&amp;#39;s Lollipop over Red Hot Chili Peppers? Perfect.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3352,7 +3349,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/14.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2009&lt;/h6&gt;&lt;h2&gt;Rx Bandits - Mandala&lt;/h2&gt;
+      &lt;h6&gt;2009&lt;/h6&gt;&lt;h4&gt;Rx Bandits - Mandala&lt;/h4&gt;
       &lt;p&gt;The climax to a decade of refinement and improvement. The band may have lost all of its horns, but that has unleashed the guitars. Like ...And the Battle Begun and The Resignation, this album was recorded &amp;quot;live&amp;quot; with the band rehearsing until they were confident enough to record it in one shot. The result, as before, is an incredibly organic album, complete with human flaws, missed notes and a perfect representation of their wonderful live show.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3364,7 +3361,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/13.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2003&lt;/h6&gt;&lt;h2&gt;The Postal Service - Give Up&lt;/h2&gt;
+      &lt;h6&gt;2003&lt;/h6&gt;&lt;h4&gt;The Postal Service - Give Up&lt;/h4&gt;
       &lt;p&gt;I&amp;#39;ve been to DC and I quite enjoyed it. If I were to attempt to wander the streets listening to this album, I may just end up in a corner hiding from people. This is the ultimate break-up album, but it&amp;#39;s not encouraging in any way. I usually end up thinking &amp;quot;I am a fool and an asshole&amp;quot; at the end. Gibbard convinces you that it&amp;#39;s all your fault and I&amp;#39;m not sure there is a rainbow at the end. I usually try to avoid listening to this when I&amp;#39;m sad, but I guess misery loves company.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3376,7 +3373,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/12.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2006&lt;/h6&gt;&lt;h2&gt;Head Automatica - Popaganda&lt;/h2&gt;
+      &lt;h6&gt;2006&lt;/h6&gt;&lt;h4&gt;Head Automatica - Popaganda&lt;/h4&gt;
       &lt;p&gt;Another follow-up album that decided to dump Dan the Automator. And yet, like Demon Days, it&amp;#39;s better for it. Popaganda does exactly what it claims to, takes Daryl Palumbo of Glassjaw&amp;#39;s eccentricity and stuffs it into a pop-rock box.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3388,7 +3385,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/11.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2000&lt;/h6&gt;&lt;h2&gt;Deltron - Deltron 3030&lt;/h2&gt;
+      &lt;h6&gt;2000&lt;/h6&gt;&lt;h4&gt;Deltron - Deltron 3030&lt;/h4&gt;
       &lt;p&gt;Hey look, more Dan the Automator! Del the Funkee Homosapien created the definitive hip hop concept album with this loose collection of songs about life in the year 3030, Del&amp;#39;s life as a mech warrior and the oppressive regime that true artists must fight against. It&amp;#39;s been 10 years and Del has been claiming Deltron Event II is mostly complete. I can&amp;#39;t wait.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3400,7 +3397,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/10.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2004&lt;/h6&gt;&lt;h2&gt;mewithoutYou - Catch For Us the Foxes&lt;/h2&gt;
+      &lt;h6&gt;2004&lt;/h6&gt;&lt;h4&gt;mewithoutYou - Catch For Us the Foxes&lt;/h4&gt;
       &lt;p&gt;My first post-hardcore album. Basically, one brother asked his other brother to read his poetry (loudly) over his band&amp;#39;s rock. The outcome is just pitch perfect.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3412,7 +3409,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/09.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2003&lt;/h6&gt;&lt;h2&gt;Rx Bandits - The Resignation&lt;/h2&gt;
+      &lt;h6&gt;2003&lt;/h6&gt;&lt;h4&gt;Rx Bandits - The Resignation&lt;/h4&gt;
       &lt;p&gt;I feel like I&amp;#39;ve already said enough about the Rx Bandits. This one was the first recorded &amp;quot;live&amp;quot; and ends with the massive build-up of Decrescendo. I&amp;#39;m also happy to see folks in 2003 complaining about America&amp;#39;s wars.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3424,7 +3421,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/08.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2005&lt;/h6&gt;&lt;h2&gt;The Mars Volta - Frances the Mute&lt;/h2&gt;
+      &lt;h6&gt;2005&lt;/h6&gt;&lt;h4&gt;The Mars Volta - Frances the Mute&lt;/h4&gt;
       &lt;p&gt;I don&amp;#39;t really know how to describe Mars Volta albums. Super-long songs. Unintelligible vocals. Epic.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3436,7 +3433,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/07.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2004&lt;/h6&gt;&lt;h2&gt;Leftover Crack - Fuck World Trade&lt;/h2&gt;
+      &lt;h6&gt;2004&lt;/h6&gt;&lt;h4&gt;Leftover Crack - Fuck World Trade&lt;/h4&gt;
       &lt;p&gt;My favorite gutter-punks crafted a surprisingly coherent and beautiful album. There are piano interludes and songs about killing cops. Still waiting on a follow-up, but Star Fucking Hipsters are enough to hold me over.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3448,7 +3445,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/06.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2008&lt;/h6&gt;&lt;h2&gt;Why? - Alopecia&lt;/h2&gt;
+      &lt;h6&gt;2008&lt;/h6&gt;&lt;h4&gt;Why? - Alopecia&lt;/h4&gt;
       &lt;p&gt;Clever, hipster, jewish hip hop. What more do you need to know? Look at these lyrics:&lt;/p&gt;
       &lt;pre&gt;i know, i know&amp;#x000A;there&amp;#39;s nothing more appealing&amp;#x000A;than the sound of high heels&amp;#x000A;down the marble tile hallways&amp;#x000A;of your distict&amp;#39;s one allotted&amp;#x000A;city funded steiner school bilingual&amp;#x000A;or montessori followed by&amp;#x000A;a single high pitched scream&amp;#x000A;followed by breaking glass&amp;#x000A;but could your anger be mapped&amp;#x000A;into an interpretive dance&amp;#x000A;to a trip hop track&amp;#x000A;could it be bowed out on strings&amp;#x000A;or strung into a pattern&amp;#x000A;for a god&amp;#39;s eye to bring to&amp;#x000A;your alma mater&amp;#39;s holiday fundraiser boutique thing&lt;/pre&gt;
     &lt;/div&gt;
@@ -3461,7 +3458,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/05.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2006&lt;/h6&gt;&lt;h2&gt;Justin Timberlake - Futuresex&amp;#47;Lovesounds&lt;/h2&gt;
+      &lt;h6&gt;2006&lt;/h6&gt;&lt;h4&gt;Justin Timberlake - Futuresex/Lovesounds&lt;/h4&gt;
       &lt;p&gt;Pop music in the later-half of this decade was defined by Justin Timberlake. Yes, I&amp;#39;m counting Dick in a Box as well. Hip hop music in the same period was defined by Timbaland. This collaboration setup the new king of pop and fully erased his boy-band history. Will there be a follow-up? I hope so.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3473,7 +3470,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/04.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2007&lt;/h6&gt;&lt;h2&gt;Bloc Party - A Weekend in the City&lt;/h2&gt;
+      &lt;h6&gt;2007&lt;/h6&gt;&lt;h4&gt;Bloc Party - A Weekend in the City&lt;/h4&gt;
       &lt;p&gt;While Silent Alarm is a great album, A Weekend in the City is really an experience. The perfect rainy-day album, whether you&amp;#39;re in London or not. I think I could leave this on repeat for an entire weekend. There is also an instrumental version which is wonderful in a completely different way.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3485,7 +3482,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/03.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2000&lt;/h6&gt;&lt;h2&gt;At the Drive-In - Relationship of Command&lt;/h2&gt;
+      &lt;h6&gt;2000&lt;/h6&gt;&lt;h4&gt;At the Drive-In - Relationship of Command&lt;/h4&gt;
       &lt;p&gt;ATDI&amp;#39;s last album. After finally achieving mainstream success with &amp;quot;One Armed Scissor,&amp;quot; they promptly imploded. There&amp;#39;s never been anything like ATDI before or since. A different monster than Mars Volta, even if they share random, crazy-person lyrics.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3497,7 +3494,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/02.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2006&lt;/h6&gt;&lt;h2&gt;The Format - Dog Problems&lt;/h2&gt;
+      &lt;h6&gt;2006&lt;/h6&gt;&lt;h4&gt;The Format - Dog Problems&lt;/h4&gt;
       &lt;p&gt;I&amp;#39;ve been listening to these guys since we were both in high school. We were even neighbors for a short time. Probably the only Phoenix, AZ band worth a damn. The band finally broke out with Interventions + Lullabies and nearly collapsed from the pressure. So they took a step back and decided to have fun. Dog Problems is the result, incorporating a ton of instruments, whimsical flourishes, a little bit of Beach Boys, a little Bowie and a lot of fun. Nate&amp;#39;s new band, actually named &amp;quot;fun,&amp;quot; follows the same formula, but probably needs a few more albums to mature.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3509,7 +3506,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/01.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2005&lt;/h6&gt;&lt;h2&gt;Say Anything - ...Is a Real Boy&lt;/h2&gt;
+      &lt;h6&gt;2005&lt;/h6&gt;&lt;h4&gt;Say Anything - ...Is a Real Boy&lt;/h4&gt;
       &lt;p&gt;Who am I to argue with statistics. According to last.fm, I listened to this album way more than any other album. I love all the Say Anything albums, but this one is a little more rough and angry, which is a good thing. The new, married, happier Max Bemis is still great, but I enjoy his disgust.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3528,19 +3525,17 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;&lt;link rel="stylesheet" href="/stylesheets/best-of-2010.css?v2" type="text/css" media="screen" /&gt;
-&lt;p&gt;In 1990, I was 7 years old. Needless to say, by 17 I still didn&amp;#39;t have the most refined musical tastes. I&amp;#39;m just now getting into Pavement, Jawbox and My Bloody Valentine. So, this past decade has been my first where I can remember listening to each of the following albums when they were released. Most of the lists I&amp;#39;ve seen so far are exceptionally myopic, with albums mostly from the past 3-4 years and enjoy Radiohead to look cool. My list is hopefully more diverse. I&amp;#39;ve also used my actual listening habits (courtesy of last.fm) for ranking, rather than pretending I actually listened to The White Stripes ever single day like some lists.&lt;/p&gt;&lt;/p&gt;
+    <summary type="html">&lt;p&gt;In 1990, I was 7 years old. Needless to say, by 17 I still didn't have the most refined musical tastes. I'm just now getting into Pavement, Jawbox and My Bloody Valentine. So, this past decade has been my first where I can remember listening to each of the following albums when they were released. Most of the lists I've seen so far are exceptionally myopic, with albums mostly from the past 3-4 years and enjoy Radiohead to look cool. My list is hopefully more diverse. I've also used my actual listening habits (courtesy of last.fm) for ranking, rather than pretending I actually listened to The White Stripes ever single day like some lists.&lt;/p&gt;
 </summary>
-    <content type="html">&lt;p&gt;&lt;link rel="stylesheet" href="/stylesheets/best-of-2010.css?v2" type="text/css" media="screen" /&gt;
-&lt;p&gt;In 1990, I was 7 years old. Needless to say, by 17 I still didn&amp;#39;t have the most refined musical tastes. I&amp;#39;m just now getting into Pavement, Jawbox and My Bloody Valentine. So, this past decade has been my first where I can remember listening to each of the following albums when they were released. Most of the lists I&amp;#39;ve seen so far are exceptionally myopic, with albums mostly from the past 3-4 years and enjoy Radiohead to look cool. My list is hopefully more diverse. I&amp;#39;ve also used my actual listening habits (courtesy of last.fm) for ranking, rather than pretending I actually listened to The White Stripes ever single day like some lists.&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;p&gt;In 1990, I was 7 years old. Needless to say, by 17 I still didn&amp;#39;t have the most refined musical tastes. I&amp;#39;m just now getting into Pavement, Jawbox and My Bloody Valentine. So, this past decade has been my first where I can remember listening to each of the following albums when they were released. Most of the lists I&amp;#39;ve seen so far are exceptionally myopic, with albums mostly from the past 3-4 years and enjoy Radiohead to look cool. My list is hopefully more diverse. I&amp;#39;ve also used my actual listening habits (courtesy of last.fm) for ranking, rather than pretending I actually listened to The White Stripes ever single day like some lists.&lt;/p&gt;
 &lt;p&gt;Let&amp;#39;s get started, with numbers 50-26:&lt;/p&gt;
-&lt;ul&gt;
+&lt;ul class="albums"&gt;
   &lt;li&gt;
     &lt;div class='cover'&gt;
       &lt;img src='http://awardwinningfjords.com/albums/50.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2005&lt;/h6&gt;&lt;h2&gt;Panic at the Disco - A Fever You Can&amp;#39;t Sweat Out&lt;/h2&gt;
+      &lt;h6&gt;2005&lt;/h6&gt;&lt;h4&gt;Panic at the Disco - A Fever You Can&amp;#39;t Sweat Out&lt;/h4&gt;
       &lt;p&gt;Listening to this recently, the autotune burned my ears, but I can&amp;#39;t pretend I didn&amp;#39;t have this on repeat when it came out. It&amp;#39;s pretty cheesy, but the non-autotuned vocals are catchy and the songs varied. Their sophomore album tried to prove they had actual talent by simplifying their sound and foregoing the autotune, but it wasn&amp;#39;t nearly as fun as this.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3552,7 +3547,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/49.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2006&lt;/h6&gt;&lt;h2&gt;Mogwai - Mr Beast&lt;/h2&gt;
+      &lt;h6&gt;2006&lt;/h6&gt;&lt;h4&gt;Mogwai - Mr Beast&lt;/h4&gt;
       &lt;p&gt;One of my favorite post-rock albums and an album that sat in my record player for months on end. I&amp;#39;m not sure I could explain it if I wanted to. It&amp;#39;s post rock, it climaxes and the timing is just about perfect on this album.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3564,7 +3559,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/48.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2002&lt;/h6&gt;&lt;h2&gt;Bad Religion - The Process of Belief&lt;/h2&gt;
+      &lt;h6&gt;2002&lt;/h6&gt;&lt;h4&gt;Bad Religion - The Process of Belief&lt;/h4&gt;
       &lt;p&gt;The last half of the 90s were pretty hard on Bad Religion. Maybe they were just busy working on other things. The return of Brett Gurewitz on guitar helped propel their comeback. The first 3 songs work great together and are usually played in rapid succession live. I think this is their best work this decade, but The Empire Strikes First and New Maps of Hell are no slouches either.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3576,7 +3571,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/47.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2006&lt;/h6&gt;&lt;h2&gt;Scissor Sisters - Ta-Dah&lt;/h2&gt;
+      &lt;h6&gt;2006&lt;/h6&gt;&lt;h4&gt;Scissor Sisters - Ta-Dah&lt;/h4&gt;
       &lt;p&gt;I once described this as the &amp;quot;gayest album I play loud and sing along to&amp;quot; and if you&amp;#39;ve scanned ahead, you&amp;#39;ll know Justin Timberlake is on this list. So that&amp;#39;s saying something. This disco-y album with Elton John on a lot of the tracks and featuring far too graphic sexual lyrics is just too much fun. Also, the &amp;quot;I Can&amp;#39;t Decide&amp;quot; sing-along The Master had in that Dr. Who finale was just plain awesome.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3588,7 +3583,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/46.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2005&lt;/h6&gt;&lt;h2&gt;Transplants - Haunted Cities&lt;/h2&gt;
+      &lt;h6&gt;2005&lt;/h6&gt;&lt;h4&gt;Transplants - Haunted Cities&lt;/h4&gt;
       &lt;p&gt;Both Transplants albums came out this decade. The self-titled is excellent, but despite their best efforts it&amp;#39;s still a punk album. However, they hit the nail on the head in their second attempt. This is an Oakland hip hop album. Travis Barker on drums kicks the shit out of any studio drum machine.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3600,7 +3595,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/45.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2001&lt;/h6&gt;&lt;h2&gt;System of a Down - Toxicity&lt;/h2&gt;
+      &lt;h6&gt;2001&lt;/h6&gt;&lt;h4&gt;System of a Down - Toxicity&lt;/h4&gt;
       &lt;p&gt;System of a Down hit their stride on Toxicity after an excellent, manic self-titled album in the late 90s. How much strong material did they write? Well, they released a 16-song collection of B-sides called &amp;quot;Steal This Album!&amp;quot; a year later and it&amp;#39;s almost good enough to be on this list as well. Their later double-albums Memorize &amp;amp; Hypnotize are excellent, but the band&amp;#39;s dynamic was different. So I&amp;#39;m sticking with this classic SOAD.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3612,7 +3607,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/44.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2005&lt;/h6&gt;&lt;h2&gt;Mindless Self Indulgence - You&amp;#39;ll Rebel To Anything&lt;/h2&gt;
+      &lt;h6&gt;2005&lt;/h6&gt;&lt;h4&gt;Mindless Self Indulgence - You&amp;#39;ll Rebel To Anything&lt;/h4&gt;
       &lt;p&gt;Frankenstein Girls Will Seem Strangely Sexy should be on this list. It&amp;#39;s awesome, but it came out in 2000 and I remember listening to it on Winamp so maybe it&amp;#39;s just too 90s. Instead, I&amp;#39;m going with their follow-up. A band known for vile, 90 seconds songs of pure IDM madness decided to make 10, very polished, well-produced songs.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3624,7 +3619,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/43.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2004&lt;/h6&gt;&lt;h2&gt;My Chemical Romance - Three Cheers for Sweet Romance&lt;/h2&gt;
+      &lt;h6&gt;2004&lt;/h6&gt;&lt;h4&gt;My Chemical Romance - Three Cheers for Sweet Romance&lt;/h4&gt;
       &lt;p&gt;This album rips all the way through. It&amp;#39;s speed and length matched perfectly up to my normal workout, so this was my default playlist for several years. It helps that I&amp;#39;m a sucker for comic books and concept albums and this album combines both.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3636,7 +3631,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/42.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2007&lt;/h6&gt;&lt;h2&gt;Of Montreal - Hissing Fauna, Are You the Destroyer?&lt;/h2&gt;
+      &lt;h6&gt;2007&lt;/h6&gt;&lt;h4&gt;Of Montreal - Hissing Fauna, Are You the Destroyer?&lt;/h4&gt;
       &lt;p&gt;I&amp;#39;m not sure I could even describe this album or band. Dancey, poppy, random genres, disjointed, nonsense lyrics and pure awesome. This might be the most musically creative band on this list. It makes me feel boring.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3648,7 +3643,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/41.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2000&lt;/h6&gt;&lt;h2&gt;Deftones - White Pony&lt;/h2&gt;
+      &lt;h6&gt;2000&lt;/h6&gt;&lt;h4&gt;Deftones - White Pony&lt;/h4&gt;
       &lt;p&gt;Maybe this belongs in the 90s, but Deftones finally got it right in 2000 and I&amp;#39;m not going to take that away from them. This dark and violent album is all the more creepy thanks to Chino&amp;#39;s soft voice and a guest spot from king of singing, Maynard James Keenan.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3660,7 +3655,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/40.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2008&lt;/h6&gt;&lt;h2&gt;The Mae Shi - Hlllyh&lt;/h2&gt;
+      &lt;h6&gt;2008&lt;/h6&gt;&lt;h4&gt;The Mae Shi - Hlllyh&lt;/h4&gt;
       &lt;p&gt;I love punk rock, but there were only a couple options left to the genre this decade. Either it could follow Blink 182 into the realm of pop, put out retro albums like Bad Religion, NOFX and Propagandhi or cross-pollinate with the electronic scene like Panic! at the Disco. The Mae Shi chose the latter and create a manic, sometimes melodic, album that rocks all the way through.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3672,7 +3667,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/39.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2004&lt;/h6&gt;&lt;h2&gt;Sum 41 - Chuck&lt;/h2&gt;
+      &lt;h6&gt;2004&lt;/h6&gt;&lt;h4&gt;Sum 41 - Chuck&lt;/h4&gt;
       &lt;p&gt;Actually, there was one other option for punk bands, but I think Sum 41 was the only one that tried it. They decided to become a metal band. The vocals and melody remain true to the band&amp;#39;s pop-punk style, but the guitars decided to imitate those of punk&amp;#39;s former worst enemy. I&amp;#39;m a huge fan of this album, it&amp;#39;s too bad it didn&amp;#39;t go over well and the band has returned to their immature pop-punk style.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3684,7 +3679,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/38.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2007&lt;/h6&gt;&lt;h2&gt;Fall Out Boy - Infinity on High&lt;/h2&gt;
+      &lt;h6&gt;2007&lt;/h6&gt;&lt;h4&gt;Fall Out Boy - Infinity on High&lt;/h4&gt;
       &lt;p&gt;This decade&amp;#39;s king of pop-punk decided to give up any illusion of punk and had hip-hop producer Babyface produce this album. The intro features Jay-Z and the guitars have mostly been muddled into an electronic sound or mixed out. The thing is, they made a perfect pop album and it&amp;#39;s fun. Their follow-up, Folie &#225; Deux is also excellent and even more polished, if not as cohesive.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3696,7 +3691,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/37.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2002&lt;/h6&gt;&lt;h2&gt;Queens of the Stone Age - Songs for the Deaf&lt;/h2&gt;
+      &lt;h6&gt;2002&lt;/h6&gt;&lt;h4&gt;Queens of the Stone Age - Songs for the Deaf&lt;/h4&gt;
       &lt;p&gt;When people shit on &amp;quot;Rock music,&amp;quot; I can&amp;#39;t help but argue because this is the album I hear in my head. Needless to say, it rocks and Dave Grohl on drums pushes it up to 11.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3708,7 +3703,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/36.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2007&lt;/h6&gt;&lt;h2&gt;Big D and the Kids Table - Strictly Rude&lt;/h2&gt;
+      &lt;h6&gt;2007&lt;/h6&gt;&lt;h4&gt;Big D and the Kids Table - Strictly Rude&lt;/h4&gt;
       &lt;p&gt;I should have put every Big D album on this list. Somehow they are all equally good and yet always different. Strictly Rude builds on How it Goes&amp;#39;s departure from loud punk, but it also brings in a UK-ska feel. 15 great songs. 2009&amp;#39;s Fluent in Stroll is excellent too, with it&amp;#39;s surf-ska-rock feel, but it&amp;#39;s a little too recent to be a classic already.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3720,7 +3715,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/35.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2001&lt;/h6&gt;&lt;h2&gt;Ozma - Rock and Rock Part 3&lt;/h2&gt;
+      &lt;h6&gt;2001&lt;/h6&gt;&lt;h4&gt;Ozma - Rock and Rock Part 3&lt;/h4&gt;
       &lt;p&gt;Everyone knows the absolute failure Weezer has been this decade, but at the beginning we had Ozma to make up for it. This album isn&amp;#39;t entirely cohesive, but there are so many gems, including the epic Baseball. You owe it to yourself to listen to it.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3732,7 +3727,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/34.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2003&lt;/h6&gt;&lt;h2&gt;The Mars Volta - De-Loused in the Comatorium&lt;/h2&gt;
+      &lt;h6&gt;2003&lt;/h6&gt;&lt;h4&gt;The Mars Volta - De-Loused in the Comatorium&lt;/h4&gt;
       &lt;p&gt;Speaking of bands I failed to get into until it was too late, At the Drive-In broke up in 2001 after finally making it &amp;quot;big.&amp;quot; Thankfully the core of the band continued as The Mars Volta. Swapping crazy punk-ish rock for progressive rock. The insane vocals remained. This is another concept album, so you know I can&amp;#39;t help but love it.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3744,7 +3739,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/33.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2002&lt;/h6&gt;&lt;h2&gt;Common Rider - This is Unity Music&lt;/h2&gt;
+      &lt;h6&gt;2002&lt;/h6&gt;&lt;h4&gt;Common Rider - This is Unity Music&lt;/h4&gt;
       &lt;p&gt;I&amp;#39;ve already mentioned The Transplants, which featured former Operation Ive member Tim Armstrong. Thankfully, Jesse formed a new band as well. Common Rider is vaguely ska, but mostly held together by Jesse&amp;#39;s vocals. Their debut, Last Wave Rockers, is excellent as well, but it came out in 1999.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3756,7 +3751,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/32.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2007&lt;/h6&gt;&lt;h2&gt;The National - Boxer&lt;/h2&gt;
+      &lt;h6&gt;2007&lt;/h6&gt;&lt;h4&gt;The National - Boxer&lt;/h4&gt;
       &lt;p&gt;Along with shoegaze, post-punk made a little comeback this decade. The National is doing it better than anyone else right now. Sorry Interpol, you got outdone.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3768,7 +3763,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/31.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2006&lt;/h6&gt;&lt;h2&gt;Clint Mansell (w&amp;#47; Mogwai &amp;amp; Kronos Quartet) - The Fountain (Music from the Motion Picture)&lt;/h2&gt;
+      &lt;h6&gt;2006&lt;/h6&gt;&lt;h4&gt;Clint Mansell (w/ Mogwai &amp;amp; Kronos Quartet) - The Fountain (Music from the Motion Picture)&lt;/h4&gt;
       &lt;p&gt;Holy crap! As if post-rock albums weren&amp;#39;t epic enough, they had to write one about a century-spanning romantic, sci-fi beauty. The music perfectly matches the movie and the crescendo of the album (and film), &amp;quot;Death Is The Road To Awe&amp;quot; can&amp;#39;t be beat.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3780,7 +3775,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/30.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2005&lt;/h6&gt;&lt;h2&gt;Kanye West - Late Registration&lt;/h2&gt;
+      &lt;h6&gt;2005&lt;/h6&gt;&lt;h4&gt;Kanye West - Late Registration&lt;/h4&gt;
       &lt;p&gt;Kanye&amp;#39;s most consistent and best produced work. Featuring folks like Michel Gondry and Jon Brion ridding shotgun. 808s and Heartbreak is very interesting, but I&amp;#39;m going with &amp;quot;classic&amp;quot; Kanye.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3792,7 +3787,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/29.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2003&lt;/h6&gt;&lt;h2&gt;The Distillers - Coral Fang&lt;/h2&gt;
+      &lt;h6&gt;2003&lt;/h6&gt;&lt;h4&gt;The Distillers - Coral Fang&lt;/h4&gt;
       &lt;p&gt;The definitive break-up album. The album was written during, and focusing on, the lead singer&amp;#39;s divorce from Transplant&amp;#39;s Tim Armstrong and new relationship with Queens of the Stone Age&amp;#39;s Josh Homme. I seriously hope I never make a woman as angry as Brody is on this album.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3804,7 +3799,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/28.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2006&lt;/h6&gt;&lt;h2&gt;The Dresden Dolls - Yes Virginia&lt;/h2&gt;
+      &lt;h6&gt;2006&lt;/h6&gt;&lt;h4&gt;The Dresden Dolls - Yes Virginia&lt;/h4&gt;
       &lt;p&gt;The terrific twosome reigned in their self-title&amp;#39;s burlesque punk sounds and creates this quirky masterpiece. The first half bounces around with great piano pieces and weird, chirping vocals. The second half slows down a little, but it&amp;#39;s still great.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3816,8 +3811,8 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/27.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2001&lt;/h6&gt;&lt;h2&gt;Leftover Crack - Mediocre Generica&lt;/h2&gt;
-      &lt;p&gt;The band&amp;#39;s &amp;quot;tower-toppling release of 9&amp;#47;11&amp;#47;01&amp;quot; is one of the best punk albums of the decade and one of the best ska-punk albums of all time. Styz&amp;#39;s anti-religion, anti-intolerance and pro-anarchy lyrics are top notch.&lt;/p&gt;
+      &lt;h6&gt;2001&lt;/h6&gt;&lt;h4&gt;Leftover Crack - Mediocre Generica&lt;/h4&gt;
+      &lt;p&gt;The band&amp;#39;s &amp;quot;tower-toppling release of 9/11/01&amp;quot; is one of the best punk albums of the decade and one of the best ska-punk albums of all time. Styz&amp;#39;s anti-religion, anti-intolerance and pro-anarchy lyrics are top notch.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
       &lt;h6&gt;#27&lt;/h6&gt;
@@ -3828,7 +3823,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
       &lt;img src='http://awardwinningfjords.com/albums/26.jpg' /&gt;
     &lt;/div&gt;
     &lt;div class='content'&gt;
-      &lt;h6&gt;2009&lt;/h6&gt;&lt;h2&gt;Portugal the Man - The Satanic Satanist&lt;/h2&gt;
+      &lt;h6&gt;2009&lt;/h6&gt;&lt;h4&gt;Portugal the Man - The Satanic Satanist&lt;/h4&gt;
       &lt;p&gt;One of those albums that you can leave on repeat for hours accidentally. Sublimely cohesive.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
@@ -3858,7 +3853,7 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
 
 &lt;p&gt;These approaches have a couple problems. First, they assume the client cares what technology you use. Second, they require you to deploy the site to a web-server before the client can preview the design. And finally, the backend team will probably be frustrated with your PHP unless they just so happen to use it as well.&lt;/p&gt;
 
-&lt;p&gt;The solution is to use strong backend tools and concepts like variables, helper functions, layouts (or MasterPages) and javascript&amp;#47;css minifiers while still delivering plain old, static HTML to the client.&lt;/p&gt;
+&lt;p&gt;The solution is to use strong backend tools and concepts like variables, helper functions, layouts (or MasterPages) and javascript/css minifiers while still delivering plain old, static HTML to the client.&lt;/p&gt;
 
 &lt;h2&gt;Existing solutions&lt;/h2&gt;
 
@@ -3875,19 +3870,19 @@ if [[ -s &amp;#47;Users&amp;#47;tdreyno&amp;#47;.rvm&amp;#47;scripts&amp;#47;rvm
 &lt;pre&gt;&lt;code&gt;# mm-init .
 Generating with setup generator:
      [ADDED]  init.rb
-     [ADDED]  views&amp;#47;index.html.haml
-     [ADDED]  views&amp;#47;layout.haml
-     [ADDED]  views&amp;#47;stylesheets&amp;#47;site.css.sass
-     [ADDED]  public&amp;#47;stylesheets
-     [ADDED]  public&amp;#47;javascripts
-     [ADDED]  public&amp;#47;images
+     [ADDED]  views/index.html.haml
+     [ADDED]  views/layout.haml
+     [ADDED]  views/stylesheets/site.css.sass
+     [ADDED]  public/stylesheets
+     [ADDED]  public/javascripts
+     [ADDED]  public/images
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;The initializer creates a homepage (index.html.haml), a layout to contain shared interface elements and a site-wide stylesheet. As you can see, Haml and Sass are the default templating languages. However, you&amp;#39;re free to replace .haml with .erb and use Erb templates or enable additional renderers like Markdown (more on this later). The Sass support comes with Compass bundled to provide a large number of css frameworks such as YUI, Blueprint, 960.gs, Susy and more.&lt;/p&gt;
 
 &lt;p&gt;The init.rb file allows customization and enabling or disabling specific features. The default init.rb looks like this:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::Ruby
+&lt;pre&gt;&lt;code&gt;:::ruby
 # Helpers
 helpers do
 end
@@ -3901,7 +3896,7 @@ configure :build do
   # enable :minified_css
 
   # Or use a different image path
-  # set :http_path, &amp;quot;&amp;#47;Content&amp;#47;images&amp;#47;&amp;quot;
+  # set :http_path, &amp;quot;/Content/images/&amp;quot;
 
   # Disable cache buster
   # disable :cache_buster
@@ -3920,19 +3915,19 @@ end
 
 &lt;p&gt;Below is an example init.rb that I am using on a live client site. First, I include a couple files with helper definitions. Next I enable php files to be previewed and choose the default template for directory requests. For this project, I have chosen to place all static files under the &amp;quot;assets&amp;quot; folder. The asset_url helper is overridden to ignore a couple cases specific to this site. Finally, I setup the directory under which the site will live in production. That&amp;#39;s it! Nearly 200 pages with a shared layout, simple Haml templates, Blueprint-base CSS grids, minified CSS, Javascript dependency management and minification, CDN support and cache busting query strings.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::Ruby
-require &amp;#39;config&amp;#47;path_helpers&amp;#39;
-require &amp;#39;config&amp;#47;haml_helpers&amp;#39;
+&lt;pre&gt;&lt;code&gt;:::ruby
+require &amp;#39;config/path_helpers&amp;#39;
+require &amp;#39;config/haml_helpers&amp;#39;
 
-mime :php, &amp;quot;text&amp;#47;html&amp;quot;
+mime :php, &amp;quot;text/html&amp;quot;
 set :index_file, &amp;quot;index.php&amp;quot;
-set :images_dir, &amp;quot;assets&amp;#47;images&amp;quot;
-set :css_dir, &amp;quot;assets&amp;#47;stylesheets&amp;quot;
-set :videos_dir, &amp;quot;assets&amp;#47;videos&amp;quot;
-set :js_dir, &amp;quot;assets&amp;#47;javascripts&amp;quot;
+set :images_dir, &amp;quot;assets/images&amp;quot;
+set :css_dir, &amp;quot;assets/stylesheets&amp;quot;
+set :videos_dir, &amp;quot;assets/videos&amp;quot;
+set :js_dir, &amp;quot;assets/javascripts&amp;quot;
 
 configure :build do
-  set :http_prefix, &amp;quot;&amp;#47;sites&amp;#47;billboard&amp;quot;
+  set :http_prefix, &amp;quot;/sites/billboard&amp;quot;
   enable :automatic_image_sizes
 end
 &lt;/code&gt;&lt;/pre&gt;
@@ -3942,7 +3937,7 @@ end
 &lt;p&gt;As you can see, the basic project is quite sparse and you get to choose which features your project needs. 
 The current list of features is as follows:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::Ruby
+&lt;pre&gt;&lt;code&gt;:::ruby
 # Features enabled by default
 enable :compass
 enable :sprockets
@@ -3969,26 +3964,26 @@ disable :cache_buster
 &lt;pre&gt;&lt;code&gt;Gir:~ tdreyno$ mm-init new_project
 Generating with setup generator:
      [ADDED]  init.rb
-     [ADDED]  views&amp;#47;index.haml
-     [ADDED]  views&amp;#47;layout.haml
-     [ADDED]  views&amp;#47;stylesheets&amp;#47;site.sass
-     [ADDED]  public&amp;#47;stylesheets
-     [ADDED]  public&amp;#47;javascripts
-     [ADDED]  public&amp;#47;images
+     [ADDED]  views/index.haml
+     [ADDED]  views/layout.haml
+     [ADDED]  views/stylesheets/site.sass
+     [ADDED]  public/stylesheets
+     [ADDED]  public/javascripts
+     [ADDED]  public/images
 
-Gir:~ tdreyno$ cd new_project&amp;#47;
+Gir:~ tdreyno$ cd new_project/
 Gir:new_project tdreyno$ mm-server 
-== Local config at: &amp;#47;Users&amp;#47;tdreyno&amp;#47;new_project&amp;#47;init.rb
+== Local config at: /Users/tdreyno/new_project/init.rb
 == The Middleman is standing watch on port 4567
 &amp;gt;&amp;gt; Thin web server (v1.2.4 codename Flaming Astroboy)
 &amp;gt;&amp;gt; Maximum connections set to 1024
 &amp;gt;&amp;gt; Listening on 0.0.0.0:4567, CTRL+C to stop
 
 Gir:new_project tdreyno$ mm-build 
-== Local config at: &amp;#47;Users&amp;#47;tdreyno&amp;#47;new_project&amp;#47;init.rb
+== Local config at: /Users/tdreyno/new_project/init.rb
 Generating with build generator:
      [ADDED]  index.html
-     [ADDED]  stylesheets&amp;#47;site.css
+     [ADDED]  stylesheets/site.css
 
      &amp;gt;&amp;gt; Thin web server (v1.2.4 codename Flaming Astroboy)
      &amp;gt;&amp;gt; Maximum connections set to 1024
@@ -3997,9 +3992,9 @@ Generating with build generator:
 
 &lt;h2&gt;Source &amp;amp; bug reports&lt;/h2&gt;
 
-&lt;p&gt;The code, as always, is on GitHub at: &lt;a href="http://github.com/middleman/middleman"&gt;http:&amp;#47;&amp;#47;github.com&amp;#47;middleman&amp;#47;middleman&lt;/a&gt;.&lt;br /&gt;
-There is also a wiki at: &lt;a href="http://wiki.github.com/middleman/middleman"&gt;http:&amp;#47;&amp;#47;wiki.github.com&amp;#47;middleman&amp;#47;middleman&lt;/a&gt;.&lt;br /&gt;
-And finally, please report bugs to: &lt;a href="http://github.com/middleman/middleman/issues"&gt;http:&amp;#47;&amp;#47;github.com&amp;#47;middleman&amp;#47;middleman&amp;#47;issues&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The code, as always, is on GitHub at: &lt;a href="http://github.com/middleman/middleman"&gt;http://github.com/middleman/middleman&lt;/a&gt;.&lt;br /&gt;
+There is also a wiki at: &lt;a href="http://wiki.github.com/middleman/middleman"&gt;http://wiki.github.com/middleman/middleman&lt;/a&gt;.&lt;br /&gt;
+And finally, please report bugs to: &lt;a href="http://github.com/middleman/middleman/issues"&gt;http://github.com/middleman/middleman/issues&lt;/a&gt;.&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -4029,7 +4024,7 @@ vertical slide. This is similar to the various carousel scripts around the web, 
 
 &lt;h2&gt;The Source&lt;/h2&gt;
 
-&lt;p&gt;You can grab the code on Github at&lt;a href="http://github.com/tdreyno/pageSlider"&gt;http:&amp;#47;&amp;#47;github.com&amp;#47;tdreyno&amp;#47;pageSlider&lt;/a&gt;
+&lt;p&gt;You can grab the code on Github at&lt;a href="http://github.com/tdreyno/pageSlider"&gt;http://github.com/tdreyno/pageSlider&lt;/a&gt;
 or in &lt;a href="http://cloud.github.com/downloads/tdreyno/pageSlider/pageSlider.zip"&gt;this zip file&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2&gt;How to Use&lt;/h2&gt;
@@ -4040,34 +4035,34 @@ or in &lt;a href="http://cloud.github.com/downloads/tdreyno/pageSlider/pageSlide
 
 &lt;p&gt;There are also some CSS caveats. The containing element must be set to &lt;tt&gt;overflow: hidden;&lt;/tt&gt;. Additionally, calculating heights on the pages can be difficult. The best way is to set a padding on the &lt;tt&gt;.page&lt;/tt&gt; so margins don&amp;#39;t leak outside it&amp;#39;s box.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::HTML
+&lt;pre&gt;&lt;code&gt;:::html
 &amp;lt;head&amp;gt;
-  &amp;lt;style type=&amp;quot;text&amp;#47;css&amp;quot;&amp;gt;
+  &amp;lt;style type=&amp;quot;text/css&amp;quot;&amp;gt;
     #maincontent {
       overflow: hidden; }
     .page {
       padding: 5px; }
-  &amp;lt;&amp;#47;style&amp;gt;
-  &amp;lt;script src=&amp;quot;jquery-1.3.2.js&amp;quot; type=&amp;quot;text&amp;#47;javascript&amp;quot;&amp;gt;&amp;lt;&amp;#47;script&amp;gt;
-  &amp;lt;script src=&amp;quot;jquery.history.js&amp;quot; type=&amp;quot;text&amp;#47;javascript&amp;quot;&amp;gt;&amp;lt;&amp;#47;script&amp;gt;
-  &amp;lt;script src=&amp;quot;jquery.page-slider.js&amp;quot; type=&amp;quot;text&amp;#47;javascript&amp;quot;&amp;gt;&amp;lt;&amp;#47;script&amp;gt;
-  &amp;lt;script type=&amp;quot;text&amp;#47;javascript&amp;quot;&amp;gt;
+  &amp;lt;/style&amp;gt;
+  &amp;lt;script src=&amp;quot;jquery-1.3.2.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+  &amp;lt;script src=&amp;quot;jquery.history.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+  &amp;lt;script src=&amp;quot;jquery.page-slider.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+  &amp;lt;script type=&amp;quot;text/javascript&amp;quot;&amp;gt;
     $(document).ready(function() {
       $(&amp;#39;.page&amp;#39;).pageSlider();
     });
-  &amp;lt;&amp;#47;script&amp;gt;
-&amp;lt;&amp;#47;head&amp;gt;
+  &amp;lt;/script&amp;gt;
+&amp;lt;/head&amp;gt;
 
 &amp;lt;body&amp;gt;
   &amp;lt;div id=&amp;quot;maincontent&amp;quot;&amp;gt;
     &amp;lt;div title=&amp;quot;home&amp;quot; class=&amp;quot;page&amp;quot;&amp;gt;
       Home page
-    &amp;lt;&amp;#47;div&amp;gt;
+    &amp;lt;/div&amp;gt;
     &amp;lt;div title=&amp;quot;page2&amp;quot; class=&amp;quot;page&amp;quot;&amp;gt;
       Page number two
-    &amp;lt;&amp;#47;div&amp;gt;
-  &amp;lt;&amp;#47;div&amp;gt;
-&amp;lt;&amp;#47;body&amp;gt;
+    &amp;lt;/div&amp;gt;
+  &amp;lt;/div&amp;gt;
+&amp;lt;/body&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Now, whenever the &amp;quot;history&amp;quot; hash (the #page location in the URL) is changed, the javascript will slide to the requested piece. Normal links such as &amp;lt;a href=&amp;quot;#page2&amp;quot;&amp;gt; can be used to trigger the effect. The back-button will also change the history and thus trigger the animation.&lt;/p&gt;
@@ -4078,7 +4073,7 @@ or in &lt;a href="http://cloud.github.com/downloads/tdreyno/pageSlider/pageSlide
 
 &lt;ul&gt;&lt;li&gt;&lt;tt&gt;containerSelector&lt;/tt&gt; sets the text of the "on" state. Defaults to: &lt;strong&gt;#maincontent&lt;/strong&gt;&lt;/li&gt;&lt;/ul&gt;
 
-&lt;pre&gt;&lt;code&gt;:::Javascript
+&lt;pre&gt;&lt;code&gt;:::javascript
 $(&amp;#39;.page&amp;#39;).pageSlider({
   containerSelector: &amp;quot;#frame&amp;quot;
 });
@@ -4088,15 +4083,82 @@ $(&amp;#39;.page&amp;#39;).pageSlider({
 
 &lt;p&gt;The plugin calls a &lt;tt&gt;changingPage&lt;/tt&gt; event whenever the animation begins. If you have dependent elements you want to update together with the slide, you can attach them to the event via the normal jQuery event model. This callback is used in the video above to update the sidebar navigation when the history changes.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::Javascript
+&lt;pre&gt;&lt;code&gt;:::javascript
 $(document).bind(&amp;#39;changingPage&amp;#39;, function(anchor_name) {
-  &amp;#47;&amp;#47; Update some other dependent element based on anchor_name
+  // Update some other dependent element based on anchor_name
 });
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2&gt;Demo&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href="/pageSlider/demo.html"&gt;See the demo here&lt;/a&gt;.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Easy Google Maps with jQuery</title>
+    <link href="/2009/07/22/google-maps-with-jquery.html" rel="alternate"/>
+    <id>/2009/07/22/google-maps-with-jquery.html</id>
+    <published>2009-07-22T00:00:00-07:00</published>
+    <updated>2009-07-22T00:00:00-07:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;p&gt;The other day I needed a simple way to include a Google Map, so I wrote this jQuery function.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;:::javascript
+$.fn.googleMap = function(address, options) {
+  var defaults = {
+    lat: 44.081996,
+    long: -123.0286928,
+    zoom: 14,
+&lt;/code&gt;&lt;/pre&gt;
+</summary>
+    <content type="html">&lt;p&gt;The other day I needed a simple way to include a Google Map, so I wrote this jQuery function.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;:::javascript
+$.fn.googleMap = function(address, options) {
+  var defaults = {
+    lat: 44.081996,
+    long: -123.0286928,
+    zoom: 14,
+    mapTypeId: google.maps.MapTypeId.HYBRID
+  };
+
+  options = $.extend(defaults, options || {});
+
+  var center = new google.maps.LatLng(options.lat, options.long);
+  var map = new google.maps.Map(this.get(0), $.extend(options, { center: center }));
+
+  var geocoder = new google.maps.Geocoder();
+  geocoder.geocode({ address: address }, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK &amp;amp;&amp;amp; results.length) {
+      if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+            position: results[0].geometry.location,
+            map: map
+        });
+      }
+    }
+  });
+};
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Basically, the lat &amp;amp; long are default coordinates, but you pass in an address which Google focuses the map on.&lt;/p&gt;
+
+&lt;p&gt;This requires the latest (v3) version of the Google Map API.&lt;/p&gt;
+
+&lt;h2&gt;Usage&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;:::html
+&amp;lt;script src=&amp;#39;http://maps.google.com/maps/api/js?sensor=false&amp;#39; type=&amp;#39;text/javascript&amp;#39;&amp;gt;
+&amp;lt;/script&amp;gt;
+&amp;lt;script type=&amp;#39;text/javascript&amp;#39;&amp;gt;
+  $(document).ready(function() {
+    $(&amp;#39;#map-container&amp;#39;).googleMap(&amp;quot;3333 RiverBend Drive, Springfield, OR&amp;quot;);
+  });
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
 </content>
   </entry>
   <entry>
@@ -4142,73 +4204,6 @@ $(document).bind(&amp;#39;changingPage&amp;#39;, function(anchor_name) {
     &lt;embed allowfullscreen='true' allowscriptaccess='always' height='355' src='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=simplifyingcsswithsass-090724010510-phpapp02&amp;amp;rel=0&amp;amp;stripped_title=simplifying-css-with-sass' type='application/x-shockwave-flash' width='425'&gt;&lt;/embed&gt;
   &lt;/object&gt;
 &lt;/div&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Easy Google Maps with jQuery</title>
-    <link href="/2009/07/22/google-maps-with-jquery.html" rel="alternate"/>
-    <id>/2009/07/22/google-maps-with-jquery.html</id>
-    <published>2009-07-22T00:00:00-07:00</published>
-    <updated>2009-07-22T00:00:00-07:00</updated>
-    <author>
-      <name>Thomas Reynolds</name>
-    </author>
-    <summary type="html">&lt;p&gt;The other day I needed a simple way to include a Google Map, so I wrote this jQuery function.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;:::JavaScript
-$.fn.googleMap = function(address, options) {
-  var defaults = {
-    lat: 44.081996,
-    long: -123.0286928,
-    zoom: 14,
-&lt;/code&gt;&lt;/pre&gt;
-</summary>
-    <content type="html">&lt;p&gt;The other day I needed a simple way to include a Google Map, so I wrote this jQuery function.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;:::JavaScript
-$.fn.googleMap = function(address, options) {
-  var defaults = {
-    lat: 44.081996,
-    long: -123.0286928,
-    zoom: 14,
-    mapTypeId: google.maps.MapTypeId.HYBRID
-  };
-
-  options = $.extend(defaults, options || {});
-
-  var center = new google.maps.LatLng(options.lat, options.long);
-  var map = new google.maps.Map(this.get(0), $.extend(options, { center: center }));
-
-  var geocoder = new google.maps.Geocoder();
-  geocoder.geocode({ address: address }, function(results, status) {
-    if (status == google.maps.GeocoderStatus.OK &amp;amp;&amp;amp; results.length) {
-      if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
-        map.setCenter(results[0].geometry.location);
-        var marker = new google.maps.Marker({
-            position: results[0].geometry.location,
-            map: map
-        });
-      }
-    }
-  });
-};
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Basically, the lat &amp;amp; long are default coordinates, but you pass in an address which Google focuses the map on.&lt;/p&gt;
-
-&lt;p&gt;This requires the latest (v3) version of the Google Map API.&lt;/p&gt;
-
-&lt;h2&gt;Usage&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;:::HTML
-&amp;lt;script src=&amp;#39;http:&amp;#47;&amp;#47;maps.google.com&amp;#47;maps&amp;#47;api&amp;#47;js?sensor=false&amp;#39; type=&amp;#39;text&amp;#47;javascript&amp;#39;&amp;gt;
-&amp;lt;&amp;#47;script&amp;gt;
-&amp;lt;script type=&amp;#39;text&amp;#47;javascript&amp;#39;&amp;gt;
-  $(document).ready(function() {
-    $(&amp;#39;#map-container&amp;#39;).googleMap(&amp;quot;3333 RiverBend Drive, Springfield, OR&amp;quot;);
-  });
-&amp;lt;&amp;#47;script&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
 </content>
   </entry>
   <entry>
@@ -4284,18 +4279,18 @@ $.fn.googleMap = function(address, options) {
 
 &lt;p&gt;Once the files are available to your site, activating the script is very easy:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::HTML
+&lt;pre&gt;&lt;code&gt;:::html
 &amp;lt;head&amp;gt;
-  &amp;lt;script src=&amp;quot;prototype.js&amp;quot; type=&amp;quot;text&amp;#47;javascript&amp;quot;&amp;gt;&amp;lt;&amp;#47;script&amp;gt;
-  &amp;lt;script src=&amp;quot;scriptaculous.js&amp;quot; type=&amp;quot;text&amp;#47;javascript&amp;quot;&amp;gt;&amp;lt;&amp;#47;script&amp;gt;
-  &amp;lt;script src=&amp;quot;prototype&amp;#47;iphone-style-checkboxes.js&amp;quot; type=&amp;quot;text&amp;#47;javascript&amp;quot;&amp;gt;&amp;lt;&amp;#47;script&amp;gt;
-  &amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;path_to&amp;#47;style.css&amp;quot; type=&amp;quot;text&amp;#47;css&amp;quot; media=&amp;quot;screen&amp;quot; &amp;#47;&amp;gt;
-  &amp;lt;script type=&amp;quot;text&amp;#47;javascript&amp;quot;&amp;gt;
+  &amp;lt;script src=&amp;quot;prototype.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+  &amp;lt;script src=&amp;quot;scriptaculous.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+  &amp;lt;script src=&amp;quot;prototype/iphone-style-checkboxes.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+  &amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;path_to/style.css&amp;quot; type=&amp;quot;text/css&amp;quot; media=&amp;quot;screen&amp;quot; /&amp;gt;
+  &amp;lt;script type=&amp;quot;text/javascript&amp;quot;&amp;gt;
     document.observe(&amp;quot;dom:loaded&amp;quot;, function() {
       new iPhoneStyle(&amp;#39;input[type=checkbox]&amp;#39;);
     });
-  &amp;lt;&amp;#47;script&amp;gt;
-&amp;lt;&amp;#47;head&amp;gt;
+  &amp;lt;/script&amp;gt;
+&amp;lt;/head&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;The initialization method takes a handful of options.&lt;/p&gt;
@@ -4304,7 +4299,7 @@ $.fn.googleMap = function(address, options) {
 
 &lt;p&gt;For example:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::Javascript
+&lt;pre&gt;&lt;code&gt;:::javascript
 new iPhoneStyle(&amp;#39;input[type=checkbox]&amp;#39;, {
   checkedLabel: &amp;#39;YES&amp;#39;,
   uncheckedLabel: &amp;#39;NO&amp;#39;
@@ -4338,7 +4333,7 @@ new iPhoneStyle(&amp;#39;input[type=checkbox]&amp;#39;, {
 &lt;h2&gt;Original version and Contributing&lt;/h2&gt;
 
 &lt;p&gt;You can read about the original jQuery version &lt;a href="/2009/06/16/iphone-style-checkboxes.html"&gt;here&lt;/a&gt;.
-Both versions are maintained using GitHub: &lt;a href="http://github.com/tdreyno/iphone-style-checkboxes"&gt;http:&amp;#47;&amp;#47;github.com&amp;#47;tdreyno&amp;#47;iphone-style-checkboxes&lt;/a&gt;&lt;/p&gt;
+Both versions are maintained using GitHub: &lt;a href="http://github.com/tdreyno/iphone-style-checkboxes"&gt;http://github.com/tdreyno/iphone-style-checkboxes&lt;/a&gt;&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -4351,7 +4346,7 @@ Both versions are maintained using GitHub: &lt;a href="http://github.com/tdreyno
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html"></summary>
-    <content type="html">&lt;p&gt;Ever wanted those flash iPhone on&amp;#47;off toggle switches on your webpage? Love jQuery? Well then I&amp;#39;ve got something special for you. iphone-style-checkboxes implements the iPhone toggles as replacements for standard HTML checkboxes. Simply run the script and your site will be updated with these specialized controls. Best of all, the underlying checkbox is not touched and backend system will never know the difference. The change is purely visual.&lt;/p&gt;
+    <content type="html">&lt;p&gt;Ever wanted those flash iPhone on/off toggle switches on your webpage? Love jQuery? Well then I&amp;#39;ve got something special for you. iphone-style-checkboxes implements the iPhone toggles as replacements for standard HTML checkboxes. Simply run the script and your site will be updated with these specialized controls. Best of all, the underlying checkbox is not touched and backend system will never know the difference. The change is purely visual.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href="/2009/06/29/prototype-iphone-style-checkboxes.html"&gt;UPDATED: Now with Prototype-based version here.&lt;/a&gt;&lt;/p&gt;
 
@@ -4393,17 +4388,17 @@ unzip it and place the javascript, images and stylesheet where you please. You&a
 
 &lt;p&gt;Once the files are available to your site, activating the script is very easy:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::HTML
+&lt;pre&gt;&lt;code&gt;:::html
 &amp;lt;head&amp;gt;
-  &amp;lt;script src=&amp;quot;jquery-1.4.js&amp;quot; type=&amp;quot;text&amp;#47;javascript&amp;quot;&amp;gt;&amp;lt;&amp;#47;script&amp;gt;
-  &amp;lt;script src=&amp;quot;jquery&amp;#47;iphone-style-checkboxes.js&amp;quot; type=&amp;quot;text&amp;#47;javascript&amp;quot;&amp;gt;&amp;lt;&amp;#47;script&amp;gt;
-  &amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;path_to&amp;#47;style.css&amp;quot; type=&amp;quot;text&amp;#47;css&amp;quot; media=&amp;quot;screen&amp;quot; &amp;#47;&amp;gt;
-  &amp;lt;script type=&amp;quot;text&amp;#47;javascript&amp;quot;&amp;gt;
+  &amp;lt;script src=&amp;quot;jquery-1.4.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+  &amp;lt;script src=&amp;quot;jquery/iphone-style-checkboxes.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+  &amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;path_to/style.css&amp;quot; type=&amp;quot;text/css&amp;quot; media=&amp;quot;screen&amp;quot; /&amp;gt;
+  &amp;lt;script type=&amp;quot;text/javascript&amp;quot;&amp;gt;
     $(document).ready(function() {
       $(&amp;#39;:checkbox&amp;#39;).iphoneStyle();
     });
-  &amp;lt;&amp;#47;script&amp;gt;
-&amp;lt;&amp;#47;head&amp;gt;
+  &amp;lt;/script&amp;gt;
+&amp;lt;/head&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;The initialization method takes a handful of options.&lt;/p&gt;
@@ -4415,7 +4410,7 @@ unzip it and place the javascript, images and stylesheet where you please. You&a
 
 &lt;p&gt;For example:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::Javascript
+&lt;pre&gt;&lt;code&gt;:::javascript
 $(&amp;#39;:checkbox&amp;#39;).iphoneStyle({
   checkedLabel: &amp;#39;YES&amp;#39;,
   uncheckedLabel: &amp;#39;NO&amp;#39;
@@ -4449,7 +4444,7 @@ $(&amp;#39;:checkbox&amp;#39;).iphoneStyle({
 &lt;h2&gt;Contribute&lt;/h2&gt;
 
 &lt;p&gt;The source is available, and forkable, on GitHub at
-&lt;a href="https://github.com/tdreyno/iphone-style-checkboxes"&gt;https:&amp;#47;&amp;#47;github.com&amp;#47;tdreyno&amp;#47;iphone-style-checkboxes&lt;/a&gt;.
+&lt;a href="https://github.com/tdreyno/iphone-style-checkboxes"&gt;https://github.com/tdreyno/iphone-style-checkboxes&lt;/a&gt;.
 Please direct comments, support requests, bug reporting and pull requests to there.&lt;/p&gt;
 </content>
   </entry>
@@ -4468,7 +4463,7 @@ Please direct comments, support requests, bug reporting and pull requests to the
   &lt;li&gt;&#10003; Video support&lt;/li&gt;
   &lt;li&gt;&#10003; 32Gb&lt;/li&gt;
   &lt;li&gt;&#10003; Compass &amp;amp; turn-by-turn partnership&lt;/li&gt;
-  &lt;li&gt;&#10003; Pre&amp;#47;Zune bashing&lt;/li&gt;
+  &lt;li&gt;&#10003; Pre/Zune bashing&lt;/li&gt;
   &lt;li&gt;&#10003; iTunes WiFi Video Store&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;Snow Leopard&lt;/h2&gt;
@@ -4480,12 +4475,12 @@ Please direct comments, support requests, bug reporting and pull requests to the
   &lt;li&gt;&#10003; Video support&lt;/li&gt;
   &lt;li&gt;&#10003; 32Gb&lt;/li&gt;
   &lt;li&gt;&#10003; Compass &amp;amp; turn-by-turn partnership&lt;/li&gt;
-  &lt;li&gt;&#10003; Pre&amp;#47;Zune bashing&lt;/li&gt;
+  &lt;li&gt;&#10003; Pre/Zune bashing&lt;/li&gt;
   &lt;li&gt;&#10003; iTunes WiFi Video Store&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;Snow Leopard&lt;/h2&gt;
 &lt;ul&gt;
-  &lt;li&gt;Secret sauce released: theme updates, &#10003; Cocoa&amp;#47;64bit magic, &#10003; Safari 4&lt;/li&gt;
+  &lt;li&gt;Secret sauce released: theme updates, &#10003; Cocoa/64bit magic, &#10003; Safari 4&lt;/li&gt;
   &lt;li&gt;&#10003; RC handed out to developers&lt;/li&gt;
   &lt;li&gt;&#10003; Out in September&lt;/li&gt;
   &lt;li&gt;&#10003; Windows 7 bashing&lt;/li&gt;
@@ -4515,7 +4510,7 @@ Please direct comments, support requests, bug reporting and pull requests to the
 
 &lt;p&gt;When you start a new project using the compass command-line tool, it will generate a config.rb file which contains options specific to your new project. There is a variable called http&lt;em&gt;images&lt;/em&gt;path which is used by Compass to generate the correct image paths. I have the value setup for this site as such&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;http_images_path = &amp;quot;&amp;#47;wp-content&amp;#47;themes&amp;#47;default&amp;#47;images&amp;#47;&amp;quot;
+&lt;pre&gt;&lt;code&gt;http_images_path = &amp;quot;/wp-content/themes/default/images/&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Now when I use the image_url() method for the header on this site:&lt;/p&gt;
@@ -4526,12 +4521,12 @@ Please direct comments, support requests, bug reporting and pull requests to the
 
 &lt;p&gt;It will generate this CSS:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::CSS
+&lt;pre&gt;&lt;code&gt;:::css
 h1 {
-  background: url(&amp;#47;images&amp;#47;title-embellishment.gif) no-repeat 17px 7px; }
+  background: url(/images/title-embellishment.gif) no-repeat 17px 7px; }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;This makes it trivial to change image paths for the entire site with one line in config.rb. Never again worry about relative paths, ..&amp;#47;..&amp;#47;images&amp;#47; and the like.&lt;/p&gt;
+&lt;p&gt;This makes it trivial to change image paths for the entire site with one line in config.rb. Never again worry about relative paths, ../../images/ and the like.&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -4750,13 +4745,13 @@ hr
 
 &lt;p&gt;This means Ruby&amp;#39;s symbols (prefixed with a colon) are now just plain keys. Similarly, the hashrocket (=&amp;gt;) becomes a normal equals sign&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;Before: %link{ :type =&amp;gt; &amp;quot;text&amp;#47;css&amp;quot;, :rel =&amp;gt; &amp;quot;stylesheet&amp;quot;, :src =&amp;gt; &amp;quot;style.css&amp;quot; }
-After:  %link{ type=&amp;quot;text&amp;#47;css&amp;quot;, rel=&amp;quot;stylesheet&amp;quot;, src=&amp;quot;style.css&amp;quot; }
+&lt;pre&gt;&lt;code&gt;Before: %link{ :type =&amp;gt; &amp;quot;text/css&amp;quot;, :rel =&amp;gt; &amp;quot;stylesheet&amp;quot;, :src =&amp;gt; &amp;quot;style.css&amp;quot; }
+After:  %link{ type=&amp;quot;text/css&amp;quot;, rel=&amp;quot;stylesheet&amp;quot;, src=&amp;quot;style.css&amp;quot; }
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;&lt;strong&gt;[Edit: As of NHaml 2.0 beta 2, the syntax for attributes has changed and now appears exactly like normal HTML attributes (no commas are used). The above code would now be written is as follows:]&lt;/strong&gt;&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;%link{ type=&amp;quot;text&amp;#47;css&amp;quot; rel=&amp;quot;stylesheet&amp;quot; src=&amp;quot;style.css&amp;quot; }
+&lt;pre&gt;&lt;code&gt;%link{ type=&amp;quot;text/css&amp;quot; rel=&amp;quot;stylesheet&amp;quot; src=&amp;quot;style.css&amp;quot; }
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2&gt;Single-quotes are not allowed&lt;/h2&gt;
@@ -4791,15 +4786,15 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
 
 &lt;p&gt;NHaml will render this as:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::HTML
+&lt;pre&gt;&lt;code&gt;:::html
 &amp;lt;ul&amp;gt;
   &amp;lt;li&amp;gt;
     Text
-  &amp;lt;&amp;#47;li&amp;gt;
-&amp;lt;&amp;#47;ul&amp;gt;
+  &amp;lt;/li&amp;gt;
+&amp;lt;/ul&amp;gt;
 &amp;lt;li&amp;gt;
   Text2
-&amp;lt;&amp;#47;li&amp;gt;
+&amp;lt;/li&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;So remember to remove white-space-only lines until this issue is resolved.&lt;/p&gt;
@@ -4866,32 +4861,6 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
 </content>
   </entry>
   <entry>
-    <title>Sass Introduction slides</title>
-    <link href="/2009/04/02/sass-introduction-slides.html" rel="alternate"/>
-    <id>/2009/04/02/sass-introduction-slides.html</id>
-    <published>2009-04-02T00:00:00-07:00</published>
-    <updated>2009-04-02T00:00:00-07:00</updated>
-    <author>
-      <name>Thomas Reynolds</name>
-    </author>
-    <summary type="html">&lt;p&gt;Here&amp;#39;s the slides I will be presenting at Jive Software:&lt;/p&gt;
-
-&lt;p&gt;&lt;div class='flash'&gt;
-  &lt;object data='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=sass-090402192738-phpapp01&amp;amp;rel=0&amp;amp;stripped_title=sass-introduction' height='355' type='application/x-shockwave-flash' width='425'&gt;&lt;/p&gt;
-</summary>
-    <content type="html">&lt;p&gt;Here&amp;#39;s the slides I will be presenting at Jive Software:&lt;/p&gt;
-
-&lt;div class='flash'&gt;
-  &lt;object data='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=sass-090402192738-phpapp01&amp;amp;rel=0&amp;amp;stripped_title=sass-introduction' height='355' type='application/x-shockwave-flash' width='425'&gt;
-    &lt;param name='allowFullScreen' value='true' /&gt;
-    &lt;param name='allowScriptAccess' value='always' /&gt;
-    &lt;param name='src' value='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=sass-090402192738-phpapp01&amp;amp;rel=0&amp;amp;stripped_title=sass-introduction' /&gt;
-    &lt;param name='allowfullscreen' value='true' /&gt;
-  &lt;/object&gt;
-&lt;/div&gt;
-</content>
-  </entry>
-  <entry>
     <title>Don't repeat yourself, use Sass mixins</title>
     <link href="/2009/04/02/dont-repeat-yourself-use-sass-modules.html" rel="alternate"/>
     <id>/2009/04/02/dont-repeat-yourself-use-sass-modules.html</id>
@@ -4939,9 +4908,9 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
 &lt;pre&gt;&lt;code&gt;=clearfix
   overflow: auto
   overflow: -moz-scrollbars-none
-  &amp;#47;&amp;#47; This makes ie6 get layout
+  // This makes ie6 get layout
   display: inline-block
-  &amp;#47;&amp;#47; and this puts it back to block
+  // and this puts it back to block
   &amp;amp;amp;
     display: block
 &lt;/code&gt;&lt;/pre&gt;
@@ -4990,7 +4959,7 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
 &lt;p&gt;As you can see, we must pass in the location of the replacement image and optionally the background position. The simplest usage of this module looks something like this:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;#header h1
-  +replace-text(&amp;quot;&amp;#47;images&amp;#47;welcome.jpg&amp;quot;)
+  +replace-text(&amp;quot;/images/welcome.jpg&amp;quot;)
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;And for completeness, here is the generated CSS:&lt;/p&gt;
@@ -4998,7 +4967,7 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
 &lt;pre&gt;&lt;code&gt;#header h1 {
   text-indent: -9999em;
   overflow: hidden;
-  background-image: url(&amp;quot;&amp;#47;images&amp;#47;welcome.jpg&amp;quot;);
+  background-image: url(&amp;quot;/images/welcome.jpg&amp;quot;);
   background-repeat: no-repeat;
   background-position: 50% 50%; }
 &lt;/code&gt;&lt;/pre&gt;
@@ -5006,6 +4975,32 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
 &lt;h2&gt;Mixin libraries&lt;/h2&gt;
 
 &lt;p&gt;In the next article, I&amp;#39;ll go through a number of Sass mixins which are distributed with the Compass project.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Sass Introduction slides</title>
+    <link href="/2009/04/02/sass-introduction-slides.html" rel="alternate"/>
+    <id>/2009/04/02/sass-introduction-slides.html</id>
+    <published>2009-04-02T00:00:00-07:00</published>
+    <updated>2009-04-02T00:00:00-07:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;p&gt;Here&amp;#39;s the slides I will be presenting at Jive Software:&lt;/p&gt;
+
+&lt;p&gt;&lt;div class='flash'&gt;
+  &lt;object data='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=sass-090402192738-phpapp01&amp;amp;rel=0&amp;amp;stripped_title=sass-introduction' height='355' type='application/x-shockwave-flash' width='425'&gt;&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;Here&amp;#39;s the slides I will be presenting at Jive Software:&lt;/p&gt;
+
+&lt;div class='flash'&gt;
+  &lt;object data='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=sass-090402192738-phpapp01&amp;amp;rel=0&amp;amp;stripped_title=sass-introduction' height='355' type='application/x-shockwave-flash' width='425'&gt;
+    &lt;param name='allowFullScreen' value='true' /&gt;
+    &lt;param name='allowScriptAccess' value='always' /&gt;
+    &lt;param name='src' value='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=sass-090402192738-phpapp01&amp;amp;rel=0&amp;amp;stripped_title=sass-introduction' /&gt;
+    &lt;param name='allowfullscreen' value='true' /&gt;
+  &lt;/object&gt;
+&lt;/div&gt;
 </content>
   </entry>
   <entry>
@@ -5032,7 +5027,7 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
 
 &lt;p&gt;The safer alternative is to convert from CSS to Sass by hand. Simply remove all curly braces and semicolons and you should have a valid&#8212;if not optimized&#8212;Sass document. If you&amp;#39;ve been inconsistent with using either tabs or spaces, Sass will warn you. You&amp;#39;ll need to standardize on one or the other before moving forward. If you start out with some CSS like this:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::CSS
+&lt;pre&gt;&lt;code&gt;:::css
 #left {
   float: left;
   display: inline;
@@ -5107,10 +5102,10 @@ sudo gem install compass
 
 &lt;h2&gt;Continuous Compilation&lt;/h2&gt;
 
-&lt;p&gt;Alright, let&amp;#39;s move to our web directory&#8212;wherever that may be. I like to keep all my CSS and Sass together so I have a base css&amp;#47; directory and css&amp;#47;sass&amp;#47; directory under that. Given that structure, I can have compass watch my Sass like so:&lt;/p&gt;
+&lt;p&gt;Alright, let&amp;#39;s move to our web directory&#8212;wherever that may be. I like to keep all my CSS and Sass together so I have a base css/ directory and css/sass/ directory under that. Given that structure, I can have compass watch my Sass like so:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;cd PROJECT_DIR
-compass --watch --css-dir css --sass-dir css&amp;#47;sass
+compass --watch --css-dir css --sass-dir css/sass
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Compass will sit patiently in the terminal, monitoring the folder I specified and compiling the Sass files to CSS whenever I save an existing file or add a new one. In my next article, I will discuss converting existing CSS files to Sass, the refactoring process and the usage of compass&amp;#39; included Sass modules for common CSS such as the &lt;a href="http://www.positioniseverything.net/easyclearing.html"&gt;clearfix hack&lt;/a&gt; and &lt;a href="http://phark.typepad.com/phark/2003/08/accessible_imag.html"&gt;Mike Rundle&amp;#39;s image replacement&lt;/a&gt;.&lt;/p&gt;
