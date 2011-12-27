@@ -24,7 +24,7 @@
 
 &lt;p&gt;You can probably imagine how often you&amp;#39;ll need to implement these patterns: mail clients, chat rooms; anything that updates, really.&lt;/p&gt;
 
-&lt;p&gt;Over the weekend, my friends at Bocoup &lt;a href="http://weblog.bocoup.com/backbone-live-collections"&gt;posted an article&lt;/a&gt; called &lt;em&gt;Backbone.js Live Collections&lt;/em&gt; which discussed how to use Backbone.js&lt;sup&gt;1&lt;/sup&gt; to poll Twitter for new tweets and update a list of those tweets on the page. I don&amp;#39;t know their official stance on Backbone.js, so I&amp;#39;m going to assume they used it as an example because it was either code extracted from one of their projects or they simply decided to use Backbone.js because of its popularity. Go ahead and read that article&#8230; I&amp;#39;ll wait.&lt;/p&gt;
+&lt;p&gt;Over the weekend, my friends at Bocoup &lt;a href="http://weblog.bocoup.com/backbone-live-collections"&gt;posted an article&lt;/a&gt; called &lt;em&gt;Backbone.js Live Collections&lt;/em&gt; which discussed how to use Backbone.js&lt;sup&gt;1&lt;/sup&gt; to poll Twitter for new tweets and update a list of those tweets on the page. &lt;strike&gt;I don&amp;#39;t know their official stance on Backbone.js, so I&amp;#39;m going to assume they used it as an example because it was either code extracted from one of their projects or they simply decided to use Backbone.js because of its popularity.&lt;/strike&gt; &lt;strong&gt;[Edit: Ben Alman of Bocoup has clarified their position saying: &amp;quot;FWIW, we decided to use Backbone after a ton of research and experimentation.&amp;quot;]&lt;/strong&gt; Go ahead and read that article&#8230; I&amp;#39;ll wait.&lt;/p&gt;
 
 &lt;p&gt;Back? Good.&lt;/p&gt;
 
