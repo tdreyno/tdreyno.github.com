@@ -5,10 +5,166 @@
   <id>http://awardwinningfjords.com/</id>
   <link href="http://awardwinningfjords.com/"/>
   <link href="http://awardwinningfjords.com/feed.xml" rel="self"/>
-  <updated>2011-12-26T00:00:00-08:00</updated>
+  <updated>2011-12-27T00:00:00-08:00</updated>
   <author>
     <name>Thomas Reynolds</name>
   </author>
+  <entry>
+    <title>Ember.js Live Collections</title>
+    <link href="/2011/12/27/emberjs-collections.html" rel="alternate"/>
+    <id>/2011/12/27/emberjs-collections.html</id>
+    <published>2011-12-27T00:00:00-08:00</published>
+    <updated>2011-12-27T00:00:00-08:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;p&gt;If you&amp;#39;re writing a client-side application, there are two common tasks you can expect to perform. First, modern web applications are expected to show updated information as quickly as possible without a full page reload. (Think about Twitter or Facebook: as you&amp;#39;re reading the updates, newer updates continue to arrive at the top of the page.) Second, you&amp;#39;ll be sending the current user&amp;#39;s updates to everyone else&amp;#39;s streams.&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;If you&amp;#39;re writing a client-side application, there are two common tasks you can expect to perform. First, modern web applications are expected to show updated information as quickly as possible without a full page reload. (Think about Twitter or Facebook: as you&amp;#39;re reading the updates, newer updates continue to arrive at the top of the page.) Second, you&amp;#39;ll be sending the current user&amp;#39;s updates to everyone else&amp;#39;s streams.&lt;/p&gt;
+
+&lt;p&gt;You can probably imagine how often you&amp;#39;ll need to implement these patterns: mail clients, chat rooms; anything that updates, really.&lt;/p&gt;
+
+&lt;p&gt;Over the weekend, my friends at Bocoup &lt;a href="http://weblog.bocoup.com/backbone-live-collections"&gt;posted an article&lt;/a&gt; called &lt;em&gt;Backbone.js Live Collections&lt;/em&gt; which discussed how to use Backbone.js&lt;sup&gt;1&lt;/sup&gt; to poll Twitter for new tweets and update a list of those tweets on the page. I don&amp;#39;t know their official stance on Backbone.js, so I&amp;#39;m going to assume they used it as an example because it was either code extracted from one of their projects or they simply decided to use Backbone.js because of its popularity. Go ahead and read that article&#8230; I&amp;#39;ll wait.&lt;/p&gt;
+
+&lt;p&gt;Back? Good.&lt;/p&gt;
+
+&lt;p&gt;Assuming that Bocoup simply chose Backbone.js for familiarity&amp;#39;s sake, I glibly summed up the article as &amp;quot;In other words, use Ember.js :-p&amp;quot; and ruffled more feathers than I intended. I was invited to write this article to express my point better than a tweet could, so here we go.&lt;/p&gt;
+
+&lt;h2&gt;Ember.js &lt;strike&gt;Amber.js&lt;/strike&gt; &lt;strike&gt;Sproutcore 2.0&lt;/strike&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href="http://www.emberjs.com/"&gt;Ember.js&lt;/a&gt; is what happened when SproutCore decided to be less Apple Cocoa and more jQuery. The result is a web framework which retains very important high-level concepts such as observers, bindings and state charts, while delivering a concise API. SproutCore started its life as the development framework behind an early client-side email application. Then, Apple used it to build MobileMe (and then iCloud), both of which include email clients. Needless to say, they&amp;#39;ve figured out that collections which update from the server are very important. In my opinion, SproutCore/Ember.js are the best solution for anything needing collections of data rendered into the DOM. Thus my glib tweet above.&lt;/p&gt;
+
+&lt;p&gt;Below, I&amp;#39;ve recreated the Bocoup example using Ember.js. I think it expresses the intent of the initial application more concisely and
+understandably. You&amp;#39;ll note that there is no code that interacts with the DOM at all; instead, making in changes in JavaScript causes
+the DOM to be updated to reflect the new state automatically.&lt;/p&gt;
+
+&lt;h3&gt;App&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;:::javascript
+// Setup a global namespace for our code.
+Twitter = Em.Application.create({
+
+  // When everything is loaded.
+  ready: function() {
+
+    // Start polling Twitter
+    setInterval(function() {
+      Twitter.searchResults.refresh();
+    }, 2000);
+
+    // The default search is empty, let&amp;#39;s find some cats.
+    Twitter.searchResults.set(&amp;quot;query&amp;quot;, &amp;quot;cats&amp;quot;);
+
+    // Call the superclass&amp;#39;s `ready` method.
+    this._super();
+  }
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The app is the core of any Ember.js project. It provides a ready event, much like jQuery&amp;#39;s, and sets up event delegation behind the scenes. Its primary use in this example is to namespace all our classes and variables under the &lt;code&gt;Twitter&lt;/code&gt; namespace.&lt;/p&gt;
+
+&lt;h3&gt;Template View&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;:::html
+&amp;lt;script type=&amp;quot;text/x-handlebars&amp;quot;&amp;gt;
+  &amp;lt;ul class=&amp;quot;tweets&amp;quot;&amp;gt;
+  {{#each Twitter.searchResults}}
+    &amp;lt;li class=&amp;quot;tweet&amp;quot;&amp;gt;{{text}}&amp;lt;/li&amp;gt;
+  {{/each}}
+  &amp;lt;/ul&amp;gt;
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Ember.js templates are written in &lt;a href="http://www.handlebarsjs.com/"&gt;Handlebars.js&lt;/a&gt;. You can use a &lt;code&gt;text/x-handlebars&lt;/code&gt; script tag anywhere in your document and it will be replaced with a live-updating View. The above code will watch for a variable called &lt;code&gt;Twitter.searchResults&lt;/code&gt; and when it changes, it will update the list items in the &lt;code&gt;ul&lt;/code&gt;. See what I mean about Ember.js being optimized for collections and lists?&lt;/p&gt;
+
+&lt;h3&gt;Model&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;:::javascript
+Twitter.Tweet = Em.Object.extend();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is entirely a naming/convenience issue. We&amp;#39;re not writing any custom code for handling each tweet. We simply take its JSON and use it directly.&lt;/p&gt;
+
+&lt;h3&gt;Controller&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;:::javascript
+// An instance of ArrayController which handles collections.
+Twitter.searchResults = Em.ArrayController.create({
+
+  // Default collection is an empty array.
+  content: [],
+
+  // Default query is blank.
+  query: null,
+
+  // Simple id-to-model mapping for searches and duplicate checks.
+  _idCache: {},
+
+  // Add a Twitter.Tweet instance to this collection.
+  // Most of the work is in the built-in `pushObject` method,
+  // but this is where we add our simple duplicate checking.
+  addTweet: function(tweet) {
+    // The `id` from Twitter&amp;#39;s JSON
+    var id = tweet.get(&amp;quot;id&amp;quot;);
+
+    // If we don&amp;#39;t already have an object with this id, add it.
+    if (typeof this._idCache[id] === &amp;quot;undefined&amp;quot;) {
+      this.pushObject(tweet);
+      this._idCache[id] = tweet.id;
+    }
+  },
+
+  // Public method to fetch more data. Get&amp;#39;s called in the loop
+  // above as well as whenever the `query` variable changes (via
+  // an observer).
+  refresh: function() {
+    var query = this.get(&amp;quot;query&amp;quot;);
+
+    // Only fetch if we have a query set.
+    if (Em.empty(query)) {
+      this.set(&amp;quot;content&amp;quot;, []);
+      return;
+    }
+
+    // Poll Twitter
+    var self = this;
+    var url = &amp;quot;http://search.twitter.com/search.json?q=&amp;quot; + query + &amp;quot;&amp;amp;callback=?&amp;quot;;
+    $.getJSON(url, function(data) {
+
+      // Make a model for each result and add it to the collection.
+      for (var i = 0; i &amp;lt; data.results.length; i++) {
+        self.addTweet(Twitter.Tweet.create(data.results[i]));
+      }
+    });
+  }.observes(&amp;quot;query&amp;quot;)
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here&amp;#39;s the meat of the solution. Most of this is simply setting up a nice API and doing the JSON request. The simplest version of the code above would look like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;:::javascript
+Twitter.searchResults = Em.ArrayController.create();
+$.getJSON(&amp;quot;http://search.twitter.com/search.json?q=cats&amp;amp;callback=?&amp;quot;, function(d) {
+   Twitter.searchResults.pushObjects(d.results);
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Step 3, Profit&lt;/h2&gt;
+
+&lt;p&gt;There is no step three!&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="/projects/emberjs-live-collection.html"&gt;Check out the demo&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I&amp;#39;m not saying Ember.js is the best solution for every problem, but when it comes to collections updating the DOM, they&amp;#39;ve nailed it.&lt;/p&gt;
+
+&lt;h3&gt;Footnotes&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Backbone.js is a client-side Model-View-Controller framework for Javascript. It is incredibly popular. The &lt;a href="http://peepcode.com/products/backbone-js"&gt;PeepCode screencasts&lt;/a&gt; are a wonderful way to get started.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Thanks to &lt;a href="https://twitter.com/#!/tomdale"&gt;Tom Dale&lt;/a&gt; of the Tilde, and a developer on the Ember.js project, for proofing this article.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+  </entry>
   <entry>
     <title>The Tweets They Are A-Changin'</title>
     <link href="/2011/12/26/the-tweets-they-are-a-changin.html" rel="alternate"/>
@@ -682,6 +838,26 @@ var loadImage = function(imageSrc) {
 </content>
   </entry>
   <entry>
+    <title>Just Give a Damn About Something</title>
+    <link href="/2011/04/26/just-give-a-damn-about-something.html" rel="alternate"/>
+    <id>/2011/04/26/just-give-a-damn-about-something.html</id>
+    <published>2011-04-26T00:00:00-07:00</published>
+    <updated>2011-04-26T00:00:00-07:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;I just want everyone to care about something. [...] I just think it&amp;#39;s sad when people seem to have no passion in life.
+&lt;strong&gt;- Marco Arment&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+</summary>
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;I just want everyone to care about something. [...] I just think it&amp;#39;s sad when people seem to have no passion in life.
+&lt;strong&gt;- Marco Arment&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+</content>
+  </entry>
+  <entry>
     <title>Just Launched: PixelUnion v2</title>
     <link href="/2011/04/26/just-launched-pixelunion-v2.html" rel="alternate"/>
     <id>/2011/04/26/just-launched-pixelunion-v2.html</id>
@@ -704,26 +880,6 @@ About a year ago, we teamed up with &lt;a href="http://www.45royale.com/"&gt;45r
 About a year ago, we teamed up with &lt;a href="http://www.45royale.com/"&gt;45royale&lt;/a&gt; to create &lt;a href="http://pixelunion.net"&gt;Pixel Union&lt;/a&gt;, a premium Tumblr theme marketplace showcasing designs by some of the world&#8217;s best designers. It&#8217;s been immensely successful. What began as four themes dedicated to better showcasing photographs and videos has rapidly turned into a library of nearly twenty, multipurpose themes. &lt;br /&gt;&lt;br /&gt;
 It&#8217;s with a whole lot of pride that we announce today the launch of Pixel Union 2.0. We&#8217;ve redesigned the site, we&#8217;ve packed it full of new themes and, over the next two months, we&#8217;re going to be releasing one new theme each week. Check out &lt;a href="http://pixelunion.net/"&gt;the new site&lt;/a&gt; and stay tuned by following Pixel Union &lt;a href="http://twitter.com/pixelunion"&gt;on Twitter&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;
 &lt;strong&gt;- &lt;a href="http://blog.metalabdesign.com/post/4966260447/introducing-pixel-union-2-0-about-a-year-ago-we"&gt;Metalab Blog&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Just Give a Damn About Something</title>
-    <link href="/2011/04/26/just-give-a-damn-about-something.html" rel="alternate"/>
-    <id>/2011/04/26/just-give-a-damn-about-something.html</id>
-    <published>2011-04-26T00:00:00-07:00</published>
-    <updated>2011-04-26T00:00:00-07:00</updated>
-    <author>
-      <name>Thomas Reynolds</name>
-    </author>
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;I just want everyone to care about something. [...] I just think it&amp;#39;s sad when people seem to have no passion in life.
-&lt;strong&gt;- Marco Arment&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-</summary>
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;I just want everyone to care about something. [...] I just think it&amp;#39;s sad when people seem to have no passion in life.
-&lt;strong&gt;- Marco Arment&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 </content>
   </entry>
@@ -4252,6 +4408,51 @@ $(document).bind(&amp;#39;changingPage&amp;#39;, function(anchor_name) {
 </content>
   </entry>
   <entry>
+    <title>Simplifying CSS with Sass Presentation</title>
+    <link href="/2009/07/22/simplifying-css-presentation.html" rel="alternate"/>
+    <id>/2009/07/22/simplifying-css-presentation.html</id>
+    <published>2009-07-22T00:00:00-07:00</published>
+    <updated>2009-07-22T00:00:00-07:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;p&gt;Here are my slides from tonight&amp;#39;s Refresh PDX presentation on Sass and Compass.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="http://www.slideshare.net/tdreyno/simplifying-css-with-sass"&gt;Simplifying CSS With Sass&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;div class='flash'&gt;
+  &lt;object height='355' style='margin:0px' width='425'&gt;&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;Here are my slides from tonight&amp;#39;s Refresh PDX presentation on Sass and Compass.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="http://www.slideshare.net/tdreyno/simplifying-css-with-sass"&gt;Simplifying CSS With Sass&lt;/a&gt;&lt;/p&gt;
+
+&lt;div class='flash'&gt;
+  &lt;object height='355' style='margin:0px' width='425'&gt;
+    &lt;param name='movie' value='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=simplifyingcsswithsass-090724010510-phpapp02&amp;amp;rel=0&amp;amp;stripped_title=simplifying-css-with-sass' /&gt;
+    &lt;param name='allowFullScreen' value='true' /&gt;
+    &lt;param name='allowScriptAccess' value='always' /&gt;
+    &lt;embed allowfullscreen='true' allowscriptaccess='always' height='355' src='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=simplifyingcsswithsass-090724010510-phpapp02&amp;amp;rel=0&amp;amp;stripped_title=simplifying-css-with-sass' type='application/x-shockwave-flash' width='425'&gt;&lt;/embed&gt;
+  &lt;/object&gt;
+&lt;/div&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Speaking at RefreshPDX on Sass</title>
+    <link href="/2009/07/22/speaking-at-refreshpdx.html" rel="alternate"/>
+    <id>/2009/07/22/speaking-at-refreshpdx.html</id>
+    <published>2009-07-22T00:00:00-07:00</published>
+    <updated>2009-07-22T00:00:00-07:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html"></summary>
+    <content type="html">&lt;p&gt;It&amp;#39;s late notice, but I&amp;#39;ll be speaking on Sass and Compass at &lt;a href="http://refreshpdx.org/"&gt;Refresh Portland&lt;/a&gt;  on Thursday, July 23rd at  &lt;a href="http://maps.google.com/maps?f=q&amp;amp;hl=en&amp;amp;q=915+SW+Stark+St,+Portland,+Multnomah,+Oregon+97205,+United+States&amp;amp;sll=37.0625,-95.677068&amp;amp;sspn=49.176833,77.519531&amp;amp;ie=UTF8&amp;amp;cd=1&amp;amp;geocode=0,45.521796,-122.680205&amp;amp;ll=45.521804,-122.680206&amp;amp;spn=0.021408,0.037851&amp;amp;t=p&amp;amp;z=15&amp;amp;iwloc=addr"&gt;Jive Software&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The presentation should be streamed (and then archived) on Ustream and I&amp;#39;ll post the slides here on Friday.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
     <title>Easy Google Maps with jQuery</title>
     <link href="/2009/07/22/google-maps-with-jquery.html" rel="alternate"/>
     <id>/2009/07/22/google-maps-with-jquery.html</id>
@@ -4316,51 +4517,6 @@ $.fn.googleMap = function(address, options) {
   });
 &amp;lt;/script&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Speaking at RefreshPDX on Sass</title>
-    <link href="/2009/07/22/speaking-at-refreshpdx.html" rel="alternate"/>
-    <id>/2009/07/22/speaking-at-refreshpdx.html</id>
-    <published>2009-07-22T00:00:00-07:00</published>
-    <updated>2009-07-22T00:00:00-07:00</updated>
-    <author>
-      <name>Thomas Reynolds</name>
-    </author>
-    <summary type="html"></summary>
-    <content type="html">&lt;p&gt;It&amp;#39;s late notice, but I&amp;#39;ll be speaking on Sass and Compass at &lt;a href="http://refreshpdx.org/"&gt;Refresh Portland&lt;/a&gt;  on Thursday, July 23rd at  &lt;a href="http://maps.google.com/maps?f=q&amp;amp;hl=en&amp;amp;q=915+SW+Stark+St,+Portland,+Multnomah,+Oregon+97205,+United+States&amp;amp;sll=37.0625,-95.677068&amp;amp;sspn=49.176833,77.519531&amp;amp;ie=UTF8&amp;amp;cd=1&amp;amp;geocode=0,45.521796,-122.680205&amp;amp;ll=45.521804,-122.680206&amp;amp;spn=0.021408,0.037851&amp;amp;t=p&amp;amp;z=15&amp;amp;iwloc=addr"&gt;Jive Software&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;The presentation should be streamed (and then archived) on Ustream and I&amp;#39;ll post the slides here on Friday.&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Simplifying CSS with Sass Presentation</title>
-    <link href="/2009/07/22/simplifying-css-presentation.html" rel="alternate"/>
-    <id>/2009/07/22/simplifying-css-presentation.html</id>
-    <published>2009-07-22T00:00:00-07:00</published>
-    <updated>2009-07-22T00:00:00-07:00</updated>
-    <author>
-      <name>Thomas Reynolds</name>
-    </author>
-    <summary type="html">&lt;p&gt;Here are my slides from tonight&amp;#39;s Refresh PDX presentation on Sass and Compass.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href="http://www.slideshare.net/tdreyno/simplifying-css-with-sass"&gt;Simplifying CSS With Sass&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;div class='flash'&gt;
-  &lt;object height='355' style='margin:0px' width='425'&gt;&lt;/p&gt;
-</summary>
-    <content type="html">&lt;p&gt;Here are my slides from tonight&amp;#39;s Refresh PDX presentation on Sass and Compass.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href="http://www.slideshare.net/tdreyno/simplifying-css-with-sass"&gt;Simplifying CSS With Sass&lt;/a&gt;&lt;/p&gt;
-
-&lt;div class='flash'&gt;
-  &lt;object height='355' style='margin:0px' width='425'&gt;
-    &lt;param name='movie' value='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=simplifyingcsswithsass-090724010510-phpapp02&amp;amp;rel=0&amp;amp;stripped_title=simplifying-css-with-sass' /&gt;
-    &lt;param name='allowFullScreen' value='true' /&gt;
-    &lt;param name='allowScriptAccess' value='always' /&gt;
-    &lt;embed allowfullscreen='true' allowscriptaccess='always' height='355' src='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=simplifyingcsswithsass-090724010510-phpapp02&amp;amp;rel=0&amp;amp;stripped_title=simplifying-css-with-sass' type='application/x-shockwave-flash' width='425'&gt;&lt;/embed&gt;
-  &lt;/object&gt;
-&lt;/div&gt;
 </content>
   </entry>
   <entry>
