@@ -5,10 +5,134 @@
   <id>http://awardwinningfjords.com/</id>
   <link href="http://awardwinningfjords.com/"/>
   <link href="http://awardwinningfjords.com/feed.xml" rel="self"/>
-  <updated>2011-12-27T00:00:00-08:00</updated>
+  <updated>2012-01-03T00:00:00-08:00</updated>
   <author>
     <name>Thomas Reynolds</name>
   </author>
+  <entry>
+    <title>Middleman 3.0 Beta</title>
+    <link href="/2012/01/03/middleman-3-beta.html" rel="alternate"/>
+    <id>/2012/01/03/middleman-3-beta.html</id>
+    <published>2012-01-03T00:00:00-08:00</published>
+    <updated>2012-01-03T00:00:00-08:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;p&gt;Middleman is a small tool for developing stand-alone, static websites. It&amp;#39;s great for separating frontend development from the backend, developing blazingly fast static websites or quickly creating prototypes. Middleman brings all of the power of Rails to provide an incredibly powerful development environment with access to:&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;Middleman is a small tool for developing stand-alone, static websites. It&amp;#39;s great for separating frontend development from the backend, developing blazingly fast static websites or quickly creating prototypes. Middleman brings all of the power of Rails to provide an incredibly powerful development environment with access to:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Templating engines and layouts (ERb, Slim, Haml, anything supported by Tilt)&lt;/li&gt;
+&lt;li&gt;Preprocessors (CoffeeScript, Sass, Less, Stylus, etc)&lt;/li&gt;
+&lt;li&gt;Compression (Minify CSS, JS and images)&lt;/li&gt;
+&lt;li&gt;Post-compile callbacks for deployment&lt;/li&gt;
+&lt;li&gt;And lots of new stuff in 3.0&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Install the Beta&lt;/h3&gt;
+
+&lt;p&gt;Before getting in to all the new features, here&amp;#39;s how you can install the beta:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;:::bash
+gem install middleman --pre
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Remember:&lt;/strong&gt; This is a beta and there are bound to be bugs and possible regressions. 3.0 should be fully backwards compatible with 2.x. Please submit any issues you run into on &lt;a href="https://github.com/middleman/middleman/issues"&gt;the Github issue tracker&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3&gt;New Features&lt;/h3&gt;
+
+&lt;p&gt;Let&amp;#39;s dive in.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;h4&gt;middleman-core &amp;amp; middleman-more&lt;/h4&gt;
+
+&lt;p&gt;The middleman gem has been split into 2 smaller gems. middleman-core contains everything you need to run a simple Middleman project, but does not include any templating languages other than ERb or any compiled extensions. This means you &lt;em&gt;should&lt;/em&gt; be able to install middleman-core on systems without a compiler. You won&amp;#39;t have access to things like CoffeeScript, Sass, Sprockets or asset compression, but many users don&amp;#39;t need these extra features. The full dependency list for middleman-core is: activesupport, fssm, rack, rack-test, thor &amp;amp; tilt.&lt;/p&gt;
+
+&lt;p&gt;middleman-more contains everything not in middleman-core. Combining the two will work exactly as middleman 2.x did. In fact, this is exactly what installing the middleman gem directly does.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h4&gt;Direct Preview&lt;/h4&gt;
+
+&lt;p&gt;Sometimes you just want to host a directory of web assets on localhost without doing anything fancy. In 3.0, Middleman will do just this if you run it from a directory with a &lt;code&gt;config.rb&lt;/code&gt; file. For example: &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;:::bash
+# Download the Zurb Foundation: http://foundation.zurb.com/
+cd foundation
+middleman server
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now the &lt;a href="http://foundation.zurb.com/"&gt;Zurb Foundation&lt;/a&gt; will be available at: http://localhost:4567/&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h4&gt;Sass, Compass and Sprockets&lt;/h4&gt;
+
+&lt;p&gt;Sass and Scss file now have access to Sprockets dependency management and to CSS located in gems which support the Rails 3.1 Asset Pipeline. Given a &amp;quot;source/stylesheets/main.css.scss&amp;quot;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;:::css
+/**
+ *= require &amp;quot;some_partial&amp;quot;
+ *
+ * Using Zurb as an example: gem install zurb-foundation
+ *= require &amp;quot;foundation/typography&amp;quot;
+ */
+
+body {
+  /* My code */
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h4&gt;Nested Layouts&lt;/h4&gt;
+
+&lt;p&gt;As an alternative to partials and content_for blocks, we&amp;#39;ve added something from the Django world. Say I have a template named &amp;quot;source/index.html.erb&amp;quot; and it&amp;#39;s layout is located at &amp;quot;source/layouts/default.erb&amp;quot;. Normally, the contents of the layout will wrap the contents of the template. With nested layouts, I can add the following to the layout and wrap the contents yet again:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;:::erb
+&amp;lt;% wrap_layout :admin do %&amp;gt;
+  I am the Defaul Layout
+  &amp;lt;%= yield %&amp;gt;
+&amp;lt;% end %&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now, the final contents will be the template, wrapped in the default layout, wrapped in the admin layout. This can continue indefinitely.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h4&gt;The Sitemap&lt;/h4&gt;
+
+&lt;p&gt;The Sitemap is a new, internal cache of all the pages in your project. It can be inspected for building navigation, scraping pages for frontmatter or all manner of metaprogramming. When you add, remove or change a file, the sitemap is automatically updated.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;#39;s a quick example for building an index page which displays an automatically updating list of it&amp;#39;s child pages.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;:::erb
+&amp;lt;% for page in current_page.children %&amp;gt;
+  &amp;lt;%= link_to page.data.title, page.url %&amp;gt;
+&amp;lt;% end %&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As you&amp;#39;ll notice, the page object has access to that page&amp;#39;s frontmatter. This means we can use frontmatter to provide categorization and work with that data. Say we have several pages with the following frontmatter (and several without it):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;:::yaml
+---
+category: internal
+---
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we can select only the pages with that category to display in our list of links:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;:::erb
+&amp;lt;h1&amp;gt;Internal&amp;lt;/h1&amp;gt;
+&amp;lt;% for page in current_page.children.select { |x| x.data.category == &amp;quot;internal&amp;quot; } %&amp;gt;
+  &amp;lt;%= link_to page.data.title, page.url %&amp;gt;
+&amp;lt;% end %&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;h4&gt;Miscellaneous Changes&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Rewritten to work directly with Rack (Sinatra apps can still be mounted)&lt;/li&gt;
+&lt;li&gt;Yard code docs: &lt;a href="http://rubydoc.info/github/middleman/middleman"&gt;http://rubydoc.info/github/middleman/middleman&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;3rd Party Command Line Tools&lt;/li&gt;
+&lt;li&gt;Activate mobile html5boilerplate template&lt;/li&gt;
+&lt;li&gt;Support for placekitten.com&lt;/li&gt;
+&lt;li&gt;Activating extensions can now take an options hash&lt;/li&gt;
+&lt;li&gt;Don&amp;#39;t re-minify files with &amp;quot;.min&amp;quot; in their name&lt;/li&gt;
+&lt;li&gt;Enable chained templates outside of sprockets (file.html.markdown.erb)&lt;/li&gt;
+&lt;li&gt;Removed old 1.x mm- binaries, please use the main &amp;quot;middleman&amp;quot; binary from now on&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+  </entry>
   <entry>
     <title>Ember.js Live Collections</title>
     <link href="/2011/12/27/emberjs-collections.html" rel="alternate"/>
@@ -314,11 +438,19 @@ $.getJSON(&amp;quot;http://search.twitter.com/search.json?q=cats&amp;amp;callbac
 &lt;td&gt;Wise Man&amp;#39;s Fear&lt;/td&gt;
 &lt;td&gt;993&lt;/td&gt;
 &lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Hunger Games&lt;/td&gt;
+&lt;td&gt;384&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Catching Fire&lt;/td&gt;
+&lt;td&gt;391&lt;/td&gt;
+&lt;/tr&gt;
 &lt;/tbody&gt;&lt;/table&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Total Pages: &lt;strong&gt;7980&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;Average Pages per Day: &lt;strong&gt;21.8&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Total Pages: &lt;strong&gt;8755&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Average Pages per Day: &lt;strong&gt;23.9&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </content>
   </entry>
@@ -344,8 +476,8 @@ $.getJSON(&amp;quot;http://search.twitter.com/search.json?q=cats&amp;amp;callbac
     <title>Just Launched: The License Lab</title>
     <link href="/2011/11/03/just-launched-thelicenselab.html" rel="alternate"/>
     <id>/2011/11/03/just-launched-thelicenselab.html</id>
-    <published>2011-11-03T00:00:00-07:00</published>
-    <updated>2011-11-03T00:00:00-07:00</updated>
+    <published>2011-11-03T00:00:00-08:00</published>
+    <updated>2011-11-03T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -381,8 +513,8 @@ $.getJSON(&amp;quot;http://search.twitter.com/search.json?q=cats&amp;amp;callbac
     <title>Just Launched: Metalab Design v4</title>
     <link href="/2011/09/11/just-launched-metalab-v4.html" rel="alternate"/>
     <id>/2011/09/11/just-launched-metalab-v4.html</id>
-    <published>2011-09-11T00:00:00-07:00</published>
-    <updated>2011-09-11T00:00:00-07:00</updated>
+    <published>2011-09-11T00:00:00-08:00</published>
+    <updated>2011-09-11T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -417,8 +549,8 @@ $.getJSON(&amp;quot;http://search.twitter.com/search.json?q=cats&amp;amp;callbac
     <title>Middleman 2.0</title>
     <link href="/2011/08/08/middleman-2-0.html" rel="alternate"/>
     <id>/2011/08/08/middleman-2-0.html</id>
-    <published>2011-08-08T00:00:00-07:00</published>
-    <updated>2011-08-08T00:00:00-07:00</updated>
+    <published>2011-08-08T00:00:00-08:00</published>
+    <updated>2011-08-08T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -552,8 +684,8 @@ middleman migrate
     <title>CoffeeScript-specific Style Guide</title>
     <link href="/2011/05/13/coffeescript-specific-style-guide.html" rel="alternate"/>
     <id>/2011/05/13/coffeescript-specific-style-guide.html</id>
-    <published>2011-05-13T00:00:00-07:00</published>
-    <updated>2011-05-13T00:00:00-07:00</updated>
+    <published>2011-05-13T00:00:00-08:00</published>
+    <updated>2011-05-13T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -609,8 +741,8 @@ expect(elem.id).toEqual &amp;quot;myselector&amp;quot;
     <title>Javascript Microframeworks and The Future</title>
     <link href="/2011/05/09/javascript-microframeworks-and-the-future.html" rel="alternate"/>
     <id>/2011/05/09/javascript-microframeworks-and-the-future.html</id>
-    <published>2011-05-09T00:00:00-07:00</published>
-    <updated>2011-05-09T00:00:00-07:00</updated>
+    <published>2011-05-09T00:00:00-08:00</published>
+    <updated>2011-05-09T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -722,8 +854,8 @@ expect(elem.id).toEqual &amp;quot;myselector&amp;quot;
     <title>Trigger CSS3 Animations with jQuery</title>
     <link href="/2011/05/06/trigger-css3-animations-with-jquery.html" rel="alternate"/>
     <id>/2011/05/06/trigger-css3-animations-with-jquery.html</id>
-    <published>2011-05-06T00:00:00-07:00</published>
-    <updated>2011-05-06T00:00:00-07:00</updated>
+    <published>2011-05-06T00:00:00-08:00</published>
+    <updated>2011-05-06T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -790,7 +922,7 @@ $(&amp;#39;.left&amp;#39;).click(function() {
 
 &lt;h2&gt;Full Implementation&lt;/h2&gt;
 
-&lt;p&gt;Download: https://gist.github.com/959860&lt;/p&gt;
+&lt;p&gt;Download: &lt;a href="https://gist.github.com/959860"&gt;https://gist.github.com/959860&lt;/a&gt;&lt;/p&gt;
 
 &lt;script src="https://gist.github.com/959860.js?file=isoTransform.js"&gt;&lt;/script&gt;
 </content>
@@ -799,8 +931,8 @@ $(&amp;#39;.left&amp;#39;).click(function() {
     <title>jQuery.Deferred Image Preloader</title>
     <link href="/2011/05/03/jquerydeferred-image-preloader.html" rel="alternate"/>
     <id>/2011/05/03/jquerydeferred-image-preloader.html</id>
-    <published>2011-05-03T00:00:00-07:00</published>
-    <updated>2011-05-03T00:00:00-07:00</updated>
+    <published>2011-05-03T00:00:00-08:00</published>
+    <updated>2011-05-03T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -838,31 +970,11 @@ var loadImage = function(imageSrc) {
 </content>
   </entry>
   <entry>
-    <title>Just Give a Damn About Something</title>
-    <link href="/2011/04/26/just-give-a-damn-about-something.html" rel="alternate"/>
-    <id>/2011/04/26/just-give-a-damn-about-something.html</id>
-    <published>2011-04-26T00:00:00-07:00</published>
-    <updated>2011-04-26T00:00:00-07:00</updated>
-    <author>
-      <name>Thomas Reynolds</name>
-    </author>
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;I just want everyone to care about something. [...] I just think it&amp;#39;s sad when people seem to have no passion in life.
-&lt;strong&gt;- Marco Arment&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-</summary>
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;I just want everyone to care about something. [...] I just think it&amp;#39;s sad when people seem to have no passion in life.
-&lt;strong&gt;- Marco Arment&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-</content>
-  </entry>
-  <entry>
     <title>Just Launched: PixelUnion v2</title>
     <link href="/2011/04/26/just-launched-pixelunion-v2.html" rel="alternate"/>
     <id>/2011/04/26/just-launched-pixelunion-v2.html</id>
-    <published>2011-04-26T00:00:00-07:00</published>
-    <updated>2011-04-26T00:00:00-07:00</updated>
+    <published>2011-04-26T00:00:00-08:00</published>
+    <updated>2011-04-26T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -884,11 +996,31 @@ It&#8217;s with a whole lot of pride that we announce today the launch of Pixel 
 </content>
   </entry>
   <entry>
+    <title>Just Give a Damn About Something</title>
+    <link href="/2011/04/26/just-give-a-damn-about-something.html" rel="alternate"/>
+    <id>/2011/04/26/just-give-a-damn-about-something.html</id>
+    <published>2011-04-26T00:00:00-08:00</published>
+    <updated>2011-04-26T00:00:00-08:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;I just want everyone to care about something. [...] I just think it&amp;#39;s sad when people seem to have no passion in life.
+&lt;strong&gt;- Marco Arment&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+</summary>
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;I just want everyone to care about something. [...] I just think it&amp;#39;s sad when people seem to have no passion in life.
+&lt;strong&gt;- Marco Arment&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+</content>
+  </entry>
+  <entry>
     <title>CrossFit is for Nerds</title>
     <link href="/2011/04/24/crossfit-is-for-nerds.html" rel="alternate"/>
     <id>/2011/04/24/crossfit-is-for-nerds.html</id>
-    <published>2011-04-24T00:00:00-07:00</published>
-    <updated>2011-04-24T00:00:00-07:00</updated>
+    <published>2011-04-24T00:00:00-08:00</published>
+    <updated>2011-04-24T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -969,8 +1101,8 @@ It&#8217;s with a whole lot of pride that we announce today the launch of Pixel 
     <title>Branching Out, Opening Up and Publishing More</title>
     <link href="/2011/04/23/branching-out-opening-up-and-publishing-more.html" rel="alternate"/>
     <id>/2011/04/23/branching-out-opening-up-and-publishing-more.html</id>
-    <published>2011-04-23T00:00:00-07:00</published>
-    <updated>2011-04-23T00:00:00-07:00</updated>
+    <published>2011-04-23T00:00:00-08:00</published>
+    <updated>2011-04-23T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -991,8 +1123,8 @@ It&#8217;s with a whole lot of pride that we announce today the launch of Pixel 
     <title>Middleman v1.1</title>
     <link href="/2011/04/15/middleman-v11.html" rel="alternate"/>
     <id>/2011/04/15/middleman-v11.html</id>
-    <published>2011-04-15T00:00:00-07:00</published>
-    <updated>2011-04-15T00:00:00-07:00</updated>
+    <published>2011-04-15T00:00:00-08:00</published>
+    <updated>2011-04-15T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -1024,7 +1156,7 @@ It&#8217;s with a whole lot of pride that we announce today the launch of Pixel 
 
 &lt;p&gt;It&amp;#39;s been a long time since &lt;a href="/2009/10/22/middleman"&gt;I introduced Middleman on this blog&lt;/a&gt; in 2009. Since then, RubyGems reports that there have been 27,518 downloads, &lt;a href="https://github.com/middleman/middleman/contributors"&gt;several great contributors&lt;/a&gt; to the source code and even a mention in a printed book.&lt;/p&gt;
 
-&lt;p&gt;I&amp;#39;ve been working hard on documentation as it was the most requested feature from the &lt;a href="/2011/02/06/future-of-middleman-survey"&gt;&amp;quot;Future of Middleman Survey&amp;quot;&lt;/a&gt;. I&amp;#39;m a developer and I&amp;#39;m sorry to admit that my first documentation target is the code and generated documentation. Available at: &lt;a href="http://middlemanapp.com/"&gt;http://middlemanapp.com/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I&amp;#39;ve been working hard on documentation as it was the most requested feature from the &lt;a href="/2011/02/06/future-of-middleman-survey"&gt;&amp;quot;Future of Middleman Survey&amp;quot;&lt;/a&gt;. I&amp;#39;m a developer and I&amp;#39;m sorry to admit that my first documentation target is the code and generated documentation. Available at: &lt;a href="http://middlemanapp.com/"&gt;&lt;a href="http://middlemanapp.com/"&gt;http://middlemanapp.com/&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;I know, I need better, more tutorial-style written documentation for actual people. I&amp;#39;ll be working on it as time permits, but I&amp;#39;d also love any assistance.&lt;/p&gt;
 
@@ -1187,15 +1319,15 @@ run Middleman::Server
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Please direct all questions and bugs to Github:
-&lt;a href="https://github.com/middleman/middleman"&gt;https://github.com/middleman/middleman&lt;/a&gt;&lt;/p&gt;
+&lt;a href="https://github.com/middleman/middleman"&gt;&lt;a href="https://github.com/middleman/middleman"&gt;https://github.com/middleman/middleman&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
 </content>
   </entry>
   <entry>
     <title>Adjustable Animations with Sliders</title>
     <link href="/2011/04/13/adjustable-animations-with-sliders.html" rel="alternate"/>
     <id>/2011/04/13/adjustable-animations-with-sliders.html</id>
-    <published>2011-04-13T00:00:00-07:00</published>
-    <updated>2011-04-13T00:00:00-07:00</updated>
+    <published>2011-04-13T00:00:00-08:00</published>
+    <updated>2011-04-13T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -1319,8 +1451,8 @@ run Middleman::Server
     <title>Announcing: WouldHire.com</title>
     <link href="/2011/04/08/announcing-wouldhirecom.html" rel="alternate"/>
     <id>/2011/04/08/announcing-wouldhirecom.html</id>
-    <published>2011-04-08T00:00:00-07:00</published>
-    <updated>2011-04-08T00:00:00-07:00</updated>
+    <published>2011-04-08T00:00:00-08:00</published>
+    <updated>2011-04-08T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -1553,7 +1685,7 @@ newProject.save();
 </summary>
     <content type="html">&lt;p&gt;I&amp;#39;ve created a brief survey about &lt;a href="http://middlemanapp.com"&gt;Middleman&lt;/a&gt;. If you&amp;#39;ve used the project, I would love your input. Thanks!&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="http://www.surveymonkey.com/s/5P9B92Q"&gt;http://www.surveymonkey.com/s/5P9B92Q&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.surveymonkey.com/s/5P9B92Q"&gt;&lt;a href="http://www.surveymonkey.com/s/5P9B92Q"&gt;http://www.surveymonkey.com/s/5P9B92Q&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -1662,7 +1794,7 @@ ProjectList.fetch(function(data) {
 </summary>
     <content type="html">&lt;p&gt;You can now learn everything you wanted to know about the JavascriptMVC3 state machine on the project website at:&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-statemachine/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/SecondStoryJS-StateMachine.png" alt="SecondStoryJS State Machine" /&gt;&lt;/p&gt;
 </content>
@@ -1877,8 +2009,8 @@ ProjectList.fetch(function(data) {
     <title>PubSub, Evented Programming and Javascript</title>
     <link href="/2010/10/27/pubsub-evented-programming-and-javascript.html" rel="alternate"/>
     <id>/2010/10/27/pubsub-evented-programming-and-javascript.html</id>
-    <published>2010-10-27T00:00:00-07:00</published>
-    <updated>2010-10-27T00:00:00-07:00</updated>
+    <published>2010-10-27T00:00:00-08:00</published>
+    <updated>2010-10-27T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -1947,8 +2079,8 @@ $.ajax({
     <title>Slides from my jQuery Conference Presentation</title>
     <link href="/2010/10/18/slides-from-my-jquery-conference-presentation.html" rel="alternate"/>
     <id>/2010/10/18/slides-from-my-jquery-conference-presentation.html</id>
-    <published>2010-10-18T00:00:00-07:00</published>
-    <updated>2010-10-18T00:00:00-07:00</updated>
+    <published>2010-10-18T00:00:00-08:00</published>
+    <updated>2010-10-18T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -1960,33 +2092,11 @@ $.ajax({
 </content>
   </entry>
   <entry>
-    <title>SecondStoryJS Router now has a documentation website</title>
-    <link href="/2010/10/11/secondstoryjs-router-now-has-a-documentation-website.html" rel="alternate"/>
-    <id>/2010/10/11/secondstoryjs-router-now-has-a-documentation-website.html</id>
-    <published>2010-10-11T00:00:00-07:00</published>
-    <updated>2010-10-11T00:00:00-07:00</updated>
-    <author>
-      <name>Thomas Reynolds</name>
-    </author>
-    <summary type="html">&lt;p&gt;Like the title says, you can now learn everything you wanted to know about the JavascriptMVC3 router on the project website at:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/SecondStoryJS-Router.png" alt="SecondStoryJS Router" /&gt;&lt;/p&gt;
-</summary>
-    <content type="html">&lt;p&gt;Like the title says, you can now learn everything you wanted to know about the JavascriptMVC3 router on the project website at:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/SecondStoryJS-Router.png" alt="SecondStoryJS Router" /&gt;&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
     <title>Middleman Feature: Config.rb can setup Rack middleware</title>
     <link href="/2010/10/11/middleman-feature-configrb-can-setup-rack-middleware.html" rel="alternate"/>
     <id>/2010/10/11/middleman-feature-configrb-can-setup-rack-middleware.html</id>
-    <published>2010-10-11T00:00:00-07:00</published>
-    <updated>2010-10-11T00:00:00-07:00</updated>
+    <published>2010-10-11T00:00:00-08:00</published>
+    <updated>2010-10-11T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -2002,11 +2112,33 @@ $.ajax({
 </content>
   </entry>
   <entry>
+    <title>SecondStoryJS Router now has a documentation website</title>
+    <link href="/2010/10/11/secondstoryjs-router-now-has-a-documentation-website.html" rel="alternate"/>
+    <id>/2010/10/11/secondstoryjs-router-now-has-a-documentation-website.html</id>
+    <published>2010-10-11T00:00:00-08:00</published>
+    <updated>2010-10-11T00:00:00-08:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;p&gt;Like the title says, you can now learn everything you wanted to know about the JavascriptMVC3 router on the project website at:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/SecondStoryJS-Router.png" alt="SecondStoryJS Router" /&gt;&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;Like the title says, you can now learn everything you wanted to know about the JavascriptMVC3 router on the project website at:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/SecondStoryJS-Router.png" alt="SecondStoryJS Router" /&gt;&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
     <title>Handling Touch Events in jQuery Tools Scrollable</title>
     <link href="/2010/09/22/handling-touch-events-in-jquery-tools-scrollable.html" rel="alternate"/>
     <id>/2010/09/22/handling-touch-events-in-jquery-tools-scrollable.html</id>
-    <published>2010-09-22T00:00:00-07:00</published>
-    <updated>2010-09-22T00:00:00-07:00</updated>
+    <published>2010-09-22T00:00:00-08:00</published>
+    <updated>2010-09-22T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -2052,8 +2184,8 @@ $(&amp;quot;.scrollable&amp;quot;).scrollable().handleSwipes();
     <title>Speaking at jQuery Conference: Boston 2010</title>
     <link href="/2010/09/08/speaking-at-jquery-conference-boston-2010.html" rel="alternate"/>
     <id>/2010/09/08/speaking-at-jquery-conference-boston-2010.html</id>
-    <published>2010-09-08T00:00:00-07:00</published>
-    <updated>2010-09-08T00:00:00-07:00</updated>
+    <published>2010-09-08T00:00:00-08:00</published>
+    <updated>2010-09-08T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -2072,8 +2204,8 @@ $(&amp;quot;.scrollable&amp;quot;).scrollable().handleSwipes();
     <title>Mustache for JavascriptMVC 3</title>
     <link href="/2010/08/09/mustache-for-javascriptmvc-3.html" rel="alternate"/>
     <id>/2010/08/09/mustache-for-javascriptmvc-3.html</id>
-    <published>2010-08-09T00:00:00-07:00</published>
-    <updated>2010-08-09T00:00:00-07:00</updated>
+    <published>2010-08-09T00:00:00-08:00</published>
+    <updated>2010-08-09T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -2110,8 +2242,8 @@ $(&amp;quot;#elem&amp;quot;).html(&amp;quot;//views/template.mustache&amp;quot;,
     <title>The jQuery Tools API Pattern</title>
     <link href="/2010/08/06/the-jquery-tools-api-pattern.html" rel="alternate"/>
     <id>/2010/08/06/the-jquery-tools-api-pattern.html</id>
-    <published>2010-08-06T00:00:00-07:00</published>
-    <updated>2010-08-06T00:00:00-07:00</updated>
+    <published>2010-08-06T00:00:00-08:00</published>
+    <updated>2010-08-06T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -2210,8 +2342,8 @@ $(&amp;quot;:input&amp;quot;).myPlugin();
     <title>Style Guides Using Sass @extend</title>
     <link href="/2010/07/30/style-guides-using-sass-extend.html" rel="alternate"/>
     <id>/2010/07/30/style-guides-using-sass-extend.html</id>
-    <published>2010-07-30T00:00:00-07:00</published>
-    <updated>2010-07-30T00:00:00-07:00</updated>
+    <published>2010-07-30T00:00:00-08:00</published>
+    <updated>2010-07-30T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -2346,8 +2478,8 @@ $dark-grey:        #4b4b48
     <title>Sass @extend Introduction</title>
     <link href="/2010/07/27/sass-extend-introduction.html" rel="alternate"/>
     <id>/2010/07/27/sass-extend-introduction.html</id>
-    <published>2010-07-27T00:00:00-07:00</published>
-    <updated>2010-07-27T00:00:00-07:00</updated>
+    <published>2010-07-27T00:00:00-08:00</published>
+    <updated>2010-07-27T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -2433,13 +2565,13 @@ $dark-grey:        #4b4b48
     <title>JavascriptMVC Router</title>
     <link href="/2010/07/23/javascriptmvc-router.html" rel="alternate"/>
     <id>/2010/07/23/javascriptmvc-router.html</id>
-    <published>2010-07-23T00:00:00-07:00</published>
-    <updated>2010-07-23T00:00:00-07:00</updated>
+    <published>2010-07-23T00:00:00-08:00</published>
+    <updated>2010-07-23T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html"></summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS Router now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS Router now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;Modern web applications should function as naturally as their static page-based predecessors. As developers, we may need to store state in the location bar, but the user shouldn&amp;#39;t be able to tell the difference, except, hopefully, the Ajaxified version should be faster and smoother.&lt;/p&gt;
 
@@ -2536,8 +2668,8 @@ steal.plugins(&amp;quot;ss/router&amp;quot;)
     <title>UINavigationController implementation for SenchaTouch</title>
     <link href="/2010/07/02/uinavigationcontroller-implementation-for-senchatouch.html" rel="alternate"/>
     <id>/2010/07/02/uinavigationcontroller-implementation-for-senchatouch.html</id>
-    <published>2010-07-02T00:00:00-07:00</published>
-    <updated>2010-07-02T00:00:00-07:00</updated>
+    <published>2010-07-02T00:00:00-08:00</published>
+    <updated>2010-07-02T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -2583,15 +2715,15 @@ controller.popPanel();
     <title>State Machine Controller for JavascriptMVC</title>
     <link href="/2010/05/27/state-machine-controller-for-javascriptmvc.html" rel="alternate"/>
     <id>/2010/05/27/state-machine-controller-for-javascriptmvc.html</id>
-    <published>2010-05-27T00:00:00-07:00</published>
-    <updated>2010-05-27T00:00:00-07:00</updated>
+    <published>2010-05-27T00:00:00-08:00</published>
+    <updated>2010-05-27T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html"></summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The repository has moved to http://github.com/secondstory/secondstoryjs-statemachine. The main class has been renamed to SS.Controller.StateMachine&lt;/strong&gt;&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The repository has moved to &lt;a href="http://github.com/secondstory/secondstoryjs-statemachine"&gt;http://github.com/secondstory/secondstoryjs-statemachine&lt;/a&gt;. The main class has been renamed to SS.Controller.StateMachine&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS State Machine now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-statemachine/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS State Machine now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-statemachine/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-statemachine/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;I&amp;#39;ve been attempting to write this article for a week, but I&amp;#39;ve been unable to justify the usefulness of Finite State Machines in words. I tried written up some typical examples, such as the classic vending machine, but it kept getting very obtuse very quickly. Instead, let me just say, that I love Finite State Machines. I think they are the only technique I learned at school and when I am able to replace dozens of &lt;tt&gt;if&lt;/tt&gt; statements with a Finite State Machine, it makes me very happy and feel secure. Being able to monitor an object&amp;#39;s state, rather than just querying its instance variables, makes testing simpler and helps me find bugs.&lt;/p&gt;
 
@@ -2671,13 +2803,13 @@ steal.js INFO: FSM (MyNavigation.instance0): timelineOpen -&amp;gt; initial
     <title>HTML5 localStorage for JavascriptMVC</title>
     <link href="/2010/05/21/html5-localstorage-for-javascriptmvc.html" rel="alternate"/>
     <id>/2010/05/21/html5-localstorage-for-javascriptmvc.html</id>
-    <published>2010-05-21T00:00:00-07:00</published>
-    <updated>2010-05-21T00:00:00-07:00</updated>
+    <published>2010-05-21T00:00:00-08:00</published>
+    <updated>2010-05-21T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html"></summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The new Github repository location is: http://github.com/secondstory/secondstoryjs-html5storage. The new class names are SS.Model.HTML5Store.Local and SS.Model.HTML5Store.Session&lt;/strong&gt;&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The new Github repository location is: &lt;a href="http://github.com/secondstory/secondstoryjs-html5storage"&gt;http://github.com/secondstory/secondstoryjs-html5storage&lt;/a&gt;. The new class names are SS.Model.HTML5Store.Local and SS.Model.HTML5Store.Session&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;For those who don&amp;#39;t know, JavascriptMVC 3 is a framework for building complex web applications based on jQuery. jQuery is a wonderful tool for manipulating the DOM, but it doesn&amp;#39;t provide any system for dependency resolution, file organization or a separation of concerns. JavascriptMVC 3, which is currently in a very solid alpha form, provides a strong MVC foundation for oragnizing your code.&lt;/p&gt;
 
@@ -2752,8 +2884,8 @@ function isInStore(id) {
     <title>Apple-style Gradient Text Headlines in SCSS/SASS</title>
     <link href="/2010/04/13/apple-style-gradient-text-headlines-in-scsssass.html" rel="alternate"/>
     <id>/2010/04/13/apple-style-gradient-text-headlines-in-scsssass.html</id>
-    <published>2010-04-13T00:00:00-07:00</published>
-    <updated>2010-04-13T00:00:00-07:00</updated>
+    <published>2010-04-13T00:00:00-08:00</published>
+    <updated>2010-04-13T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -2797,8 +2929,8 @@ h1 {
     <title>Sass 3 Color Manipulation</title>
     <link href="/2010/04/12/sass-3-color-manipulation.html" rel="alternate"/>
     <id>/2010/04/12/sass-3-color-manipulation.html</id>
-    <published>2010-04-12T00:00:00-07:00</published>
-    <updated>2010-04-12T00:00:00-07:00</updated>
+    <published>2010-04-12T00:00:00-08:00</published>
+    <updated>2010-04-12T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -2829,8 +2961,8 @@ $link-color:         #af512c
     <title>Example SCSS (Sassy CSS) File</title>
     <link href="/2010/04/09/example-scss-sassy-css-file.html" rel="alternate"/>
     <id>/2010/04/09/example-scss-sassy-css-file.html</id>
-    <published>2010-04-09T00:00:00-07:00</published>
-    <updated>2010-04-09T00:00:00-07:00</updated>
+    <published>2010-04-09T00:00:00-08:00</published>
+    <updated>2010-04-09T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -3132,8 +3264,8 @@ body {
     <title>Sass 3 Syntax</title>
     <link href="/2010/03/31/sass-3-syntax.html" rel="alternate"/>
     <id>/2010/03/31/sass-3-syntax.html</id>
-    <published>2010-03-31T00:00:00-07:00</published>
-    <updated>2010-03-31T00:00:00-07:00</updated>
+    <published>2010-03-31T00:00:00-08:00</published>
+    <updated>2010-03-31T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -4150,8 +4282,8 @@ if [[ -s /Users/tdreyno/.rvm/scripts/rvm ]] ; then source /Users/tdreyno/.rvm/sc
     <title>The Middleman. A modular, feature-rich static site generator</title>
     <link href="/2009/10/22/middleman.html" rel="alternate"/>
     <id>/2009/10/22/middleman.html</id>
-    <published>2009-10-22T00:00:00-07:00</published>
-    <updated>2009-10-22T00:00:00-07:00</updated>
+    <published>2009-10-22T00:00:00-08:00</published>
+    <updated>2009-10-22T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -4314,8 +4446,8 @@ And finally, please report bugs to: &lt;a href="http://github.com/middleman/midd
     <title>Tweetie-style paging with pageSlider</title>
     <link href="/2009/08/31/pageslider-tweetie-style-pages.html" rel="alternate"/>
     <id>/2009/08/31/pageslider-tweetie-style-pages.html</id>
-    <published>2009-08-31T00:00:00-07:00</published>
-    <updated>2009-08-31T00:00:00-07:00</updated>
+    <published>2009-08-31T00:00:00-08:00</published>
+    <updated>2009-08-31T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -4408,56 +4540,11 @@ $(document).bind(&amp;#39;changingPage&amp;#39;, function(anchor_name) {
 </content>
   </entry>
   <entry>
-    <title>Simplifying CSS with Sass Presentation</title>
-    <link href="/2009/07/22/simplifying-css-presentation.html" rel="alternate"/>
-    <id>/2009/07/22/simplifying-css-presentation.html</id>
-    <published>2009-07-22T00:00:00-07:00</published>
-    <updated>2009-07-22T00:00:00-07:00</updated>
-    <author>
-      <name>Thomas Reynolds</name>
-    </author>
-    <summary type="html">&lt;p&gt;Here are my slides from tonight&amp;#39;s Refresh PDX presentation on Sass and Compass.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href="http://www.slideshare.net/tdreyno/simplifying-css-with-sass"&gt;Simplifying CSS With Sass&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;div class='flash'&gt;
-  &lt;object height='355' style='margin:0px' width='425'&gt;&lt;/p&gt;
-</summary>
-    <content type="html">&lt;p&gt;Here are my slides from tonight&amp;#39;s Refresh PDX presentation on Sass and Compass.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href="http://www.slideshare.net/tdreyno/simplifying-css-with-sass"&gt;Simplifying CSS With Sass&lt;/a&gt;&lt;/p&gt;
-
-&lt;div class='flash'&gt;
-  &lt;object height='355' style='margin:0px' width='425'&gt;
-    &lt;param name='movie' value='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=simplifyingcsswithsass-090724010510-phpapp02&amp;amp;rel=0&amp;amp;stripped_title=simplifying-css-with-sass' /&gt;
-    &lt;param name='allowFullScreen' value='true' /&gt;
-    &lt;param name='allowScriptAccess' value='always' /&gt;
-    &lt;embed allowfullscreen='true' allowscriptaccess='always' height='355' src='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=simplifyingcsswithsass-090724010510-phpapp02&amp;amp;rel=0&amp;amp;stripped_title=simplifying-css-with-sass' type='application/x-shockwave-flash' width='425'&gt;&lt;/embed&gt;
-  &lt;/object&gt;
-&lt;/div&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Speaking at RefreshPDX on Sass</title>
-    <link href="/2009/07/22/speaking-at-refreshpdx.html" rel="alternate"/>
-    <id>/2009/07/22/speaking-at-refreshpdx.html</id>
-    <published>2009-07-22T00:00:00-07:00</published>
-    <updated>2009-07-22T00:00:00-07:00</updated>
-    <author>
-      <name>Thomas Reynolds</name>
-    </author>
-    <summary type="html"></summary>
-    <content type="html">&lt;p&gt;It&amp;#39;s late notice, but I&amp;#39;ll be speaking on Sass and Compass at &lt;a href="http://refreshpdx.org/"&gt;Refresh Portland&lt;/a&gt;  on Thursday, July 23rd at  &lt;a href="http://maps.google.com/maps?f=q&amp;amp;hl=en&amp;amp;q=915+SW+Stark+St,+Portland,+Multnomah,+Oregon+97205,+United+States&amp;amp;sll=37.0625,-95.677068&amp;amp;sspn=49.176833,77.519531&amp;amp;ie=UTF8&amp;amp;cd=1&amp;amp;geocode=0,45.521796,-122.680205&amp;amp;ll=45.521804,-122.680206&amp;amp;spn=0.021408,0.037851&amp;amp;t=p&amp;amp;z=15&amp;amp;iwloc=addr"&gt;Jive Software&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;The presentation should be streamed (and then archived) on Ustream and I&amp;#39;ll post the slides here on Friday.&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
     <title>Easy Google Maps with jQuery</title>
     <link href="/2009/07/22/google-maps-with-jquery.html" rel="alternate"/>
     <id>/2009/07/22/google-maps-with-jquery.html</id>
-    <published>2009-07-22T00:00:00-07:00</published>
-    <updated>2009-07-22T00:00:00-07:00</updated>
+    <published>2009-07-22T00:00:00-08:00</published>
+    <updated>2009-07-22T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -4520,11 +4607,56 @@ $.fn.googleMap = function(address, options) {
 </content>
   </entry>
   <entry>
+    <title>Speaking at RefreshPDX on Sass</title>
+    <link href="/2009/07/22/speaking-at-refreshpdx.html" rel="alternate"/>
+    <id>/2009/07/22/speaking-at-refreshpdx.html</id>
+    <published>2009-07-22T00:00:00-08:00</published>
+    <updated>2009-07-22T00:00:00-08:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html"></summary>
+    <content type="html">&lt;p&gt;It&amp;#39;s late notice, but I&amp;#39;ll be speaking on Sass and Compass at &lt;a href="http://refreshpdx.org/"&gt;Refresh Portland&lt;/a&gt;  on Thursday, July 23rd at  &lt;a href="http://maps.google.com/maps?f=q&amp;amp;hl=en&amp;amp;q=915+SW+Stark+St,+Portland,+Multnomah,+Oregon+97205,+United+States&amp;amp;sll=37.0625,-95.677068&amp;amp;sspn=49.176833,77.519531&amp;amp;ie=UTF8&amp;amp;cd=1&amp;amp;geocode=0,45.521796,-122.680205&amp;amp;ll=45.521804,-122.680206&amp;amp;spn=0.021408,0.037851&amp;amp;t=p&amp;amp;z=15&amp;amp;iwloc=addr"&gt;Jive Software&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The presentation should be streamed (and then archived) on Ustream and I&amp;#39;ll post the slides here on Friday.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Simplifying CSS with Sass Presentation</title>
+    <link href="/2009/07/22/simplifying-css-presentation.html" rel="alternate"/>
+    <id>/2009/07/22/simplifying-css-presentation.html</id>
+    <published>2009-07-22T00:00:00-08:00</published>
+    <updated>2009-07-22T00:00:00-08:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;p&gt;Here are my slides from tonight&amp;#39;s Refresh PDX presentation on Sass and Compass.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="http://www.slideshare.net/tdreyno/simplifying-css-with-sass"&gt;Simplifying CSS With Sass&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;div class='flash'&gt;
+  &lt;object height='355' style='margin:0px' width='425'&gt;&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;Here are my slides from tonight&amp;#39;s Refresh PDX presentation on Sass and Compass.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="http://www.slideshare.net/tdreyno/simplifying-css-with-sass"&gt;Simplifying CSS With Sass&lt;/a&gt;&lt;/p&gt;
+
+&lt;div class='flash'&gt;
+  &lt;object height='355' style='margin:0px' width='425'&gt;
+    &lt;param name='movie' value='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=simplifyingcsswithsass-090724010510-phpapp02&amp;amp;rel=0&amp;amp;stripped_title=simplifying-css-with-sass' /&gt;
+    &lt;param name='allowFullScreen' value='true' /&gt;
+    &lt;param name='allowScriptAccess' value='always' /&gt;
+    &lt;embed allowfullscreen='true' allowscriptaccess='always' height='355' src='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=simplifyingcsswithsass-090724010510-phpapp02&amp;amp;rel=0&amp;amp;stripped_title=simplifying-css-with-sass' type='application/x-shockwave-flash' width='425'&gt;&lt;/embed&gt;
+  &lt;/object&gt;
+&lt;/div&gt;
+</content>
+  </entry>
+  <entry>
     <title>Rapha&amp;euml;l. The Return of Browser SVG</title>
     <link href="/2009/07/13/return-of-svg.html" rel="alternate"/>
     <id>/2009/07/13/return-of-svg.html</id>
-    <published>2009-07-13T00:00:00-07:00</published>
-    <updated>2009-07-13T00:00:00-07:00</updated>
+    <published>2009-07-13T00:00:00-08:00</published>
+    <updated>2009-07-13T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -4548,8 +4680,8 @@ $.fn.googleMap = function(address, options) {
     <title>iPhone-style Checkboxes for Prototype</title>
     <link href="/2009/06/29/prototype-iphone-style-checkboxes.html" rel="alternate"/>
     <id>/2009/06/29/prototype-iphone-style-checkboxes.html</id>
-    <published>2009-06-29T00:00:00-07:00</published>
-    <updated>2009-06-29T00:00:00-07:00</updated>
+    <published>2009-06-29T00:00:00-08:00</published>
+    <updated>2009-06-29T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -4653,8 +4785,8 @@ Both versions are maintained using GitHub: &lt;a href="http://github.com/tdreyno
     <title>Introducing iPhone-style Checkboxes</title>
     <link href="/2009/06/16/iphone-style-checkboxes.html" rel="alternate"/>
     <id>/2009/06/16/iphone-style-checkboxes.html</id>
-    <published>2009-06-16T00:00:00-07:00</published>
-    <updated>2009-06-16T00:00:00-07:00</updated>
+    <published>2009-06-16T00:00:00-08:00</published>
+    <updated>2009-06-16T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -4765,8 +4897,8 @@ Please direct comments, support requests, bug reporting and pull requests to the
     <title>WWDC 2009 Predictions</title>
     <link href="/2009/06/04/wwdc-2009-predictions.html" rel="alternate"/>
     <id>/2009/06/04/wwdc-2009-predictions.html</id>
-    <published>2009-06-04T00:00:00-07:00</published>
-    <updated>2009-06-04T00:00:00-07:00</updated>
+    <published>2009-06-04T00:00:00-08:00</published>
+    <updated>2009-06-04T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -4810,8 +4942,8 @@ Please direct comments, support requests, bug reporting and pull requests to the
     <title>Simplify image paths with image_url()</title>
     <link href="/2009/05/11/simplify-image-paths-with-image_url.html" rel="alternate"/>
     <id>/2009/05/11/simplify-image-paths-with-image_url.html</id>
-    <published>2009-05-11T00:00:00-07:00</published>
-    <updated>2009-05-11T00:00:00-07:00</updated>
+    <published>2009-05-11T00:00:00-08:00</published>
+    <updated>2009-05-11T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -4846,8 +4978,8 @@ h1 {
     <title>Using Compass to implement the Blueprint grid-system &amp;amp; consistent vertical-rhythm</title>
     <link href="/2009/05/07/blueprint-grids-vertical-rhythm.html" rel="alternate"/>
     <id>/2009/05/07/blueprint-grids-vertical-rhythm.html</id>
-    <published>2009-05-07T00:00:00-07:00</published>
-    <updated>2009-05-07T00:00:00-07:00</updated>
+    <published>2009-05-07T00:00:00-08:00</published>
+    <updated>2009-05-07T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -5045,8 +5177,8 @@ hr
     <title>NHaml idiosyncrasies</title>
     <link href="/2009/04/30/nhaml-idiosyncrasies.html" rel="alternate"/>
     <id>/2009/04/30/nhaml-idiosyncrasies.html</id>
-    <published>2009-04-30T00:00:00-07:00</published>
-    <updated>2009-04-30T00:00:00-07:00</updated>
+    <published>2009-04-30T00:00:00-08:00</published>
+    <updated>2009-04-30T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -5123,8 +5255,8 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
     <title>A Compass &amp;amp; Sass Screencast via Chris Eppstein</title>
     <link href="/2009/04/26/a-compass-sass-screencast-via-chris-eppstein.html" rel="alternate"/>
     <id>/2009/04/26/a-compass-sass-screencast-via-chris-eppstein.html</id>
-    <published>2009-04-26T00:00:00-07:00</published>
-    <updated>2009-04-26T00:00:00-07:00</updated>
+    <published>2009-04-26T00:00:00-08:00</published>
+    <updated>2009-04-26T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -5150,8 +5282,8 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
     <title>Creating bullet-proof HTML emails</title>
     <link href="/2009/04/06/creating-bullet-proof-html-emails.html" rel="alternate"/>
     <id>/2009/04/06/creating-bullet-proof-html-emails.html</id>
-    <published>2009-04-06T00:00:00-07:00</published>
-    <updated>2009-04-06T00:00:00-07:00</updated>
+    <published>2009-04-06T00:00:00-08:00</published>
+    <updated>2009-04-06T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -5177,8 +5309,8 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
     <title>Don't repeat yourself, use Sass mixins</title>
     <link href="/2009/04/02/dont-repeat-yourself-use-sass-modules.html" rel="alternate"/>
     <id>/2009/04/02/dont-repeat-yourself-use-sass-modules.html</id>
-    <published>2009-04-02T00:00:00-07:00</published>
-    <updated>2009-04-02T00:00:00-07:00</updated>
+    <published>2009-04-02T00:00:00-08:00</published>
+    <updated>2009-04-02T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -5294,8 +5426,8 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
     <title>Sass Introduction slides</title>
     <link href="/2009/04/02/sass-introduction-slides.html" rel="alternate"/>
     <id>/2009/04/02/sass-introduction-slides.html</id>
-    <published>2009-04-02T00:00:00-07:00</published>
-    <updated>2009-04-02T00:00:00-07:00</updated>
+    <published>2009-04-02T00:00:00-08:00</published>
+    <updated>2009-04-02T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -5320,8 +5452,8 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
     <title>Refactoring with Sass</title>
     <link href="/2009/03/14/refactoring-with-sass.html" rel="alternate"/>
     <id>/2009/03/14/refactoring-with-sass.html</id>
-    <published>2009-03-14T00:00:00-07:00</published>
-    <updated>2009-03-14T00:00:00-07:00</updated>
+    <published>2009-03-14T00:00:00-08:00</published>
+    <updated>2009-03-14T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -5390,8 +5522,8 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
     <title>Compass, the future of Sass development</title>
     <link href="/2009/03/11/compass-the-future-of-sass-development.html" rel="alternate"/>
     <id>/2009/03/11/compass-the-future-of-sass-development.html</id>
-    <published>2009-03-11T00:00:00-07:00</published>
-    <updated>2009-03-11T00:00:00-07:00</updated>
+    <published>2009-03-11T00:00:00-08:00</published>
+    <updated>2009-03-11T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
