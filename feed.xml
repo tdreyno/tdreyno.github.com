@@ -4799,7 +4799,7 @@ Both versions are maintained using GitHub: &lt;a href="http://github.com/tdreyno
 
 &lt;h2&gt;Examples&lt;/h2&gt;
 
-&lt;p&gt;&lt;div class='table'&gt;
+&lt;div class='table'&gt;
   &lt;table&gt;
     &lt;tr&gt;
       &lt;td style='vertical-align: middle !important;'&gt;
@@ -4819,11 +4819,6 @@ Both versions are maintained using GitHub: &lt;a href="http://github.com/tdreyno
     &lt;/tr&gt;
   &lt;/table&gt;
 &lt;/div&gt;
-&lt;script src='/iphone-style-checkboxes/jquery/iphone-style-checkboxes.js' type='text/javascript'&gt;&lt;/script&gt;
-&lt;link href='/iphone-style-checkboxes/style.css' media='screen' rel='stylesheet' type='text/css'&gt;
-&lt;script type='text/javascript'&gt;
-  $(&amp;#39;#post :checkbox.normal&amp;#39;).iphoneStyle({ background: &amp;#39;#F9F3E8&amp;#39; });
-&lt;/script&gt;&lt;/p&gt;
 
 &lt;h2&gt;Download and implement&lt;/h2&gt;
 
@@ -4862,7 +4857,7 @@ $(&amp;#39;:checkbox&amp;#39;).iphoneStyle({
 });
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;div class='table'&gt;
+&lt;div class='table'&gt;
   &lt;table&gt;
     &lt;tr&gt;
       &lt;td style='vertical-align: middle !important;'&gt;
@@ -4882,15 +4877,17 @@ $(&amp;#39;:checkbox&amp;#39;).iphoneStyle({
     &lt;/tr&gt;
   &lt;/table&gt;
 &lt;/div&gt;
-&lt;script type='text/javascript'&gt;
-  $(&amp;#39;#post :checkbox.yesno&amp;#39;).iphoneStyle({ checkedLabel: &amp;#39;YES&amp;#39;, uncheckedLabel: &amp;#39;NO&amp;#39;, background: &amp;#39;#F9F3E8&amp;#39; });
-&lt;/script&gt;&lt;/p&gt;
 
 &lt;h2&gt;Contribute&lt;/h2&gt;
 
 &lt;p&gt;The source is available, and forkable, on GitHub at
 &lt;a href="https://github.com/tdreyno/iphone-style-checkboxes"&gt;https://github.com/tdreyno/iphone-style-checkboxes&lt;/a&gt;.
 Please direct comments, support requests, bug reporting and pull requests to there.&lt;/p&gt;
+
+&lt;script src='/projects/iphone-style-checkboxes/jquery.min.js' type='text/javascript'&gt;&lt;/script&gt;
+&lt;script src='/projects/iphone-style-checkboxes/iphone-style-checkboxes.js' type='text/javascript'&gt;&lt;/script&gt;
+&lt;link href='/projects/iphone-style-checkboxes/style.css' media='screen' rel='stylesheet' type='text/css'&gt;
+&lt;script src='/projects/iphone-style-checkboxes/setup.js' type='text/javascript'&gt;&lt;/script&gt;
 </content>
   </entry>
   <entry>
