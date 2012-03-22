@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1">
+<meta name="author" content="Thomas Reynolds">
+<!-- Mobile viewport optimization http://goo.gl/b9SaQ --><meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading --><meta http-equiv="cleartype" content="on">
+<!-- Google Setup --><meta content="VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=" name="verify-v1">
+<!-- OpenID Setup --><link href="http://www.myopenid.com/server" rel="openid.server">
+<link href="http://tdreyno.myopenid.com/" rel="openid.delegate">
+<link href="http://tdreyno.myopenid.com" rel="openid2.local_id">
+<link href="http://www.myopenid.com/server" rel="openid2.provider">
+<meta content="http://www.myopenid.com/xrds?username=tdreyno.myopenid.com" http-equiv="X-XRDS-Location">
+<title>Canvas Hit Tracking « Thomas Reynolds</title>
+<!-- Stylesheet --><link href="/stylesheets/new.css?1332401136" media="screen" rel="stylesheet" type="text/css">
+<!-- RSS --><link href="http://feeds2.feedburner.com/awf-allposts" rel="alternate" title="Award Winning Fjords" type="application/rss+xml">
+</head>
+<body>
+    <header><h1>
+        <a href="/">Award-Winning Fjords</a>
+        <span class="sub">Thomas Reynolds</span>
+      </h1></header><div id="frame">
+      
+        <article><h2>Canvas Hit Tracking</h2>
+          <time>Mar 21 2012</time><p><em>NOTE: Code samples are in CoffeeScript</em></p>
+
+<p>One of the most fundamental interactions of any game is the ability to click (or touch) an on-screen component to manipulate it. Sounds simple enough, but when building HTML5 Canvas-based games, you'd be wrong.</p>
+
+<p>The HTML5 Canvas allows us to easily draw shapes and images, but it does not provide an object model. What this means is, when I write code to draw a circle:</p>
+
+<pre>ctx.arc(10, 10, 10, 0, Math.PI * 2) # Arcs are in Radians
+ctx.fill()
+</pre>
+
+<p><img src="/projects/hit-tracking/one.png" alt="Single Circle"></p>
+
+<p>That code will draw the circle on the canvas immediately, but there is no link between what is displayed and what code caused it to be drawn.</p>
+
+<p>Let's encapsulate drawing a circle into an Object we can reuse. We will also create an array of Objects being displayed.</p>
+
+<h2>A Simple Drawing Object</h2>
+
+<pre>class Circle
+  constructor: (@opt={}) -&gt;
+  draw: (ctx) -&gt;
+    ctx.arc(
+        @opt.x      ? 10, # Default to 10
+        @opt.y      ? 10, # Default to 10
+        @opt.radius ? 10, # Default to 10
+        0, Math.PI * 2
+    )
+    ctx.fill()
+</pre>
+
+<p>Which can be used like so:</p>
+
+<pre>c = new Circle(x: 50, y: 50, radius: 50)
+</pre>
+
+<h2>The World: A Collection of Objects</h2>
+
+<p>To keep track of our objects for drawing, we'll use a simple array:</p>
+
+<pre>theWorld = {
+  items: []
+  draw: -&gt;
+    canvasElement = document.getElementById("world")
+    ctx = canvasElement.getContext("2d")
+
+    # Clear previously drawn
+    ctx.clearRect(
+      0, 0, 
+      canvasElement.width+1, canvasElement.height+1
+    )
+
+    # Draw everything
+    obj.draw(ctx) for obj in @items
+}
+</pre>
+
+<p>Now let's add our circle to the world:</p>
+
+<pre>theWorld.items.push(c)
+</pre>
+
+<p>Finally, let's draw the world:</p>
+
+<pre>theWorld.draw()
+</pre>
+
+<h2>Naive Hit Tracking</h2>
+
+<p>So, now that we have an object representing a circle that we can manipulate and redraw, how do we figure out if clicking (or touching) a specific point on the canvas will "hit" a specific object?</p>
+
+<p>A first solution might involve Bounding Boxes. A Bounding Box is a rectangular container which our drawn object would fill. In the circle example above, the bounding box of a circle drawn at <code>x=50</code>, <code>y=50</code> and with a <code>radius=5</code> would be: </p>
+
+<ul>
+<li>Top left:     { x:   0, y:   0 }</li>
+<li>Top right:    { x: 100, y:   0 }</li>
+<li>Bottom left:  { x:   0, y: 100 }</li>
+<li>Bottom right: { x: 100, y: 100 }</li>
+</ul>
+<p>Let's add code to our Circle object to calculate this:</p>
+
+<pre># class Circle
+getBounds: -&gt;      
+  {
+    top:    @y - @radius
+    left:   @x - @radius
+    width:  @radius * 2
+    height: @radius * 2
+  }
+</pre>
+
+<p>Remember, HTML5 Canvas draws circles from their center. The above can be used like this:</p>
+
+<pre>c = new Circle(x: 50, y: 50, radius: 50)
+c.getBounds() # =&gt; { top: 0, left: 0, width: 100, height: 100 }
+</pre>
+
+<p>Now, using simple math, we can calculate whether a click is inside that bounding box. Let's add more to Circle:</p>
+
+<pre># class Circle
+didHit: (targetX, targetY) -&gt;
+  b = @getBounds()
+  (
+    (b.top  &lt;= targetY &lt;= b.top  + b.height) &amp;&amp;
+    (b.left &lt;= targetX &lt;= b.left + b.width)
+  )
+</pre>
+
+<p>Running a few hit tests should return expected results:</p>
+
+<pre>c.didHit(5,   5)   # =&gt; true
+c.didHit(0,   0)   # =&gt; true
+c.didHit(10,  10)  # =&gt; true
+c.didHit(100, 100) # =&gt; false
+</pre>
+
+<h3>The Problem With Bounding Boxes</h3>
+
+<p>Our choice of shapes, a circle, should give you a hint as to the issues with using bounding boxes for hit testing. Circles are not rectangles, as such, they will give "false" positives at the points inside their bounds, but outside their arcs such as: <code>x=0,y=0</code>. The problem is fourth magnified as soon as we start drawing complex shapes or using images with transparent regions.</p>
+
+<h3>The Great Thing About Bounding Boxes</h3>
+
+<p>Fear not! The above code is not useless. HTML5 Canvas has the ability to clear specific portions of an already drawn canvas. For performance reasons, you'll want to clear and redraw only the portions that change rather than clearing the whole canvas (as our <code>theWorld</code> example does). The method for clear is <code>clearRect</code> and as you may guess, it takes a bounding box rectangle.</p>
+
+<p>If we had drawn our circle, we could they clear its bounding box like this:</p>
+
+<pre># class Circle
+clear: (ctx) -&gt;
+  b = @getBounds()
+  ctx.clearRect(
+    b.left, 
+    b.top, 
+    b.left + b.width, 
+    b.top  + b.height
+  )
+</pre>
+
+<p>That said, let's move on to a pixel-perfect hit test. We'll need to refactor our Circle and world first.</p>
+
+<h2>Offscreen Canvases</h2>
+
+<p>Another common HTML5 Canvas performance technique you'll encounter is using "offscreen canvases" to reduce the amount of drawing that drawing the whole world would require. Offscreen canvases are simply canvas elements which have not been added to the DOM. In this approach, each Object actually has its own canvas which contains only itself. Drawing the entire world simply copies each Object's canvas onto the main "onscreen canvas."</p>
+
+<p>Let's look at a beefed-up Circle class which uses an offscreen canvas:</p>
+
+<pre># class Circle
+constructor: (@opt={}) -&gt;
+  @canvas = document.createElement("canvas")
+  # @canvas.width  needs to be same side as world canvas
+  # @canvas.height needs to be same side as world canvas
+  @ctx = @canvas.getContext("2d")
+  @drawOffscreen()
+
+drawOffscreen: -&gt;
+  @ctx.arc(
+      @opt.x ? 10, 
+      @opt.y ? 10, 
+      @opt.radius ? 10, 
+      0, Math.PI * 2
+  )
+  @ctx.fill()
+
+# Note: Drawing the entire offscreen canvas onto the
+# entire world canvas will get progressively slower as
+# the dimensions of the canvas grows. Consider only 
+# drawing the image slice which represents this object's
+# bounding box.
+copyOffscreen: (ctx) -&gt;
+  ctx.drawImage(@canvas, 0, 0)
+</pre>
+
+<p>This time, we create an offscreen canvas for each Circle. <code>drawOffscreen</code> will render to that canvas and <code>copyOffscreen</code> will copy that image to the world canvas (passed in as ctx). <code>drawOffscreen</code> only needs to be called when the parameters which describe the Object change.</p>
+
+<p>The world can now be drawn like so:</p>
+
+<pre>theWorld = {
+  items: []
+  draw: -&gt;
+    canvasElement = document.getElementById("world")
+    ctx = canvasElement.getContext("2d")
+
+    # Clear Objects
+    obj.clear(ctx) for obj in @items
+
+    # Draw everything
+    obj.copyOffscreen(ctx) for obj in @items
+}
+</pre>
+
+<p>Finally, we're getting close to a modern, reusable and extensible system for managing Objects, how they clear themselves and how they draw themselves (offscreen and only on parameter change).</p>
+
+<h2>Per-Object Canvas Hit Testing</h2>
+
+<p>Enough of the preamble, here's the meat. Now that we have an offscreen canvas for each Object that only contains itself, we can use that to check if we are "hitting" the drawn item. If there is a visible pixel at the point of the hit, then we return true.</p>
+
+<pre># class Circle
+didHit: (targetX, targetY) -&gt;
+  imageData = @ctx.getImageData(targetX, targetY, 1, 1)
+  (imageData.data[3] &gt; 0)
+</pre>
+
+<p>The <code>getImageData</code> method returns the RGBA values for the requested range of pixels on a canvas. In the above code, we ask for the target X/Y only. The resulting data is an array <code>[R, G, B, A]</code>. <code>imageData.data[3]</code> is the alpha value of the pixel, if it is greater than zero then that means we drew something there and the hit test is true.</p>
+
+<h2>Putting It All Together</h2>
+
+<p>Let's make an addition to <code>theWorld</code> to allow it to test all of its Objects and return only the items which we click on.</p>
+
+<pre># theWorld
+hitTestObjects: (targetX, targetY) -&gt;
+  i for i in @items when i.hitTest(targetX, targetY)
+</pre>
+
+<p>There we go, here's a complicated example:</p>
+
+<pre>c1 = new Circle(x: 50,  y: 50, radius: 50)
+c2 = new Circle(x: 100, y: 50, radius: 50)
+c3 = new Circle(x: 150, y: 50, radius: 50)
+
+theWorld.push(c1)
+theWorld.push(c2)
+theWorld.push(c3)
+
+theWorld.hitTestObjects(0,    0) # =&gt; []
+theWorld.hitTestObjects(50,  50) # =&gt; [c1, c2]
+theWorld.hitTestObjects(100, 50) # =&gt; [c1, c2, c3]
+theWorld.hitTestObjects(150, 50) # =&gt; [c2, c3]
+</pre>
+
+<p><img src="/projects/hit-tracking/three.png" alt="Three Circles"></p>
+
+<p>I could go further and try things out with arcs, empty stroked rectangles, donuts and semi-transparent images, but it would work exactly the same.</p>
+
+<p>There's plenty of room for caching, memorization and other optimizations in this system, but conceptually this is common approach. I hope this was enlightening.</p>
+
+        </article><footer><p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p>
+    
+        <p>
+          <a href="http://twitter.com/tdreyno">Twitter</a> •
+          <a href="mailto:me@tdreyno.com">Email</a> •
+          <a href="https://github.com/tdreyno">Github</a> •
+          <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a>
+        </p>
+      </footer>
+</div>
+    
+    <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-90027-9']);
+  _gaq.push(['_trackPageview']);
+  _gaq.push(['_trackPageLoadTime']);
+
+  (function() {
+  var ga = document.createElement('script');
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 
+    'http://www') + '.google-analytics.com/ga.js';
+  ga.setAttribute('async', 'true');
+  document.documentElement.firstChild.appendChild(ga);
+  })();
+</script><script type="text/javascript">
+  var _gauges = _gauges || [];
+  (function() {
+    var t   = document.createElement('script');
+    t.type  = 'text/javascript';
+    t.async = true;
+    t.id    = 'gauges-tracker';
+    t.setAttribute('data-site-id', '4d770721192b0c4ab6000002');
+    t.src = '//secure.gaug.es/track.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
+  })();
+</script>
+</body>
+</html>
