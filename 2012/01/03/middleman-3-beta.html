@@ -1,177 +1,32 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1">
-<meta name="author" content="Thomas Reynolds">
-<!-- Mobile viewport optimization http://goo.gl/b9SaQ --><meta name="HandheldFriendly" content="True">
-<meta name="MobileOptimized" content="320">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading --><meta http-equiv="cleartype" content="on">
-<!-- Google Setup --><meta content="VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=" name="verify-v1">
-<!-- OpenID Setup --><link href="http://www.myopenid.com/server" rel="openid.server">
-<link href="http://tdreyno.myopenid.com/" rel="openid.delegate">
-<link href="http://tdreyno.myopenid.com" rel="openid2.local_id">
-<link href="http://www.myopenid.com/server" rel="openid2.provider">
-<meta content="http://www.myopenid.com/xrds?username=tdreyno.myopenid.com" http-equiv="X-XRDS-Location">
-<title>Middleman 3.0 Beta « Thomas Reynolds</title>
-<!-- Stylesheet --><link type="text/css" media="screen" href="/stylesheets/new.css?1335203275" rel="stylesheet">
-<!-- RSS --><link href="http://feeds2.feedburner.com/awf-allposts" rel="alternate" title="Award Winning Fjords" type="application/rss+xml">
-</head>
-<body>
-    <header><h1>
-        <a href="/">Award-Winning Fjords</a>
-        <span class="sub">Thomas Reynolds</span>
-      </h1></header><div id="frame">
-      
-        <article><h2>Middleman 3.0 Beta</h2>
-          <time>Jan  3 2012</time><p>Middleman is a small tool for developing stand-alone, static websites. It's great for separating frontend development from the backend, developing blazingly fast static websites or quickly creating prototypes. Middleman brings all of the power of Rails to provide an incredibly powerful development environment with access to:</p>
-
-<ul>
-<li>Templating engines and layouts (ERb, Slim, Haml, anything supported by Tilt)</li>
-<li>Preprocessors (CoffeeScript, Sass, Less, Stylus, etc)</li>
-<li>Compression (Minify CSS, JS and images)</li>
-<li>Post-compile callbacks for deployment</li>
-<li>And lots of new stuff in 3.0</li>
-</ul>
-<h3>Install the Beta</h3>
-
-<p>Before getting in to all the new features, here's how you can install the beta:</p>
-
-<div class="highlight">
-<pre>gem install middleman --pre
-</pre>
-</div>
-
-
-<p><strong>Remember:</strong> This is a beta and there are bound to be bugs and possible regressions. 3.0 should be fully backwards compatible with 2.x. Please submit any issues you run into on <a href="https://github.com/middleman/middleman/issues">the Github issue tracker</a>.</p>
-
-<h3>New Features</h3>
-
-<p>Let's dive in.</p>
-
-<ul>
-<li>
-<h4>middleman-core &amp; middleman-more</h4>
-
-<p>The middleman gem has been split into 2 smaller gems. middleman-core contains everything you need to run a simple Middleman project, but does not include any templating languages other than ERb or any compiled extensions. This means you <em>should</em> be able to install middleman-core on systems without a compiler. You won't have access to things like CoffeeScript, Sass, Sprockets or asset compression, but many users don't need these extra features. The full dependency list for middleman-core is: activesupport, fssm, rack, rack-test, thor &amp; tilt.</p>
-
-<p>middleman-more contains everything not in middleman-core. Combining the two will work exactly as middleman 2.x did. In fact, this is exactly what installing the middleman gem directly does.</p>
-</li>
-<li>
-<h4>Direct Preview</h4>
-
-<p>Sometimes you just want to host a directory of web assets on localhost without doing anything fancy. In 3.0, Middleman will do just this if you run it from a directory with a <code>config.rb</code> file. For example: </p>
-
-<div class="highlight">
-<pre><span class="c"># Download the Zurb Foundation: http://foundation.zurb.com/</span>
-<span class="nb">cd </span>foundation
+<!doctype html> <html> <head> <meta charset="utf-8"> <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'> <meta name="author" content="Thomas Reynolds"> <meta name="HandheldFriendly" content="True"> <meta name="MobileOptimized" content="320"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <meta http-equiv="cleartype" content="on"> <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'> <link href='http://www.myopenid.com/server' rel='openid.server'> <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'> <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'> <link href='http://www.myopenid.com/server' rel='openid2.provider'> <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'> <title>Middleman 3.0 Beta &laquo; Thomas Reynolds</title> <link href="/stylesheets/new.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'> </head> <body> <header> <h1> <a href="/">Award-Winning Fjords</a> <span class="sub">Thomas Reynolds</span> </header> </header> <div id="frame"> <article> <h2>Middleman 3.0 Beta</h2> <time>Jan 3 2012</time> <p>Middleman is a small tool for developing stand-alone, static websites. It&#39;s great for separating frontend development from the backend, developing blazingly fast static websites or quickly creating prototypes. Middleman brings all of the power of Rails to provide an incredibly powerful development environment with access to:</p> <ul> <li>Templating engines and layouts (ERb, Slim, Haml, anything supported by Tilt)</li> <li>Preprocessors (CoffeeScript, Sass, Less, Stylus, etc)</li> <li>Compression (Minify CSS, JS and images)</li> <li>Post-compile callbacks for deployment</li> <li>And lots of new stuff in 3.0</li> </ul> <h3>Install the Beta</h3> <p>Before getting in to all the new features, here&#39;s how you can install the beta:</p> <pre><code>gem install middleman --pre
+</code></pre> <p><strong>Remember:</strong> This is a beta and there are bound to be bugs and possible regressions. 3.0 should be fully backwards compatible with 2.x. Please submit any issues you run into on <a href="https://github.com/middleman/middleman/issues">the Github issue tracker</a>.</p> <h3>New Features</h3> <p>Let&#39;s dive in.</p> <ul> <li><h4>middleman-core &amp; middleman-more</h4> <p>The middleman gem has been split into 2 smaller gems. middleman-core contains everything you need to run a simple Middleman project, but does not include any templating languages other than ERb or any compiled extensions. This means you <em>should</em> be able to install middleman-core on systems without a compiler. You won&#39;t have access to things like CoffeeScript, Sass, Sprockets or asset compression, but many users don&#39;t need these extra features. The full dependency list for middleman-core is: activesupport, fssm, rack, rack-test, thor &amp; tilt.</p> <p>middleman-more contains everything not in middleman-core. Combining the two will work exactly as middleman 2.x did. In fact, this is exactly what installing the middleman gem directly does.</p></li> <li><h4>Direct Preview</h4> <p>Sometimes you just want to host a directory of web assets on localhost without doing anything fancy. In 3.0, Middleman will do just this if you run it from a directory with a <code>config.rb</code> file. For example: </p> <pre><code>    # Download the Zurb Foundation: http://foundation.zurb.com/
+cd foundation
 middleman server
-</pre>
-</div>
+</code></pre> <p>Now the <a href="http://foundation.zurb.com/">Zurb Foundation</a> will be available at: http://localhost:4567/</p></li> <li><h4>Sass, Compass and Sprockets</h4> <p>Sass and Scss file now have access to Sprockets dependency management and to CSS located in gems which support the Rails 3.1 Asset Pipeline. Given a &quot;source/stylesheets/main.css.scss&quot;:</p> <pre><code>    /**
+ *= require &quot;some_partial&quot;
+ *
+ * Using Zurb as an example: gem install zurb-foundation
+ *= require &quot;foundation/typography&quot;
+ */
 
-
-<p>Now the <a href="http://foundation.zurb.com/">Zurb Foundation</a> will be available at: http://localhost:4567/</p>
-</li>
-<li>
-<h4>Sass, Compass and Sprockets</h4>
-
-<p>Sass and Scss file now have access to Sprockets dependency management and to CSS located in gems which support the Rails 3.1 Asset Pipeline. Given a "source/stylesheets/main.css.scss":</p>
-
-<div class="highlight">
-<pre><span class="c">/**</span>
-<span class="c"> *= require "some_partial"</span>
-<span class="c"> *</span>
-<span class="c"> * Using Zurb as an example: gem install zurb-foundation</span>
-<span class="c"> *= require "foundation/typography"</span>
-<span class="c"> */</span>
-
-<span class="nt">body</span> <span class="p">{</span>
-  <span class="c">/* My code */</span>
-<span class="p">}</span>
-</pre>
-</div>
-</li>
-<li>
-<h4>Nested Layouts</h4>
-
-<p>As an alternative to partials and content_for blocks, we've added something from the Django world. Say I have a template named "source/index.html.erb" and it's layout is located at "source/layouts/default.erb". Normally, the contents of the layout will wrap the contents of the template. With nested layouts, I can add the following to the layout and wrap the contents yet again:</p>
-
-<div class="highlight">
-<pre><span class="cp">&lt;%</span> <span class="n">wrap_layout</span> <span class="ss">:admin</span> <span class="k">do</span> <span class="cp">%&gt;</span><span class="x"></span>
-<span class="x">  I am the Defaul Layout</span>
-<span class="x">  </span><span class="cp">&lt;%=</span> <span class="k">yield</span> <span class="cp">%&gt;</span><span class="x"></span>
-<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span><span class="x"></span>
-</pre>
-</div>
-
-
-<p>Now, the final contents will be the template, wrapped in the default layout, wrapped in the admin layout. This can continue indefinitely.</p>
-</li>
-<li>
-<h4>The Sitemap</h4>
-
-<p>The Sitemap is a new, internal cache of all the pages in your project. It can be inspected for building navigation, scraping pages for frontmatter or all manner of metaprogramming. When you add, remove or change a file, the sitemap is automatically updated.</p>
-
-<p>Here's a quick example for building an index page which displays an automatically updating list of it's child pages.</p>
-
-<div class="highlight">
-<pre><span class="cp">&lt;%</span> <span class="k">for</span> <span class="n">page</span> <span class="k">in</span> <span class="n">current_page</span><span class="o">.</span><span class="n">children</span> <span class="cp">%&gt;</span><span class="x"></span>
-<span class="x">  </span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="n">page</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">page</span><span class="o">.</span><span class="n">url</span> <span class="cp">%&gt;</span><span class="x"></span>
-<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span><span class="x"></span>
-</pre>
-</div>
-
-
-<p>As you'll notice, the page object has access to that page's frontmatter. This means we can use frontmatter to provide categorization and work with that data. Say we have several pages with the following frontmatter (and several without it):</p>
-
-<div class="highlight">
-<pre><span class="nn">---</span>
-<span class="l-Scalar-Plain">category</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">internal</span>
-<span class="nn">---</span>
-</pre>
-</div>
-
-
-<p>Now we can select only the pages with that category to display in our list of links:</p>
-
-<div class="highlight">
-<pre><span class="x">&lt;h1&gt;Internal&lt;/h1&gt;</span>
-<span class="cp">&lt;%</span> <span class="k">for</span> <span class="n">page</span> <span class="k">in</span> <span class="n">current_page</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">select</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">category</span> <span class="o">==</span> <span class="s2">"internal"</span> <span class="p">}</span> <span class="cp">%&gt;</span><span class="x"></span>
-<span class="x">  </span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="n">page</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">page</span><span class="o">.</span><span class="n">url</span> <span class="cp">%&gt;</span><span class="x"></span>
-<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span><span class="x"></span>
-</pre>
-</div>
-</li>
-<li>
-<h4>Miscellaneous Changes</h4>
-
-<ul>
-<li>Rewritten to work directly with Rack (Sinatra apps can still be mounted)</li>
-<li>Yard code docs: <a href="http://rubydoc.info/github/middleman/middleman">http://rubydoc.info/github/middleman/middleman</a>
-</li>
-<li>3rd Party Command Line Tools</li>
-<li>Activate mobile html5boilerplate template</li>
-<li>Support for placekitten.com</li>
-<li>Activating extensions can now take an options hash</li>
-<li>Don't re-minify files with ".min" in their name</li>
-<li>Enable chained templates outside of sprockets (file.html.markdown.erb)</li>
-<li>Removed old 1.x mm- binaries, please use the main "middleman" binary from now on</li>
-</ul>
-</li>
-</ul></article><footer><p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p>
-    
-        <p>
-          <a href="http://twitter.com/tdreyno">Twitter</a> •
-          <a href="mailto:me@tdreyno.com">Email</a> •
-          <a href="https://github.com/tdreyno">Github</a> •
-          <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a>
-        </p>
-      </footer>
-</div>
-    
-    <script type="text/javascript">
+body {
+  /* My code */
+}
+</code></pre></li> <li><h4>Nested Layouts</h4> <p>As an alternative to partials and content_for blocks, we&#39;ve added something from the Django world. Say I have a template named &quot;source/index.html.erb&quot; and it&#39;s layout is located at &quot;source/layouts/default.erb&quot;. Normally, the contents of the layout will wrap the contents of the template. With nested layouts, I can add the following to the layout and wrap the contents yet again:</p> <pre><code>&lt;% wrap_layout :admin do %&gt;
+  I am the Defaul Layout
+  &lt;%= yield %&gt;
+&lt;% end %&gt;
+</code></pre> <p>Now, the final contents will be the template, wrapped in the default layout, wrapped in the admin layout. This can continue indefinitely.</p></li> <li><h4>The Sitemap</h4> <p>The Sitemap is a new, internal cache of all the pages in your project. It can be inspected for building navigation, scraping pages for frontmatter or all manner of metaprogramming. When you add, remove or change a file, the sitemap is automatically updated.</p> <p>Here&#39;s a quick example for building an index page which displays an automatically updating list of it&#39;s child pages.</p> <pre><code>&lt;% for page in current_page.children %&gt;
+  &lt;%= link_to page.data.title, page.url %&gt;
+&lt;% end %&gt;
+</code></pre> <p>As you&#39;ll notice, the page object has access to that page&#39;s frontmatter. This means we can use frontmatter to provide categorization and work with that data. Say we have several pages with the following frontmatter (and several without it):</p> <pre><code>---
+category: internal
+---
+</code></pre> <p>Now we can select only the pages with that category to display in our list of links:</p> <pre><code>&lt;h1&gt;Internal&lt;/h1&gt;
+&lt;% for page in current_page.children.select { |x| x.data.category == &quot;internal&quot; } %&gt;
+  &lt;%= link_to page.data.title, page.url %&gt;
+&lt;% end %&gt;
+</code></pre></li> <li><h4>Miscellaneous Changes</h4> <ul> <li>Rewritten to work directly with Rack (Sinatra apps can still be mounted)</li> <li>Yard code docs: http://rubydoc.info/github/middleman/middleman</li> <li>3rd Party Command Line Tools</li> <li>Activate mobile html5boilerplate template</li> <li>Support for placekitten.com</li> <li>Activating extensions can now take an options hash</li> <li>Don&#39;t re-minify files with &quot;.min&quot; in their name</li> <li>Enable chained templates outside of sprockets (file.html.markdown.erb)</li> <li>Removed old 1.x mm- binaries, please use the main &quot;middleman&quot; binary from now on</li> </ul></li> </ul> </article> <footer> <p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p> <p> <a href="http://twitter.com/tdreyno">Twitter</a> &bull; <a href="mailto:me@tdreyno.com">Email</a> &bull; <a href="https://github.com/tdreyno">Github</a> &bull; <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a> </p> </footer> </div> <script>
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-90027-9']);
   _gaq.push(['_trackPageview']);
@@ -184,7 +39,7 @@ middleman server
   ga.setAttribute('async', 'true');
   document.documentElement.firstChild.appendChild(ga);
   })();
-</script><script type="text/javascript">
+</script> <script>
   var _gauges = _gauges || [];
   (function() {
     var t   = document.createElement('script');
@@ -196,6 +51,4 @@ middleman server
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(t, s);
   })();
-</script>
-</body>
-</html>
+</script> <script src="/javascripts/highlight.pack.js?1335916790" type="text/javascript"></script> <link href="/stylesheets/solarized_light.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <script>hljs.initHighlightingOnLoad();</script> </body> </html>

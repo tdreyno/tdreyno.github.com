@@ -1,101 +1,38 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1">
-<meta name="author" content="Thomas Reynolds">
-<!-- Mobile viewport optimization http://goo.gl/b9SaQ --><meta name="HandheldFriendly" content="True">
-<meta name="MobileOptimized" content="320">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading --><meta http-equiv="cleartype" content="on">
-<!-- Google Setup --><meta content="VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=" name="verify-v1">
-<!-- OpenID Setup --><link href="http://www.myopenid.com/server" rel="openid.server">
-<link href="http://tdreyno.myopenid.com/" rel="openid.delegate">
-<link href="http://tdreyno.myopenid.com" rel="openid2.local_id">
-<link href="http://www.myopenid.com/server" rel="openid2.provider">
-<meta content="http://www.myopenid.com/xrds?username=tdreyno.myopenid.com" http-equiv="X-XRDS-Location">
-<title>Trigger CSS3 Animations with jQuery « Thomas Reynolds</title>
-<!-- Stylesheet --><link type="text/css" media="screen" href="/stylesheets/new.css?1335203275" rel="stylesheet">
-<!-- RSS --><link href="http://feeds2.feedburner.com/awf-allposts" rel="alternate" title="Award Winning Fjords" type="application/rss+xml">
-</head>
-<body>
-    <header><h1>
-        <a href="/">Award-Winning Fjords</a>
-        <span class="sub">Thomas Reynolds</span>
-      </h1></header><div id="frame">
-      
-        <article><h2>Trigger CSS3 Animations with jQuery</h2>
-          <time>May  6 2011</time><p>Did you know that jQuery 1.4.3 added a system for adding custom css attributes? For example, any normal style can be applied like so:</p>
-
-<pre>$(elem).css({ background: 'red' })
-</pre>
-
-<p>But what about more complicated styles? Complicated polyfills and vendor-prefixed styles? What if you could add a custom handler for <tt>border-radius</tt>? It's pretty simple and I'll show you a strawman example.</p>
-
-<p></p>
-
-<pre>$.cssHooks['pirateBackground'] = {
+<!doctype html> <html> <head> <meta charset="utf-8"> <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'> <meta name="author" content="Thomas Reynolds"> <meta name="HandheldFriendly" content="True"> <meta name="MobileOptimized" content="320"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <meta http-equiv="cleartype" content="on"> <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'> <link href='http://www.myopenid.com/server' rel='openid.server'> <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'> <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'> <link href='http://www.myopenid.com/server' rel='openid2.provider'> <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'> <title>Trigger CSS3 Animations with jQuery &laquo; Thomas Reynolds</title> <link href="/stylesheets/new.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'> </head> <body> <header> <h1> <a href="/">Award-Winning Fjords</a> <span class="sub">Thomas Reynolds</span> </header> </header> <div id="frame"> <article> <h2>Trigger CSS3 Animations with jQuery</h2> <time>May 6 2011</time> <p>Did you know that jQuery 1.4.3 added a system for adding custom css attributes? For example, any normal style can be applied like so:</p> <pre><code>$(elem).css({ background: &#39;red&#39; })
+</code></pre> <p>But what about more complicated styles? Complicated polyfills and vendor-prefixed styles? What if you could add a custom handler for <tt>border-radius</tt>? It&#39;s pretty simple and I&#39;ll show you a strawman example.</p> <p></p> <pre><code>$.cssHooks[&#39;pirateBackground&#39;] = {
   get: function(elem, computed, extra) {
-    return "yaarrr";
+    return &quot;yaarrr&quot;;
   },
   set: function(elem, value) {
-    elem.style.background = value + " url(pirates.png)";
+    elem.style.background = value + &quot; url(pirates.png)&quot;;
   }
 };
 
-$(elem).css({ pirateBackground: 'red' });
+$(elem).css({ pirateBackground: &#39;red&#39; });
 // elem now has a red background and the pirates.png pattern
 
-$(elem).css('pirateBackground') == "yaarrr"
-</pre>
-
-<p>Included in David DeSandro's excellent <a href="http://isotope.metafizzy.co/">Isotope</a> library are <a href="https://github.com/desandro/isotope/blob/a2a238968347199842dd7e2d552741d5a63c90b9/jquery.isotope.js">csshooks for CSS3 scale and translate</a>. These hooks correctly use the fast 3d-transforms if available. I've included the full implementation below, but the important part is that you can include the following gist and use it like this:</p>
-
-<pre>// Double the size using CSS3 transform scale 
+$(elem).css(&#39;pirateBackground&#39;) == &quot;yaarrr&quot;
+</code></pre> <p>Included in David DeSandro&#39;s excellent <a href="http://isotope.metafizzy.co/">Isotope</a> library are <a href="https://github.com/desandro/isotope/blob/a2a238968347199842dd7e2d552741d5a63c90b9/jquery.isotope.js">csshooks for CSS3 scale and translate</a>. These hooks correctly use the fast 3d-transforms if available. I&#39;ve included the full implementation below, but the important part is that you can include the following gist and use it like this:</p> <pre><code>// Double the size using CSS3 transform scale 
 $(elem).css({ scale: [2] })
 
 // Move the element 100px right and 200px down
 $(elem).css({ translate: [ 100, 200 ] })
-</pre>
-
-<h2>Demo</h2>
-
-<pre>$('.2x').click(function() {
-  $('.square').css({ scale: [2] })
+</code></pre> <h2>Demo</h2> <pre><code>$(&#39;.2x&#39;).click(function() {
+  $(&#39;.square&#39;).css({ scale: [2] })
 });
 
-$('.1x').click(function() {
-  $('.square').css({ scale: [1] })
+$(&#39;.1x&#39;).click(function() {
+  $(&#39;.square&#39;).css({ scale: [1] })
 });
 
-$('.right').click(function() {
-  $('.square').css({ translate: [150, 0] })
+$(&#39;.right&#39;).click(function() {
+  $(&#39;.square&#39;).css({ translate: [150, 0] })
 });
 
-$('.left').click(function() {
-  $('.square').css({ translate: [25, 0] })
+$(&#39;.left&#39;).click(function() {
+  $(&#39;.square&#39;).css({ translate: [25, 0] })
 });
-</pre>
-
-<iframe width="300" height="450" src="/images/iso/demo.html"></iframe>
-
-<h2>Full Implementation</h2>
-
-<p>Download: <a href="https://gist.github.com/959860">https://gist.github.com/959860</a></p>
-
-<script src="https://gist.github.com/959860.js?file=isoTransform.js"></script></article><footer><p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p>
-    
-        <p>
-          <a href="http://twitter.com/tdreyno">Twitter</a> •
-          <a href="mailto:me@tdreyno.com">Email</a> •
-          <a href="https://github.com/tdreyno">Github</a> •
-          <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a>
-        </p>
-      </footer>
-</div>
-    
-    <script type="text/javascript">
+</code></pre> <iframe width="300" height="450" src="/images/iso/demo.html"></iframe> <h2>Full Implementation</h2> <p>Download: https://gist.github.com/959860</p> <script src="https://gist.github.com/959860.js?file=isoTransform.js"></script> </article> <footer> <p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p> <p> <a href="http://twitter.com/tdreyno">Twitter</a> &bull; <a href="mailto:me@tdreyno.com">Email</a> &bull; <a href="https://github.com/tdreyno">Github</a> &bull; <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a> </p> </footer> </div> <script>
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-90027-9']);
   _gaq.push(['_trackPageview']);
@@ -108,7 +45,7 @@ $('.left').click(function() {
   ga.setAttribute('async', 'true');
   document.documentElement.firstChild.appendChild(ga);
   })();
-</script><script type="text/javascript">
+</script> <script>
   var _gauges = _gauges || [];
   (function() {
     var t   = document.createElement('script');
@@ -120,6 +57,4 @@ $('.left').click(function() {
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(t, s);
   })();
-</script>
-</body>
-</html>
+</script> <script src="/javascripts/highlight.pack.js?1335916790" type="text/javascript"></script> <link href="/stylesheets/solarized_light.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <script>hljs.initHighlightingOnLoad();</script> </body> </html>

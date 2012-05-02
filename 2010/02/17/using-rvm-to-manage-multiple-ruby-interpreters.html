@@ -1,119 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1">
-<meta name="author" content="Thomas Reynolds">
-<!-- Mobile viewport optimization http://goo.gl/b9SaQ --><meta name="HandheldFriendly" content="True">
-<meta name="MobileOptimized" content="320">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading --><meta http-equiv="cleartype" content="on">
-<!-- Google Setup --><meta content="VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=" name="verify-v1">
-<!-- OpenID Setup --><link href="http://www.myopenid.com/server" rel="openid.server">
-<link href="http://tdreyno.myopenid.com/" rel="openid.delegate">
-<link href="http://tdreyno.myopenid.com" rel="openid2.local_id">
-<link href="http://www.myopenid.com/server" rel="openid2.provider">
-<meta content="http://www.myopenid.com/xrds?username=tdreyno.myopenid.com" http-equiv="X-XRDS-Location">
-<title>Using RVM to Manage Multiple Ruby Interpreters « Thomas Reynolds</title>
-<!-- Stylesheet --><link type="text/css" media="screen" href="/stylesheets/new.css?1335203275" rel="stylesheet">
-<!-- RSS --><link href="http://feeds2.feedburner.com/awf-allposts" rel="alternate" title="Award Winning Fjords" type="application/rss+xml">
-</head>
-<body>
-    <header><h1>
-        <a href="/">Award-Winning Fjords</a>
-        <span class="sub">Thomas Reynolds</span>
-      </h1></header><div id="frame">
-      
-        <article><h2>Using RVM to Manage Multiple Ruby Interpreters</h2>
-          <time>Feb 17 2010</time><p>I've been hearing a bit of buzz about the <a href="http://rvm.beginrescueend.com/rvm/install/">Ruby Version Manager</a> project on Twitter and from other Rubyists I know. Basically, the project provides a command-line tool which can download and compile a large number of Ruby implementations and swap between the active implementation on a per-terminal basis.</p>
-
-<p>This is especially useful for me as I have Ruby tools, like <a href="http://middlemanapp.com">Middleman</a>, which I need to maintain on multiple VMs. In the past, you'd have to install each VM to it's own namespace and be very careful when running them to make sure you were in the right VM. For example:</p>
-
-<pre>ruby: The default OSX ruby 1.8.7
+<!doctype html> <html> <head> <meta charset="utf-8"> <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'> <meta name="author" content="Thomas Reynolds"> <meta name="HandheldFriendly" content="True"> <meta name="MobileOptimized" content="320"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <meta http-equiv="cleartype" content="on"> <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'> <link href='http://www.myopenid.com/server' rel='openid.server'> <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'> <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'> <link href='http://www.myopenid.com/server' rel='openid2.provider'> <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'> <title>Using RVM to Manage Multiple Ruby Interpreters &laquo; Thomas Reynolds</title> <link href="/stylesheets/new.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'> </head> <body> <header> <h1> <a href="/">Award-Winning Fjords</a> <span class="sub">Thomas Reynolds</span> </header> </header> <div id="frame"> <article> <h2>Using RVM to Manage Multiple Ruby Interpreters</h2> <time>Feb 17 2010</time> <p>I&#39;ve been hearing a bit of buzz about the <a href="http://rvm.beginrescueend.com/rvm/install/">Ruby Version Manager</a> project on Twitter and from other Rubyists I know. Basically, the project provides a command-line tool which can download and compile a large number of Ruby implementations and swap between the active implementation on a per-terminal basis.</p> <p>This is especially useful for me as I have Ruby tools, like <a href="http://middlemanapp.com">Middleman</a>, which I need to maintain on multiple VMs. In the past, you&#39;d have to install each VM to it&#39;s own namespace and be very careful when running them to make sure you were in the right VM. For example:</p> <pre><code>ruby: The default OSX ruby 1.8.7
 ruby19: My custom-compiled ruby 1.9.1
 jruby: My custom-compiled jRuby
 macruby: My custom-compiled MacRuby
-</pre>
-
-<p>RVM makes managing these interpreters a snap. So here's how you get started.</p>
-
-<h2>Install the gem</h2>
-
-<pre>gem install rvm
-</pre>
-
-<h2>Run the installer</h2>
-
-<pre>rvm-install
-</pre>
-
-<p>Follow instructions and append the output of the install to your terminal profile</p>
-
-<pre>In ~/.profile
+</code></pre> <p>RVM makes managing these interpreters a snap. So here&#39;s how you get started.</p> <h2>Install the gem</h2> <pre><code>gem install rvm
+</code></pre> <h2>Run the installer</h2> <pre><code>rvm-install
+</code></pre> <p>Follow instructions and append the output of the install to your terminal profile</p> <pre><code>In ~/.profile
 Add to the bottom:
 
 if [[ -s /Users/tdreyno/.rvm/scripts/rvm ]] ; then source /Users/tdreyno/.rvm/scripts/rvm ; fi
-</pre>
-
-<p>Then, save and close ~/.profile and run:</p>
-
-<pre>source ~/.profile
-</pre>
-
-<p>Now, you are ready to go.</p>
-
-<h2>Commands</h2>
-
-<p>First, lets see which Ruby VMs the tool detected.</p>
-
-<pre>rvm list
-</pre>
-
-<p>My output includes the built-in OSX VM.</p>
-
-<pre>System Ruby
+</code></pre> <p>Then, save and close ~/.profile and run:</p> <pre><code>source ~/.profile
+</code></pre> <p>Now, you are ready to go.</p> <h2>Commands</h2> <p>First, lets see which Ruby VMs the tool detected.</p> <pre><code>rvm list
+</code></pre> <p>My output includes the built-in OSX VM.</p> <pre><code>System Ruby
 
    system [ x86_64 i386 ppc ]
-</pre>
-
-<p>Now, I want to install some more Rubies.</p>
-
-<pre>rvm install 1.9.1,rbx,jruby,macruby
-</pre>
-
-<p>A couple of minutes later, you'll have 5 different Ruby VMs installed. RBX is Rubinius and the others should be self-explanatory.</p>
-
-<h2>Swapping VMs</h2>
-
-<p>To change between the active VM, simply run:</p>
-
-<pre>rvm use 1.9.1
-</pre>
-
-<p>And now <code>ruby -v</code> returns "ruby 1.9.1p378 (2010-01-10 revision 26273) [i386-darwin10.2.0]"</p>
-
-<p>In my case, I can now run my Cucumber tests against my library and verify that it's working with Ruby 1.9.1.</p>
-
-<p>To return to your original VM, run:</p>
-
-<pre>rvm use system
-</pre>
-
-<p>Be aware that each VM probably has it's own gems. So you'll need to be aware of that and try to keep each VM's gems in sync.</p>
-
-        </article><footer><p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p>
-    
-        <p>
-          <a href="http://twitter.com/tdreyno">Twitter</a> •
-          <a href="mailto:me@tdreyno.com">Email</a> •
-          <a href="https://github.com/tdreyno">Github</a> •
-          <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a>
-        </p>
-      </footer>
-</div>
-    
-    <script type="text/javascript">
+</code></pre> <p>Now, I want to install some more Rubies.</p> <pre><code>rvm install 1.9.1,rbx,jruby,macruby
+</code></pre> <p>A couple of minutes later, you&#39;ll have 5 different Ruby VMs installed. RBX is Rubinius and the others should be self-explanatory.</p> <h2>Swapping VMs</h2> <p>To change between the active VM, simply run:</p> <pre><code>rvm use 1.9.1
+</code></pre> <p>And now <code>ruby -v</code> returns &quot;ruby 1.9.1p378 (2010-01-10 revision 26273) [i386-darwin10.2.0]&quot;</p> <p>In my case, I can now run my Cucumber tests against my library and verify that it&#39;s working with Ruby 1.9.1.</p> <p>To return to your original VM, run:</p> <pre><code>rvm use system
+</code></pre> <p>Be aware that each VM probably has it&#39;s own gems. So you&#39;ll need to be aware of that and try to keep each VM&#39;s gems in sync.</p> </article> <footer> <p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p> <p> <a href="http://twitter.com/tdreyno">Twitter</a> &bull; <a href="mailto:me@tdreyno.com">Email</a> &bull; <a href="https://github.com/tdreyno">Github</a> &bull; <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a> </p> </footer> </div> <script>
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-90027-9']);
   _gaq.push(['_trackPageview']);
@@ -126,7 +29,7 @@ if [[ -s /Users/tdreyno/.rvm/scripts/rvm ]] ; then source /Users/tdreyno/.rvm/sc
   ga.setAttribute('async', 'true');
   document.documentElement.firstChild.appendChild(ga);
   })();
-</script><script type="text/javascript">
+</script> <script>
   var _gauges = _gauges || [];
   (function() {
     var t   = document.createElement('script');
@@ -138,6 +41,4 @@ if [[ -s /Users/tdreyno/.rvm/scripts/rvm ]] ; then source /Users/tdreyno/.rvm/sc
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(t, s);
   })();
-</script>
-</body>
-</html>
+</script> <script src="/javascripts/highlight.pack.js?1335916790" type="text/javascript"></script> <link href="/stylesheets/solarized_light.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <script>hljs.initHighlightingOnLoad();</script> </body> </html>

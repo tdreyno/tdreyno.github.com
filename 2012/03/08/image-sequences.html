@@ -1,304 +1,124 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1">
-<meta name="author" content="Thomas Reynolds">
-<!-- Mobile viewport optimization http://goo.gl/b9SaQ --><meta name="HandheldFriendly" content="True">
-<meta name="MobileOptimized" content="320">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading --><meta http-equiv="cleartype" content="on">
-<!-- Google Setup --><meta content="VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=" name="verify-v1">
-<!-- OpenID Setup --><link href="http://www.myopenid.com/server" rel="openid.server">
-<link href="http://tdreyno.myopenid.com/" rel="openid.delegate">
-<link href="http://tdreyno.myopenid.com" rel="openid2.local_id">
-<link href="http://www.myopenid.com/server" rel="openid2.provider">
-<meta content="http://www.myopenid.com/xrds?username=tdreyno.myopenid.com" http-equiv="X-XRDS-Location">
-<title>Image Sequences: Let Me Count The Ways « Thomas Reynolds</title>
-<!-- Stylesheet --><link type="text/css" media="screen" href="/stylesheets/new.css?1335203275" rel="stylesheet">
-<!-- RSS --><link href="http://feeds2.feedburner.com/awf-allposts" rel="alternate" title="Award Winning Fjords" type="application/rss+xml">
-</head>
-<body>
-    <header><h1>
-        <a href="/">Award-Winning Fjords</a>
-        <span class="sub">Thomas Reynolds</span>
-      </h1></header><div id="frame">
-      
-        <article><h2>Image Sequences: Let Me Count The Ways</h2>
-          <time>Mar  8 2012</time><p>Everyone's very excited by their "Pure CSS" <a href="http://lab.victorcoulon.fr/css/path-menu/">this</a> and "Pure CSS" <a href="http://clear.youyuxi.com/">that</a>, but if we are front-end developers really want to start taking on traditionally Flash use-cases, we're going to need to step out animation game up a notch.</p>
-
-<p>Enter the Image Sequence. An Image Sequence is exactly what it sounds like, a series of images, each representing a single frame of an animation. Usually these will be exported from a high-level application like Adobe After Effects. For memory and performance reasons, these images are usually combined into a single Sprite Sheet. You may have heard of this technique, because <a href="http://en.wikipedia.org/wiki/Sprite_(computer_graphics)">we've been using it for decades</a>.</p>
-
-<p>This week I implemented Image Sequences in 3 different ways. And just yesterday, Apple started using another technique on their <a href="http://www.apple.com/ipad/">iPad product page</a>.</p>
-
-<h2>The Animation</h2>
-
-<p>I'll be animating a "bouncing" particle. Here's a look at the first frame:</p>
-
-<p><img src="/projects/sequence/particle-hover/particle_hover_04_00000.png"></p>
-
-<p>Each frame is 104x124. </p>
-
-<p>Here's <a href="/projects/sequence/particle-hover.zip">a zip of the entire 60 frame sequence</a>.</p>
-
-<p>Finally, here's <a href="/projects/sequence/particle-hover-frames.jpg">a 560kb Sprite Sheet containing all the frames</a>. We'll be using this in all the examples except for Apple's newest implementation.</p>
-
-<h2>1: Pure <del>CSS</del>Sass Animation</h2>
-
-<p>Did I say CSS? I'm way too lazy for that, let's use Sass.</p>
-
-<p>The current versions of all desktop browsers, except IE, <a href="http://caniuse.com/#feat=css-animation">support CSS3 Animations</a>. The syntax for this in CSS looks like the following (you'll need to add your own vendor prefixes):</p>
-
-<div class="highlight">
-<pre><span class="k">@keyframes</span> <span class="nt">animate-particle</span> <span class="p">{</span>
-  <span class="nt">0</span><span class="o">%</span>   <span class="p">{</span> <span class="k">opacity</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span> <span class="p">}</span>
-  <span class="nt">100</span><span class="o">%</span> <span class="p">{</span> <span class="k">opacity</span><span class="o">:</span> <span class="m">1</span><span class="p">;</span> <span class="p">}</span>
-<span class="p">}</span>
-</pre>
-</div>
-
-
-<p>This will define a simple fadeIn animation which you can control on each element which implements it:</p>
-
-<div class="highlight">
-<pre><span class="nf">#my-particle</span> <span class="p">{</span>
-  <span class="k">width</span><span class="o">:</span> <span class="m">104px</span><span class="p">;</span>
-  <span class="k">height</span><span class="o">:</span> <span class="m">124px</span><span class="p">;</span>
-  <span class="k">background</span><span class="o">:</span> <span class="sx">url(particle-hover_04_00000.png)</span><span class="p">;</span>
-  <span class="n">animation</span><span class="o">-</span><span class="n">duration</span><span class="o">:</span> <span class="m">1s</span><span class="p">;</span>
-  <span class="n">animation</span><span class="o">-</span><span class="n">iteration</span><span class="o">-</span><span class="n">count</span><span class="o">:</span> <span class="n">infinite</span><span class="p">;</span>
-  <span class="n">animation</span><span class="o">-</span><span class="n">name</span><span class="o">:</span> <span class="n">animate</span><span class="o">-</span><span class="n">particle</span><span class="p">;</span>
-<span class="p">}</span>
-</pre>
-</div>
-
-
-<p>This will run the 1 second animation infinitely.</p>
-
-<p>So, how can we use this to animate our Sprite Sheet? We'll simply animate the background-position offset of the element 1 frame at a time. If you opened <a href="/projects/sequence/particle-hover-frames.jpg">the Sprite Sheet</a>, you'll remember we've stacked all 60 frames vertically. So our keyframes would look something like: </p>
-
-<div class="highlight">
-<pre><span class="k">@keyframes</span> <span class="nt">animate-particle</span> <span class="p">{</span>
-  <span class="nt">0</span><span class="o">%</span>    <span class="p">{</span> <span class="k">background-position</span><span class="o">:</span> <span class="m">0</span> <span class="m">0</span><span class="p">;</span> <span class="p">}</span>
-  <span class="nt">1</span><span class="nc">.69</span><span class="o">%</span> <span class="p">{</span> <span class="k">background-position</span><span class="o">:</span> <span class="m">0</span> <span class="m">-124px</span><span class="p">;</span> <span class="p">}</span>
-  <span class="nt">3</span><span class="nc">.39</span><span class="o">%</span> <span class="p">{</span> <span class="k">background-position</span><span class="o">:</span> <span class="m">0</span> <span class="m">-248px</span><span class="p">;</span> <span class="p">}</span>
-  <span class="o">...</span>
-<span class="p">}</span>
-</pre>
-</div>
-
+<!doctype html> <html> <head> <meta charset="utf-8"> <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'> <meta name="author" content="Thomas Reynolds"> <meta name="HandheldFriendly" content="True"> <meta name="MobileOptimized" content="320"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <meta http-equiv="cleartype" content="on"> <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'> <link href='http://www.myopenid.com/server' rel='openid.server'> <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'> <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'> <link href='http://www.myopenid.com/server' rel='openid2.provider'> <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'> <title>Image Sequences: Let Me Count The Ways &laquo; Thomas Reynolds</title> <link href="/stylesheets/new.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'> </head> <body> <header> <h1> <a href="/">Award-Winning Fjords</a> <span class="sub">Thomas Reynolds</span> </header> </header> <div id="frame"> <article> <h2>Image Sequences: Let Me Count The Ways</h2> <time>Mar 8 2012</time> <p>Everyone&#39;s very excited by their &quot;Pure CSS&quot; <a href="http://lab.victorcoulon.fr/css/path-menu/">this</a> and &quot;Pure CSS&quot; <a href="http://clear.youyuxi.com/">that</a>, but if we are front-end developers really want to start taking on traditionally Flash use-cases, we&#39;re going to need to step out animation game up a notch.</p> <p>Enter the Image Sequence. An Image Sequence is exactly what it sounds like, a series of images, each representing a single frame of an animation. Usually these will be exported from a high-level application like Adobe After Effects. For memory and performance reasons, these images are usually combined into a single Sprite Sheet. You may have heard of this technique, because <a href="http://en.wikipedia.org/wiki/Sprite_(computer_graphics)">we&#39;ve been using it for decades</a>.</p> <p>This week I implemented Image Sequences in 3 different ways. And just yesterday, Apple started using another technique on their <a href="http://www.apple.com/ipad/">iPad product page</a>.</p> <h2>The Animation</h2> <p>I&#39;ll be animating a &quot;bouncing&quot; particle. Here&#39;s a look at the first frame:</p> <p><img src="/projects/sequence/particle-hover/particle_hover_04_00000.png"></p> <p>Each frame is 104x124. </p> <p>Here&#39;s <a href="/projects/sequence/particle-hover.zip">a zip of the entire 60 frame sequence</a>.</p> <p>Finally, here&#39;s <a href="/projects/sequence/particle-hover-frames.jpg">a 560kb Sprite Sheet containing all the frames</a>. We&#39;ll be using this in all the examples except for Apple&#39;s newest implementation.</p> <h2>1: Pure <del>CSS</del>Sass Animation</h2> <p>Did I say CSS? I&#39;m way too lazy for that, let&#39;s use Sass.</p> <p>The current versions of all desktop browsers, except IE, <a href="http://caniuse.com/#feat=css-animation">support CSS3 Animations</a>. The syntax for this in CSS looks like the following (you&#39;ll need to add your own vendor prefixes):</p> <pre><code>@keyframes animate-particle {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+</code></pre> <p>This will define a simple fadeIn animation which you can control on each element which implements it:</p> <pre><code>#my-particle {
+  width: 104px;
+  height: 124px;
+  background: url(particle-hover_04_00000.png);
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-name: animate-particle;
+}
+</code></pre> <p>This will run the 1 second animation infinitely.</p> <p>So, how can we use this to animate our Sprite Sheet? We&#39;ll simply animate the background-position offset of the element 1 frame at a time. If you opened <a href="/projects/sequence/particle-hover-frames.jpg">the Sprite Sheet</a>, you&#39;ll remember we&#39;ve stacked all 60 frames vertically. So our keyframes would look something like: </p> <pre><code>@keyframes animate-particle {
+  0%    { background-position: 0 0; }
+  1.69% { background-position: 0 -124px; }
+  3.39% { background-position: 0 -248px; }
+  ...
+}
+</code></pre> <p>We need to animate across 60 frames over the 100% range of the animation, which means each frame is 1.695%. This could get nasty and verbose very quickly. Let&#39;s use Sass:</p> <pre><code>@keyframes animate-particle {
+  @for $i from 0 through 59 {
+    $s: ($i * 100) / 59 + &quot;%&quot;;
+    #{$s} { background-position: 0 ($i * -124px); }
+  }
+}
+</code></pre> <p>You can see <a href="https://gist.github.com/2002296">the entire output here</a>. Now, let&#39;s reference that on our element. We&#39;ve double checked with our designer that the animation is at 30fps, so that means our 60 frames should last 2 seconds.</p> <pre><code>#my-particle {
+  width: 104px;
+  height: 124px;
+  background: url(particle-hover-frames.jpg);
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: step-start;
+  animation-name: animate-particle;
+}
+</code></pre> <p>There is one piece of special sauce above and that is:</p> <pre><code>animation-timing-function: step-start;
+</code></pre> <p>Normally, CSS animations will attempt to tween between states, which is great for smooth transitions in opacity or scale, but we need the animate to jump immediately from frame to frame. That is what <code>step-start</code> does.</p> <h4><a href="/projects/sequence/css.html">View the Pure CSS Animation Image Sequence Demo</a>.<br><br></h4> <h2>2: Canvas Animation</h2> <p>The Canvas element is just a blank slate you can draw pixels on to. Drawing image data from individual files or sprite sheets is very easy. We&#39;ll use the same Sprite Sheet from above.</p> <pre><code>function drawFrame(ctx, image, width, height, num) {
+  var offsetX = 0,
+      offsetY = num * height;
+
+  ctx.drawImage(image, 
+    offsetX, offsetY, 
+    width, height, 
+    0, 0, 
+    width, height);
+}
+</code></pre> <p>The above function will take a Canvas context, an Image object, the dimensions of each frame and the frame to draw. We&#39;ll use <a href="http://paulirish.com/2011/requestanimationframe-for-smart-animating/">requestAnimationFrame</a> for smooth animations.</p> <pre><code>var fps          = 30,
+    currentFrame = 0,
+    totalFrames  = 60,
+    img          = document.getElementById(&quot;frames&quot;),
+    canvas       = document.getElementById(&quot;canvas&quot;),
+    ctx          = canvas.getContext(&quot;2d&quot;),
+    currentTime  = new Date().getTime();
+
+(function animloop(time){
+  var delta = (time - currentTime) / 1000;
+
+  currentFrame += (delta * fps);
+
+  var frameNum = Math.floor(currentFrame);
+
+  if (frameNum &gt;= totalFrames) {
+    currentFrame = frameNum = 0;
+  }
+
+  requestAnimationFrame(animloop);
+
+  drawFrame(ctx, img, 104, 124, frameNum);
+  currentTime = time;
+})(currentTime);
+</code></pre> <h4><a href="/projects/sequence/canvas.html">View the Canvas Animation Image Sequence Demo</a>.<br><br></h4> <h2>3: Javascript DOM Animation</h2> <p>The next solution is to implement the CSS version in Javascript. We&#39;ll use the exact same approach. Take a div element, animate its background image. The advantage here is that this will work in every browser (assuming you have the <a href="http://paulirish.com/2011/requestanimationframe-for-smart-animating/">requestAnimationFrame polyfill</a>).</p> <pre><code>#my-particle2 {
+  width: 104px;
+  height: 124px;
+  background: url(particle-hover-frames.jpg);
+}
+</code></pre> <p>Similar CSS, minus the CSS Animation code. Now for the JS (which is similar to the Canvas implementation): </p> <pre><code>var fps          = 30,
+    currentFrame = 0,
+    totalFrames  = 60,
+    elem         = document.getElementById(&quot;my-particle2&quot;),
+    currentTime  = new Date().getTime();
+
+(function animloop(time){
+  var delta = (time - currentTime) / 1000;
+
+  currentFrame += (delta * fps);
+
+  var frameNum = Math.floor(currentFrame);
+
+  if (frameNum &gt;= totalFrames) {
+    currentFrame = frameNum = 0;
+  }
+
+  requestAnimationFrame(animloop);
+
+  elem.style.backgroundPosition = &quot;0 -&quot; + (frameNum * 124) + &quot;px&quot;;
+
+  currentTime = time;
+})(currentTime);
+</code></pre> <h4><a href="/projects/sequence/elem.html">View the Javascript DOM Animation Image Sequence Demo</a>.<br><br></h4> <h2>4: Apple-style IMG Animation</h2> <p>Finally, let&#39;s take a look at Apple&#39;s implementation. They actually use the more straightforward approach. The preload the individual images, and directly set the chosen frame on a normal Image element. Simple, eh?</p> <p>Traditionally, this approach has been considered too slow to smoothly animate, but it looks like the combination of requestAnimationFrame, Webkit&#39;s incredible speed, Apple&#39;s ability to target Safari and the decline of older IE versions has made this technique &quot;fast enough&quot;.</p> <p>Here&#39;s an implementation:</p> <pre><code>var fps          = 30,
+    currentFrame = 0,
+    totalFrames  = 60,
+    img          = document.getElementById(&quot;myImage&quot;),
+    currentTime  = new Date().getTime();
 
-<p>We need to animate across 60 frames over the 100% range of the animation, which means each frame is 1.695%. This could get nasty and verbose very quickly. Let's use Sass:</p>
+(function animloop(time){
+  var delta = (time - currentTime) / 1000;
 
-<div class="highlight">
-<pre><span class="k">@keyframes</span> <span class="nt">animate-particle</span> <span class="p">{</span>
-  <span class="k">@for</span> <span class="err">$</span><span class="nt">i</span> <span class="nt">from</span> <span class="nt">0</span> <span class="nt">through</span> <span class="nt">59</span> <span class="p">{</span>
-    <span class="err">$</span><span class="nt">s</span><span class="o">:</span> <span class="o">(</span><span class="err">$</span><span class="nt">i</span> <span class="o">*</span> <span class="nt">100</span><span class="o">)</span> <span class="o">/</span> <span class="nt">59</span> <span class="o">+</span> <span class="s2">"%"</span><span class="o">;</span>
-    <span class="err">#</span><span class="p">{</span><span class="err">$</span><span class="n">s</span><span class="p">}</span> <span class="p">{</span> <span class="k">background-position</span><span class="o">:</span> <span class="m">0</span> <span class="p">(</span><span class="err">$</span><span class="n">i</span> <span class="o">*</span> <span class="m">-124px</span><span class="p">);</span> <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</pre>
-</div>
+  currentFrame += (delta * fps);
 
+  var frameNum = Math.floor(currentFrame);
 
-<p>You can see <a href="https://gist.github.com/2002296">the entire output here</a>. Now, let's reference that on our element. We've double checked with our designer that the animation is at 30fps, so that means our 60 frames should last 2 seconds.</p>
+  if (frameNum &gt;= totalFrames) {
+    currentFrame = frameNum = 0;
+  }
 
-<div class="highlight">
-<pre><span class="nf">#my-particle</span> <span class="p">{</span>
-  <span class="k">width</span><span class="o">:</span> <span class="m">104px</span><span class="p">;</span>
-  <span class="k">height</span><span class="o">:</span> <span class="m">124px</span><span class="p">;</span>
-  <span class="k">background</span><span class="o">:</span> <span class="sx">url(particle-hover-frames.jpg)</span><span class="p">;</span>
-  <span class="n">animation</span><span class="o">-</span><span class="n">duration</span><span class="o">:</span> <span class="m">2s</span><span class="p">;</span>
-  <span class="n">animation</span><span class="o">-</span><span class="n">iteration</span><span class="o">-</span><span class="n">count</span><span class="o">:</span> <span class="n">infinite</span><span class="p">;</span>
-  <span class="n">animation</span><span class="o">-</span><span class="n">timing</span><span class="o">-</span><span class="n">function</span><span class="o">:</span> <span class="n">step</span><span class="o">-</span><span class="n">start</span><span class="p">;</span>
-  <span class="n">animation</span><span class="o">-</span><span class="n">name</span><span class="o">:</span> <span class="n">animate</span><span class="o">-</span><span class="n">particle</span><span class="p">;</span>
-<span class="p">}</span>
-</pre>
-</div>
+  requestAnimationFrame(animloop);
 
+  img.src = &quot;/projects/sequence/particle-hover/particle_hover_04_000&quot; +
+    (frameNum &lt; 10 ? &quot;0&quot; : &quot;&quot;) + frameNum + &quot;.png&quot;;
 
-<p>There is one piece of special sauce above and that is:</p>
-
-<div class="highlight">
-<pre><span class="nt">animation-timing-function</span><span class="o">:</span> <span class="nt">step-start</span><span class="o">;</span>
-</pre>
-</div>
-
-
-<p>Normally, CSS animations will attempt to tween between states, which is great for smooth transitions in opacity or scale, but we need the animate to jump immediately from frame to frame. That is what <code>step-start</code> does.</p>
-
-<h4>
-<a href="/projects/sequence/css.html">View the Pure CSS Animation Image Sequence Demo</a>.<br><br>
-</h4>
-
-<h2>2: Canvas Animation</h2>
-
-<p>The Canvas element is just a blank slate you can draw pixels on to. Drawing image data from individual files or sprite sheets is very easy. We'll use the same Sprite Sheet from above.</p>
-
-<div class="highlight">
-<pre><span class="kd">function</span> <span class="nx">drawFrame</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">image</span><span class="p">,</span> <span class="nx">width</span><span class="p">,</span> <span class="nx">height</span><span class="p">,</span> <span class="nx">num</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">offsetX</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-      <span class="nx">offsetY</span> <span class="o">=</span> <span class="nx">num</span> <span class="o">*</span> <span class="nx">height</span><span class="p">;</span>
-
-  <span class="nx">ctx</span><span class="p">.</span><span class="nx">drawImage</span><span class="p">(</span><span class="nx">image</span><span class="p">,</span> 
-    <span class="nx">offsetX</span><span class="p">,</span> <span class="nx">offsetY</span><span class="p">,</span> 
-    <span class="nx">width</span><span class="p">,</span> <span class="nx">height</span><span class="p">,</span> 
-    <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> 
-    <span class="nx">width</span><span class="p">,</span> <span class="nx">height</span><span class="p">);</span>
-<span class="p">}</span>
-</pre>
-</div>
-
-
-<p>The above function will take a Canvas context, an Image object, the dimensions of each frame and the frame to draw. We'll use <a href="http://paulirish.com/2011/requestanimationframe-for-smart-animating/">requestAnimationFrame</a> for smooth animations.</p>
-
-<div class="highlight">
-<pre><span class="kd">var</span> <span class="nx">fps</span>          <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
-    <span class="nx">currentFrame</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="nx">totalFrames</span>  <span class="o">=</span> <span class="mi">60</span><span class="p">,</span>
-    <span class="nx">img</span>          <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"frames"</span><span class="p">),</span>
-    <span class="nx">canvas</span>       <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"canvas"</span><span class="p">),</span>
-    <span class="nx">ctx</span>          <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">"2d"</span><span class="p">),</span>
-    <span class="nx">currentTime</span>  <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">();</span>
-
-<span class="p">(</span><span class="kd">function</span> <span class="nx">animloop</span><span class="p">(</span><span class="nx">time</span><span class="p">){</span>
-  <span class="kd">var</span> <span class="nx">delta</span> <span class="o">=</span> <span class="p">(</span><span class="nx">time</span> <span class="o">-</span> <span class="nx">currentTime</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">;</span>
-
-  <span class="nx">currentFrame</span> <span class="o">+=</span> <span class="p">(</span><span class="nx">delta</span> <span class="o">*</span> <span class="nx">fps</span><span class="p">);</span>
-
-  <span class="kd">var</span> <span class="nx">frameNum</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">currentFrame</span><span class="p">);</span>
-
-  <span class="k">if</span> <span class="p">(</span><span class="nx">frameNum</span> <span class="o">&gt;=</span> <span class="nx">totalFrames</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">currentFrame</span> <span class="o">=</span> <span class="nx">frameNum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="p">}</span>
-
-  <span class="nx">requestAnimationFrame</span><span class="p">(</span><span class="nx">animloop</span><span class="p">);</span>
-
-  <span class="nx">drawFrame</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">img</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">124</span><span class="p">,</span> <span class="nx">frameNum</span><span class="p">);</span>
-  <span class="nx">currentTime</span> <span class="o">=</span> <span class="nx">time</span><span class="p">;</span>
-<span class="p">})(</span><span class="nx">currentTime</span><span class="p">);</span>
-</pre>
-</div>
-
-
-<h4>
-<a href="/projects/sequence/canvas.html">View the Canvas Animation Image Sequence Demo</a>.<br><br>
-</h4>
-
-<h2>3: Javascript DOM Animation</h2>
-
-<p>The next solution is to implement the CSS version in Javascript. We'll use the exact same approach. Take a div element, animate its background image. The advantage here is that this will work in every browser (assuming you have the <a href="http://paulirish.com/2011/requestanimationframe-for-smart-animating/">requestAnimationFrame polyfill</a>).</p>
-
-<div class="highlight">
-<pre><span class="nf">#my-particle2</span> <span class="p">{</span>
-  <span class="k">width</span><span class="o">:</span> <span class="m">104px</span><span class="p">;</span>
-  <span class="k">height</span><span class="o">:</span> <span class="m">124px</span><span class="p">;</span>
-  <span class="k">background</span><span class="o">:</span> <span class="sx">url(particle-hover-frames.jpg)</span><span class="p">;</span>
-<span class="p">}</span>
-</pre>
-</div>
-
-
-<p>Similar CSS, minus the CSS Animation code. Now for the JS (which is similar to the Canvas implementation): </p>
-
-<div class="highlight">
-<pre><span class="kd">var</span> <span class="nx">fps</span>          <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
-    <span class="nx">currentFrame</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="nx">totalFrames</span>  <span class="o">=</span> <span class="mi">60</span><span class="p">,</span>
-    <span class="nx">elem</span>         <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"my-particle2"</span><span class="p">),</span>
-    <span class="nx">currentTime</span>  <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">();</span>
-
-<span class="p">(</span><span class="kd">function</span> <span class="nx">animloop</span><span class="p">(</span><span class="nx">time</span><span class="p">){</span>
-  <span class="kd">var</span> <span class="nx">delta</span> <span class="o">=</span> <span class="p">(</span><span class="nx">time</span> <span class="o">-</span> <span class="nx">currentTime</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">;</span>
-
-  <span class="nx">currentFrame</span> <span class="o">+=</span> <span class="p">(</span><span class="nx">delta</span> <span class="o">*</span> <span class="nx">fps</span><span class="p">);</span>
-
-  <span class="kd">var</span> <span class="nx">frameNum</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">currentFrame</span><span class="p">);</span>
-
-  <span class="k">if</span> <span class="p">(</span><span class="nx">frameNum</span> <span class="o">&gt;=</span> <span class="nx">totalFrames</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">currentFrame</span> <span class="o">=</span> <span class="nx">frameNum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="p">}</span>
-
-  <span class="nx">requestAnimationFrame</span><span class="p">(</span><span class="nx">animloop</span><span class="p">);</span>
-
-  <span class="nx">elem</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">backgroundPosition</span> <span class="o">=</span> <span class="s2">"0 -"</span> <span class="o">+</span> <span class="p">(</span><span class="nx">frameNum</span> <span class="o">*</span> <span class="mi">124</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"px"</span><span class="p">;</span>
-
-  <span class="nx">currentTime</span> <span class="o">=</span> <span class="nx">time</span><span class="p">;</span>
-<span class="p">})(</span><span class="nx">currentTime</span><span class="p">);</span>
-</pre>
-</div>
-
-
-<h4>
-<a href="/projects/sequence/elem.html">View the Javascript DOM Animation Image Sequence Demo</a>.<br><br>
-</h4>
-
-<h2>4: Apple-style IMG Animation</h2>
-
-<p>Finally, let's take a look at Apple's implementation. They actually use the more straightforward approach. The preload the individual images, and directly set the chosen frame on a normal Image element. Simple, eh?</p>
-
-<p>Traditionally, this approach has been considered too slow to smoothly animate, but it looks like the combination of requestAnimationFrame, Webkit's incredible speed, Apple's ability to target Safari and the decline of older IE versions has made this technique "fast enough".</p>
-
-<p>Here's an implementation:</p>
-
-<div class="highlight">
-<pre><span class="kd">var</span> <span class="nx">fps</span>          <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
-    <span class="nx">currentFrame</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="nx">totalFrames</span>  <span class="o">=</span> <span class="mi">60</span><span class="p">,</span>
-    <span class="nx">img</span>          <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"myImage"</span><span class="p">),</span>
-    <span class="nx">currentTime</span>  <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">();</span>
-
-<span class="p">(</span><span class="kd">function</span> <span class="nx">animloop</span><span class="p">(</span><span class="nx">time</span><span class="p">){</span>
-  <span class="kd">var</span> <span class="nx">delta</span> <span class="o">=</span> <span class="p">(</span><span class="nx">time</span> <span class="o">-</span> <span class="nx">currentTime</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">;</span>
-
-  <span class="nx">currentFrame</span> <span class="o">+=</span> <span class="p">(</span><span class="nx">delta</span> <span class="o">*</span> <span class="nx">fps</span><span class="p">);</span>
-
-  <span class="kd">var</span> <span class="nx">frameNum</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">currentFrame</span><span class="p">);</span>
-
-  <span class="k">if</span> <span class="p">(</span><span class="nx">frameNum</span> <span class="o">&gt;=</span> <span class="nx">totalFrames</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">currentFrame</span> <span class="o">=</span> <span class="nx">frameNum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="p">}</span>
-
-  <span class="nx">requestAnimationFrame</span><span class="p">(</span><span class="nx">animloop</span><span class="p">);</span>
-
-  <span class="nx">img</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s2">"/projects/sequence/particle-hover/particle_hover_04_000"</span> <span class="o">+</span>
-    <span class="p">(</span><span class="nx">frameNum</span> <span class="o">&lt;</span> <span class="mi">10</span> <span class="o">?</span> <span class="s2">"0"</span> <span class="o">:</span> <span class="s2">""</span><span class="p">)</span> <span class="o">+</span> <span class="nx">frameNum</span> <span class="o">+</span> <span class="s2">".png"</span><span class="p">;</span>
-
-  <span class="nx">currentTime</span> <span class="o">=</span> <span class="nx">time</span><span class="p">;</span>
-<span class="p">})(</span><span class="nx">currentTime</span><span class="p">);</span>
-</pre>
-</div>
-
-
-<h4>
-<a href="/projects/sequence/apple.html">View the Apple-style Animation Image Sequence Demo</a>.<br><br>
-</h4>
-
-<h2>Conclusion</h2>
-
-<p>Each of the above techniques has a specific use-case. </p>
-
-<p>Pure CSS <em>should</em> be GPU accelerated and lets you keep all your animations together in CSS. The downside is that you have to generate all the frame percentages in CSS (or Sass) and that it only works in modern browsers. I've also encountered performance issues where the CSS method is causing redraw/repaint events which slow other animations on the screen.</p>
-
-<p>The Canvas implementation is great for games, where you'll be drawing most of your components directly to the canvas.</p>
-
-<p>The Javascript DOM method works best when you want to load the large Sprite Sheet and avoid too many HTTP requests.</p>
-
-<p>The Apple-style method will probably become very popular. You can start the animation after the page loads and use it as a form of progressive enhancement.</p>
-
-        </article><footer><p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p>
-    
-        <p>
-          <a href="http://twitter.com/tdreyno">Twitter</a> •
-          <a href="mailto:me@tdreyno.com">Email</a> •
-          <a href="https://github.com/tdreyno">Github</a> •
-          <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a>
-        </p>
-      </footer>
-</div>
-    
-    <script type="text/javascript">
+  currentTime = time;
+})(currentTime);
+</code></pre> <h4><a href="/projects/sequence/apple.html">View the Apple-style Animation Image Sequence Demo</a>.<br><br></h4> <h2>Conclusion</h2> <p>Each of the above techniques has a specific use-case. </p> <p>Pure CSS <em>should</em> be GPU accelerated and lets you keep all your animations together in CSS. The downside is that you have to generate all the frame percentages in CSS (or Sass) and that it only works in modern browsers. I&#39;ve also encountered performance issues where the CSS method is causing redraw/repaint events which slow other animations on the screen.</p> <p>The Canvas implementation is great for games, where you&#39;ll be drawing most of your components directly to the canvas.</p> <p>The Javascript DOM method works best when you want to load the large Sprite Sheet and avoid too many HTTP requests.</p> <p>The Apple-style method will probably become very popular. You can start the animation after the page loads and use it as a form of progressive enhancement.</p> </article> <footer> <p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p> <p> <a href="http://twitter.com/tdreyno">Twitter</a> &bull; <a href="mailto:me@tdreyno.com">Email</a> &bull; <a href="https://github.com/tdreyno">Github</a> &bull; <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a> </p> </footer> </div> <script>
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-90027-9']);
   _gaq.push(['_trackPageview']);
@@ -311,7 +131,7 @@
   ga.setAttribute('async', 'true');
   document.documentElement.firstChild.appendChild(ga);
   })();
-</script><script type="text/javascript">
+</script> <script>
   var _gauges = _gauges || [];
   (function() {
     var t   = document.createElement('script');
@@ -323,6 +143,4 @@
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(t, s);
   })();
-</script>
-</body>
-</html>
+</script> <script src="/javascripts/highlight.pack.js?1335916790" type="text/javascript"></script> <link href="/stylesheets/solarized_light.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <script>hljs.initHighlightingOnLoad();</script> </body> </html>

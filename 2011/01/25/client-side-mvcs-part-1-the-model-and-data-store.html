@@ -1,45 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1">
-<meta name="author" content="Thomas Reynolds">
-<!-- Mobile viewport optimization http://goo.gl/b9SaQ --><meta name="HandheldFriendly" content="True">
-<meta name="MobileOptimized" content="320">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading --><meta http-equiv="cleartype" content="on">
-<!-- Google Setup --><meta content="VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=" name="verify-v1">
-<!-- OpenID Setup --><link href="http://www.myopenid.com/server" rel="openid.server">
-<link href="http://tdreyno.myopenid.com/" rel="openid.delegate">
-<link href="http://tdreyno.myopenid.com" rel="openid2.local_id">
-<link href="http://www.myopenid.com/server" rel="openid2.provider">
-<meta content="http://www.myopenid.com/xrds?username=tdreyno.myopenid.com" http-equiv="X-XRDS-Location">
-<title>Client-side MVC+S Part 1: The Model and Data Store « Thomas Reynolds</title>
-<!-- Stylesheet --><link type="text/css" media="screen" href="/stylesheets/new.css?1335203275" rel="stylesheet">
-<!-- RSS --><link href="http://feeds2.feedburner.com/awf-allposts" rel="alternate" title="Award Winning Fjords" type="application/rss+xml">
-</head>
-<body>
-    <header><h1>
-        <a href="/">Award-Winning Fjords</a>
-        <span class="sub">Thomas Reynolds</span>
-      </h1></header><div id="frame">
-      
-        <article><h2>Client-side MVC+S Part 1: The Model and Data Store</h2>
-          <time>Jan 25 2011</time><p>Like it or not, the Apple iPhone and iPad have changed people’s expectations for how apps and even websites should behave. As designers begin porting native application concepts to the web, we front-end developers have got to become more organized and application-oriented to survive. More and more, websites should be categorized as "simple applications." Building sites as a collection of jQuery plugins is a bad idea in this new, complex web-application world.</p>
-
-<p>Maybe you’ve heard about <a href="http://www.sproutcore.com/">Sproutcore</a>, <a href="http://cappuccino.org/">Capuccino</a>, <a href="http://www.sencha.com/products/touch/">Sencha Touch</a>,  <a href="http://javascriptmvc.com/">JavascriptMVC</a> or <a href="http://documentcloud.github.com/backbone/">Backbone</a>. These frameworks provide a full application stack for the web and they are all based on the Model-View-Controller pattern. Please note, if you are familiar with server-side MVC, you should be aware that client-side MVC is slightly different. Even if you aren’t interested in learning a whole new framework, you will definitely need the MVC pattern to build modern web sites so I’m going to talk about what each piece of the pattern looks like on the client-side.</p>
-
-<h2>Model</h2>
-
-<p>Client-side models have two important pieces. First is the traditional model which has some attributes (like name, date updated, etc) and allows you to update those attributes. The generic Javascript object handles this role perfectly. If you’re getting data from JSON, you’re getting a JavaScript Object Model (JSOM?) of the data. For example:</p>
-
-<pre>{ name: "Object 1", updated_at: "2011/01/25" }
-</pre>
-
-<p>At some point you will want to have some helper functions that are related to each model. Maybe you want to get the name in all caps. A simple Javascript Class for this model would look like:</p>
-
-<pre>var Project = function(attrs) {
+<!doctype html> <html> <head> <meta charset="utf-8"> <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'> <meta name="author" content="Thomas Reynolds"> <meta name="HandheldFriendly" content="True"> <meta name="MobileOptimized" content="320"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <meta http-equiv="cleartype" content="on"> <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'> <link href='http://www.myopenid.com/server' rel='openid.server'> <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'> <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'> <link href='http://www.myopenid.com/server' rel='openid2.provider'> <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'> <title>Client-side MVC+S Part 1: The Model and Data Store &laquo; Thomas Reynolds</title> <link href="/stylesheets/new.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'> </head> <body> <header> <h1> <a href="/">Award-Winning Fjords</a> <span class="sub">Thomas Reynolds</span> </header> </header> <div id="frame"> <article> <h2>Client-side MVC+S Part 1: The Model and Data Store</h2> <time>Jan 25 2011</time> <p>Like it or not, the Apple iPhone and iPad have changed people&rsquo;s expectations for how apps and even websites should behave. As designers begin porting native application concepts to the web, we front-end developers have got to become more organized and application-oriented to survive. More and more, websites should be categorized as &quot;simple applications.&quot; Building sites as a collection of jQuery plugins is a bad idea in this new, complex web-application world.</p> <p>Maybe you&rsquo;ve heard about <a href="http://www.sproutcore.com/">Sproutcore</a>, <a href="http://cappuccino.org/">Capuccino</a>, <a href="http://www.sencha.com/products/touch/">Sencha Touch</a>, <a href="http://javascriptmvc.com/">JavascriptMVC</a> or <a href="http://documentcloud.github.com/backbone/">Backbone</a>. These frameworks provide a full application stack for the web and they are all based on the Model-View-Controller pattern. Please note, if you are familiar with server-side MVC, you should be aware that client-side MVC is slightly different. Even if you aren&rsquo;t interested in learning a whole new framework, you will definitely need the MVC pattern to build modern web sites so I&rsquo;m going to talk about what each piece of the pattern looks like on the client-side.</p> <h2>Model</h2> <p>Client-side models have two important pieces. First is the traditional model which has some attributes (like name, date updated, etc) and allows you to update those attributes. The generic Javascript object handles this role perfectly. If you&rsquo;re getting data from JSON, you&rsquo;re getting a JavaScript Object Model (JSOM?) of the data. For example:</p> <pre><code>{ name: &quot;Object 1&quot;, updated_at: &quot;2011/01/25&quot; }
+</code></pre> <p>At some point you will want to have some helper functions that are related to each model. Maybe you want to get the name in all caps. A simple Javascript Class for this model would look like:</p> <pre><code>var Project = function(attrs) {
   this.name = attrs.name;
 }
 
@@ -47,21 +7,13 @@ Project.prototype.allCapsName = function() {
   return this.name.toUpperCase();
 }
 
-var myProject = new Project("mine");
-myProject.allCapsName() =&gt; "MINE"
-</pre>
-
-<p>So far, so good and we’re still entirely in the realm of plain old Javascript. Each of the popular frameworks mentioned above take the approach of wrapping a data object in a class to allow custom methods, but if all you need is a way of organizing your code without a library, this should be good enough.</p>
-
-<h2>Data Store</h2>
-
-<p>The second part of the Model is the Data Store/Source. At some point, you will need a way of getting models from a server, working with a list of models and sending updates to the server. If you have each model handle communication with the server itself, you will end up with a lot of duplication. So let’s make a data store that gets a list of project using a plain javascript model from above. I’m going to use jQuery for the AJAX portion because </p>
-
-<pre>var ProjectList = {
+var myProject = new Project(&quot;mine&quot;);
+myProject.allCapsName() =&gt; &quot;MINE&quot;
+</code></pre> <p>So far, so good and we&rsquo;re still entirely in the realm of plain old Javascript. Each of the popular frameworks mentioned above take the approach of wrapping a data object in a class to allow custom methods, but if all you need is a way of organizing your code without a library, this should be good enough.</p> <h2>Data Store</h2> <p>The second part of the Model is the Data Store/Source. At some point, you will need a way of getting models from a server, working with a list of models and sending updates to the server. If you have each model handle communication with the server itself, you will end up with a lot of duplication. So let&rsquo;s make a data store that gets a list of project using a plain javascript model from above. I&rsquo;m going to use jQuery for the AJAX portion because </p> <pre><code>var ProjectList = {
   all: [],
   fetch: function(myCallback) {
     var self = this;
-    $.get("/projects.json", function(data) {
+    $.get(&quot;/projects.json&quot;, function(data) {
       for (var i = 0; i &lt; data.length; i++) {
         var model = new Project(data[i]);
         self.all.push(model);
@@ -73,28 +25,9 @@ myProject.allCapsName() =&gt; "MINE"
 
 ProjectList.all =&gt; []
 ProjectList.fetch(function(data) { 
-  console.debug("Got a list of Project models");
+  console.debug(&quot;Got a list of Project models&quot;);
 });
-</pre>
-
-<p>Basically, we have a Javascript object which stores a list of our models. When we call <tt>ProjectList.fetch</tt>, jQuery gets JSON representing a bunch of projects which we iterate over and add to <tt>ProjectList.all</tt> which is an array. If you wanted, you could also write some kind of <tt>ProjectList.sync</tt> function which would push data to the backend.</p>
-
-<p><a href="http://www.sproutcore.com/">Sproutcore</a> and <a href="http://www.sencha.com/products/touch/">Sencha Touch</a> provide robust data source libraries for interacting with a wide variety of backends such as REST, XML, JSON or YQL. Their model systems also track which attributes have changed on each object and can intelligently sync with the backend. Still, even without using a framework, this abstraction is very useful.</p>
-
-<p>Ed Spencer has <a href="http://www.sencha.com/blog/2011/01/21/countdown-to-ext-js-4-data-package/">a great write-up of the Sencha/ExtJS Data Package</a>. I highly suggest reading it if only to get a grasp on the importance of having solid client-side models.</p>
-
-        </article><footer><p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p>
-    
-        <p>
-          <a href="http://twitter.com/tdreyno">Twitter</a> •
-          <a href="mailto:me@tdreyno.com">Email</a> •
-          <a href="https://github.com/tdreyno">Github</a> •
-          <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a>
-        </p>
-      </footer>
-</div>
-    
-    <script type="text/javascript">
+</code></pre> <p>Basically, we have a Javascript object which stores a list of our models. When we call <tt>ProjectList.fetch</tt>, jQuery gets JSON representing a bunch of projects which we iterate over and add to <tt>ProjectList.all</tt> which is an array. If you wanted, you could also write some kind of <tt>ProjectList.sync</tt> function which would push data to the backend.</p> <p><a href="http://www.sproutcore.com/">Sproutcore</a> and <a href="http://www.sencha.com/products/touch/">Sencha Touch</a> provide robust data source libraries for interacting with a wide variety of backends such as REST, XML, JSON or YQL. Their model systems also track which attributes have changed on each object and can intelligently sync with the backend. Still, even without using a framework, this abstraction is very useful.</p> <p>Ed Spencer has <a href="http://www.sencha.com/blog/2011/01/21/countdown-to-ext-js-4-data-package/">a great write-up of the Sencha/ExtJS Data Package</a>. I highly suggest reading it if only to get a grasp on the importance of having solid client-side models.</p> </article> <footer> <p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p> <p> <a href="http://twitter.com/tdreyno">Twitter</a> &bull; <a href="mailto:me@tdreyno.com">Email</a> &bull; <a href="https://github.com/tdreyno">Github</a> &bull; <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a> </p> </footer> </div> <script>
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-90027-9']);
   _gaq.push(['_trackPageview']);
@@ -107,7 +40,7 @@ ProjectList.fetch(function(data) {
   ga.setAttribute('async', 'true');
   document.documentElement.firstChild.appendChild(ga);
   })();
-</script><script type="text/javascript">
+</script> <script>
   var _gauges = _gauges || [];
   (function() {
     var t   = document.createElement('script');
@@ -119,6 +52,4 @@ ProjectList.fetch(function(data) {
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(t, s);
   })();
-</script>
-</body>
-</html>
+</script> <script src="/javascripts/highlight.pack.js?1335916790" type="text/javascript"></script> <link href="/stylesheets/solarized_light.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <script>hljs.initHighlightingOnLoad();</script> </body> </html>

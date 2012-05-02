@@ -1,52 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1">
-<meta name="author" content="Thomas Reynolds">
-<!-- Mobile viewport optimization http://goo.gl/b9SaQ --><meta name="HandheldFriendly" content="True">
-<meta name="MobileOptimized" content="320">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading --><meta http-equiv="cleartype" content="on">
-<!-- Google Setup --><meta content="VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=" name="verify-v1">
-<!-- OpenID Setup --><link href="http://www.myopenid.com/server" rel="openid.server">
-<link href="http://tdreyno.myopenid.com/" rel="openid.delegate">
-<link href="http://tdreyno.myopenid.com" rel="openid2.local_id">
-<link href="http://www.myopenid.com/server" rel="openid2.provider">
-<meta content="http://www.myopenid.com/xrds?username=tdreyno.myopenid.com" http-equiv="X-XRDS-Location">
-<title>A Learning Experience. iPhone-style checkboxes in Coffee-Script « Thomas Reynolds</title>
-<!-- Stylesheet --><link type="text/css" media="screen" href="/stylesheets/new.css?1335203275" rel="stylesheet">
-<!-- RSS --><link href="http://feeds2.feedburner.com/awf-allposts" rel="alternate" title="Award Winning Fjords" type="application/rss+xml">
-</head>
-<body>
-    <header><h1>
-        <a href="/">Award-Winning Fjords</a>
-        <span class="sub">Thomas Reynolds</span>
-      </h1></header><div id="frame">
-      
-        <article><h2>A Learning Experience. iPhone-style checkboxes in Coffee-Script</h2>
-          <time>Mar  1 2010</time><p>According to the <a href="http://jashkenas.github.com/coffee-script/">Coffee Script website</a>, "CoffeeScript is a little language that compiles into JavaScript. Think of it as JavaScript's less ostentatious kid brother — the same genes, roughly the same height, but a different sense of style. Apart from a handful of bonus goodies, statements in CoffeeScript correspond one-to-one with their equivalent in JavaScript, it's just another way of saying it."</p>
-
-<p>Basically, Coffee Script is compiled into Javascript and attempts to make basic operations simpler and safe. For example, in Ruby you can add a conditional to the end of the current line as a short-hand for a full <tt>if</tt> statement. In Coffee Script this looks like:</p>
-
-<pre>number = -42 if opposite_day
-</pre>
-
-<p>Which compiles to:</p>
-
-<pre>if (opposite_day) {
+<!doctype html> <html> <head> <meta charset="utf-8"> <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'> <meta name="author" content="Thomas Reynolds"> <meta name="HandheldFriendly" content="True"> <meta name="MobileOptimized" content="320"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <meta http-equiv="cleartype" content="on"> <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'> <link href='http://www.myopenid.com/server' rel='openid.server'> <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'> <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'> <link href='http://www.myopenid.com/server' rel='openid2.provider'> <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'> <title>A Learning Experience. iPhone-style checkboxes in Coffee-Script &laquo; Thomas Reynolds</title> <link href="/stylesheets/new.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'> </head> <body> <header> <h1> <a href="/">Award-Winning Fjords</a> <span class="sub">Thomas Reynolds</span> </header> </header> <div id="frame"> <article> <h2>A Learning Experience. iPhone-style checkboxes in Coffee-Script</h2> <time>Mar 1 2010</time> <p>According to the <a href="http://jashkenas.github.com/coffee-script/">Coffee Script website</a>, &quot;CoffeeScript is a little language that compiles into JavaScript. Think of it as JavaScript&#39;s less ostentatious kid brother — the same genes, roughly the same height, but a different sense of style. Apart from a handful of bonus goodies, statements in CoffeeScript correspond one-to-one with their equivalent in JavaScript, it&#39;s just another way of saying it.&quot;</p> <p>Basically, Coffee Script is compiled into Javascript and attempts to make basic operations simpler and safe. For example, in Ruby you can add a conditional to the end of the current line as a short-hand for a full <tt>if</tt> statement. In Coffee Script this looks like:</p> <pre><code>number = -42 if opposite_day
+</code></pre> <p>Which compiles to:</p> <pre><code>if (opposite_day) {
   number = -42;
 }
-</pre>
-
-<p>Pretty simple, right? If you're familiar with Javascript, you'll recognize Coffee Script's attempt to fix little annoyances. I dove right in and ported my iPhone-style Checkboxes for jQuery to Coffee Script. <a href="http://github.com/tdreyno/iphone-style-checkboxes/blob/master/coffee/iphone-style-checkboxes.coffee">The code can be found on GitHub</a>. Here are a few thoughts and examples I discovered. </p>
-
-<h2>Basic Features</h2>
-
-<p>A lot of the convenience of Coffee Script is only really apparent if you're quite familiar with Javascript. The following three features are fairly common and useful in Ruby, but trying something similar in Javascript requires a bit more error-checking and code. Coffee Script hides this.</p>
-
-<pre># Conditional assignments
+</code></pre> <p>Pretty simple, right? If you&#39;re familiar with Javascript, you&#39;ll recognize Coffee Script&#39;s attempt to fix little annoyances. I dove right in and ported my iPhone-style Checkboxes for jQuery to Coffee Script. <a href="http://github.com/tdreyno/iphone-style-checkboxes/blob/master/coffee/iphone-style-checkboxes.coffee">The code can be found on GitHub</a>. Here are a few thoughts and examples I discovered. </p> <h2>Basic Features</h2> <p>A lot of the convenience of Coffee Script is only really apparent if you&#39;re quite familiar with Javascript. The following three features are fairly common and useful in Ruby, but trying something similar in Javascript requires a bit more error-checking and code. Coffee Script hides this.</p> <pre><code># Conditional assignments
 expensive ||= do_the_math()
 
 # Treating function arguments as a real array
@@ -55,11 +11,7 @@ backwards = -&gt;
 
 # Existence conditions
 solipsism = true if mind? and not world?
-</pre>
-
-<p>These are compiled to their Javascript representations.</p>
-
-<pre># Conditional assignments
+</code></pre> <p>These are compiled to their Javascript representations.</p> <pre><code># Conditional assignments
 expensive = expensive || do_the_math();
 
 # Treating function arguments as a real array
@@ -71,98 +23,42 @@ backwards = function backwards() {
 
 # Existence conditions
 var solipsism;
-if ( (typeof mind !== "undefined" &amp;&amp; mind !== null) &amp;&amp; 
-    !(typeof world !== "undefined" &amp;&amp; world !== null)) {
+if ( (typeof mind !== &quot;undefined&quot; &amp;&amp; mind !== null) &amp;&amp; 
+    !(typeof world !== &quot;undefined&quot; &amp;&amp; world !== null)) {
   solipsism = true;
 }
-</pre>
-
-<h2>Features I Love #1: Simpler functions, this.attribute &amp; function binding</h2>
-
-<p>From here on out, I'll omit the Javascript version. Let's just look at some cool features and trust they will work when compiled. To begin, function definitions, and anonymous functions, are even simpler in Coffee Script. It's as simple as:</p>
-
-<pre>method_name: (parameter1, parameter1, other_params...) -&gt;
-  "Thanks for coming"
-</pre>
-
-<p>The method is defined by a series of parameters, a -&gt; symbol and an indented method body. Unless you specific a return value, the last statement of the method is automatically returned, as in Ruby. The ellipsis parameter is called a Splat, this sucks up the remaining parameters that may have been passed in a groups them into an array.</p>
-
-<p>A class is just a variation of a function in Javascript. Usually capitalized, it looks like this:</p>
-
-<pre>Account = (customer, cart) -&gt;
+</code></pre> <h2>Features I Love #1: Simpler functions, this.attribute &amp; function binding</h2> <p>From here on out, I&#39;ll omit the Javascript version. Let&#39;s just look at some cool features and trust they will work when compiled. To begin, function definitions, and anonymous functions, are even simpler in Coffee Script. It&#39;s as simple as:</p> <pre><code>method_name: (parameter1, parameter1, other_params...) -&gt;
+  &quot;Thanks for coming&quot;
+</code></pre> <p>The method is defined by a series of parameters, a -&gt; symbol and an indented method body. Unless you specific a return value, the last statement of the method is automatically returned, as in Ruby. The ellipsis parameter is called a Splat, this sucks up the remaining parameters that may have been passed in a groups them into an array.</p> <p>A class is just a variation of a function in Javascript. Usually capitalized, it looks like this:</p> <pre><code>Account = (customer, cart) -&gt;
   @customer = customer
   @cart     = cart
-</pre>
-
-<p>The Account class takes two parameters on it's constructor. The @ sign is used for accessing instance variables. In raw Javascript, this is usually handled by the <tt>this</tt> value. Maybe Javascript event libraries allow anonymous functions as callbacks, but the value of <tt>this</tt> inside these callbacks can be hard to ensure. In Coffee Script, we can force the value of <tt>this</tt>, called binding, to the current object by using a =&gt; symbol instead of -&gt;</p>
-
-<pre>  $('.shopping_cart').bind 'click', (event) =&gt;
+</code></pre> <p>The Account class takes two parameters on it&#39;s constructor. The @ sign is used for accessing instance variables. In raw Javascript, this is usually handled by the <tt>this</tt> value. Maybe Javascript event libraries allow anonymous functions as callbacks, but the value of <tt>this</tt> inside these callbacks can be hard to ensure. In Coffee Script, we can force the value of <tt>this</tt>, called binding, to the current object by using a =&gt; symbol instead of -&gt;</p> <pre><code>  $(&#39;.shopping_cart&#39;).bind &#39;click&#39;, (event) =&gt;
     @customer.purchase @cart
-</pre>
-
-<p>The above code, when indented inside the Account class, will make sure the callback method has access to the instance @customer and @cart variables. <a href="http://jashkenas.github.com/coffee-script/#fat_arrow">Look on the Coffee Script site if you want to see the Javascript version of this code</a>. It's a bit rough.</p>
-
-<h2>Features I Love #2: Pattern Matching</h2>
-
-<p>Next up is Pattern Matching, also known as Destructuring Assignment in the ECMAScript 4 syntax. Basically, we have an object or array and we want to pull some pieces out and into variables to work with. The simplest example is having a method that returns an array of three items.</p>
-
-<pre>weather_report: (location) -&gt;
+</code></pre> <p>The above code, when indented inside the Account class, will make sure the callback method has access to the instance @customer and @cart variables. <a href="http://jashkenas.github.com/coffee-script/#fat_arrow">Look on the Coffee Script site if you want to see the Javascript version of this code</a>. It&#39;s a bit rough.</p> <h2>Features I Love #2: Pattern Matching</h2> <p>Next up is Pattern Matching, also known as Destructuring Assignment in the ECMAScript 4 syntax. Basically, we have an object or array and we want to pull some pieces out and into variables to work with. The simplest example is having a method that returns an array of three items.</p> <pre><code>weather_report: (location) -&gt;
   # Make an Ajax request to fetch the weather...
-  [location, 72, "Mostly Sunny"]
+  [location, 72, &quot;Mostly Sunny&quot;]
 
-[city, temp, forecast] = weather_report "Berkeley, CA"
-</pre>
-
-<p>In the above example, the weather_report function returns 3 variables which we then assign to three local variables. The structure of the template on the left-hand side mirrors the value on the right-hand side. So in the example above, we have an array of local variables on the left and an array of results from the function on the right.</p>
-
-<p>Now lets get very complicated. Let's destructure nested objects. This can be very powerful. Here's an example nested object:</p>
-
-<pre>futurists: {
-  sculptor: "Umberto Boccioni"
-  painter:  "Vladimir Burliuk"
+[city, temp, forecast] = weather_report &quot;Berkeley, CA&quot;
+</code></pre> <p>In the above example, the weather_report function returns 3 variables which we then assign to three local variables. The structure of the template on the left-hand side mirrors the value on the right-hand side. So in the example above, we have an array of local variables on the left and an array of results from the function on the right.</p> <p>Now lets get very complicated. Let&#39;s destructure nested objects. This can be very powerful. Here&#39;s an example nested object:</p> <pre><code>futurists: {
+  sculptor: &quot;Umberto Boccioni&quot;
+  painter:  &quot;Vladimir Burliuk&quot;
   poet: {
-    name:   "F.T. Marinetti"
+    name:   &quot;F.T. Marinetti&quot;
     address: [
-      "Via Roma 42R"
-      "Bellagio, Italy 22021"
+      &quot;Via Roma 42R&quot;
+      &quot;Bellagio, Italy 22021&quot;
     ]
   }
 }
-</pre>
-
-<p>Now, we'll pull out the pieces we want into local variables:</p>
-
-<pre>{poet: {name: poet_name, address: [street, city]}} = futurists
-</pre>
-
-<p>This results in poet_name="F.T. Marinetti", street="Via Roma 42R" and city="Bellagio, Italy 22021"</p>
-
-<p>I admit, I'm not used to thinking about data structures in this way, so there are probably some very cool applications which I haven't even thought of yet.</p>
-
-<h2>Features I Love #3: Indentation-aware Heredocs</h2>
-
-<p>The triple quote (from Python, I think?) starts a block of text which will be turned into a single string which has the indentation you'd expect rather than including all of the prefixed whitespace. </p>
-
-<pre>html: '''
+</code></pre> <p>Now, we&#39;ll pull out the pieces we want into local variables:</p> <pre><code>{poet: {name: poet_name, address: [street, city]}} = futurists
+</code></pre> <p>This results in poet_name=&quot;F.T. Marinetti&quot;, street=&quot;Via Roma 42R&quot; and city=&quot;Bellagio, Italy 22021&quot;</p> <p>I admit, I&#39;m not used to thinking about data structures in this way, so there are probably some very cool applications which I haven&#39;t even thought of yet.</p> <h2>Features I Love #3: Indentation-aware Heredocs</h2> <p>The triple quote (from Python, I think?) starts a block of text which will be turned into a single string which has the indentation you&#39;d expect rather than including all of the prefixed whitespace. </p> <pre><code>html: &#39;&#39;&#39;
       &lt;strong&gt;
         cup of coffeescript
       &lt;/strong&gt;
-      '''
-</pre>
-
-<p>Compiles to:</p>
-
-<pre>var html;
-html = "&lt;strong&gt;\n  cup of coffeescript\n&lt;/strong&gt;";
-</pre>
-
-<h2>Conclusion</h2>
-
-<p>That's all I can think of right now. Make sure to check out the <a href="http://jashkenas.github.com/coffee-script/">Coffee Script docs</a>, look at <a href="http://github.com/tdreyno/iphone-style-checkboxes/blob/master/coffee/iphone-style-checkboxes.coffee">my port of iPhone-style Checkboxes</a> and invest a little time in this new language.</p>
-
-<h2>Welcome to the Year 2010, it's ASCII art time!</h2>
-
-<pre>        {                   
+      &#39;&#39;&#39;
+</code></pre> <p>Compiles to:</p> <pre><code>var html;
+html = &quot;&lt;strong&gt;\n  cup of coffeescript\n&lt;/strong&gt;&quot;;
+</code></pre> <h2>Conclusion</h2> <p>That&#39;s all I can think of right now. Make sure to check out the <a href="http://jashkenas.github.com/coffee-script/">Coffee Script docs</a>, look at <a href="http://github.com/tdreyno/iphone-style-checkboxes/blob/master/coffee/iphone-style-checkboxes.coffee">my port of iPhone-style Checkboxes</a> and invest a little time in this new language.</p> <h2>Welcome to the Year 2010, it&#39;s ASCII art time!</h2> <pre><code>        {                   
      }   }   {              
     {   {  }  }             
      }   }{  {               
@@ -170,31 +66,18 @@ html = "&lt;strong&gt;\n  cup of coffeescript\n&lt;/strong&gt;";
    ( }{ }{  { )                   / ____|     / _|/ _|          
  .- { { }  { }} -.               | |     ___ | |_| |_ ___  ___ 
 (  ( } { } { } }  )              | |    / _ \|  _|  _/ _ \/ _ \ 
-|`-..________ ..-'|              | |___| (_) | | | ||  __/  __/ 
+|`-..________ ..-&#39;|              | |___| (_) | | | ||  __/  __/ 
 |                 |               \_____\___/|_| |_| \___|\___|
 |                 ;--.           
 |                (__  \            _____           _       _   
 |                 | )  )          / ____|         (_)     | |  
 |                 |/  /          | (___   ___ _ __ _ _ __ | |_ 
-|                 (  /            \___ \ / __| '__| | '_ \| __|
+|                 (  /            \___ \ / __| &#39;__| | &#39;_ \| __|
 |                 |/              ____) | (__| |  | | |_) | |_ 
 |                 |              |_____/ \___|_|  |_| .__/ \__|
- `-.._________..-'                                  | |        
+ `-.._________..-&#39;                                  | |        
                                                     |_|
-</pre>
-
-        </article><footer><p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p>
-    
-        <p>
-          <a href="http://twitter.com/tdreyno">Twitter</a> •
-          <a href="mailto:me@tdreyno.com">Email</a> •
-          <a href="https://github.com/tdreyno">Github</a> •
-          <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a>
-        </p>
-      </footer>
-</div>
-    
-    <script type="text/javascript">
+</code></pre> </article> <footer> <p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p> <p> <a href="http://twitter.com/tdreyno">Twitter</a> &bull; <a href="mailto:me@tdreyno.com">Email</a> &bull; <a href="https://github.com/tdreyno">Github</a> &bull; <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a> </p> </footer> </div> <script>
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-90027-9']);
   _gaq.push(['_trackPageview']);
@@ -207,7 +90,7 @@ html = "&lt;strong&gt;\n  cup of coffeescript\n&lt;/strong&gt;";
   ga.setAttribute('async', 'true');
   document.documentElement.firstChild.appendChild(ga);
   })();
-</script><script type="text/javascript">
+</script> <script>
   var _gauges = _gauges || [];
   (function() {
     var t   = document.createElement('script');
@@ -219,6 +102,4 @@ html = "&lt;strong&gt;\n  cup of coffeescript\n&lt;/strong&gt;";
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(t, s);
   })();
-</script>
-</body>
-</html>
+</script> <script src="/javascripts/highlight.pack.js?1335916790" type="text/javascript"></script> <link href="/stylesheets/solarized_light.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <script>hljs.initHighlightingOnLoad();</script> </body> </html>

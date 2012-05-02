@@ -1,35 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1">
-<meta name="author" content="Thomas Reynolds">
-<!-- Mobile viewport optimization http://goo.gl/b9SaQ --><meta name="HandheldFriendly" content="True">
-<meta name="MobileOptimized" content="320">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading --><meta http-equiv="cleartype" content="on">
-<!-- Google Setup --><meta content="VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=" name="verify-v1">
-<!-- OpenID Setup --><link href="http://www.myopenid.com/server" rel="openid.server">
-<link href="http://tdreyno.myopenid.com/" rel="openid.delegate">
-<link href="http://tdreyno.myopenid.com" rel="openid2.local_id">
-<link href="http://www.myopenid.com/server" rel="openid2.provider">
-<meta content="http://www.myopenid.com/xrds?username=tdreyno.myopenid.com" http-equiv="X-XRDS-Location">
-<title>Using Compass to implement the Blueprint grid-system &amp; consistent vertical-rhythm « Thomas Reynolds</title>
-<!-- Stylesheet --><link type="text/css" media="screen" href="/stylesheets/new.css?1335203275" rel="stylesheet">
-<!-- RSS --><link href="http://feeds2.feedburner.com/awf-allposts" rel="alternate" title="Award Winning Fjords" type="application/rss+xml">
-</head>
-<body>
-    <header><h1>
-        <a href="/">Award-Winning Fjords</a>
-        <span class="sub">Thomas Reynolds</span>
-      </h1></header><div id="frame">
-      
-        <article><h2>Using Compass to implement the Blueprint grid-system &amp; consistent vertical-rhythm</h2>
-          <time>May  7 2009</time><p>Using Sass &amp; Compass I updated the css on this site to use Blueprint's 950px grid system and their typography for consistent vertical rhythm. 
-The full Sass is included below:</p>
-
-<pre>@import base.sass
+<!doctype html> <html> <head> <meta charset="utf-8"> <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'> <meta name="author" content="Thomas Reynolds"> <meta name="HandheldFriendly" content="True"> <meta name="MobileOptimized" content="320"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <meta http-equiv="cleartype" content="on"> <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'> <link href='http://www.myopenid.com/server' rel='openid.server'> <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'> <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'> <link href='http://www.myopenid.com/server' rel='openid2.provider'> <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'> <title>Using Compass to implement the Blueprint grid-system &amp; consistent vertical-rhythm &laquo; Thomas Reynolds</title> <link href="/stylesheets/new.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'> </head> <body> <header> <h1> <a href="/">Award-Winning Fjords</a> <span class="sub">Thomas Reynolds</span> </header> </header> <div id="frame"> <article> <h2>Using Compass to implement the Blueprint grid-system &amp; consistent vertical-rhythm</h2> <time>May 7 2009</time> <p>Using Sass &amp; Compass I updated the css on this site to use Blueprint&#39;s 950px grid system and their typography for consistent vertical rhythm. The full Sass is included below:</p> <pre><code>@import base.sass
 
 body
   background: #F9F3E8
@@ -46,7 +15,7 @@ h1, h2, h3
     font-weight: 200
 h1
   margin-top: 0
-  background= image_url("title-embellishment.gif") "no-repeat" 17px 7px
+  background= image_url(&quot;title-embellishment.gif&quot;) &quot;no-repeat&quot; 17px 7px
 h2
   margin: 1.5em 0 0 0
 
@@ -60,7 +29,7 @@ hr
   background: #6B4419
   h2
     height: 108px
-    +replace-text("header.gif")
+    +replace-text(&quot;header.gif&quot;)
     +link-fills-element
   p
     display: none
@@ -77,12 +46,12 @@ hr
   blockquote
     color: #592E08
     font-family= !quote_font_family
-    background= image_url("quote.gif") "no-repeat"
+    background= image_url(&quot;quote.gif&quot;) &quot;no-repeat&quot;
   strong
     color= !darker_font_color
   pre
     color= !darker_font_color
-    background= #F2EADD image_url("code.gif") "no-repeat"
+    background= #F2EADD image_url(&quot;code.gif&quot;) &quot;no-repeat&quot;
     overflow: visible
     padding-top: 1.5em
     padding-bottom: 1.5em
@@ -109,7 +78,7 @@ hr
   padding-top: 1.5em
   h2
     color: #543616
-    border-bottom= 3px "solid" !border_color
+    border-bottom= 3px &quot;solid&quot; !border_color
     +prepend(2)
     margin= 0 0 (!baseline - 3px) 0
     span
@@ -117,7 +86,7 @@ hr
       overflow: hidden
       display: inline
       font-weight: bold
-      font-family: 'Helvetica Neue', arial, sans-serif
+      font-family: &#39;Helvetica Neue&#39;, arial, sans-serif
       color: #fff
       padding: 0 10px
       -webkit-border-radius: 0.5em
@@ -132,15 +101,15 @@ hr
       +append(2)
       padding-top: 1.5em
       padding-bottom: 1.5em
-      background= image_url("quote-odd.gif") "no-repeat" 0 -23px
+      background= image_url(&quot;quote-odd.gif&quot;) &quot;no-repeat&quot; 0 -23px
       cite
         font-weight: bold
         font-style: normal
         color: #AF512C
       &amp;amp;.odd
-        background= #F2EADD image_url("quote-even.gif") "no-repeat" 0 -23px
+        background= #F2EADD image_url(&quot;quote-even.gif&quot;) &quot;no-repeat&quot; 0 -23px
       &amp;amp;.comment-author-admin
-        background= #8F704E image_url("quote-myself.gif") "no-repeat" 0 -23px
+        background= #8F704E image_url(&quot;quote-myself.gif&quot;) &quot;no-repeat&quot; 0 -23px
         cite
           color: #fff
         p
@@ -201,20 +170,7 @@ hr
 
     .submit
       height= (!baseline * 2)
-</pre>
-
-        </article><footer><p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p>
-    
-        <p>
-          <a href="http://twitter.com/tdreyno">Twitter</a> •
-          <a href="mailto:me@tdreyno.com">Email</a> •
-          <a href="https://github.com/tdreyno">Github</a> •
-          <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a>
-        </p>
-      </footer>
-</div>
-    
-    <script type="text/javascript">
+</code></pre> </article> <footer> <p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p> <p> <a href="http://twitter.com/tdreyno">Twitter</a> &bull; <a href="mailto:me@tdreyno.com">Email</a> &bull; <a href="https://github.com/tdreyno">Github</a> &bull; <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a> </p> </footer> </div> <script>
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-90027-9']);
   _gaq.push(['_trackPageview']);
@@ -227,7 +183,7 @@ hr
   ga.setAttribute('async', 'true');
   document.documentElement.firstChild.appendChild(ga);
   })();
-</script><script type="text/javascript">
+</script> <script>
   var _gauges = _gauges || [];
   (function() {
     var t   = document.createElement('script');
@@ -239,6 +195,4 @@ hr
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(t, s);
   })();
-</script>
-</body>
-</html>
+</script> <script src="/javascripts/highlight.pack.js?1335916790" type="text/javascript"></script> <link href="/stylesheets/solarized_light.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <script>hljs.initHighlightingOnLoad();</script> </body> </html>

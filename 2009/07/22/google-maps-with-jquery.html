@@ -1,94 +1,37 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1">
-<meta name="author" content="Thomas Reynolds">
-<!-- Mobile viewport optimization http://goo.gl/b9SaQ --><meta name="HandheldFriendly" content="True">
-<meta name="MobileOptimized" content="320">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading --><meta http-equiv="cleartype" content="on">
-<!-- Google Setup --><meta content="VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=" name="verify-v1">
-<!-- OpenID Setup --><link href="http://www.myopenid.com/server" rel="openid.server">
-<link href="http://tdreyno.myopenid.com/" rel="openid.delegate">
-<link href="http://tdreyno.myopenid.com" rel="openid2.local_id">
-<link href="http://www.myopenid.com/server" rel="openid2.provider">
-<meta content="http://www.myopenid.com/xrds?username=tdreyno.myopenid.com" http-equiv="X-XRDS-Location">
-<title>Easy Google Maps with jQuery « Thomas Reynolds</title>
-<!-- Stylesheet --><link type="text/css" media="screen" href="/stylesheets/new.css?1335203275" rel="stylesheet">
-<!-- RSS --><link href="http://feeds2.feedburner.com/awf-allposts" rel="alternate" title="Award Winning Fjords" type="application/rss+xml">
-</head>
-<body>
-    <header><h1>
-        <a href="/">Award-Winning Fjords</a>
-        <span class="sub">Thomas Reynolds</span>
-      </h1></header><div id="frame">
-      
-        <article><h2>Easy Google Maps with jQuery</h2>
-          <time>Jul 22 2009</time><p>The other day I needed a simple way to include a Google Map, so I wrote this jQuery function.</p>
+<!doctype html> <html> <head> <meta charset="utf-8"> <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'> <meta name="author" content="Thomas Reynolds"> <meta name="HandheldFriendly" content="True"> <meta name="MobileOptimized" content="320"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <meta http-equiv="cleartype" content="on"> <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'> <link href='http://www.myopenid.com/server' rel='openid.server'> <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'> <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'> <link href='http://www.myopenid.com/server' rel='openid2.provider'> <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'> <title>Easy Google Maps with jQuery &laquo; Thomas Reynolds</title> <link href="/stylesheets/new.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'> </head> <body> <header> <h1> <a href="/">Award-Winning Fjords</a> <span class="sub">Thomas Reynolds</span> </header> </header> <div id="frame"> <article> <h2>Easy Google Maps with jQuery</h2> <time>Jul 22 2009</time> <p>The other day I needed a simple way to include a Google Map, so I wrote this jQuery function.</p> <pre><code>$.fn.googleMap = function(address, options) {
+  var defaults = {
+    lat: 44.081996,
+    long: -123.0286928,
+    zoom: 14,
+    mapTypeId: google.maps.MapTypeId.HYBRID
+  };
 
-<div class="highlight">
-<pre><span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">googleMap</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">address</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">defaults</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="nx">lat</span><span class="o">:</span> <span class="mf">44.081996</span><span class="p">,</span>
-    <span class="kr">long</span><span class="o">:</span> <span class="o">-</span><span class="mf">123.0286928</span><span class="p">,</span>
-    <span class="nx">zoom</span><span class="o">:</span> <span class="mi">14</span><span class="p">,</span>
-    <span class="nx">mapTypeId</span><span class="o">:</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">MapTypeId</span><span class="p">.</span><span class="nx">HYBRID</span>
-  <span class="p">};</span>
+  options = $.extend(defaults, options || {});
 
-  <span class="nx">options</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">defaults</span><span class="p">,</span> <span class="nx">options</span> <span class="o">||</span> <span class="p">{});</span>
+  var center = new google.maps.LatLng(options.lat, options.long);
+  var map = new google.maps.Map(this.get(0), $.extend(options, { center: center }));
 
-  <span class="kd">var</span> <span class="nx">center</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">LatLng</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">lat</span><span class="p">,</span> <span class="nx">options</span><span class="p">.</span><span class="kr">long</span><span class="p">);</span>
-  <span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Map</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="p">{</span> <span class="nx">center</span><span class="o">:</span> <span class="nx">center</span> <span class="p">}));</span>
-
-  <span class="kd">var</span> <span class="nx">geocoder</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Geocoder</span><span class="p">();</span>
-  <span class="nx">geocoder</span><span class="p">.</span><span class="nx">geocode</span><span class="p">({</span> <span class="nx">address</span><span class="o">:</span> <span class="nx">address</span> <span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">results</span><span class="p">,</span> <span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">status</span> <span class="o">==</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">GeocoderStatus</span><span class="p">.</span><span class="nx">OK</span> <span class="o">&amp;&amp;</span> <span class="nx">results</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">if</span> <span class="p">(</span><span class="nx">status</span> <span class="o">!=</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">GeocoderStatus</span><span class="p">.</span><span class="nx">ZERO_RESULTS</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">map</span><span class="p">.</span><span class="nx">setCenter</span><span class="p">(</span><span class="nx">results</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">geometry</span><span class="p">.</span><span class="nx">location</span><span class="p">);</span>
-        <span class="kd">var</span> <span class="nx">marker</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Marker</span><span class="p">({</span>
-            <span class="nx">position</span><span class="o">:</span> <span class="nx">results</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">geometry</span><span class="p">.</span><span class="nx">location</span><span class="p">,</span>
-            <span class="nx">map</span><span class="o">:</span> <span class="nx">map</span>
-        <span class="p">});</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
-  <span class="p">});</span>
-<span class="p">};</span>
-</pre>
-</div>
-
-
-<p>Basically, the lat &amp; long are default coordinates, but you pass in an address which Google focuses the map on.</p>
-
-<p>This requires the latest (v3) version of the Google Map API.</p>
-
-<h2>Usage</h2>
-
-<div class="highlight">
-<pre><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">'http://maps.google.com/maps/api/js?sensor=false'</span> <span class="na">type=</span><span class="s">'text/javascript'</span><span class="nt">&gt;</span>
-<span class="nt">&lt;/script&gt;</span>
-<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">'text/javascript'</span><span class="nt">&gt;</span>
-  <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">$</span><span class="p">(</span><span class="s1">'#map-container'</span><span class="p">).</span><span class="nx">googleMap</span><span class="p">(</span><span class="s2">"3333 RiverBend Drive, Springfield, OR"</span><span class="p">);</span>
-  <span class="p">});</span>
-<span class="nt">&lt;/script&gt;</span>
-</pre>
-</div>
-
-
-        </article><footer><p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p>
-    
-        <p>
-          <a href="http://twitter.com/tdreyno">Twitter</a> •
-          <a href="mailto:me@tdreyno.com">Email</a> •
-          <a href="https://github.com/tdreyno">Github</a> •
-          <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a>
-        </p>
-      </footer>
-</div>
-    
-    <script type="text/javascript">
+  var geocoder = new google.maps.Geocoder();
+  geocoder.geocode({ address: address }, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK &amp;&amp; results.length) {
+      if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+            position: results[0].geometry.location,
+            map: map
+        });
+      }
+    }
+  });
+};
+</code></pre> <p>Basically, the lat &amp; long are default coordinates, but you pass in an address which Google focuses the map on.</p> <p>This requires the latest (v3) version of the Google Map API.</p> <h2>Usage</h2> <pre><code>&lt;script src=&#39;http://maps.google.com/maps/api/js?sensor=false&#39; type=&#39;text/javascript&#39;&gt;
+&lt;/script&gt;
+&lt;script type=&#39;text/javascript&#39;&gt;
+  $(document).ready(function() {
+    $(&#39;#map-container&#39;).googleMap(&quot;3333 RiverBend Drive, Springfield, OR&quot;);
+  });
+&lt;/script&gt;
+</code></pre> </article> <footer> <p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p> <p> <a href="http://twitter.com/tdreyno">Twitter</a> &bull; <a href="mailto:me@tdreyno.com">Email</a> &bull; <a href="https://github.com/tdreyno">Github</a> &bull; <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a> </p> </footer> </div> <script>
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-90027-9']);
   _gaq.push(['_trackPageview']);
@@ -101,7 +44,7 @@
   ga.setAttribute('async', 'true');
   document.documentElement.firstChild.appendChild(ga);
   })();
-</script><script type="text/javascript">
+</script> <script>
   var _gauges = _gauges || [];
   (function() {
     var t   = document.createElement('script');
@@ -113,6 +56,4 @@
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(t, s);
   })();
-</script>
-</body>
-</html>
+</script> <script src="/javascripts/highlight.pack.js?1335916790" type="text/javascript"></script> <link href="/stylesheets/solarized_light.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <script>hljs.initHighlightingOnLoad();</script> </body> </html>

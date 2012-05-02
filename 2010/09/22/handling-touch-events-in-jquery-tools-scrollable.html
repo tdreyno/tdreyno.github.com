@@ -1,83 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1">
-<meta name="author" content="Thomas Reynolds">
-<!-- Mobile viewport optimization http://goo.gl/b9SaQ --><meta name="HandheldFriendly" content="True">
-<meta name="MobileOptimized" content="320">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading --><meta http-equiv="cleartype" content="on">
-<!-- Google Setup --><meta content="VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=" name="verify-v1">
-<!-- OpenID Setup --><link href="http://www.myopenid.com/server" rel="openid.server">
-<link href="http://tdreyno.myopenid.com/" rel="openid.delegate">
-<link href="http://tdreyno.myopenid.com" rel="openid2.local_id">
-<link href="http://www.myopenid.com/server" rel="openid2.provider">
-<meta content="http://www.myopenid.com/xrds?username=tdreyno.myopenid.com" http-equiv="X-XRDS-Location">
-<title>Handling Touch Events in jQuery Tools Scrollable « Thomas Reynolds</title>
-<!-- Stylesheet --><link type="text/css" media="screen" href="/stylesheets/new.css?1335203275" rel="stylesheet">
-<!-- RSS --><link href="http://feeds2.feedburner.com/awf-allposts" rel="alternate" title="Award Winning Fjords" type="application/rss+xml">
-</head>
-<body>
-    <header><h1>
-        <a href="/">Award-Winning Fjords</a>
-        <span class="sub">Thomas Reynolds</span>
-      </h1></header><div id="frame">
-      
-        <article><h2>Handling Touch Events in jQuery Tools Scrollable</h2>
-          <time>Sep 22 2010</time><p><strong>[EDIT]: Looks like jQuery Tools Scrollable will support touch natively in their next release <a href="http://github.com/jquerytools/jquerytools/commit/d63892b54a85e00bb73ce248f8db29acf327d293">according to this commit</a>.</strong></p>
+<!doctype html> <html> <head> <meta charset="utf-8"> <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'> <meta name="author" content="Thomas Reynolds"> <meta name="HandheldFriendly" content="True"> <meta name="MobileOptimized" content="320"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <meta http-equiv="cleartype" content="on"> <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'> <link href='http://www.myopenid.com/server' rel='openid.server'> <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'> <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'> <link href='http://www.myopenid.com/server' rel='openid2.provider'> <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'> <title>Handling Touch Events in jQuery Tools Scrollable &laquo; Thomas Reynolds</title> <link href="/stylesheets/new.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'> </head> <body> <header> <h1> <a href="/">Award-Winning Fjords</a> <span class="sub">Thomas Reynolds</span> </header> </header> <div id="frame"> <article> <h2>Handling Touch Events in jQuery Tools Scrollable</h2> <time>Sep 22 2010</time> <p><strong>[EDIT]: Looks like jQuery Tools Scrollable will support touch natively in their next release <a href="http://github.com/jquerytools/jquerytools/commit/d63892b54a85e00bb73ce248f8db29acf327d293">according to this commit</a>.</strong></p> <p>Today I was trying to optimize the experience of a website for the Apple iPad. One quick win is to respond to touch events on the device which will make your site feel much smoother and avoid the double tapping which Mobile Safari sometimes requires to activate javascript links. Additionally, your very nice paging controls may not be large enough to comfortably tap on the device (the common wisdom is touch targets need to be at least 40px square). A simple swipe can go a long way towards addressing these issues.</p> <p>So, how can we get the Scrollable widget to handle touch events?</p> <p>First, you&#39;ll obviously need the <a href="http://flowplayer.org/tools/scrollable/index.html">jQuery Tools Scrollable</a> widget.</p> <p>Next, you&#39;ll need Rick Olson&#39;s excellent <a href="http://github.com/technoweenie/jquery.doubletap">DoubleTap for jQuery</a> which adds touch events to jQuery&#39;s event system.</p> <p>Finally, you&#39;ll need to write the glue:</p> <pre><code>$.fn.handleSwipes = function() {
+  return this.each(function() {
+    var api = $(this).data(&quot;scrollable&quot;);
 
-<p>Today I was trying to optimize the experience of a website for the Apple iPad. One quick win is to respond to touch events on the device which will make your site feel much smoother and avoid the double tapping which Mobile Safari sometimes requires to activate javascript links. Additionally, your very nice paging controls may not be large enough to comfortably tap on the device (the common wisdom is touch targets need to be at least 40px square). A simple swipe can go a long way towards addressing these issues.</p>
-
-<p>So, how can we get the Scrollable widget to handle touch events?</p>
-
-<p>First, you'll obviously need the <a href="http://flowplayer.org/tools/scrollable/index.html">jQuery Tools Scrollable</a> widget.</p>
-
-<p>Next, you'll need Rick Olson's excellent <a href="http://github.com/technoweenie/jquery.doubletap">DoubleTap for jQuery</a> which adds touch events to jQuery's event system.</p>
-
-<p>Finally, you'll need to write the glue:</p>
-
-<div class="highlight">
-<pre><span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">handleSwipes</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">"scrollable"</span><span class="p">);</span>
-
-    <span class="nx">api</span><span class="p">.</span><span class="nx">getRoot</span><span class="p">().</span><span class="nx">addSwipeEvents</span><span class="p">()</span>
-       <span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s1">'swipeleft'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-         <span class="nx">api</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
-       <span class="p">})</span>
-       <span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s1">'swiperight'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-         <span class="nx">api</span><span class="p">.</span><span class="nx">prev</span><span class="p">();</span>
-       <span class="p">});</span>
-  <span class="p">});</span>
-<span class="p">};</span>
-</pre>
-</div>
-
-
-<p>Once you have all three of these components on a page, initialize them like so:</p>
-
-<div class="highlight">
-<pre><span class="nx">$</span><span class="p">(</span><span class="s2">".scrollable"</span><span class="p">).</span><span class="nx">scrollable</span><span class="p">().</span><span class="nx">handleSwipes</span><span class="p">();</span>
-</pre>
-</div>
-
-
-<p>Now touch swipes will trigger the next and previous behavious built into the widget. Enjoy.</p>
-
-        </article><footer><p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p>
-    
-        <p>
-          <a href="http://twitter.com/tdreyno">Twitter</a> •
-          <a href="mailto:me@tdreyno.com">Email</a> •
-          <a href="https://github.com/tdreyno">Github</a> •
-          <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a>
-        </p>
-      </footer>
-</div>
-    
-    <script type="text/javascript">
+    api.getRoot().addSwipeEvents()
+       .bind(&#39;swipeleft&#39;, function() {
+         api.next();
+       })
+       .bind(&#39;swiperight&#39;, function() {
+         api.prev();
+       });
+  });
+};
+</code></pre> <p>Once you have all three of these components on a page, initialize them like so:</p> <pre><code>$(&quot;.scrollable&quot;).scrollable().handleSwipes();
+</code></pre> <p>Now touch swipes will trigger the next and previous behavious built into the widget. Enjoy.</p> </article> <footer> <p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p> <p> <a href="http://twitter.com/tdreyno">Twitter</a> &bull; <a href="mailto:me@tdreyno.com">Email</a> &bull; <a href="https://github.com/tdreyno">Github</a> &bull; <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a> </p> </footer> </div> <script>
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-90027-9']);
   _gaq.push(['_trackPageview']);
@@ -90,7 +25,7 @@
   ga.setAttribute('async', 'true');
   document.documentElement.firstChild.appendChild(ga);
   })();
-</script><script type="text/javascript">
+</script> <script>
   var _gauges = _gauges || [];
   (function() {
     var t   = document.createElement('script');
@@ -102,6 +37,4 @@
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(t, s);
   })();
-</script>
-</body>
-</html>
+</script> <script src="/javascripts/highlight.pack.js?1335916790" type="text/javascript"></script> <link href="/stylesheets/solarized_light.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <script>hljs.initHighlightingOnLoad();</script> </body> </html>

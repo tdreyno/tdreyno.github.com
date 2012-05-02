@@ -11,7 +11,7 @@
   </author>
   <entry>
     <title>Middleman 3.0 Beta 2</title>
-    <link href="/2012/04/23/middleman-3-beta-2.html" rel="alternate"/>
+    <link rel="alternate" href="/2012/04/23/middleman-3-beta-2.html"/>
     <id>/2012/04/23/middleman-3-beta-2.html</id>
     <published>2012-04-23T00:00:00-08:00</published>
     <updated>2012-04-23T00:00:00-08:00</updated>
@@ -38,8 +38,7 @@
 
 &lt;p&gt;Before getting in to all the new features, here&amp;#39;s how you can install the beta:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::bash
-gem install middleman --pre
+&lt;pre&gt;&lt;code&gt;gem install middleman --pre
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;&lt;strong&gt;Remember:&lt;/strong&gt; This is a beta and there are bound to be bugs and possible regressions. 3.0 should be fully backwards compatible with 2.x. Please submit any issues you run into on &lt;a href="https://github.com/middleman/middleman/issues"&gt;the Github issue tracker&lt;/a&gt;.&lt;/p&gt;
@@ -94,7 +93,7 @@ gem install middleman --pre
   </entry>
   <entry>
     <title>Canvas Hit Tracking</title>
-    <link href="/2012/03/21/canvas-hit-tracking.html" rel="alternate"/>
+    <link rel="alternate" href="/2012/03/21/canvas-hit-tracking.html"/>
     <id>/2012/03/21/canvas-hit-tracking.html</id>
     <published>2012-03-21T00:00:00-08:00</published>
     <updated>2012-03-21T00:00:00-08:00</updated>
@@ -342,7 +341,7 @@ theWorld.hitTestObjects(150, 50) # =&amp;gt; [c2, c3]
   </entry>
   <entry>
     <title>Image Sequences: Let Me Count The Ways</title>
-    <link href="/2012/03/08/image-sequences.html" rel="alternate"/>
+    <link rel="alternate" href="/2012/03/08/image-sequences.html"/>
     <id>/2012/03/08/image-sequences.html</id>
     <published>2012-03-08T00:00:00-08:00</published>
     <updated>2012-03-08T00:00:00-08:00</updated>
@@ -375,8 +374,7 @@ theWorld.hitTestObjects(150, 50) # =&amp;gt; [c2, c3]
 
 &lt;p&gt;The current versions of all desktop browsers, except IE, &lt;a href="http://caniuse.com/#feat=css-animation"&gt;support CSS3 Animations&lt;/a&gt;. The syntax for this in CSS looks like the following (you&amp;#39;ll need to add your own vendor prefixes):&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::css
-@keyframes animate-particle {
+&lt;pre&gt;&lt;code&gt;@keyframes animate-particle {
   0%   { opacity: 0; }
   100% { opacity: 1; }
 }
@@ -384,8 +382,7 @@ theWorld.hitTestObjects(150, 50) # =&amp;gt; [c2, c3]
 
 &lt;p&gt;This will define a simple fadeIn animation which you can control on each element which implements it:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::css
-#my-particle {
+&lt;pre&gt;&lt;code&gt;#my-particle {
   width: 104px;
   height: 124px;
   background: url(particle-hover_04_00000.png);
@@ -399,8 +396,7 @@ theWorld.hitTestObjects(150, 50) # =&amp;gt; [c2, c3]
 
 &lt;p&gt;So, how can we use this to animate our Sprite Sheet? We&amp;#39;ll simply animate the background-position offset of the element 1 frame at a time. If you opened &lt;a href="/projects/sequence/particle-hover-frames.jpg"&gt;the Sprite Sheet&lt;/a&gt;, you&amp;#39;ll remember we&amp;#39;ve stacked all 60 frames vertically. So our keyframes would look something like: &lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::css
-@keyframes animate-particle {
+&lt;pre&gt;&lt;code&gt;@keyframes animate-particle {
   0%    { background-position: 0 0; }
   1.69% { background-position: 0 -124px; }
   3.39% { background-position: 0 -248px; }
@@ -410,8 +406,7 @@ theWorld.hitTestObjects(150, 50) # =&amp;gt; [c2, c3]
 
 &lt;p&gt;We need to animate across 60 frames over the 100% range of the animation, which means each frame is 1.695%. This could get nasty and verbose very quickly. Let&amp;#39;s use Sass:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::css
-@keyframes animate-particle {
+&lt;pre&gt;&lt;code&gt;@keyframes animate-particle {
   @for $i from 0 through 59 {
     $s: ($i * 100) / 59 + &amp;quot;%&amp;quot;;
     #{$s} { background-position: 0 ($i * -124px); }
@@ -421,8 +416,7 @@ theWorld.hitTestObjects(150, 50) # =&amp;gt; [c2, c3]
 
 &lt;p&gt;You can see &lt;a href="https://gist.github.com/2002296"&gt;the entire output here&lt;/a&gt;. Now, let&amp;#39;s reference that on our element. We&amp;#39;ve double checked with our designer that the animation is at 30fps, so that means our 60 frames should last 2 seconds.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::css
-#my-particle {
+&lt;pre&gt;&lt;code&gt;#my-particle {
   width: 104px;
   height: 124px;
   background: url(particle-hover-frames.jpg);
@@ -435,8 +429,7 @@ theWorld.hitTestObjects(150, 50) # =&amp;gt; [c2, c3]
 
 &lt;p&gt;There is one piece of special sauce above and that is:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::css
-animation-timing-function: step-start;
+&lt;pre&gt;&lt;code&gt;animation-timing-function: step-start;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Normally, CSS animations will attempt to tween between states, which is great for smooth transitions in opacity or scale, but we need the animate to jump immediately from frame to frame. That is what &lt;code&gt;step-start&lt;/code&gt; does.&lt;/p&gt;
@@ -447,8 +440,7 @@ animation-timing-function: step-start;
 
 &lt;p&gt;The Canvas element is just a blank slate you can draw pixels on to. Drawing image data from individual files or sprite sheets is very easy. We&amp;#39;ll use the same Sprite Sheet from above.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-function drawFrame(ctx, image, width, height, num) {
+&lt;pre&gt;&lt;code&gt;function drawFrame(ctx, image, width, height, num) {
   var offsetX = 0,
       offsetY = num * height;
 
@@ -462,8 +454,7 @@ function drawFrame(ctx, image, width, height, num) {
 
 &lt;p&gt;The above function will take a Canvas context, an Image object, the dimensions of each frame and the frame to draw. We&amp;#39;ll use &lt;a href="http://paulirish.com/2011/requestanimationframe-for-smart-animating/"&gt;requestAnimationFrame&lt;/a&gt; for smooth animations.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-var fps          = 30,
+&lt;pre&gt;&lt;code&gt;var fps          = 30,
     currentFrame = 0,
     totalFrames  = 60,
     img          = document.getElementById(&amp;quot;frames&amp;quot;),
@@ -495,8 +486,7 @@ var fps          = 30,
 
 &lt;p&gt;The next solution is to implement the CSS version in Javascript. We&amp;#39;ll use the exact same approach. Take a div element, animate its background image. The advantage here is that this will work in every browser (assuming you have the &lt;a href="http://paulirish.com/2011/requestanimationframe-for-smart-animating/"&gt;requestAnimationFrame polyfill&lt;/a&gt;).&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::css
-#my-particle2 {
+&lt;pre&gt;&lt;code&gt;#my-particle2 {
   width: 104px;
   height: 124px;
   background: url(particle-hover-frames.jpg);
@@ -505,8 +495,7 @@ var fps          = 30,
 
 &lt;p&gt;Similar CSS, minus the CSS Animation code. Now for the JS (which is similar to the Canvas implementation): &lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-var fps          = 30,
+&lt;pre&gt;&lt;code&gt;var fps          = 30,
     currentFrame = 0,
     totalFrames  = 60,
     elem         = document.getElementById(&amp;quot;my-particle2&amp;quot;),
@@ -541,8 +530,7 @@ var fps          = 30,
 
 &lt;p&gt;Here&amp;#39;s an implementation:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-var fps          = 30,
+&lt;pre&gt;&lt;code&gt;var fps          = 30,
     currentFrame = 0,
     totalFrames  = 60,
     img          = document.getElementById(&amp;quot;myImage&amp;quot;),
@@ -585,7 +573,7 @@ var fps          = 30,
   </entry>
   <entry>
     <title>Best Albums of the Year: 2011</title>
-    <link href="/2012/01/07/best-albums-of-the-year-2011.html" rel="alternate"/>
+    <link rel="alternate" href="/2012/01/07/best-albums-of-the-year-2011.html"/>
     <id>/2012/01/07/best-albums-of-the-year-2011.html</id>
     <published>2012-01-07T00:00:00-08:00</published>
     <updated>2012-01-07T00:00:00-08:00</updated>
@@ -701,7 +689,7 @@ var fps          = 30,
   </entry>
   <entry>
     <title>Middleman 3.0 Beta</title>
-    <link href="/2012/01/03/middleman-3-beta.html" rel="alternate"/>
+    <link rel="alternate" href="/2012/01/03/middleman-3-beta.html"/>
     <id>/2012/01/03/middleman-3-beta.html</id>
     <published>2012-01-03T00:00:00-08:00</published>
     <updated>2012-01-03T00:00:00-08:00</updated>
@@ -724,8 +712,7 @@ var fps          = 30,
 
 &lt;p&gt;Before getting in to all the new features, here&amp;#39;s how you can install the beta:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::bash
-gem install middleman --pre
+&lt;pre&gt;&lt;code&gt;gem install middleman --pre
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;&lt;strong&gt;Remember:&lt;/strong&gt; This is a beta and there are bound to be bugs and possible regressions. 3.0 should be fully backwards compatible with 2.x. Please submit any issues you run into on &lt;a href="https://github.com/middleman/middleman/issues"&gt;the Github issue tracker&lt;/a&gt;.&lt;/p&gt;
@@ -744,8 +731,7 @@ gem install middleman --pre
 
 &lt;p&gt;Sometimes you just want to host a directory of web assets on localhost without doing anything fancy. In 3.0, Middleman will do just this if you run it from a directory with a &lt;code&gt;config.rb&lt;/code&gt; file. For example: &lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::bash
-# Download the Zurb Foundation: http://foundation.zurb.com/
+&lt;pre&gt;&lt;code&gt;    # Download the Zurb Foundation: http://foundation.zurb.com/
 cd foundation
 middleman server
 &lt;/code&gt;&lt;/pre&gt;
@@ -755,8 +741,7 @@ middleman server
 
 &lt;p&gt;Sass and Scss file now have access to Sprockets dependency management and to CSS located in gems which support the Rails 3.1 Asset Pipeline. Given a &amp;quot;source/stylesheets/main.css.scss&amp;quot;:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::css
-/**
+&lt;pre&gt;&lt;code&gt;    /**
  *= require &amp;quot;some_partial&amp;quot;
  *
  * Using Zurb as an example: gem install zurb-foundation
@@ -771,8 +756,7 @@ body {
 
 &lt;p&gt;As an alternative to partials and content_for blocks, we&amp;#39;ve added something from the Django world. Say I have a template named &amp;quot;source/index.html.erb&amp;quot; and it&amp;#39;s layout is located at &amp;quot;source/layouts/default.erb&amp;quot;. Normally, the contents of the layout will wrap the contents of the template. With nested layouts, I can add the following to the layout and wrap the contents yet again:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::erb
-&amp;lt;% wrap_layout :admin do %&amp;gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;% wrap_layout :admin do %&amp;gt;
   I am the Defaul Layout
   &amp;lt;%= yield %&amp;gt;
 &amp;lt;% end %&amp;gt;
@@ -785,24 +769,21 @@ body {
 
 &lt;p&gt;Here&amp;#39;s a quick example for building an index page which displays an automatically updating list of it&amp;#39;s child pages.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::erb
-&amp;lt;% for page in current_page.children %&amp;gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;% for page in current_page.children %&amp;gt;
   &amp;lt;%= link_to page.data.title, page.url %&amp;gt;
 &amp;lt;% end %&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;As you&amp;#39;ll notice, the page object has access to that page&amp;#39;s frontmatter. This means we can use frontmatter to provide categorization and work with that data. Say we have several pages with the following frontmatter (and several without it):&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::yaml
----
+&lt;pre&gt;&lt;code&gt;---
 category: internal
 ---
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Now we can select only the pages with that category to display in our list of links:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::erb
-&amp;lt;h1&amp;gt;Internal&amp;lt;/h1&amp;gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;h1&amp;gt;Internal&amp;lt;/h1&amp;gt;
 &amp;lt;% for page in current_page.children.select { |x| x.data.category == &amp;quot;internal&amp;quot; } %&amp;gt;
   &amp;lt;%= link_to page.data.title, page.url %&amp;gt;
 &amp;lt;% end %&amp;gt;
@@ -811,7 +792,7 @@ category: internal
 
 &lt;ul&gt;
 &lt;li&gt;Rewritten to work directly with Rack (Sinatra apps can still be mounted)&lt;/li&gt;
-&lt;li&gt;Yard code docs: &lt;a href="http://rubydoc.info/github/middleman/middleman"&gt;http://rubydoc.info/github/middleman/middleman&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Yard code docs: http://rubydoc.info/github/middleman/middleman&lt;/li&gt;
 &lt;li&gt;3rd Party Command Line Tools&lt;/li&gt;
 &lt;li&gt;Activate mobile html5boilerplate template&lt;/li&gt;
 &lt;li&gt;Support for placekitten.com&lt;/li&gt;
@@ -825,7 +806,7 @@ category: internal
   </entry>
   <entry>
     <title>Ember.js Live Collections</title>
-    <link href="/2011/12/27/emberjs-collections.html" rel="alternate"/>
+    <link rel="alternate" href="/2011/12/27/emberjs-collections.html"/>
     <id>/2011/12/27/emberjs-collections.html</id>
     <published>2011-12-27T00:00:00-08:00</published>
     <updated>2011-12-27T00:00:00-08:00</updated>
@@ -838,7 +819,7 @@ category: internal
 
 &lt;p&gt;You can probably imagine how often you&amp;#39;ll need to implement these patterns: mail clients, chat rooms; anything that updates, really.&lt;/p&gt;
 
-&lt;p&gt;Over the weekend, my friends at Bocoup &lt;a href="http://weblog.bocoup.com/backbone-live-collections"&gt;posted an article&lt;/a&gt; called &lt;em&gt;Backbone.js Live Collections&lt;/em&gt; which discussed how to use Backbone.js&lt;sup&gt;1&lt;/sup&gt; to poll Twitter for new tweets and update a list of those tweets on the page. &lt;strike&gt;I don&amp;#39;t know their official stance on Backbone.js, so I&amp;#39;m going to assume they used it as an example because it was either code extracted from one of their projects or they simply decided to use Backbone.js because of its popularity.&lt;/strike&gt; &lt;strong&gt;[Edit: Ben Alman of Bocoup has clarified their position saying: &amp;quot;FWIW, we decided to use Backbone after a ton of research and experimentation.&amp;quot;]&lt;/strong&gt; Go ahead and read that article&#8230; I&amp;#39;ll wait.&lt;/p&gt;
+&lt;p&gt;Over the weekend, my friends at Bocoup &lt;a href="http://weblog.bocoup.com/backbone-live-collections"&gt;posted an article&lt;/a&gt; called &lt;em&gt;Backbone.js Live Collections&lt;/em&gt; which discussed how to use Backbone.js&lt;sup&gt;1&lt;/sup&gt; to poll Twitter for new tweets and update a list of those tweets on the page. &lt;strike&gt;I don&amp;#39;t know their official stance on Backbone.js, so I&amp;#39;m going to assume they used it as an example because it was either code extracted from one of their projects or they simply decided to use Backbone.js because of its popularity.&lt;/strike&gt; &lt;strong&gt;[Edit: Ben Alman of Bocoup has clarified their position saying: &amp;quot;FWIW, we decided to use Backbone after a ton of research and experimentation.&amp;quot;]&lt;/strong&gt; Go ahead and read that article… I&amp;#39;ll wait.&lt;/p&gt;
 
 &lt;p&gt;Back? Good.&lt;/p&gt;
 
@@ -854,8 +835,7 @@ the DOM to be updated to reflect the new state automatically.&lt;/p&gt;
 
 &lt;h3&gt;App&lt;/h3&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-// Setup a global namespace for our code.
+&lt;pre&gt;&lt;code&gt;// Setup a global namespace for our code.
 Twitter = Em.Application.create({
 
   // When everything is loaded.
@@ -879,8 +859,7 @@ Twitter = Em.Application.create({
 
 &lt;h3&gt;Template View&lt;/h3&gt;
 
-&lt;pre&gt;&lt;code&gt;:::html
-&amp;lt;script type=&amp;quot;text/x-handlebars&amp;quot;&amp;gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;script type=&amp;quot;text/x-handlebars&amp;quot;&amp;gt;
   &amp;lt;ul class=&amp;quot;tweets&amp;quot;&amp;gt;
   {{#each Twitter.searchResults}}
     &amp;lt;li class=&amp;quot;tweet&amp;quot;&amp;gt;{{text}}&amp;lt;/li&amp;gt;
@@ -893,16 +872,14 @@ Twitter = Em.Application.create({
 
 &lt;h3&gt;Model&lt;/h3&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-Twitter.Tweet = Em.Object.extend();
+&lt;pre&gt;&lt;code&gt;Twitter.Tweet = Em.Object.extend();
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;This is entirely a naming/convenience issue. We&amp;#39;re not writing any custom code for handling each tweet. We simply take its JSON and use it directly.&lt;/p&gt;
 
 &lt;h3&gt;Controller&lt;/h3&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-// An instance of ArrayController which handles collections.
+&lt;pre&gt;&lt;code&gt;// An instance of ArrayController which handles collections.
 Twitter.searchResults = Em.ArrayController.create({
 
   // Default collection is an empty array.
@@ -956,8 +933,7 @@ Twitter.searchResults = Em.ArrayController.create({
 
 &lt;p&gt;Here&amp;#39;s the meat of the solution. Most of this is simply setting up a nice API and doing the JSON request. The simplest version of the code above would look like:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-Twitter.searchResults = Em.ArrayController.create();
+&lt;pre&gt;&lt;code&gt;Twitter.searchResults = Em.ArrayController.create();
 $.getJSON(&amp;quot;http://search.twitter.com/search.json?q=cats&amp;amp;callback=?&amp;quot;, function(d) {
    Twitter.searchResults.pushObjects(d.results);
 });
@@ -981,7 +957,7 @@ $.getJSON(&amp;quot;http://search.twitter.com/search.json?q=cats&amp;amp;callbac
   </entry>
   <entry>
     <title>The Tweets They Are A-Changin'</title>
-    <link href="/2011/12/26/the-tweets-they-are-a-changin.html" rel="alternate"/>
+    <link rel="alternate" href="/2011/12/26/the-tweets-they-are-a-changin.html"/>
     <id>/2011/12/26/the-tweets-they-are-a-changin.html</id>
     <published>2011-12-26T00:00:00-08:00</published>
     <updated>2011-12-26T00:00:00-08:00</updated>
@@ -1045,7 +1021,7 @@ $.getJSON(&amp;quot;http://search.twitter.com/search.json?q=cats&amp;amp;callbac
   </entry>
   <entry>
     <title>Kindle Dots</title>
-    <link href="/2011/12/25/kindle-dots.html" rel="alternate"/>
+    <link rel="alternate" href="/2011/12/25/kindle-dots.html"/>
     <id>/2011/12/25/kindle-dots.html</id>
     <published>2011-12-25T00:00:00-08:00</published>
     <updated>2011-12-25T00:00:00-08:00</updated>
@@ -1066,77 +1042,24 @@ $.getJSON(&amp;quot;http://search.twitter.com/search.json?q=cats&amp;amp;callbac
 
 &lt;p&gt;I read a lot of long books this year, mostly fantasy, some sci-fi and some steampunk. I decided to check Amazon for the actual printed page lengths of these books.&lt;/p&gt;
 
-&lt;table&gt;&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Title&lt;/th&gt;
-&lt;th&gt;Pages&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;A Storm of Swords&lt;/td&gt;
-&lt;td&gt;1216&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;A Feast for Crows&lt;/td&gt;
-&lt;td&gt;784&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;A Dance with Dragons&lt;/td&gt;
-&lt;td&gt;1040&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;The Windup Girl&lt;/td&gt;
-&lt;td&gt;300&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;The Half-Made World&lt;/td&gt;
-&lt;td&gt;480&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;The Magicians&lt;/td&gt;
-&lt;td&gt;416&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;The Magician King&lt;/td&gt;
-&lt;td&gt;416&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;The Black Company&lt;/td&gt;
-&lt;td&gt;320&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Shadows Linger&lt;/td&gt;
-&lt;td&gt;319&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;The White Rose&lt;/td&gt;
-&lt;td&gt;320&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;The Name of the Wind&lt;/td&gt;
-&lt;td&gt;672&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;The Dresden Files: Storm Front&lt;/td&gt;
-&lt;td&gt;384&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Old Man&amp;#39;s War&lt;/td&gt;
-&lt;td&gt;320&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Wise Man&amp;#39;s Fear&lt;/td&gt;
-&lt;td&gt;993&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;The Hunger Games&lt;/td&gt;
-&lt;td&gt;384&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Catching Fire&lt;/td&gt;
-&lt;td&gt;391&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;&lt;/table&gt;
+&lt;p&gt;Title                          | Pages
+-------------------------------|------
+A Storm of Swords              | 1216
+A Feast for Crows              |  784
+A Dance with Dragons           | 1040
+The Windup Girl                |  300
+The Half-Made World            |  480
+The Magicians                  |  416
+The Magician King              |  416
+The Black Company              |  320
+Shadows Linger                 |  319
+The White Rose                 |  320
+The Name of the Wind           |  672
+The Dresden Files: Storm Front |  384
+Old Man&amp;#39;s War                  |  320
+Wise Man&amp;#39;s Fear                |  993
+The Hunger Games               |  384
+Catching Fire                  |  391&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Total Pages: &lt;strong&gt;8755&lt;/strong&gt;&lt;/li&gt;
@@ -1146,7 +1069,7 @@ $.getJSON(&amp;quot;http://search.twitter.com/search.json?q=cats&amp;amp;callbac
   </entry>
   <entry>
     <title>Experiment: Particle Rider</title>
-    <link href="/2011/11/30/particle-rider-experiment.html" rel="alternate"/>
+    <link rel="alternate" href="/2011/11/30/particle-rider-experiment.html"/>
     <id>/2011/11/30/particle-rider-experiment.html</id>
     <published>2011-11-30T00:00:00-08:00</published>
     <updated>2011-11-30T00:00:00-08:00</updated>
@@ -1164,7 +1087,7 @@ $.getJSON(&amp;quot;http://search.twitter.com/search.json?q=cats&amp;amp;callbac
   </entry>
   <entry>
     <title>Just Launched: The License Lab</title>
-    <link href="/2011/11/03/just-launched-thelicenselab.html" rel="alternate"/>
+    <link rel="alternate" href="/2011/11/03/just-launched-thelicenselab.html"/>
     <id>/2011/11/03/just-launched-thelicenselab.html</id>
     <published>2011-11-03T00:00:00-08:00</published>
     <updated>2011-11-03T00:00:00-08:00</updated>
@@ -1202,7 +1125,7 @@ $.getJSON(&amp;quot;http://search.twitter.com/search.json?q=cats&amp;amp;callbac
   </entry>
   <entry>
     <title>Just Launched: Metalab Design v4</title>
-    <link href="/2011/09/11/just-launched-metalab-v4.html" rel="alternate"/>
+    <link rel="alternate" href="/2011/09/11/just-launched-metalab-v4.html"/>
     <id>/2011/09/11/just-launched-metalab-v4.html</id>
     <published>2011-09-11T00:00:00-08:00</published>
     <updated>2011-09-11T00:00:00-08:00</updated>
@@ -1239,7 +1162,7 @@ $.getJSON(&amp;quot;http://search.twitter.com/search.json?q=cats&amp;amp;callbac
   </entry>
   <entry>
     <title>Middleman 2.0</title>
-    <link href="/2011/08/08/middleman-2-0.html" rel="alternate"/>
+    <link rel="alternate" href="/2011/08/08/middleman-2-0.html"/>
     <id>/2011/08/08/middleman-2-0.html</id>
     <published>2011-08-08T00:00:00-08:00</published>
     <updated>2011-08-08T00:00:00-08:00</updated>
@@ -1250,8 +1173,7 @@ $.getJSON(&amp;quot;http://search.twitter.com/search.json?q=cats&amp;amp;callbac
 
 &lt;p&gt;As always, install via RubyGems:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::bash
-gem install middleman
+&lt;pre&gt;&lt;code&gt;gem install middleman
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;For more information, read the &lt;a href="http://middlemanapp.com/guides/getting-started"&gt;Getting Started&lt;/a&gt; guide.&lt;/p&gt;
@@ -1263,8 +1185,7 @@ gem install middleman
 
 &lt;p&gt;As always, install via RubyGems:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::bash
-gem install middleman
+&lt;pre&gt;&lt;code&gt;gem install middleman
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;For more information, read the &lt;a href="http://middlemanapp.com/guides/getting-started"&gt;Getting Started&lt;/a&gt; guide.&lt;/p&gt;
@@ -1295,8 +1216,7 @@ gem install middleman
 
 &lt;p&gt;Sprockets is a tool for Javascript dependency management. Using Sprockets you can include other Javascript and CoffeeScript files into your scripts. &lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-//= require &amp;quot;another_file&amp;quot;
+&lt;pre&gt;&lt;code&gt;//= require &amp;quot;another_file&amp;quot;
 
 function my_javascript() {
 
@@ -1309,8 +1229,7 @@ function my_javascript() {
 
 &lt;p&gt;Dynamic pages allow you to generate HTML for files which share a single template. &lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::ruby
-[&amp;quot;tom&amp;quot;, &amp;quot;dick&amp;quot;, &amp;quot;harry&amp;quot;].each do |name|
+&lt;pre&gt;&lt;code&gt;[&amp;quot;tom&amp;quot;, &amp;quot;dick&amp;quot;, &amp;quot;harry&amp;quot;].each do |name|
   page &amp;quot;/about/#{name}.html&amp;quot;, :proxy =&amp;gt; &amp;quot;/about/template.html&amp;quot; do
     @person_name = name
   end
@@ -1323,8 +1242,7 @@ end
 
 &lt;p&gt;Pretty URLs (aka Directory Indexes) let you generate folders for each HTML file in your project which results in a pretty, extension-less URL in common web-servers.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::ruby
-activate :directory_indexes
+&lt;pre&gt;&lt;code&gt;activate :directory_indexes
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Now &lt;code&gt;source/my-page.html&lt;/code&gt; will generate &lt;code&gt;build/my-page/index.html&lt;/code&gt;.&lt;/p&gt;
@@ -1335,8 +1253,7 @@ activate :directory_indexes
 
 &lt;p&gt;YAML Frontmatter lets you add in-template variables at the top of a page, which are also available in the layout, and to configure which layout the page uses.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::erb
----
+&lt;pre&gt;&lt;code&gt;---
 layout: &amp;quot;login&amp;quot;
 page_name: &amp;quot;Login&amp;quot;
 ---
@@ -1354,16 +1271,14 @@ page_name: &amp;quot;Login&amp;quot;
 
 &lt;p&gt;In addition, you can have LiveReload monitor your project files as well and instruct the web-browser to reload when they change using the &lt;a href="https://github.com/mockko/livereload#readme"&gt;LiveReload Extension&lt;/a&gt; and the &lt;code&gt;--livereload&lt;/code&gt; flag.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::bash
-middleman server --livereload
+&lt;pre&gt;&lt;code&gt;middleman server --livereload
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2&gt;Migrating to 2.0&lt;/h2&gt;
 
 &lt;p&gt;Updating old projects to Middleman 2.0 is very easy. Simply use the new &lt;code&gt;migrate&lt;/code&gt; command:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::bash
-middleman migrate
+&lt;pre&gt;&lt;code&gt;middleman migrate
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Read more about the migration edge cases in the &lt;a href="http://middlemanapp.com/guides/migrating"&gt;Migrating to Middleman 2.0&lt;/a&gt; guide.&lt;/p&gt;
@@ -1375,7 +1290,7 @@ middleman migrate
   </entry>
   <entry>
     <title>CoffeeScript-specific Style Guide</title>
-    <link href="/2011/05/13/coffeescript-specific-style-guide.html" rel="alternate"/>
+    <link rel="alternate" href="/2011/05/13/coffeescript-specific-style-guide.html"/>
     <id>/2011/05/13/coffeescript-specific-style-guide.html</id>
     <published>2011-05-13T00:00:00-08:00</published>
     <updated>2011-05-13T00:00:00-08:00</updated>
@@ -1395,8 +1310,7 @@ middleman migrate
 
 &lt;p&gt;Here&amp;#39;s a simple piece of jQuery and a test case in plain Javascript.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-var elem = $(&amp;quot;#myselector&amp;quot;).addClass(&amp;quot;testing&amp;quot;);
+&lt;pre&gt;&lt;code&gt;var elem = $(&amp;quot;#myselector&amp;quot;).addClass(&amp;quot;testing&amp;quot;);
 expect(elem.id).toEqual(&amp;quot;myselector&amp;quot;);
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -1433,7 +1347,7 @@ expect(elem.id).toEqual &amp;quot;myselector&amp;quot;
   </entry>
   <entry>
     <title>Javascript Microframeworks and The Future</title>
-    <link href="/2011/05/09/javascript-microframeworks-and-the-future.html" rel="alternate"/>
+    <link rel="alternate" href="/2011/05/09/javascript-microframeworks-and-the-future.html"/>
     <id>/2011/05/09/javascript-microframeworks-and-the-future.html</id>
     <published>2011-05-09T00:00:00-08:00</published>
     <updated>2011-05-09T00:00:00-08:00</updated>
@@ -1517,7 +1431,7 @@ expect(elem.id).toEqual &amp;quot;myselector&amp;quot;
 &lt;li&gt;DOM Attributes (Bonzo)&lt;/li&gt;
 &lt;li&gt;DOM Data Storage (Bonzo)&lt;/li&gt;
 &lt;li&gt;Core Helpers and Plugin Framework: $.each, $.extend, etc (Underscore &amp;amp; Klass)&lt;/li&gt;
-&lt;li&gt;CSS reading/writing/animating (&#201;mile)&lt;/li&gt;
+&lt;li&gt;CSS reading/writing/animating (Émile)&lt;/li&gt;
 &lt;li&gt;AJAX (Reqwest)&lt;/li&gt;
 &lt;li&gt;Events (Bean)&lt;/li&gt;
 &lt;/ul&gt;
@@ -1532,7 +1446,7 @@ expect(elem.id).toEqual &amp;quot;myselector&amp;quot;
 
 &lt;p&gt;Next, I ported the site to JavascriptMVC which has a very nice dependency management system and only pulls in the pieces you need (and jQuery). The coding-style was nicer, the code modularized and the minified output was: &lt;u&gt;110k&lt;/u&gt;. Makes sense, it has all of jQuery plus a 1k of glue code (Class system + Controllers). I&amp;#39;d really like to see JavascriptMVC (and Sproutcore too), break up jQuery into it&amp;#39;s components and rely on those directly. Their dependency management systems can handle this and it should reduce the file system for relatively simple apps.&lt;/p&gt;
 
-&lt;p&gt;Finally, I used Ender with Bonzo, &#201;mile, Bean, Qwery and &lt;a href="http://extralogical.net/projects/firmin/"&gt;Firmin&lt;/a&gt;. I had to change some stuff around and basically invent a micro controller system, but the minified output was only: &lt;u&gt;38k&lt;/u&gt;.&lt;/p&gt;
+&lt;p&gt;Finally, I used Ender with Bonzo, Émile, Bean, Qwery and &lt;a href="http://extralogical.net/projects/firmin/"&gt;Firmin&lt;/a&gt;. I had to change some stuff around and basically invent a micro controller system, but the minified output was only: &lt;u&gt;38k&lt;/u&gt;.&lt;/p&gt;
 
 &lt;p&gt;So, not a surprise, when competing purely on size, microframeworks and Ender.js win. I didn&amp;#39;t really love the code I had to write for the Ender.js version and I don&amp;#39;t appreciate opening 4 different documentation pages to figure out the methods. Still, I&amp;#39;ll probably stick with it because the project has only a single developer, doesn&amp;#39;t require great IE compatibility and my primary goal is speed.&lt;/p&gt;
 
@@ -1547,7 +1461,7 @@ expect(elem.id).toEqual &amp;quot;myselector&amp;quot;
   </entry>
   <entry>
     <title>Trigger CSS3 Animations with jQuery</title>
-    <link href="/2011/05/06/trigger-css3-animations-with-jquery.html" rel="alternate"/>
+    <link rel="alternate" href="/2011/05/06/trigger-css3-animations-with-jquery.html"/>
     <id>/2011/05/06/trigger-css3-animations-with-jquery.html</id>
     <published>2011-05-06T00:00:00-08:00</published>
     <updated>2011-05-06T00:00:00-08:00</updated>
@@ -1618,14 +1532,14 @@ $(&amp;#39;.left&amp;#39;).click(function() {
 
 &lt;h2&gt;Full Implementation&lt;/h2&gt;
 
-&lt;p&gt;Download: &lt;a href="https://gist.github.com/959860"&gt;https://gist.github.com/959860&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Download: https://gist.github.com/959860&lt;/p&gt;
 
 &lt;script src="https://gist.github.com/959860.js?file=isoTransform.js"&gt;&lt;/script&gt;
 </content>
   </entry>
   <entry>
     <title>jQuery.Deferred Image Preloader</title>
-    <link href="/2011/05/03/jquerydeferred-image-preloader.html" rel="alternate"/>
+    <link rel="alternate" href="/2011/05/03/jquerydeferred-image-preloader.html"/>
     <id>/2011/05/03/jquerydeferred-image-preloader.html</id>
     <published>2011-05-03T00:00:00-08:00</published>
     <updated>2011-05-03T00:00:00-08:00</updated>
@@ -1668,7 +1582,7 @@ var loadImage = function(imageSrc) {
   </entry>
   <entry>
     <title>Just Launched: PixelUnion v2</title>
-    <link href="/2011/04/26/just-launched-pixelunion-v2.html" rel="alternate"/>
+    <link rel="alternate" href="/2011/04/26/just-launched-pixelunion-v2.html"/>
     <id>/2011/04/26/just-launched-pixelunion-v2.html</id>
     <published>2011-04-26T00:00:00-08:00</published>
     <updated>2011-04-26T00:00:00-08:00</updated>
@@ -1679,21 +1593,21 @@ var loadImage = function(imageSrc) {
 
 &lt;blockquote&gt;
 &lt;p&gt;&lt;iframe src="http://player.vimeo.com/video/22873653" width="500" height="281" frameborder="0"&gt;&lt;/iframe&gt;&lt;br /&gt;&lt;br /&gt;
-About a year ago, we teamed up with &lt;a href="http://www.45royale.com/"&gt;45royale&lt;/a&gt; to create &lt;a href="http://pixelunion.net"&gt;Pixel Union&lt;/a&gt;, a premium Tumblr theme marketplace showcasing designs by some of the world&#8217;s best designers. It&#8217;s been immensely successful. What began as four themes dedicated to better showcasing photographs and videos has rapidly turned into a library of nearly twenty, multipurpose themes. &lt;br /&gt;&lt;br /&gt;
+About a year ago, we teamed up with &lt;a href="http://www.45royale.com/"&gt;45royale&lt;/a&gt; to create &lt;a href="http://pixelunion.net"&gt;Pixel Union&lt;/a&gt;, a premium Tumblr theme marketplace showcasing designs by some of the world’s best designers. It’s been immensely successful. What began as four themes dedicated to better showcasing photographs and videos has rapidly turned into a library of nearly twenty, multipurpose themes. &lt;br /&gt;&lt;br /&gt;
 </summary>
     <content type="html">&lt;p&gt;A project I&amp;#39;ve been working on has just launched. Check out the release post from the Metalab blog below:&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;&lt;iframe src="http://player.vimeo.com/video/22873653" width="500" height="281" frameborder="0"&gt;&lt;/iframe&gt;&lt;br /&gt;&lt;br /&gt;
-About a year ago, we teamed up with &lt;a href="http://www.45royale.com/"&gt;45royale&lt;/a&gt; to create &lt;a href="http://pixelunion.net"&gt;Pixel Union&lt;/a&gt;, a premium Tumblr theme marketplace showcasing designs by some of the world&#8217;s best designers. It&#8217;s been immensely successful. What began as four themes dedicated to better showcasing photographs and videos has rapidly turned into a library of nearly twenty, multipurpose themes. &lt;br /&gt;&lt;br /&gt;
-It&#8217;s with a whole lot of pride that we announce today the launch of Pixel Union 2.0. We&#8217;ve redesigned the site, we&#8217;ve packed it full of new themes and, over the next two months, we&#8217;re going to be releasing one new theme each week. Check out &lt;a href="http://pixelunion.net/"&gt;the new site&lt;/a&gt; and stay tuned by following Pixel Union &lt;a href="http://twitter.com/pixelunion"&gt;on Twitter&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;
+About a year ago, we teamed up with &lt;a href="http://www.45royale.com/"&gt;45royale&lt;/a&gt; to create &lt;a href="http://pixelunion.net"&gt;Pixel Union&lt;/a&gt;, a premium Tumblr theme marketplace showcasing designs by some of the world’s best designers. It’s been immensely successful. What began as four themes dedicated to better showcasing photographs and videos has rapidly turned into a library of nearly twenty, multipurpose themes. &lt;br /&gt;&lt;br /&gt;
+It’s with a whole lot of pride that we announce today the launch of Pixel Union 2.0. We’ve redesigned the site, we’ve packed it full of new themes and, over the next two months, we’re going to be releasing one new theme each week. Check out &lt;a href="http://pixelunion.net/"&gt;the new site&lt;/a&gt; and stay tuned by following Pixel Union &lt;a href="http://twitter.com/pixelunion"&gt;on Twitter&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;
 &lt;strong&gt;- &lt;a href="http://blog.metalabdesign.com/post/4966260447/introducing-pixel-union-2-0-about-a-year-ago-we"&gt;Metalab Blog&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 </content>
   </entry>
   <entry>
     <title>Just Give a Damn About Something</title>
-    <link href="/2011/04/26/just-give-a-damn-about-something.html" rel="alternate"/>
+    <link rel="alternate" href="/2011/04/26/just-give-a-damn-about-something.html"/>
     <id>/2011/04/26/just-give-a-damn-about-something.html</id>
     <published>2011-04-26T00:00:00-08:00</published>
     <updated>2011-04-26T00:00:00-08:00</updated>
@@ -1713,7 +1627,7 @@ It&#8217;s with a whole lot of pride that we announce today the launch of Pixel 
   </entry>
   <entry>
     <title>CrossFit is for Nerds</title>
-    <link href="/2011/04/24/crossfit-is-for-nerds.html" rel="alternate"/>
+    <link rel="alternate" href="/2011/04/24/crossfit-is-for-nerds.html"/>
     <id>/2011/04/24/crossfit-is-for-nerds.html</id>
     <published>2011-04-24T00:00:00-08:00</published>
     <updated>2011-04-24T00:00:00-08:00</updated>
@@ -1795,7 +1709,7 @@ It&#8217;s with a whole lot of pride that we announce today the launch of Pixel 
   </entry>
   <entry>
     <title>Branching Out, Opening Up and Publishing More</title>
-    <link href="/2011/04/23/branching-out-opening-up-and-publishing-more.html" rel="alternate"/>
+    <link rel="alternate" href="/2011/04/23/branching-out-opening-up-and-publishing-more.html"/>
     <id>/2011/04/23/branching-out-opening-up-and-publishing-more.html</id>
     <published>2011-04-23T00:00:00-08:00</published>
     <updated>2011-04-23T00:00:00-08:00</updated>
@@ -1817,7 +1731,7 @@ It&#8217;s with a whole lot of pride that we announce today the launch of Pixel 
   </entry>
   <entry>
     <title>Middleman v1.1</title>
-    <link href="/2011/04/15/middleman-v11.html" rel="alternate"/>
+    <link rel="alternate" href="/2011/04/15/middleman-v11.html"/>
     <id>/2011/04/15/middleman-v11.html</id>
     <published>2011-04-15T00:00:00-08:00</published>
     <updated>2011-04-15T00:00:00-08:00</updated>
@@ -1828,7 +1742,7 @@ It&#8217;s with a whole lot of pride that we announce today the launch of Pixel 
 
 &lt;p&gt;It&amp;#39;s been a long time since &lt;a href="/2009/10/22/middleman"&gt;I introduced Middleman on this blog&lt;/a&gt; in 2009. Since then, RubyGems reports that there have been 27,518 downloads, &lt;a href="https://github.com/middleman/middleman/contributors"&gt;several great contributors&lt;/a&gt; to the source code and even a mention in a printed book.&lt;/p&gt;
 
-&lt;p&gt;I&amp;#39;ve been working hard on documentation as it was the most requested feature from the &lt;a href="/2011/02/06/future-of-middleman-survey"&gt;&amp;quot;Future of Middleman Survey&amp;quot;&lt;/a&gt;. I&amp;#39;m a developer and I&amp;#39;m sorry to admit that my first documentation target is the code and generated documentation. Available at: &lt;a href="http://middlemanapp.com/"&gt;&lt;a href="http://middlemanapp.com/"&gt;http://middlemanapp.com/&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I&amp;#39;ve been working hard on documentation as it was the most requested feature from the &lt;a href="/2011/02/06/future-of-middleman-survey"&gt;&amp;quot;Future of Middleman Survey&amp;quot;&lt;/a&gt;. I&amp;#39;m a developer and I&amp;#39;m sorry to admit that my first documentation target is the code and generated documentation. Available at: &lt;a href="http://middlemanapp.com/"&gt;http://middlemanapp.com/&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;I know, I need better, more tutorial-style written documentation for actual people. I&amp;#39;ll be working on it as time permits, but I&amp;#39;d also love any assistance.&lt;/p&gt;
 
@@ -1853,7 +1767,7 @@ It&#8217;s with a whole lot of pride that we announce today the launch of Pixel 
 
 &lt;p&gt;It&amp;#39;s been a long time since &lt;a href="/2009/10/22/middleman"&gt;I introduced Middleman on this blog&lt;/a&gt; in 2009. Since then, RubyGems reports that there have been 27,518 downloads, &lt;a href="https://github.com/middleman/middleman/contributors"&gt;several great contributors&lt;/a&gt; to the source code and even a mention in a printed book.&lt;/p&gt;
 
-&lt;p&gt;I&amp;#39;ve been working hard on documentation as it was the most requested feature from the &lt;a href="/2011/02/06/future-of-middleman-survey"&gt;&amp;quot;Future of Middleman Survey&amp;quot;&lt;/a&gt;. I&amp;#39;m a developer and I&amp;#39;m sorry to admit that my first documentation target is the code and generated documentation. Available at: &lt;a href="http://middlemanapp.com/"&gt;&lt;a href="http://middlemanapp.com/"&gt;http://middlemanapp.com/&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I&amp;#39;ve been working hard on documentation as it was the most requested feature from the &lt;a href="/2011/02/06/future-of-middleman-survey"&gt;&amp;quot;Future of Middleman Survey&amp;quot;&lt;/a&gt;. I&amp;#39;m a developer and I&amp;#39;m sorry to admit that my first documentation target is the code and generated documentation. Available at: &lt;a href="http://middlemanapp.com/"&gt;http://middlemanapp.com/&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;I know, I need better, more tutorial-style written documentation for actual people. I&amp;#39;ll be working on it as time permits, but I&amp;#39;d also love any assistance.&lt;/p&gt;
 
@@ -2016,12 +1930,12 @@ run Middleman::Server
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Please direct all questions and bugs to Github:
-&lt;a href="https://github.com/middleman/middleman"&gt;&lt;a href="https://github.com/middleman/middleman"&gt;https://github.com/middleman/middleman&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;a href="https://github.com/middleman/middleman"&gt;https://github.com/middleman/middleman&lt;/a&gt;&lt;/p&gt;
 </content>
   </entry>
   <entry>
     <title>Adjustable Animations with Sliders</title>
-    <link href="/2011/04/13/adjustable-animations-with-sliders.html" rel="alternate"/>
+    <link rel="alternate" href="/2011/04/13/adjustable-animations-with-sliders.html"/>
     <id>/2011/04/13/adjustable-animations-with-sliders.html</id>
     <published>2011-04-13T00:00:00-08:00</published>
     <updated>2011-04-13T00:00:00-08:00</updated>
@@ -2145,7 +2059,7 @@ run Middleman::Server
   </entry>
   <entry>
     <title>Announcing: WouldHire.com</title>
-    <link href="/2011/04/08/announcing-wouldhirecom.html" rel="alternate"/>
+    <link rel="alternate" href="/2011/04/08/announcing-wouldhirecom.html"/>
     <id>/2011/04/08/announcing-wouldhirecom.html</id>
     <published>2011-04-08T00:00:00-08:00</published>
     <updated>2011-04-08T00:00:00-08:00</updated>
@@ -2190,7 +2104,7 @@ Person A: Ah, man, you should have told me you were looking.
   </entry>
   <entry>
     <title>Model and Data Store: JavascriptMVC</title>
-    <link href="/2011/02/18/model-and-data-store-javascriptmvc.html" rel="alternate"/>
+    <link rel="alternate" href="/2011/02/18/model-and-data-store-javascriptmvc.html"/>
     <id>/2011/02/18/model-and-data-store-javascriptmvc.html</id>
     <published>2011-02-18T00:00:00-08:00</published>
     <updated>2011-02-18T00:00:00-08:00</updated>
@@ -2323,7 +2237,7 @@ newProject.save();
   </entry>
   <entry>
     <title>Aaron Quint on Javascript Hash URLs</title>
-    <link href="/2011/02/11/aaron-quint-on-javascript-hash-urls.html" rel="alternate"/>
+    <link rel="alternate" href="/2011/02/11/aaron-quint-on-javascript-hash-urls.html"/>
     <id>/2011/02/11/aaron-quint-on-javascript-hash-urls.html</id>
     <published>2011-02-11T00:00:00-08:00</published>
     <updated>2011-02-11T00:00:00-08:00</updated>
@@ -2331,12 +2245,12 @@ newProject.save();
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;Sammy and the &#8216;#&#8217; are for applications. It provides a way to maintain state in a world where you can require JavaScript and even require the presence of certain browsers. If you&#8217;re an application, that requires login/signup you can make a number of demands of your users. You also probably dont even want the crawlability. You&#8217;re using &#8216;#&#8217; to maintain state for a specific user in a specific session.&lt;/p&gt;
+&lt;p&gt;Sammy and the ‘#’ are for applications. It provides a way to maintain state in a world where you can require JavaScript and even require the presence of certain browsers. If you’re an application, that requires login/signup you can make a number of demands of your users. You also probably dont even want the crawlability. You’re using ‘#’ to maintain state for a specific user in a specific session.&lt;/p&gt;
 </summary>
     <content type="html">&lt;blockquote&gt;
-&lt;p&gt;Sammy and the &#8216;#&#8217; are for applications. It provides a way to maintain state in a world where you can require JavaScript and even require the presence of certain browsers. If you&#8217;re an application, that requires login/signup you can make a number of demands of your users. You also probably dont even want the crawlability. You&#8217;re using &#8216;#&#8217; to maintain state for a specific user in a specific session.&lt;/p&gt;
+&lt;p&gt;Sammy and the ‘#’ are for applications. It provides a way to maintain state in a world where you can require JavaScript and even require the presence of certain browsers. If you’re an application, that requires login/signup you can make a number of demands of your users. You also probably dont even want the crawlability. You’re using ‘#’ to maintain state for a specific user in a specific session.&lt;/p&gt;
 
-&lt;p&gt;Outside of the world of the &#8216;application&#8217; you really, really shouldn&#8217;t rely on JavaScript being there for your site to work (at least at a basic level).&lt;br /&gt;
+&lt;p&gt;Outside of the world of the ‘application’ you really, really shouldn’t rely on JavaScript being there for your site to work (at least at a basic level).&lt;br /&gt;
 &lt;strong&gt;- Aaron Quint&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -2347,7 +2261,7 @@ newProject.save();
   </entry>
   <entry>
     <title>Andy Rutledge on Kickstarter</title>
-    <link href="/2011/02/08/andy-rutledge-on-kickstarter.html" rel="alternate"/>
+    <link rel="alternate" href="/2011/02/08/andy-rutledge-on-kickstarter.html"/>
     <id>/2011/02/08/andy-rutledge-on-kickstarter.html</id>
     <published>2011-02-08T00:00:00-08:00</published>
     <updated>2011-02-08T00:00:00-08:00</updated>
@@ -2355,10 +2269,10 @@ newProject.save();
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;By taking the professional-to-client approach for what should be a merchant-to-customer context, Mr. Chimero has abdicated ownership of his idea/genius and the results that will come of it. Having bought and paid for it, the collective investors now own his genius in this project. By selling out first before he created the product he promises, he&#8217;s now working for the investors instead of working for himself.&lt;br /&gt;
+&lt;p&gt;By taking the professional-to-client approach for what should be a merchant-to-customer context, Mr. Chimero has abdicated ownership of his idea/genius and the results that will come of it. Having bought and paid for it, the collective investors now own his genius in this project. By selling out first before he created the product he promises, he’s now working for the investors instead of working for himself.&lt;br /&gt;
 </summary>
     <content type="html">&lt;blockquote&gt;
-&lt;p&gt;By taking the professional-to-client approach for what should be a merchant-to-customer context, Mr. Chimero has abdicated ownership of his idea/genius and the results that will come of it. Having bought and paid for it, the collective investors now own his genius in this project. By selling out first before he created the product he promises, he&#8217;s now working for the investors instead of working for himself.&lt;br /&gt;
+&lt;p&gt;By taking the professional-to-client approach for what should be a merchant-to-customer context, Mr. Chimero has abdicated ownership of his idea/genius and the results that will come of it. Having bought and paid for it, the collective investors now own his genius in this project. By selling out first before he created the product he promises, he’s now working for the investors instead of working for himself.&lt;br /&gt;
 &lt;strong&gt;- Andy Rutledge&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -2367,7 +2281,7 @@ newProject.save();
   </entry>
   <entry>
     <title>Future of Middleman Survey</title>
-    <link href="/2011/02/06/future-of-middleman-survey.html" rel="alternate"/>
+    <link rel="alternate" href="/2011/02/06/future-of-middleman-survey.html"/>
     <id>/2011/02/06/future-of-middleman-survey.html</id>
     <published>2011-02-06T00:00:00-08:00</published>
     <updated>2011-02-06T00:00:00-08:00</updated>
@@ -2376,16 +2290,16 @@ newProject.save();
     </author>
     <summary type="html">&lt;p&gt;I&amp;#39;ve created a brief survey about &lt;a href="http://middlemanapp.com"&gt;Middleman&lt;/a&gt;. If you&amp;#39;ve used the project, I would love your input. Thanks!&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="http://www.surveymonkey.com/s/5P9B92Q"&gt;&lt;a href="http://www.surveymonkey.com/s/5P9B92Q"&gt;http://www.surveymonkey.com/s/5P9B92Q&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.surveymonkey.com/s/5P9B92Q"&gt;http://www.surveymonkey.com/s/5P9B92Q&lt;/a&gt;&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;I&amp;#39;ve created a brief survey about &lt;a href="http://middlemanapp.com"&gt;Middleman&lt;/a&gt;. If you&amp;#39;ve used the project, I would love your input. Thanks!&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="http://www.surveymonkey.com/s/5P9B92Q"&gt;&lt;a href="http://www.surveymonkey.com/s/5P9B92Q"&gt;http://www.surveymonkey.com/s/5P9B92Q&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.surveymonkey.com/s/5P9B92Q"&gt;http://www.surveymonkey.com/s/5P9B92Q&lt;/a&gt;&lt;/p&gt;
 </content>
   </entry>
   <entry>
     <title>Model and Data Store: Sencha</title>
-    <link href="/2011/01/28/model-and-data-store-sencha.html" rel="alternate"/>
+    <link rel="alternate" href="/2011/01/28/model-and-data-store-sencha.html"/>
     <id>/2011/01/28/model-and-data-store-sencha.html</id>
     <published>2011-01-28T00:00:00-08:00</published>
     <updated>2011-01-28T00:00:00-08:00</updated>
@@ -2405,7 +2319,7 @@ newProject.save();
   </entry>
   <entry>
     <title>Client-side MVC+S Part 1: The Model and Data Store</title>
-    <link href="/2011/01/25/client-side-mvcs-part-1-the-model-and-data-store.html" rel="alternate"/>
+    <link rel="alternate" href="/2011/01/25/client-side-mvcs-part-1-the-model-and-data-store.html"/>
     <id>/2011/01/25/client-side-mvcs-part-1-the-model-and-data-store.html</id>
     <published>2011-01-25T00:00:00-08:00</published>
     <updated>2011-01-25T00:00:00-08:00</updated>
@@ -2474,7 +2388,7 @@ ProjectList.fetch(function(data) {
   </entry>
   <entry>
     <title>SecondStoryJS State Machine now has a documentation website</title>
-    <link href="/2010/12/31/secondstoryjs-state-machine-now-has-a-documentation-website.html" rel="alternate"/>
+    <link rel="alternate" href="/2010/12/31/secondstoryjs-state-machine-now-has-a-documentation-website.html"/>
     <id>/2010/12/31/secondstoryjs-state-machine-now-has-a-documentation-website.html</id>
     <published>2010-12-31T00:00:00-08:00</published>
     <updated>2010-12-31T00:00:00-08:00</updated>
@@ -2483,18 +2397,18 @@ ProjectList.fetch(function(data) {
     </author>
     <summary type="html">&lt;p&gt;You can now learn everything you wanted to know about the JavascriptMVC3 state machine on the project website at:&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-statemachine/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;You can now learn everything you wanted to know about the JavascriptMVC3 state machine on the project website at:&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-statemachine/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/SecondStoryJS-StateMachine.png" alt="SecondStoryJS State Machine" /&gt;&lt;/p&gt;
 </content>
   </entry>
   <entry>
     <title>Best Albums of the Year: 2010</title>
-    <link href="/2010/12/09/best-albums-of-the-year-2010.html" rel="alternate"/>
+    <link rel="alternate" href="/2010/12/09/best-albums-of-the-year-2010.html"/>
     <id>/2010/12/09/best-albums-of-the-year-2010.html</id>
     <published>2010-12-09T00:00:00-08:00</published>
     <updated>2010-12-09T00:00:00-08:00</updated>
@@ -2670,7 +2584,7 @@ ProjectList.fetch(function(data) {
       &lt;img src='http://awardwinningfjords.com/albums/2010/13.jpg' /&gt;&lt;div&gt;&lt;/div&gt;
     &lt;/div&gt;
     &lt;div class='content_small'&gt;
-      &lt;h6&gt;Janelle Mon&#225;e&lt;/h6&gt;
+      &lt;h6&gt;Janelle Monáe&lt;/h6&gt;
       &lt;h4&gt;The ArchAndroid&lt;/h4&gt;
       &lt;p&gt;Fantastically inventive hip hop album. It's all over the place and most of it works. Janelle is destined to be a superstar.&lt;/p&gt;
     &lt;/div&gt;
@@ -2700,7 +2614,7 @@ ProjectList.fetch(function(data) {
   </entry>
   <entry>
     <title>PubSub, Evented Programming and Javascript</title>
-    <link href="/2010/10/27/pubsub-evented-programming-and-javascript.html" rel="alternate"/>
+    <link rel="alternate" href="/2010/10/27/pubsub-evented-programming-and-javascript.html"/>
     <id>/2010/10/27/pubsub-evented-programming-and-javascript.html</id>
     <published>2010-10-27T00:00:00-08:00</published>
     <updated>2010-10-27T00:00:00-08:00</updated>
@@ -2770,7 +2684,7 @@ $.ajax({
   </entry>
   <entry>
     <title>Slides from my jQuery Conference Presentation</title>
-    <link href="/2010/10/18/slides-from-my-jquery-conference-presentation.html" rel="alternate"/>
+    <link rel="alternate" href="/2010/10/18/slides-from-my-jquery-conference-presentation.html"/>
     <id>/2010/10/18/slides-from-my-jquery-conference-presentation.html</id>
     <published>2010-10-18T00:00:00-08:00</published>
     <updated>2010-10-18T00:00:00-08:00</updated>
@@ -2786,7 +2700,7 @@ $.ajax({
   </entry>
   <entry>
     <title>SecondStoryJS Router now has a documentation website</title>
-    <link href="/2010/10/11/secondstoryjs-router-now-has-a-documentation-website.html" rel="alternate"/>
+    <link rel="alternate" href="/2010/10/11/secondstoryjs-router-now-has-a-documentation-website.html"/>
     <id>/2010/10/11/secondstoryjs-router-now-has-a-documentation-website.html</id>
     <published>2010-10-11T00:00:00-08:00</published>
     <updated>2010-10-11T00:00:00-08:00</updated>
@@ -2795,18 +2709,18 @@ $.ajax({
     </author>
     <summary type="html">&lt;p&gt;Like the title says, you can now learn everything you wanted to know about the JavascriptMVC3 router on the project website at:&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;Like the title says, you can now learn everything you wanted to know about the JavascriptMVC3 router on the project website at:&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/SecondStoryJS-Router.png" alt="SecondStoryJS Router" /&gt;&lt;/p&gt;
 </content>
   </entry>
   <entry>
     <title>Middleman Feature: Config.rb can setup Rack middleware</title>
-    <link href="/2010/10/11/middleman-feature-configrb-can-setup-rack-middleware.html" rel="alternate"/>
+    <link rel="alternate" href="/2010/10/11/middleman-feature-configrb-can-setup-rack-middleware.html"/>
     <id>/2010/10/11/middleman-feature-configrb-can-setup-rack-middleware.html</id>
     <published>2010-10-11T00:00:00-08:00</published>
     <updated>2010-10-11T00:00:00-08:00</updated>
@@ -2826,7 +2740,7 @@ $.ajax({
   </entry>
   <entry>
     <title>Handling Touch Events in jQuery Tools Scrollable</title>
-    <link href="/2010/09/22/handling-touch-events-in-jquery-tools-scrollable.html" rel="alternate"/>
+    <link rel="alternate" href="/2010/09/22/handling-touch-events-in-jquery-tools-scrollable.html"/>
     <id>/2010/09/22/handling-touch-events-in-jquery-tools-scrollable.html</id>
     <published>2010-09-22T00:00:00-08:00</published>
     <updated>2010-09-22T00:00:00-08:00</updated>
@@ -2849,8 +2763,7 @@ $.ajax({
 
 &lt;p&gt;Finally, you&amp;#39;ll need to write the glue:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-$.fn.handleSwipes = function() {
+&lt;pre&gt;&lt;code&gt;$.fn.handleSwipes = function() {
   return this.each(function() {
     var api = $(this).data(&amp;quot;scrollable&amp;quot;);
 
@@ -2867,8 +2780,7 @@ $.fn.handleSwipes = function() {
 
 &lt;p&gt;Once you have all three of these components on a page, initialize them like so:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-$(&amp;quot;.scrollable&amp;quot;).scrollable().handleSwipes();
+&lt;pre&gt;&lt;code&gt;$(&amp;quot;.scrollable&amp;quot;).scrollable().handleSwipes();
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Now touch swipes will trigger the next and previous behavious built into the widget. Enjoy.&lt;/p&gt;
@@ -2876,7 +2788,7 @@ $(&amp;quot;.scrollable&amp;quot;).scrollable().handleSwipes();
   </entry>
   <entry>
     <title>Speaking at jQuery Conference: Boston 2010</title>
-    <link href="/2010/09/08/speaking-at-jquery-conference-boston-2010.html" rel="alternate"/>
+    <link rel="alternate" href="/2010/09/08/speaking-at-jquery-conference-boston-2010.html"/>
     <id>/2010/09/08/speaking-at-jquery-conference-boston-2010.html</id>
     <published>2010-09-08T00:00:00-08:00</published>
     <updated>2010-09-08T00:00:00-08:00</updated>
@@ -2898,7 +2810,7 @@ $(&amp;quot;.scrollable&amp;quot;).scrollable().handleSwipes();
   </entry>
   <entry>
     <title>Mustache for JavascriptMVC 3</title>
-    <link href="/2010/08/09/mustache-for-javascriptmvc-3.html" rel="alternate"/>
+    <link rel="alternate" href="/2010/08/09/mustache-for-javascriptmvc-3.html"/>
     <id>/2010/08/09/mustache-for-javascriptmvc-3.html</id>
     <published>2010-08-09T00:00:00-08:00</published>
     <updated>2010-08-09T00:00:00-08:00</updated>
@@ -2923,20 +2835,18 @@ $(&amp;quot;.scrollable&amp;quot;).scrollable().handleSwipes();
 
 &lt;p&gt;Include it in your app:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-steal.plugins(&amp;quot;mustache&amp;quot;)
+&lt;pre&gt;&lt;code&gt;steal.plugins(&amp;quot;mustache&amp;quot;)
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Create some &lt;tt&gt;.mustache&lt;/tt&gt; files and use them normally:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-$(&amp;quot;#elem&amp;quot;).html(&amp;quot;//views/template.mustache&amp;quot;, { variable: &amp;quot;Value&amp;quot; })
+&lt;pre&gt;&lt;code&gt;$(&amp;quot;#elem&amp;quot;).html(&amp;quot;//views/template.mustache&amp;quot;, { variable: &amp;quot;Value&amp;quot; })
 &lt;/code&gt;&lt;/pre&gt;
 </content>
   </entry>
   <entry>
     <title>The jQuery Tools API Pattern</title>
-    <link href="/2010/08/06/the-jquery-tools-api-pattern.html" rel="alternate"/>
+    <link rel="alternate" href="/2010/08/06/the-jquery-tools-api-pattern.html"/>
     <id>/2010/08/06/the-jquery-tools-api-pattern.html</id>
     <published>2010-08-06T00:00:00-08:00</published>
     <updated>2010-08-06T00:00:00-08:00</updated>
@@ -2945,78 +2855,73 @@ $(&amp;quot;#elem&amp;quot;).html(&amp;quot;//views/template.mustache&amp;quot;,
     </author>
     <summary type="html">&lt;p&gt;A common pattern for initializing jQuery plugins is by selecting all the instances of the target in the DOM and running the plugin once. For example:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-$(&amp;quot;:input&amp;quot;).myPlugin();
+&lt;pre&gt;&lt;code&gt;$(&amp;quot;:input&amp;quot;).myPlugin();
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;But what if you need to inspect the plugin later or are only interested in one instance of the plugin. A friend of mine &lt;a href="http://forum.jquery.com/topic/return-customized-default-values-for-each-in-a-plugin"&gt;recently asked this question&lt;/a&gt; and my suggestion was to look at the way the &lt;a href="http://flowplayer.org/tools/"&gt;jQuery Tools&lt;/a&gt; project does it. For each of their plugins, they build an API object which only interacts with one specific element and they attach it to the element once the plugin has been initialized using the jQuery.data method. This also provides a clean way of checking if the plugin has already been initialized on a specific element.&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;A common pattern for initializing jQuery plugins is by selecting all the instances of the target in the DOM and running the plugin once. For example:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-$(&amp;quot;:input&amp;quot;).myPlugin();
+&lt;pre&gt;&lt;code&gt;$(&amp;quot;:input&amp;quot;).myPlugin();
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;But what if you need to inspect the plugin later or are only interested in one instance of the plugin. A friend of mine &lt;a href="http://forum.jquery.com/topic/return-customized-default-values-for-each-in-a-plugin"&gt;recently asked this question&lt;/a&gt; and my suggestion was to look at the way the &lt;a href="http://flowplayer.org/tools/"&gt;jQuery Tools&lt;/a&gt; project does it. For each of their plugins, they build an API object which only interacts with one specific element and they attach it to the element once the plugin has been initialized using the jQuery.data method. This also provides a clean way of checking if the plugin has already been initialized on a specific element.&lt;/p&gt;
 
 &lt;p&gt;Here&amp;#39;s how they run their scrollable plugin when called by jQuery:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-  // jQuery plugin implementation
-  $.fn.scrollable = function(conf) { 
+&lt;pre&gt;&lt;code&gt;// jQuery plugin implementation
+$.fn.scrollable = function(conf) { 
 
-      // already constructed --&amp;gt; return API
-      var el = this.data(&amp;quot;scrollable&amp;quot;);
-      if (el) { return el; }         
+  // already constructed --&amp;gt; return API
+  var el = this.data(&amp;quot;scrollable&amp;quot;);
+  if (el) { return el; }     
 
-      conf = $.extend({}, $.tools.scrollable.conf, conf); 
+  conf = $.extend({}, $.tools.scrollable.conf, conf); 
 
-      this.each(function() {            
-          el = new Scrollable($(this), conf);
-          $(this).data(&amp;quot;scrollable&amp;quot;, el);   
-      });
+  this.each(function() {      
+    el = new Scrollable($(this), conf);
+    $(this).data(&amp;quot;scrollable&amp;quot;, el); 
+  });
 
-      return conf.api ? el: this; 
+  return conf.api ? el: this; 
 
-  };
+};
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;The &lt;tt&gt;Scrollable&lt;/tt&gt; function handles plugin initialization on a per-element basis and returns scoped methods for interacting with that object. Its implementation looks like this:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-  function Scrollable(root, conf) {   
-      // Setup variables
+&lt;pre&gt;&lt;code&gt;function Scrollable(root, conf) {   
+  // Setup variables
 
-      // methods
-      $.extend(self, {
-          getConf: function() {
-              return conf;  
-          },            
-        // et cetera
-      });
+  // methods
+  $.extend(self, {
+    getConf: function() {
+      return conf;  
+    },      
+    // et cetera
+  });
 
-      // callbacks  
-      $.each([&amp;#39;onBeforeSeek&amp;#39;, &amp;#39;onSeek&amp;#39;, &amp;#39;onAddItem&amp;#39;], function(i, name) {
+  // callbacks  
+  $.each([&amp;#39;onBeforeSeek&amp;#39;, &amp;#39;onSeek&amp;#39;, &amp;#39;onAddItem&amp;#39;], function(i, name) {
 
-          // configuration
-          if ($.isFunction(conf[name])) { 
-              $(self).bind(name, conf[name]); 
-          }
-
-          self[name] = function(fn) {
-              $(self).bind(name, fn);
-              return self;
-          };
-      });  
-
-      // run methods
+    // configuration
+    if ($.isFunction(conf[name])) { 
+      $(self).bind(name, conf[name]); 
     }
+
+    self[name] = function(fn) {
+      $(self).bind(name, fn);
+      return self;
+    };
+  });  
+
+  // run methods
+}
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Now, let&amp;#39;s assume we have applied this pattern to our &lt;tt&gt;myPlugin&lt;/tt&gt; plugin. The interaction would look like this.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-$(&amp;quot;:input&amp;quot;).myPlugin();
+&lt;pre&gt;&lt;code&gt;$(&amp;quot;:input&amp;quot;).myPlugin();
 
 var specificInput = $(&amp;quot;#myinput&amp;quot;);
 var api = specificInput.data(&amp;quot;myPlugin&amp;quot;);
@@ -3033,8 +2938,7 @@ api.onClick(function() {
 
 &lt;p&gt;The pattern would also handle accidently running the plugin twice on a single element. For example, in the following script the plugin would only initialize the &lt;tt&gt;#myinput&lt;/tt&gt; element once:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-$(&amp;quot;#myinput&amp;quot;).myPlugin();
+&lt;pre&gt;&lt;code&gt;$(&amp;quot;#myinput&amp;quot;).myPlugin();
 $(&amp;quot;:input&amp;quot;).myPlugin();
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -3043,7 +2947,7 @@ $(&amp;quot;:input&amp;quot;).myPlugin();
   </entry>
   <entry>
     <title>Style Guides Using Sass @extend</title>
-    <link href="/2010/07/30/style-guides-using-sass-extend.html" rel="alternate"/>
+    <link rel="alternate" href="/2010/07/30/style-guides-using-sass-extend.html"/>
     <id>/2010/07/30/style-guides-using-sass-extend.html</id>
     <published>2010-07-30T00:00:00-08:00</published>
     <updated>2010-07-30T00:00:00-08:00</updated>
@@ -3137,8 +3041,7 @@ $dark-grey:        #4b4b48
 
 &lt;p&gt;Here&amp;#39;s the resulting CSS output:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::css
-.sg-heading-1, .sg-heading-2, .sg-heading-3, .info-box h2 {
+&lt;pre&gt;&lt;code&gt;.sg-heading-1, .sg-heading-2, .sg-heading-3, .info-box h2 {
   font-family: &amp;quot;Droid Sans&amp;quot;;
   font-weight: normal;
   font-size: 32px;
@@ -3179,7 +3082,7 @@ $dark-grey:        #4b4b48
   </entry>
   <entry>
     <title>Sass @extend Introduction</title>
-    <link href="/2010/07/27/sass-extend-introduction.html" rel="alternate"/>
+    <link rel="alternate" href="/2010/07/27/sass-extend-introduction.html"/>
     <id>/2010/07/27/sass-extend-introduction.html</id>
     <published>2010-07-27T00:00:00-08:00</published>
     <updated>2010-07-27T00:00:00-08:00</updated>
@@ -3229,8 +3132,7 @@ $dark-grey:        #4b4b48
 
 &lt;p&gt;This requires only an &lt;tt&gt;id&lt;/tt&gt; on the three boxes, but we don&amp;#39;t repeat ourselves. You&amp;#39;ll also notice that the plain CSS classes are still available to place on &lt;tt&gt;div&lt;/tt&gt; elements for rapid development or if custom id attributes are not needed. For those who are curious what the output looks like, here it is: &lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::css
-.sidebar-box, 
+&lt;pre&gt;&lt;code&gt;.sidebar-box, 
 .sidebar-auth-box, 
 #login-box, 
 #logout-box, 
@@ -3266,16 +3168,18 @@ $dark-grey:        #4b4b48
   </entry>
   <entry>
     <title>JavascriptMVC Router</title>
-    <link href="/2010/07/23/javascriptmvc-router.html" rel="alternate"/>
+    <link rel="alternate" href="/2010/07/23/javascriptmvc-router.html"/>
     <id>/2010/07/23/javascriptmvc-router.html</id>
     <published>2010-07-23T00:00:00-08:00</published>
     <updated>2010-07-23T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS Router now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+    <summary type="html">&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS Router now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Modern web applications should function as naturally as their static page-based predecessors. As developers, we may need to store state in the location bar, but the user shouldn&amp;#39;t be able to tell the difference, except, hopefully, the Ajaxified version should be faster and smoother.&lt;/p&gt;
 </summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS Router now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS Router now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;Modern web applications should function as naturally as their static page-based predecessors. As developers, we may need to store state in the location bar, but the user shouldn&amp;#39;t be able to tell the difference, except, hopefully, the Ajaxified version should be faster and smoother.&lt;/p&gt;
 
@@ -3285,8 +3189,7 @@ $dark-grey:        #4b4b48
 
 &lt;p&gt;Here&amp;#39;s a matching example from the Sherpa docs:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-Router.add(&amp;#39;/test/:variable&amp;#39;).to(&amp;#39;testing&amp;#39;)
+&lt;pre&gt;&lt;code&gt;Router.add(&amp;#39;/test/:variable&amp;#39;).to(&amp;#39;testing&amp;#39;)
 Router.recognize(&amp;#39;/test/iloveyou&amp;#39;) -&amp;gt;
   {
     &amp;quot;destination&amp;quot;: &amp;quot;testing&amp;quot;,
@@ -3298,8 +3201,7 @@ Router.recognize(&amp;#39;/test/iloveyou&amp;#39;) -&amp;gt;
 
 &lt;p&gt;You can also generate routes from parameters if you give the route a name:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-Router.add(&amp;#39;/test/:variable&amp;#39;).to(&amp;#39;testing&amp;#39;).name(&amp;#39;testRoute&amp;#39;)
+&lt;pre&gt;&lt;code&gt;Router.add(&amp;#39;/test/:variable&amp;#39;).to(&amp;#39;testing&amp;#39;).name(&amp;#39;testRoute&amp;#39;)
 Router.generate(&amp;#39;testRoute&amp;#39;, { &amp;quot;variable&amp;quot;: &amp;quot;iloveyou&amp;quot; }) -&amp;gt;
   &amp;quot;/test/iloveyou&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
@@ -3308,8 +3210,7 @@ Router.generate(&amp;#39;testRoute&amp;#39;, { &amp;quot;variable&amp;quot;: &am
 
 &lt;p&gt;First, grab a copy of the Sherpa library and put it in your resources directory. Then, in your JavascriptMVC project file you intialize Sherpa:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-steal.resources(&amp;quot;sherpa&amp;quot;)
+&lt;pre&gt;&lt;code&gt;steal.resources(&amp;quot;sherpa&amp;quot;)
      .then(function($) {
 
   var Router = new Sherpa.Router();
@@ -3320,8 +3221,7 @@ steal.resources(&amp;quot;sherpa&amp;quot;)
 
 &lt;p&gt;First, you can initialize a new controller on the document element when the route is matched:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-Router.add(&amp;quot;/articles/:article_name&amp;quot;).to(&amp;quot;project_article&amp;quot;);
+&lt;pre&gt;&lt;code&gt;Router.add(&amp;quot;/articles/:article_name&amp;quot;).to(&amp;quot;project_article&amp;quot;);
 
 var key        = window.location.pathname,
     foundRoute = Router.recognize(key);
@@ -3333,8 +3233,7 @@ if (foundRoute &amp;amp;&amp;amp; $(document)[foundRoute.destination]) {
 
 &lt;p&gt;Alternatively, you could fire an OpenAjax event instead:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-Router.add(&amp;quot;/articles/:article_name&amp;quot;).to(&amp;quot;project_article&amp;quot;);
+&lt;pre&gt;&lt;code&gt;Router.add(&amp;quot;/articles/:article_name&amp;quot;).to(&amp;quot;project_article&amp;quot;);
 
 var key        = window.location.pathname,
     foundRoute = Router.recognize(key);
@@ -3357,8 +3256,7 @@ if (foundRoute) {
 
 &lt;p&gt;So let&amp;#39;s go back to our project configuration file:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-steal.plugins(&amp;quot;ss/router&amp;quot;)
+&lt;pre&gt;&lt;code&gt;steal.plugins(&amp;quot;ss/router&amp;quot;)
      .then(function($) {
 
   Router.add(&amp;quot;/articles/:article_name&amp;quot;).to(&amp;quot;project_article&amp;quot;);
@@ -3370,7 +3268,7 @@ steal.plugins(&amp;quot;ss/router&amp;quot;)
   </entry>
   <entry>
     <title>UINavigationController implementation for SenchaTouch</title>
-    <link href="/2010/07/02/uinavigationcontroller-implementation-for-senchatouch.html" rel="alternate"/>
+    <link rel="alternate" href="/2010/07/02/uinavigationcontroller-implementation-for-senchatouch.html"/>
     <id>/2010/07/02/uinavigationcontroller-implementation-for-senchatouch.html</id>
     <published>2010-07-02T00:00:00-08:00</published>
     <updated>2010-07-02T00:00:00-08:00</updated>
@@ -3389,8 +3287,7 @@ steal.plugins(&amp;quot;ss/router&amp;quot;)
 
 &lt;h2&gt;How to use PanelStack&lt;/h2&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-var bottomLevel = new Ext.Panel({ title: &amp;quot;Start page&amp;quot; });
+&lt;pre&gt;&lt;code&gt;var bottomLevel = new Ext.Panel({ title: &amp;quot;Start page&amp;quot; });
 var firstLevel  = new Ext.Panel({ title: &amp;quot;Tier 1&amp;quot; });
 var secondLevel = new Ext.Panel({ title: &amp;quot;Tier 2&amp;quot; });
 
@@ -3417,18 +3314,20 @@ controller.popPanel();
   </entry>
   <entry>
     <title>State Machine Controller for JavascriptMVC</title>
-    <link href="/2010/05/27/state-machine-controller-for-javascriptmvc.html" rel="alternate"/>
+    <link rel="alternate" href="/2010/05/27/state-machine-controller-for-javascriptmvc.html"/>
     <id>/2010/05/27/state-machine-controller-for-javascriptmvc.html</id>
     <published>2010-05-27T00:00:00-08:00</published>
     <updated>2010-05-27T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The repository has moved to &lt;a href="http://github.com/secondstory/secondstoryjs-statemachine"&gt;http://github.com/secondstory/secondstoryjs-statemachine&lt;/a&gt;. The main class has been renamed to SS.Controller.StateMachine&lt;/strong&gt;&lt;/p&gt;
-</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The repository has moved to &lt;a href="http://github.com/secondstory/secondstoryjs-statemachine"&gt;http://github.com/secondstory/secondstoryjs-statemachine&lt;/a&gt;. The main class has been renamed to SS.Controller.StateMachine&lt;/strong&gt;&lt;/p&gt;
+    <summary type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The repository has moved to http://github.com/secondstory/secondstoryjs-statemachine. The main class has been renamed to SS.Controller.StateMachine&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS State Machine now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-statemachine/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-statemachine/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS State Machine now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-statemachine/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The repository has moved to http://github.com/secondstory/secondstoryjs-statemachine. The main class has been renamed to SS.Controller.StateMachine&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS State Machine now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-statemachine/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;I&amp;#39;ve been attempting to write this article for a week, but I&amp;#39;ve been unable to justify the usefulness of Finite State Machines in words. I tried written up some typical examples, such as the classic vending machine, but it kept getting very obtuse very quickly. Instead, let me just say, that I love Finite State Machines. I think they are the only technique I learned at school and when I am able to replace dozens of &lt;tt&gt;if&lt;/tt&gt; statements with a Finite State Machine, it makes me very happy and feel secure. Being able to monitor an object&amp;#39;s state, rather than just querying its instance variables, makes testing simpler and helps me find bugs.&lt;/p&gt;
 
@@ -3440,8 +3339,7 @@ controller.popPanel();
 
 &lt;p&gt;A state machine can respond to jQuery events, global OpenAjax messages and internal &amp;quot;publishState&amp;quot; commands. The destination states define which state we are moved into on an event. Finally, &amp;quot;onEnter&amp;quot; and &amp;quot;onExit&amp;quot; can point to either instance methods or global OpenAjax messages.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-SS.Controller.StateMachine.extend(&amp;quot;MyNavigation&amp;quot;, {}, {
+&lt;pre&gt;&lt;code&gt;SS.Controller.StateMachine.extend(&amp;quot;MyNavigation&amp;quot;, {}, {
   states: {
     // Any click of the a.close element will close everything
     global:         { &amp;quot;a.close click&amp;quot;:            &amp;quot;initial&amp;quot; },
@@ -3493,8 +3391,7 @@ steal.js INFO: FSM (MyNavigation.instance0): timelineOpen -&amp;gt; initial
 
 &lt;p&gt;We need to add our new plugin to the site. In appname.js, add the following to your &lt;tt&gt;steal&lt;/tt&gt; command:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-.plugins(&amp;quot;ss/controller/state_machine&amp;quot;)
+&lt;pre&gt;&lt;code&gt;.plugins(&amp;quot;ss/controller/state_machine&amp;quot;)
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Now you can extend your Controllers from &lt;tt&gt;SS.Controller.StateMachine&lt;/tt&gt;.&lt;/p&gt;
@@ -3506,16 +3403,18 @@ steal.js INFO: FSM (MyNavigation.instance0): timelineOpen -&amp;gt; initial
   </entry>
   <entry>
     <title>HTML5 localStorage for JavascriptMVC</title>
-    <link href="/2010/05/21/html5-localstorage-for-javascriptmvc.html" rel="alternate"/>
+    <link rel="alternate" href="/2010/05/21/html5-localstorage-for-javascriptmvc.html"/>
     <id>/2010/05/21/html5-localstorage-for-javascriptmvc.html</id>
     <published>2010-05-21T00:00:00-08:00</published>
     <updated>2010-05-21T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The new Github repository location is: &lt;a href="http://github.com/secondstory/secondstoryjs-html5storage"&gt;http://github.com/secondstory/secondstoryjs-html5storage&lt;/a&gt;. The new class names are SS.Model.HTML5Store.Local and SS.Model.HTML5Store.Session&lt;/strong&gt;&lt;/p&gt;
+    <summary type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The new Github repository location is: http://github.com/secondstory/secondstoryjs-html5storage. The new class names are SS.Model.HTML5Store.Local and SS.Model.HTML5Store.Session&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;For those who don&amp;#39;t know, JavascriptMVC 3 is a framework for building complex web applications based on jQuery. jQuery is a wonderful tool for manipulating the DOM, but it doesn&amp;#39;t provide any system for dependency resolution, file organization or a separation of concerns. JavascriptMVC 3, which is currently in a very solid alpha form, provides a strong MVC foundation for oragnizing your code.&lt;/p&gt;
 </summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The new Github repository location is: &lt;a href="http://github.com/secondstory/secondstoryjs-html5storage"&gt;http://github.com/secondstory/secondstoryjs-html5storage&lt;/a&gt;. The new class names are SS.Model.HTML5Store.Local and SS.Model.HTML5Store.Session&lt;/strong&gt;&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The new Github repository location is: http://github.com/secondstory/secondstoryjs-html5storage. The new class names are SS.Model.HTML5Store.Local and SS.Model.HTML5Store.Session&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;For those who don&amp;#39;t know, JavascriptMVC 3 is a framework for building complex web applications based on jQuery. jQuery is a wonderful tool for manipulating the DOM, but it doesn&amp;#39;t provide any system for dependency resolution, file organization or a separation of concerns. JavascriptMVC 3, which is currently in a very solid alpha form, provides a strong MVC foundation for oragnizing your code.&lt;/p&gt;
 
@@ -3542,14 +3441,12 @@ steal.js INFO: FSM (MyNavigation.instance0): timelineOpen -&amp;gt; initial
 
 &lt;p&gt;We need to add our new plugin to the site. In appname.js, add the following to your &lt;tt&gt;steal&lt;/tt&gt; command:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-.plugins(&amp;quot;ss/model/html5store&amp;quot;)
+&lt;pre&gt;&lt;code&gt;.plugins(&amp;quot;ss/model/html5store&amp;quot;)
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Okay, so we have a model and now we need to add the new store system:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-jQuery.Model.extend(&amp;quot;MyModel&amp;quot;,
+&lt;pre&gt;&lt;code&gt;jQuery.Model.extend(&amp;quot;MyModel&amp;quot;,
 {
   setup: function(){
     // Alternatively, use SS.Model.HTML5Store.Local
@@ -3564,8 +3461,7 @@ jQuery.Model.extend(&amp;quot;MyModel&amp;quot;,
 
 &lt;p&gt;Now, whenever you create a MyModel with a unique id, it will be added to the HTML5 sessionStorage. You&amp;#39;re responsible for updating the store if the model changes and for querying the store to see if it has a copy of the model we&amp;#39;re looking for. Here&amp;#39;s some boilerplate code to do that:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-function updateModel(params) {
+&lt;pre&gt;&lt;code&gt;function updateModel(params) {
   MyModel.store.destroy(params.id);
   MyModel.store.create(params);
 }
@@ -3588,7 +3484,7 @@ function isInStore(id) {
   </entry>
   <entry>
     <title>Apple-style Gradient Text Headlines in SCSS/SASS</title>
-    <link href="/2010/04/13/apple-style-gradient-text-headlines-in-scsssass.html" rel="alternate"/>
+    <link rel="alternate" href="/2010/04/13/apple-style-gradient-text-headlines-in-scsssass.html"/>
     <id>/2010/04/13/apple-style-gradient-text-headlines-in-scsssass.html</id>
     <published>2010-04-13T00:00:00-08:00</published>
     <updated>2010-04-13T00:00:00-08:00</updated>
@@ -3616,8 +3512,7 @@ function isInStore(id) {
 
 &lt;p&gt;Or, if you prefer plain CSS:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::css
-h1 {
+&lt;pre&gt;&lt;code&gt;h1 {
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, 
                     color-stop(0%, #999999), 
                     color-stop(100%, #000000));
@@ -3633,7 +3528,7 @@ h1 {
   </entry>
   <entry>
     <title>Sass 3 Color Manipulation</title>
-    <link href="/2010/04/12/sass-3-color-manipulation.html" rel="alternate"/>
+    <link rel="alternate" href="/2010/04/12/sass-3-color-manipulation.html"/>
     <id>/2010/04/12/sass-3-color-manipulation.html</id>
     <published>2010-04-12T00:00:00-08:00</published>
     <updated>2010-04-12T00:00:00-08:00</updated>
@@ -3668,7 +3563,7 @@ $link-color:         #af512c
   </entry>
   <entry>
     <title>Example SCSS (Sassy CSS) File</title>
-    <link href="/2010/04/09/example-scss-sassy-css-file.html" rel="alternate"/>
+    <link rel="alternate" href="/2010/04/09/example-scss-sassy-css-file.html"/>
     <id>/2010/04/09/example-scss-sassy-css-file.html</id>
     <published>2010-04-09T00:00:00-08:00</published>
     <updated>2010-04-09T00:00:00-08:00</updated>
@@ -3971,7 +3866,7 @@ body {
   </entry>
   <entry>
     <title>Sass 3 Syntax</title>
-    <link href="/2010/03/31/sass-3-syntax.html" rel="alternate"/>
+    <link rel="alternate" href="/2010/03/31/sass-3-syntax.html"/>
     <id>/2010/03/31/sass-3-syntax.html</id>
     <published>2010-03-31T00:00:00-08:00</published>
     <updated>2010-03-31T00:00:00-08:00</updated>
@@ -4091,16 +3986,16 @@ body
   </entry>
   <entry>
     <title>A Learning Experience. iPhone-style checkboxes in Coffee-Script</title>
-    <link href="/2010/03/01/a-learning-experience-iphone-style-checkboxes-in-coffee-script.html" rel="alternate"/>
+    <link rel="alternate" href="/2010/03/01/a-learning-experience-iphone-style-checkboxes-in-coffee-script.html"/>
     <id>/2010/03/01/a-learning-experience-iphone-style-checkboxes-in-coffee-script.html</id>
     <published>2010-03-01T00:00:00-08:00</published>
     <updated>2010-03-01T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;According to the &lt;a href="http://jashkenas.github.com/coffee-script/"&gt;Coffee Script website&lt;/a&gt;, &amp;quot;CoffeeScript is a little language that compiles into JavaScript. Think of it as JavaScript&amp;#39;s less ostentatious kid brother &#8212; the same genes, roughly the same height, but a different sense of style. Apart from a handful of bonus goodies, statements in CoffeeScript correspond one-to-one with their equivalent in JavaScript, it&amp;#39;s just another way of saying it.&amp;quot;&lt;/p&gt;
+    <summary type="html">&lt;p&gt;According to the &lt;a href="http://jashkenas.github.com/coffee-script/"&gt;Coffee Script website&lt;/a&gt;, &amp;quot;CoffeeScript is a little language that compiles into JavaScript. Think of it as JavaScript&amp;#39;s less ostentatious kid brother — the same genes, roughly the same height, but a different sense of style. Apart from a handful of bonus goodies, statements in CoffeeScript correspond one-to-one with their equivalent in JavaScript, it&amp;#39;s just another way of saying it.&amp;quot;&lt;/p&gt;
 </summary>
-    <content type="html">&lt;p&gt;According to the &lt;a href="http://jashkenas.github.com/coffee-script/"&gt;Coffee Script website&lt;/a&gt;, &amp;quot;CoffeeScript is a little language that compiles into JavaScript. Think of it as JavaScript&amp;#39;s less ostentatious kid brother &#8212; the same genes, roughly the same height, but a different sense of style. Apart from a handful of bonus goodies, statements in CoffeeScript correspond one-to-one with their equivalent in JavaScript, it&amp;#39;s just another way of saying it.&amp;quot;&lt;/p&gt;
+    <content type="html">&lt;p&gt;According to the &lt;a href="http://jashkenas.github.com/coffee-script/"&gt;Coffee Script website&lt;/a&gt;, &amp;quot;CoffeeScript is a little language that compiles into JavaScript. Think of it as JavaScript&amp;#39;s less ostentatious kid brother — the same genes, roughly the same height, but a different sense of style. Apart from a handful of bonus goodies, statements in CoffeeScript correspond one-to-one with their equivalent in JavaScript, it&amp;#39;s just another way of saying it.&amp;quot;&lt;/p&gt;
 
 &lt;p&gt;Basically, Coffee Script is compiled into Javascript and attempts to make basic operations simpler and safe. For example, in Ruby you can add a conditional to the end of the current line as a short-hand for a full &lt;tt&gt;if&lt;/tt&gt; statement. In Coffee Script this looks like:&lt;/p&gt;
 
@@ -4260,7 +4155,7 @@ html = &amp;quot;&amp;lt;strong&amp;gt;\n  cup of coffeescript\n&amp;lt;/strong&
   </entry>
   <entry>
     <title>Using RVM to Manage Multiple Ruby Interpreters</title>
-    <link href="/2010/02/17/using-rvm-to-manage-multiple-ruby-interpreters.html" rel="alternate"/>
+    <link rel="alternate" href="/2010/02/17/using-rvm-to-manage-multiple-ruby-interpreters.html"/>
     <id>/2010/02/17/using-rvm-to-manage-multiple-ruby-interpreters.html</id>
     <published>2010-02-17T00:00:00-08:00</published>
     <updated>2010-02-17T00:00:00-08:00</updated>
@@ -4348,7 +4243,7 @@ if [[ -s /Users/tdreyno/.rvm/scripts/rvm ]] ; then source /Users/tdreyno/.rvm/sc
   </entry>
   <entry>
     <title>Best Albums of the Decade. Top 25</title>
-    <link href="/2009/12/14/best-of-the-decade-pt2.html" rel="alternate"/>
+    <link rel="alternate" href="/2009/12/14/best-of-the-decade-pt2.html"/>
     <id>/2009/12/14/best-of-the-decade-pt2.html</id>
     <published>2009-12-14T00:00:00-08:00</published>
     <updated>2009-12-14T00:00:00-08:00</updated>
@@ -4675,7 +4570,7 @@ if [[ -s /Users/tdreyno/.rvm/scripts/rvm ]] ; then source /Users/tdreyno/.rvm/sc
   </entry>
   <entry>
     <title>Best Albums of the Decade</title>
-    <link href="/2009/12/04/best-of-the-decade.html" rel="alternate"/>
+    <link rel="alternate" href="/2009/12/04/best-of-the-decade.html"/>
     <id>/2009/12/04/best-of-the-decade.html</id>
     <published>2009-12-04T00:00:00-08:00</published>
     <updated>2009-12-04T00:00:00-08:00</updated>
@@ -4837,7 +4732,7 @@ if [[ -s /Users/tdreyno/.rvm/scripts/rvm ]] ; then source /Users/tdreyno/.rvm/sc
     &lt;/div&gt;
     &lt;div class='content'&gt;
       &lt;h6&gt;2007&lt;/h6&gt;&lt;h4&gt;Fall Out Boy - Infinity on High&lt;/h4&gt;
-      &lt;p&gt;This decade&amp;#39;s king of pop-punk decided to give up any illusion of punk and had hip-hop producer Babyface produce this album. The intro features Jay-Z and the guitars have mostly been muddled into an electronic sound or mixed out. The thing is, they made a perfect pop album and it&amp;#39;s fun. Their follow-up, Folie &#225; Deux is also excellent and even more polished, if not as cohesive.&lt;/p&gt;
+      &lt;p&gt;This decade&amp;#39;s king of pop-punk decided to give up any illusion of punk and had hip-hop producer Babyface produce this album. The intro features Jay-Z and the guitars have mostly been muddled into an electronic sound or mixed out. The thing is, they made a perfect pop album and it&amp;#39;s fun. Their follow-up, Folie á Deux is also excellent and even more polished, if not as cohesive.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class='player'&gt;
       &lt;h6&gt;#38&lt;/h6&gt;
@@ -4992,7 +4887,7 @@ if [[ -s /Users/tdreyno/.rvm/scripts/rvm ]] ; then source /Users/tdreyno/.rvm/sc
   </entry>
   <entry>
     <title>The Middleman. A modular, feature-rich static site generator</title>
-    <link href="/2009/10/22/middleman.html" rel="alternate"/>
+    <link rel="alternate" href="/2009/10/22/middleman.html"/>
     <id>/2009/10/22/middleman.html</id>
     <published>2009-10-22T00:00:00-08:00</published>
     <updated>2009-10-22T00:00:00-08:00</updated>
@@ -5042,8 +4937,7 @@ Generating with setup generator:
 
 &lt;p&gt;The init.rb file allows customization and enabling or disabling specific features. The default init.rb looks like this:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::ruby
-# Helpers
+&lt;pre&gt;&lt;code&gt;# Helpers
 helpers do
 end
 
@@ -5075,8 +4969,7 @@ end
 
 &lt;p&gt;Below is an example init.rb that I am using on a live client site. First, I include a couple files with helper definitions. Next I enable php files to be previewed and choose the default template for directory requests. For this project, I have chosen to place all static files under the &amp;quot;assets&amp;quot; folder. The asset_url helper is overridden to ignore a couple cases specific to this site. Finally, I setup the directory under which the site will live in production. That&amp;#39;s it! Nearly 200 pages with a shared layout, simple Haml templates, Blueprint-base CSS grids, minified CSS, Javascript dependency management and minification, CDN support and cache busting query strings.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::ruby
-require &amp;#39;config/path_helpers&amp;#39;
+&lt;pre&gt;&lt;code&gt;require &amp;#39;config/path_helpers&amp;#39;
 require &amp;#39;config/haml_helpers&amp;#39;
 
 mime :php, &amp;quot;text/html&amp;quot;
@@ -5097,8 +4990,7 @@ end
 &lt;p&gt;As you can see, the basic project is quite sparse and you get to choose which features your project needs. 
 The current list of features is as follows:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::ruby
-# Features enabled by default
+&lt;pre&gt;&lt;code&gt;# Features enabled by default
 enable :compass
 enable :sprockets
 
@@ -5159,7 +5051,7 @@ And finally, please report bugs to: &lt;a href="http://github.com/middleman/midd
   </entry>
   <entry>
     <title>Tweetie-style paging with pageSlider</title>
-    <link href="/2009/08/31/pageslider-tweetie-style-pages.html" rel="alternate"/>
+    <link rel="alternate" href="/2009/08/31/pageslider-tweetie-style-pages.html"/>
     <id>/2009/08/31/pageslider-tweetie-style-pages.html</id>
     <published>2009-08-31T00:00:00-08:00</published>
     <updated>2009-08-31T00:00:00-08:00</updated>
@@ -5195,8 +5087,7 @@ or in &lt;a href="http://cloud.github.com/downloads/tdreyno/pageSlider/pageSlide
 
 &lt;p&gt;There are also some CSS caveats. The containing element must be set to &lt;tt&gt;overflow: hidden;&lt;/tt&gt;. Additionally, calculating heights on the pages can be difficult. The best way is to set a padding on the &lt;tt&gt;.page&lt;/tt&gt; so margins don&amp;#39;t leak outside it&amp;#39;s box.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::html
-&amp;lt;head&amp;gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;head&amp;gt;
   &amp;lt;style type=&amp;quot;text/css&amp;quot;&amp;gt;
     #maincontent {
       overflow: hidden; }
@@ -5233,8 +5124,7 @@ or in &lt;a href="http://cloud.github.com/downloads/tdreyno/pageSlider/pageSlide
 
 &lt;ul&gt;&lt;li&gt;&lt;tt&gt;containerSelector&lt;/tt&gt; sets the text of the "on" state. Defaults to: &lt;strong&gt;#maincontent&lt;/strong&gt;&lt;/li&gt;&lt;/ul&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-$(&amp;#39;.page&amp;#39;).pageSlider({
+&lt;pre&gt;&lt;code&gt;$(&amp;#39;.page&amp;#39;).pageSlider({
   containerSelector: &amp;quot;#frame&amp;quot;
 });
 &lt;/code&gt;&lt;/pre&gt;
@@ -5243,8 +5133,7 @@ $(&amp;#39;.page&amp;#39;).pageSlider({
 
 &lt;p&gt;The plugin calls a &lt;tt&gt;changingPage&lt;/tt&gt; event whenever the animation begins. If you have dependent elements you want to update together with the slide, you can attach them to the event via the normal jQuery event model. This callback is used in the video above to update the sidebar navigation when the history changes.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-$(document).bind(&amp;#39;changingPage&amp;#39;, function(anchor_name) {
+&lt;pre&gt;&lt;code&gt;$(document).bind(&amp;#39;changingPage&amp;#39;, function(anchor_name) {
   // Update some other dependent element based on anchor_name
 });
 &lt;/code&gt;&lt;/pre&gt;
@@ -5255,8 +5144,24 @@ $(document).bind(&amp;#39;changingPage&amp;#39;, function(anchor_name) {
 </content>
   </entry>
   <entry>
+    <title>Speaking at RefreshPDX on Sass</title>
+    <link rel="alternate" href="/2009/07/22/speaking-at-refreshpdx.html"/>
+    <id>/2009/07/22/speaking-at-refreshpdx.html</id>
+    <published>2009-07-22T00:00:00-08:00</published>
+    <updated>2009-07-22T00:00:00-08:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;p&gt;It&amp;#39;s late notice, but I&amp;#39;ll be speaking on Sass and Compass at &lt;a href="http://refreshpdx.org/"&gt;Refresh Portland&lt;/a&gt;  on Thursday, July 23rd at  &lt;a href="http://maps.google.com/maps?f=q&amp;amp;hl=en&amp;amp;q=915+SW+Stark+St,+Portland,+Multnomah,+Oregon+97205,+United+States&amp;amp;sll=37.0625,-95.677068&amp;amp;sspn=49.176833,77.519531&amp;amp;ie=UTF8&amp;amp;cd=1&amp;amp;geocode=0,45.521796,-122.680205&amp;amp;ll=45.521804,-122.680206&amp;amp;spn=0.021408,0.037851&amp;amp;t=p&amp;amp;z=15&amp;amp;iwloc=addr"&gt;Jive Software&lt;/a&gt;.&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;It&amp;#39;s late notice, but I&amp;#39;ll be speaking on Sass and Compass at &lt;a href="http://refreshpdx.org/"&gt;Refresh Portland&lt;/a&gt;  on Thursday, July 23rd at  &lt;a href="http://maps.google.com/maps?f=q&amp;amp;hl=en&amp;amp;q=915+SW+Stark+St,+Portland,+Multnomah,+Oregon+97205,+United+States&amp;amp;sll=37.0625,-95.677068&amp;amp;sspn=49.176833,77.519531&amp;amp;ie=UTF8&amp;amp;cd=1&amp;amp;geocode=0,45.521796,-122.680205&amp;amp;ll=45.521804,-122.680206&amp;amp;spn=0.021408,0.037851&amp;amp;t=p&amp;amp;z=15&amp;amp;iwloc=addr"&gt;Jive Software&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The presentation should be streamed (and then archived) on Ustream and I&amp;#39;ll post the slides here on Friday.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
     <title>Simplifying CSS with Sass Presentation</title>
-    <link href="/2009/07/22/simplifying-css-presentation.html" rel="alternate"/>
+    <link rel="alternate" href="/2009/07/22/simplifying-css-presentation.html"/>
     <id>/2009/07/22/simplifying-css-presentation.html</id>
     <published>2009-07-22T00:00:00-08:00</published>
     <updated>2009-07-22T00:00:00-08:00</updated>
@@ -5286,7 +5191,7 @@ $(document).bind(&amp;#39;changingPage&amp;#39;, function(anchor_name) {
   </entry>
   <entry>
     <title>Easy Google Maps with jQuery</title>
-    <link href="/2009/07/22/google-maps-with-jquery.html" rel="alternate"/>
+    <link rel="alternate" href="/2009/07/22/google-maps-with-jquery.html"/>
     <id>/2009/07/22/google-maps-with-jquery.html</id>
     <published>2009-07-22T00:00:00-08:00</published>
     <updated>2009-07-22T00:00:00-08:00</updated>
@@ -5295,8 +5200,7 @@ $(document).bind(&amp;#39;changingPage&amp;#39;, function(anchor_name) {
     </author>
     <summary type="html">&lt;p&gt;The other day I needed a simple way to include a Google Map, so I wrote this jQuery function.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-$.fn.googleMap = function(address, options) {
+&lt;pre&gt;&lt;code&gt;$.fn.googleMap = function(address, options) {
   var defaults = {
     lat: 44.081996,
     long: -123.0286928,
@@ -5305,8 +5209,7 @@ $.fn.googleMap = function(address, options) {
 </summary>
     <content type="html">&lt;p&gt;The other day I needed a simple way to include a Google Map, so I wrote this jQuery function.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-$.fn.googleMap = function(address, options) {
+&lt;pre&gt;&lt;code&gt;$.fn.googleMap = function(address, options) {
   var defaults = {
     lat: 44.081996,
     long: -123.0286928,
@@ -5340,8 +5243,7 @@ $.fn.googleMap = function(address, options) {
 
 &lt;h2&gt;Usage&lt;/h2&gt;
 
-&lt;pre&gt;&lt;code&gt;:::html
-&amp;lt;script src=&amp;#39;http://maps.google.com/maps/api/js?sensor=false&amp;#39; type=&amp;#39;text/javascript&amp;#39;&amp;gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;script src=&amp;#39;http://maps.google.com/maps/api/js?sensor=false&amp;#39; type=&amp;#39;text/javascript&amp;#39;&amp;gt;
 &amp;lt;/script&amp;gt;
 &amp;lt;script type=&amp;#39;text/javascript&amp;#39;&amp;gt;
   $(document).ready(function() {
@@ -5352,24 +5254,8 @@ $.fn.googleMap = function(address, options) {
 </content>
   </entry>
   <entry>
-    <title>Speaking at RefreshPDX on Sass</title>
-    <link href="/2009/07/22/speaking-at-refreshpdx.html" rel="alternate"/>
-    <id>/2009/07/22/speaking-at-refreshpdx.html</id>
-    <published>2009-07-22T00:00:00-08:00</published>
-    <updated>2009-07-22T00:00:00-08:00</updated>
-    <author>
-      <name>Thomas Reynolds</name>
-    </author>
-    <summary type="html">&lt;p&gt;It&amp;#39;s late notice, but I&amp;#39;ll be speaking on Sass and Compass at &lt;a href="http://refreshpdx.org/"&gt;Refresh Portland&lt;/a&gt;  on Thursday, July 23rd at  &lt;a href="http://maps.google.com/maps?f=q&amp;amp;hl=en&amp;amp;q=915+SW+Stark+St,+Portland,+Multnomah,+Oregon+97205,+United+States&amp;amp;sll=37.0625,-95.677068&amp;amp;sspn=49.176833,77.519531&amp;amp;ie=UTF8&amp;amp;cd=1&amp;amp;geocode=0,45.521796,-122.680205&amp;amp;ll=45.521804,-122.680206&amp;amp;spn=0.021408,0.037851&amp;amp;t=p&amp;amp;z=15&amp;amp;iwloc=addr"&gt;Jive Software&lt;/a&gt;.&lt;/p&gt;
-</summary>
-    <content type="html">&lt;p&gt;It&amp;#39;s late notice, but I&amp;#39;ll be speaking on Sass and Compass at &lt;a href="http://refreshpdx.org/"&gt;Refresh Portland&lt;/a&gt;  on Thursday, July 23rd at  &lt;a href="http://maps.google.com/maps?f=q&amp;amp;hl=en&amp;amp;q=915+SW+Stark+St,+Portland,+Multnomah,+Oregon+97205,+United+States&amp;amp;sll=37.0625,-95.677068&amp;amp;sspn=49.176833,77.519531&amp;amp;ie=UTF8&amp;amp;cd=1&amp;amp;geocode=0,45.521796,-122.680205&amp;amp;ll=45.521804,-122.680206&amp;amp;spn=0.021408,0.037851&amp;amp;t=p&amp;amp;z=15&amp;amp;iwloc=addr"&gt;Jive Software&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;The presentation should be streamed (and then archived) on Ustream and I&amp;#39;ll post the slides here on Friday.&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
     <title>Rapha&amp;euml;l. The Return of Browser SVG</title>
-    <link href="/2009/07/13/return-of-svg.html" rel="alternate"/>
+    <link rel="alternate" href="/2009/07/13/return-of-svg.html"/>
     <id>/2009/07/13/return-of-svg.html</id>
     <published>2009-07-13T00:00:00-08:00</published>
     <updated>2009-07-13T00:00:00-08:00</updated>
@@ -5394,7 +5280,7 @@ $.fn.googleMap = function(address, options) {
   </entry>
   <entry>
     <title>iPhone-style Checkboxes for Prototype</title>
-    <link href="/2009/06/29/prototype-iphone-style-checkboxes.html" rel="alternate"/>
+    <link rel="alternate" href="/2009/06/29/prototype-iphone-style-checkboxes.html"/>
     <id>/2009/06/29/prototype-iphone-style-checkboxes.html</id>
     <published>2009-06-29T00:00:00-08:00</published>
     <updated>2009-06-29T00:00:00-08:00</updated>
@@ -5441,8 +5327,7 @@ $.fn.googleMap = function(address, options) {
 
 &lt;p&gt;Once the files are available to your site, activating the script is very easy:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::html
-&amp;lt;head&amp;gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;head&amp;gt;
   &amp;lt;script src=&amp;quot;prototype.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
   &amp;lt;script src=&amp;quot;scriptaculous.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
   &amp;lt;script src=&amp;quot;prototype/iphone-style-checkboxes.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
@@ -5461,8 +5346,7 @@ $.fn.googleMap = function(address, options) {
 
 &lt;p&gt;For example:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-new iPhoneStyle(&amp;#39;input[type=checkbox]&amp;#39;, {
+&lt;pre&gt;&lt;code&gt;new iPhoneStyle(&amp;#39;input[type=checkbox]&amp;#39;, {
   checkedLabel: &amp;#39;YES&amp;#39;,
   uncheckedLabel: &amp;#39;NO&amp;#39;
 });
@@ -5500,7 +5384,7 @@ Both versions are maintained using GitHub: &lt;a href="http://github.com/tdreyno
   </entry>
   <entry>
     <title>Introducing iPhone-style Checkboxes</title>
-    <link href="/2009/06/16/iphone-style-checkboxes.html" rel="alternate"/>
+    <link rel="alternate" href="/2009/06/16/iphone-style-checkboxes.html"/>
     <id>/2009/06/16/iphone-style-checkboxes.html</id>
     <published>2009-06-16T00:00:00-08:00</published>
     <updated>2009-06-16T00:00:00-08:00</updated>
@@ -5546,8 +5430,7 @@ unzip it and place the javascript, images and stylesheet where you please. You&a
 
 &lt;p&gt;Once the files are available to your site, activating the script is very easy:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::html
-&amp;lt;head&amp;gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;head&amp;gt;
   &amp;lt;script src=&amp;quot;jquery-1.4.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
   &amp;lt;script src=&amp;quot;jquery/iphone-style-checkboxes.js&amp;quot; type=&amp;quot;text/javascript&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
   &amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;path_to/style.css&amp;quot; type=&amp;quot;text/css&amp;quot; media=&amp;quot;screen&amp;quot; /&amp;gt;
@@ -5568,8 +5451,7 @@ unzip it and place the javascript, images and stylesheet where you please. You&a
 
 &lt;p&gt;For example:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::javascript
-$(&amp;#39;:checkbox&amp;#39;).iphoneStyle({
+&lt;pre&gt;&lt;code&gt;$(&amp;#39;:checkbox&amp;#39;).iphoneStyle({
   checkedLabel: &amp;#39;YES&amp;#39;,
   uncheckedLabel: &amp;#39;NO&amp;#39;
 });
@@ -5610,7 +5492,7 @@ Please direct comments, support requests, bug reporting and pull requests to the
   </entry>
   <entry>
     <title>WWDC 2009 Predictions</title>
-    <link href="/2009/06/04/wwdc-2009-predictions.html" rel="alternate"/>
+    <link rel="alternate" href="/2009/06/04/wwdc-2009-predictions.html"/>
     <id>/2009/06/04/wwdc-2009-predictions.html</id>
     <published>2009-06-04T00:00:00-08:00</published>
     <updated>2009-06-04T00:00:00-08:00</updated>
@@ -5619,42 +5501,44 @@ Please direct comments, support requests, bug reporting and pull requests to the
     </author>
     <summary type="html">&lt;p&gt;&lt;h2&gt;iPhone&lt;/h2&gt;
 &lt;ul&gt;
-  &lt;li&gt;&#10003; New model&lt;/li&gt;
-  &lt;li&gt;&#10003; Video support&lt;/li&gt;
-  &lt;li&gt;&#10003; 32Gb&lt;/li&gt;
-  &lt;li&gt;&#10003; Compass &amp;amp; turn-by-turn partnership&lt;/li&gt;
-  &lt;li&gt;&#10003; Pre/Zune bashing&lt;/li&gt;
-  &lt;li&gt;&#10003; iTunes WiFi Video Store&lt;/li&gt;
+  &lt;li&gt;✓ New model&lt;/li&gt;
+  &lt;li&gt;✓ Video support&lt;/li&gt;
+  &lt;li&gt;✓ 32Gb&lt;/li&gt;
+  &lt;li&gt;✓ Compass &amp;amp; turn-by-turn partnership&lt;/li&gt;
+  &lt;li&gt;✓ Pre/Zune bashing&lt;/li&gt;
+  &lt;li&gt;✓ iTunes WiFi Video Store&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;Snow Leopard&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Secret sauce released: theme updates, ✓ Cocoa/64bit magic, ✓ Safari 4&lt;/li&gt;
 </summary>
     <content type="html">&lt;p&gt;&lt;h2&gt;iPhone&lt;/h2&gt;
 &lt;ul&gt;
-  &lt;li&gt;&#10003; New model&lt;/li&gt;
-  &lt;li&gt;&#10003; Video support&lt;/li&gt;
-  &lt;li&gt;&#10003; 32Gb&lt;/li&gt;
-  &lt;li&gt;&#10003; Compass &amp;amp; turn-by-turn partnership&lt;/li&gt;
-  &lt;li&gt;&#10003; Pre/Zune bashing&lt;/li&gt;
-  &lt;li&gt;&#10003; iTunes WiFi Video Store&lt;/li&gt;
+  &lt;li&gt;✓ New model&lt;/li&gt;
+  &lt;li&gt;✓ Video support&lt;/li&gt;
+  &lt;li&gt;✓ 32Gb&lt;/li&gt;
+  &lt;li&gt;✓ Compass &amp;amp; turn-by-turn partnership&lt;/li&gt;
+  &lt;li&gt;✓ Pre/Zune bashing&lt;/li&gt;
+  &lt;li&gt;✓ iTunes WiFi Video Store&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;Snow Leopard&lt;/h2&gt;
 &lt;ul&gt;
-  &lt;li&gt;Secret sauce released: theme updates, &#10003; Cocoa/64bit magic, &#10003; Safari 4&lt;/li&gt;
-  &lt;li&gt;&#10003; RC handed out to developers&lt;/li&gt;
-  &lt;li&gt;&#10003; Out in September&lt;/li&gt;
-  &lt;li&gt;&#10003; Windows 7 bashing&lt;/li&gt;
+  &lt;li&gt;Secret sauce released: theme updates, ✓ Cocoa/64bit magic, ✓ Safari 4&lt;/li&gt;
+  &lt;li&gt;✓ RC handed out to developers&lt;/li&gt;
+  &lt;li&gt;✓ Out in September&lt;/li&gt;
+  &lt;li&gt;✓ Windows 7 bashing&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;MacBooks&lt;/h2&gt;
 &lt;ul&gt;
-  &lt;li&gt;&#10003; Unibody line updated&lt;/li&gt;
-  &lt;li&gt;&#10003; MacBook Air revision&lt;/li&gt;
+  &lt;li&gt;✓ Unibody line updated&lt;/li&gt;
+  &lt;li&gt;✓ MacBook Air revision&lt;/li&gt;
   &lt;li&gt;New Snow Leopard-only features: new gestures, video cards, etc&lt;/li&gt;
 &lt;/ul&gt;&lt;/p&gt;
 </content>
   </entry>
   <entry>
     <title>Simplify image paths with image_url()</title>
-    <link href="/2009/05/11/simplify-image-paths-with-image_url.html" rel="alternate"/>
+    <link rel="alternate" href="/2009/05/11/simplify-image-paths-with-image_url.html"/>
     <id>/2009/05/11/simplify-image-paths-with-image_url.html</id>
     <published>2009-05-11T00:00:00-08:00</published>
     <updated>2009-05-11T00:00:00-08:00</updated>
@@ -5680,8 +5564,7 @@ Please direct comments, support requests, bug reporting and pull requests to the
 
 &lt;p&gt;It will generate this CSS:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::css
-h1 {
+&lt;pre&gt;&lt;code&gt;h1 {
   background: url(/images/title-embellishment.gif) no-repeat 17px 7px; }
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -5690,7 +5573,7 @@ h1 {
   </entry>
   <entry>
     <title>Using Compass to implement the Blueprint grid-system &amp;amp; consistent vertical-rhythm</title>
-    <link href="/2009/05/07/blueprint-grids-vertical-rhythm.html" rel="alternate"/>
+    <link rel="alternate" href="/2009/05/07/blueprint-grids-vertical-rhythm.html"/>
     <id>/2009/05/07/blueprint-grids-vertical-rhythm.html</id>
     <published>2009-05-07T00:00:00-08:00</published>
     <updated>2009-05-07T00:00:00-08:00</updated>
@@ -5887,7 +5770,7 @@ hr
   </entry>
   <entry>
     <title>NHaml idiosyncrasies</title>
-    <link href="/2009/04/30/nhaml-idiosyncrasies.html" rel="alternate"/>
+    <link rel="alternate" href="/2009/04/30/nhaml-idiosyncrasies.html"/>
     <id>/2009/04/30/nhaml-idiosyncrasies.html</id>
     <published>2009-04-30T00:00:00-08:00</published>
     <updated>2009-04-30T00:00:00-08:00</updated>
@@ -5943,8 +5826,7 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
 
 &lt;p&gt;NHaml will render this as:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::html
-&amp;lt;ul&amp;gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;ul&amp;gt;
   &amp;lt;li&amp;gt;
     Text
   &amp;lt;/li&amp;gt;
@@ -5965,19 +5847,19 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
   </entry>
   <entry>
     <title>A Compass &amp;amp; Sass Screencast via Chris Eppstein</title>
-    <link href="/2009/04/26/a-compass-sass-screencast-via-chris-eppstein.html" rel="alternate"/>
+    <link rel="alternate" href="/2009/04/26/a-compass-sass-screencast-via-chris-eppstein.html"/>
     <id>/2009/04/26/a-compass-sass-screencast-via-chris-eppstein.html</id>
     <published>2009-04-26T00:00:00-08:00</published>
     <updated>2009-04-26T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;Compass author&#8212;and Sass contributor&#8212;Chris Eppstein has put a screencast together showing how to use Compass. Enjoy.&lt;/p&gt;
+    <summary type="html">&lt;p&gt;Compass author—and Sass contributor—Chris Eppstein has put a screencast together showing how to use Compass. Enjoy.&lt;/p&gt;
 
 &lt;div class='flash'&gt;
   &lt;object data='http://vimeo.com/moogaloop.swf?clip_id=4335944&amp;amp;server=vimeo.com&amp;amp;show_title=1&amp;amp;show_byline=1&amp;amp;show_portrait=0&amp;amp;color=00ADEF&amp;amp;fullscreen=1' height='225' type='application/x-shockwave-flash' width='400'&gt;
 </summary>
-    <content type="html">&lt;p&gt;Compass author&#8212;and Sass contributor&#8212;Chris Eppstein has put a screencast together showing how to use Compass. Enjoy.&lt;/p&gt;
+    <content type="html">&lt;p&gt;Compass author—and Sass contributor—Chris Eppstein has put a screencast together showing how to use Compass. Enjoy.&lt;/p&gt;
 
 &lt;div class='flash'&gt;
   &lt;object data='http://vimeo.com/moogaloop.swf?clip_id=4335944&amp;amp;server=vimeo.com&amp;amp;show_title=1&amp;amp;show_byline=1&amp;amp;show_portrait=0&amp;amp;color=00ADEF&amp;amp;fullscreen=1' height='225' type='application/x-shockwave-flash' width='400'&gt;
@@ -5992,7 +5874,7 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
   </entry>
   <entry>
     <title>Creating bullet-proof HTML emails</title>
-    <link href="/2009/04/06/creating-bullet-proof-html-emails.html" rel="alternate"/>
+    <link rel="alternate" href="/2009/04/06/creating-bullet-proof-html-emails.html"/>
     <id>/2009/04/06/creating-bullet-proof-html-emails.html</id>
     <published>2009-04-06T00:00:00-08:00</published>
     <updated>2009-04-06T00:00:00-08:00</updated>
@@ -6020,8 +5902,34 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
 </content>
   </entry>
   <entry>
+    <title>Sass Introduction slides</title>
+    <link rel="alternate" href="/2009/04/02/sass-introduction-slides.html"/>
+    <id>/2009/04/02/sass-introduction-slides.html</id>
+    <published>2009-04-02T00:00:00-08:00</published>
+    <updated>2009-04-02T00:00:00-08:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;p&gt;Here&amp;#39;s the slides I will be presenting at Jive Software:&lt;/p&gt;
+
+&lt;div class='flash'&gt;
+  &lt;object data='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=sass-090402192738-phpapp01&amp;amp;rel=0&amp;amp;stripped_title=sass-introduction' height='355' type='application/x-shockwave-flash' width='425'&gt;
+</summary>
+    <content type="html">&lt;p&gt;Here&amp;#39;s the slides I will be presenting at Jive Software:&lt;/p&gt;
+
+&lt;div class='flash'&gt;
+  &lt;object data='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=sass-090402192738-phpapp01&amp;amp;rel=0&amp;amp;stripped_title=sass-introduction' height='355' type='application/x-shockwave-flash' width='425'&gt;
+    &lt;param name='allowFullScreen' value='true' /&gt;
+    &lt;param name='allowScriptAccess' value='always' /&gt;
+    &lt;param name='src' value='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=sass-090402192738-phpapp01&amp;amp;rel=0&amp;amp;stripped_title=sass-introduction' /&gt;
+    &lt;param name='allowfullscreen' value='true' /&gt;
+  &lt;/object&gt;
+&lt;/div&gt;
+</content>
+  </entry>
+  <entry>
     <title>Don't repeat yourself, use Sass mixins</title>
-    <link href="/2009/04/02/dont-repeat-yourself-use-sass-modules.html" rel="alternate"/>
+    <link rel="alternate" href="/2009/04/02/dont-repeat-yourself-use-sass-modules.html"/>
     <id>/2009/04/02/dont-repeat-yourself-use-sass-modules.html</id>
     <published>2009-04-02T00:00:00-08:00</published>
     <updated>2009-04-02T00:00:00-08:00</updated>
@@ -6062,7 +5970,7 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
 
 &lt;h2&gt;Clearfix&lt;/h2&gt;
 
-&lt;p&gt;The Sass definition for clearfix&#8212;pulled from the Compass project&#8212;is declared as such:&lt;/p&gt;
+&lt;p&gt;The Sass definition for clearfix—pulled from the Compass project—is declared as such:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;=clearfix
   overflow: auto
@@ -6137,34 +6045,8 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
 </content>
   </entry>
   <entry>
-    <title>Sass Introduction slides</title>
-    <link href="/2009/04/02/sass-introduction-slides.html" rel="alternate"/>
-    <id>/2009/04/02/sass-introduction-slides.html</id>
-    <published>2009-04-02T00:00:00-08:00</published>
-    <updated>2009-04-02T00:00:00-08:00</updated>
-    <author>
-      <name>Thomas Reynolds</name>
-    </author>
-    <summary type="html">&lt;p&gt;Here&amp;#39;s the slides I will be presenting at Jive Software:&lt;/p&gt;
-
-&lt;div class='flash'&gt;
-  &lt;object data='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=sass-090402192738-phpapp01&amp;amp;rel=0&amp;amp;stripped_title=sass-introduction' height='355' type='application/x-shockwave-flash' width='425'&gt;
-</summary>
-    <content type="html">&lt;p&gt;Here&amp;#39;s the slides I will be presenting at Jive Software:&lt;/p&gt;
-
-&lt;div class='flash'&gt;
-  &lt;object data='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=sass-090402192738-phpapp01&amp;amp;rel=0&amp;amp;stripped_title=sass-introduction' height='355' type='application/x-shockwave-flash' width='425'&gt;
-    &lt;param name='allowFullScreen' value='true' /&gt;
-    &lt;param name='allowScriptAccess' value='always' /&gt;
-    &lt;param name='src' value='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=sass-090402192738-phpapp01&amp;amp;rel=0&amp;amp;stripped_title=sass-introduction' /&gt;
-    &lt;param name='allowfullscreen' value='true' /&gt;
-  &lt;/object&gt;
-&lt;/div&gt;
-</content>
-  </entry>
-  <entry>
     <title>Refactoring with Sass</title>
-    <link href="/2009/03/14/refactoring-with-sass.html" rel="alternate"/>
+    <link rel="alternate" href="/2009/03/14/refactoring-with-sass.html"/>
     <id>/2009/03/14/refactoring-with-sass.html</id>
     <published>2009-03-14T00:00:00-08:00</published>
     <updated>2009-03-14T00:00:00-08:00</updated>
@@ -6184,10 +6066,9 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
 
 &lt;p&gt;However, there is one large caveat. Because css2sass rearranges your selectors, you can run into problems with specificity and order. If you have been working quickly and not refactoring as you were developing  (aka doing real work), then you may have begun littering your CSS with more and more one-off commands that altered css defined earlier in the document. They &amp;quot;worked&amp;quot; because css overrides styles as it reads through the document. The sass produced by css2sass may have a different order and can cause your little tweaks to be ignored.&lt;/p&gt;
 
-&lt;p&gt;The safer alternative is to convert from CSS to Sass by hand. Simply remove all curly braces and semicolons and you should have a valid&#8212;if not optimized&#8212;Sass document. If you&amp;#39;ve been inconsistent with using either tabs or spaces, Sass will warn you. You&amp;#39;ll need to standardize on one or the other before moving forward. If you start out with some CSS like this:&lt;/p&gt;
+&lt;p&gt;The safer alternative is to convert from CSS to Sass by hand. Simply remove all curly braces and semicolons and you should have a valid—if not optimized—Sass document. If you&amp;#39;ve been inconsistent with using either tabs or spaces, Sass will warn you. You&amp;#39;ll need to standardize on one or the other before moving forward. If you start out with some CSS like this:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;:::css
-#left {
+&lt;pre&gt;&lt;code&gt;#left {
   float: left;
   display: inline;
   width: 242px;
@@ -6234,16 +6115,16 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
   </entry>
   <entry>
     <title>Compass, the future of Sass development</title>
-    <link href="/2009/03/11/compass-the-future-of-sass-development.html" rel="alternate"/>
+    <link rel="alternate" href="/2009/03/11/compass-the-future-of-sass-development.html"/>
     <id>/2009/03/11/compass-the-future-of-sass-development.html</id>
     <published>2009-03-11T00:00:00-08:00</published>
     <updated>2009-03-11T00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;I&amp;#39;ve been a fan of Haml and Sass for a long time. Ever since I ran my mouth in #merb and Hampton Caitlin rightfully put me in my place. If you have no clue what Haml &amp;amp; Sass are&#8212;or if you&amp;#39;ve heard the buzz, but never actually checked them out&#8212;you can view &lt;a href="http://peepcode.com/products/haml-and-sass"&gt;this excellent PeepCode screencast on the subject&lt;/a&gt;. I currently use both for the initial coding of all the sites I develop. However, I am not lucky enough to work with a Haml-enabled framework on the backend like Rails or Merb so I have to compile to HTML and CSS when I begin integrating the front-end with the back-end&#185;.&lt;/p&gt;
+    <summary type="html">&lt;p&gt;I&amp;#39;ve been a fan of Haml and Sass for a long time. Ever since I ran my mouth in #merb and Hampton Caitlin rightfully put me in my place. If you have no clue what Haml &amp;amp; Sass are—or if you&amp;#39;ve heard the buzz, but never actually checked them out—you can view &lt;a href="http://peepcode.com/products/haml-and-sass"&gt;this excellent PeepCode screencast on the subject&lt;/a&gt;. I currently use both for the initial coding of all the sites I develop. However, I am not lucky enough to work with a Haml-enabled framework on the backend like Rails or Merb so I have to compile to HTML and CSS when I begin integrating the front-end with the back-end¹.&lt;/p&gt;
 </summary>
-    <content type="html">&lt;p&gt;I&amp;#39;ve been a fan of Haml and Sass for a long time. Ever since I ran my mouth in #merb and Hampton Caitlin rightfully put me in my place. If you have no clue what Haml &amp;amp; Sass are&#8212;or if you&amp;#39;ve heard the buzz, but never actually checked them out&#8212;you can view &lt;a href="http://peepcode.com/products/haml-and-sass"&gt;this excellent PeepCode screencast on the subject&lt;/a&gt;. I currently use both for the initial coding of all the sites I develop. However, I am not lucky enough to work with a Haml-enabled framework on the backend like Rails or Merb so I have to compile to HTML and CSS when I begin integrating the front-end with the back-end&#185;.&lt;/p&gt;
+    <content type="html">&lt;p&gt;I&amp;#39;ve been a fan of Haml and Sass for a long time. Ever since I ran my mouth in #merb and Hampton Caitlin rightfully put me in my place. If you have no clue what Haml &amp;amp; Sass are—or if you&amp;#39;ve heard the buzz, but never actually checked them out—you can view &lt;a href="http://peepcode.com/products/haml-and-sass"&gt;this excellent PeepCode screencast on the subject&lt;/a&gt;. I currently use both for the initial coding of all the sites I develop. However, I am not lucky enough to work with a Haml-enabled framework on the backend like Rails or Merb so I have to compile to HTML and CSS when I begin integrating the front-end with the back-end¹.&lt;/p&gt;
 
 &lt;p&gt;This situation sucks. Sass makes me a faster in my initial development, but it also speeds up tweaking small site-wide issues and overall maintenance. I develop my Sass modularly and try to use variables for site-wide colors, border and fonts. Wouldn&amp;#39;t it be great if I could use Sass throughout the entire development cycle?&lt;/p&gt;
 
@@ -6262,7 +6143,7 @@ sudo gem install compass
 
 &lt;h2&gt;Continuous Compilation&lt;/h2&gt;
 
-&lt;p&gt;Alright, let&amp;#39;s move to our web directory&#8212;wherever that may be. I like to keep all my CSS and Sass together so I have a base css/ directory and css/sass/ directory under that. Given that structure, I can have compass watch my Sass like so:&lt;/p&gt;
+&lt;p&gt;Alright, let&amp;#39;s move to our web directory—wherever that may be. I like to keep all my CSS and Sass together so I have a base css/ directory and css/sass/ directory under that. Given that structure, I can have compass watch my Sass like so:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;cd PROJECT_DIR
 compass --watch --css-dir css --sass-dir css/sass
@@ -6272,7 +6153,7 @@ compass --watch --css-dir css --sass-dir css/sass
 
 &lt;hr&gt;
 
-&lt;p&gt;&#185; Luckily for me, Microsoft&amp;#39;s &lt;a href="http://andrewpeters.net/2007/12/19/introducing-nhaml-an-aspnet-mvc-view-engine/"&gt;ASP.NET will soon have access to HAML&lt;/a&gt; via the MVC Contribs project. Alas, no native Sass support is on the horizon.&lt;/p&gt;
+&lt;p&gt;¹ Luckily for me, Microsoft&amp;#39;s &lt;a href="http://andrewpeters.net/2007/12/19/introducing-nhaml-an-aspnet-mvc-view-engine/"&gt;ASP.NET will soon have access to HAML&lt;/a&gt; via the MVC Contribs project. Alas, no native Sass support is on the horizon.&lt;/p&gt;
 </content>
   </entry>
 </feed>

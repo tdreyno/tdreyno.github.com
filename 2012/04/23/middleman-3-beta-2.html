@@ -1,125 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1">
-<meta name="author" content="Thomas Reynolds">
-<!-- Mobile viewport optimization http://goo.gl/b9SaQ --><meta name="HandheldFriendly" content="True">
-<meta name="MobileOptimized" content="320">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading --><meta http-equiv="cleartype" content="on">
-<!-- Google Setup --><meta content="VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=" name="verify-v1">
-<!-- OpenID Setup --><link href="http://www.myopenid.com/server" rel="openid.server">
-<link href="http://tdreyno.myopenid.com/" rel="openid.delegate">
-<link href="http://tdreyno.myopenid.com" rel="openid2.local_id">
-<link href="http://www.myopenid.com/server" rel="openid2.provider">
-<meta content="http://www.myopenid.com/xrds?username=tdreyno.myopenid.com" http-equiv="X-XRDS-Location">
-<title>Middleman 3.0 Beta 2 « Thomas Reynolds</title>
-<!-- Stylesheet --><link type="text/css" media="screen" href="/stylesheets/new.css?1335203275" rel="stylesheet">
-<!-- RSS --><link href="http://feeds2.feedburner.com/awf-allposts" rel="alternate" title="Award Winning Fjords" type="application/rss+xml">
-</head>
-<body>
-    <header><h1>
-        <a href="/">Award-Winning Fjords</a>
-        <span class="sub">Thomas Reynolds</span>
-      </h1></header><div id="frame">
-      
-        <article><h2>Middleman 3.0 Beta 2</h2>
-          <time>Apr 23 2012</time><h3>What is Middleman?</h3>
-
-<p>Middleman is a small tool for developing stand-alone, static websites. It's great for separating frontend development from the backend, developing blazingly fast static websites or quickly creating prototypes. Middleman brings all of the power of Rails to provide an incredibly powerful development environment with access to:</p>
-
-<ul>
-<li>Templating engines and layouts (ERb, Slim, Haml, anything supported by Tilt)</li>
-<li>Preprocessors (CoffeeScript, Sass, Less, Stylus, etc)</li>
-<li>Compression (Minify CSS, JS and images)</li>
-<li>Post-compile callbacks for deployment</li>
-<li>And lots of new stuff in 3.0</li>
-</ul>
-<h3>Install the Beta</h3>
-
-<p>Before getting in to all the new features, here's how you can install the beta:</p>
-
-<div class="highlight">
-<pre>gem install middleman --pre
-</pre>
-</div>
-
-
-<p><strong>Remember:</strong> This is a beta and there are bound to be bugs and possible regressions. 3.0 should be fully backwards compatible with 2.x. Please submit any issues you run into on <a href="https://github.com/middleman/middleman/issues">the Github issue tracker</a>.</p>
-
-<h3>New Features Since Beta 1</h3>
-
-<p><strong>Read about the other 3.0 features, discussed in <a href="/2012/01/03/middleman-3-beta.html">the Beta 1 announcement</a>.</strong></p>
-
-<p>First, and foremost, I want to recognize the incredible contributions Ben Hollis has made to Middleman in the past 6 months. He's been <a href="https://github.com/middleman/middleman/commits/master?author=bhollis">writing tons code</a>, including some of the features below, as well as managing the community and helping keep me some making stupid errors by commenting on my commits. He's also refactoring the <code>middleman-blog</code> extension, which will be 3.0-compatible very soon.</p>
-
-<p>So, here are some new features:</p>
-
-<ul>
-<li>
-<h4>Bundler Required</h4>
-
-<p>Most non-Rubyists, and many active Rubyists, are constantly fighting with Rubygems when using Middleman. Our solution in 2.0 was to allow the use of Bundler Gemfiles to lock down the Middleman environment. This was great, but only Ruby developers knew how to use it. In 3.0, Bundler in built directly into Middleman. All new projects generate a Gemfile. In the future, we hope to provide CLI commands for managing a Middleman project, such as: <code>middleman upgrade</code>, to rebundle a project with a newer release of Middleman. </p>
-</li>
-<li>
-<h4>i18n Built-in</h4>
-
-<p>The <code>middleman-i18n</code> extension has been merged into core. We hope to further expand its functionality to make Middleman the best possible solution for building multi-lingual websites.</p>
-</li>
-<li>
-<h4>
-<code>gzip</code> and <code>asset_hash</code> extensions</h4>
-
-<p>Two new optimization extensions are available in Beta 2. </p>
-
-<p><code>gzip</code> will compress your assets during a build, but it will be up to you to serve them. </p>
-
-<p><code>asset_hash</code> is an alternative cache-busting scheme, targeting CDNs. The current <code>cache_buster</code> extension simply adds a querystring to asset paths, which busts the cache in browsers. CDNs actually require that the name of the file is changed. <code>asset_hash</code> will insert a hash of the file into the file names of your assets during build.</p>
-</li>
-<li>
-<h4>Implied output extensions</h4>
-
-<p>Templating engines can now set a default output extension. For example, <code>.erb</code> now implies <code>.html</code> so <code>my-template.erb</code> will ouput to <code>my-template.html</code>. The 2.0 functionality, of including both the template extension and the output extension in the file name is still prefered. </p>
-</li>
-<li>
-<h4>Miscellaneous Changes</h4>
-
-<ul>
-<li>Activate mobile html5boilerplate template</li>
-<li>Update html5boilerplate template to version 3</li>
-<li>Don't re-minify files with ".min" in their name</li>
-<li>Automatically load helper modules in helpers/ directory</li>
-<li>Add pid for cleanup</li>
-<li>Use guard/listen for file watching</li>
-<li>Errors stop the build and print a stacktrace rather than silently getting printed into files.</li>
-<li>
-<code>with_layout</code> works with globs or regexes.</li>
-<li>Setting <code>directory_index</code> from <code>page</code> with a glob or regex now works.</li>
-<li>Properly output Compass-generated sprited images.</li>
-<li>Include vendored assets in sprockets path.</li>
-<li>Switch built-in CSS compressor to Rainpress.</li>
-<li>Automatically load helper modules from <code>helpers/</code>, like Rails.</li>
-<li>
-<code>ignore</code> and <code>page</code> both work with file globs or regexes.</li>
-<li>
-<code>layout</code>, <code>ignore</code>, and <code>directory_index</code> can be set from front matter.</li>
-<li>JavaScript and CSS are minified no matter where they are in the site, including in inline code blocks.</li>
-</ul>
-</li>
-</ul></article><footer><p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p>
-    
-        <p>
-          <a href="http://twitter.com/tdreyno">Twitter</a> •
-          <a href="mailto:me@tdreyno.com">Email</a> •
-          <a href="https://github.com/tdreyno">Github</a> •
-          <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a>
-        </p>
-      </footer>
-</div>
-    
-    <script type="text/javascript">
+<!doctype html> <html> <head> <meta charset="utf-8"> <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'> <meta name="author" content="Thomas Reynolds"> <meta name="HandheldFriendly" content="True"> <meta name="MobileOptimized" content="320"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <meta http-equiv="cleartype" content="on"> <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'> <link href='http://www.myopenid.com/server' rel='openid.server'> <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'> <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'> <link href='http://www.myopenid.com/server' rel='openid2.provider'> <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'> <title>Middleman 3.0 Beta 2 &laquo; Thomas Reynolds</title> <link href="/stylesheets/new.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'> </head> <body> <header> <h1> <a href="/">Award-Winning Fjords</a> <span class="sub">Thomas Reynolds</span> </header> </header> <div id="frame"> <article> <h2>Middleman 3.0 Beta 2</h2> <time>Apr 23 2012</time> <h3>What is Middleman?</h3> <p>Middleman is a small tool for developing stand-alone, static websites. It&#39;s great for separating frontend development from the backend, developing blazingly fast static websites or quickly creating prototypes. Middleman brings all of the power of Rails to provide an incredibly powerful development environment with access to:</p> <ul> <li>Templating engines and layouts (ERb, Slim, Haml, anything supported by Tilt)</li> <li>Preprocessors (CoffeeScript, Sass, Less, Stylus, etc)</li> <li>Compression (Minify CSS, JS and images)</li> <li>Post-compile callbacks for deployment</li> <li>And lots of new stuff in 3.0</li> </ul> <h3>Install the Beta</h3> <p>Before getting in to all the new features, here&#39;s how you can install the beta:</p> <pre><code>gem install middleman --pre
+</code></pre> <p><strong>Remember:</strong> This is a beta and there are bound to be bugs and possible regressions. 3.0 should be fully backwards compatible with 2.x. Please submit any issues you run into on <a href="https://github.com/middleman/middleman/issues">the Github issue tracker</a>.</p> <h3>New Features Since Beta 1</h3> <p><strong>Read about the other 3.0 features, discussed in <a href="/2012/01/03/middleman-3-beta.html">the Beta 1 announcement</a>.</strong></p> <p>First, and foremost, I want to recognize the incredible contributions Ben Hollis has made to Middleman in the past 6 months. He&#39;s been <a href="https://github.com/middleman/middleman/commits/master?author=bhollis">writing tons code</a>, including some of the features below, as well as managing the community and helping keep me some making stupid errors by commenting on my commits. He&#39;s also refactoring the <code>middleman-blog</code> extension, which will be 3.0-compatible very soon.</p> <p>So, here are some new features:</p> <ul> <li><h4>Bundler Required</h4> <p>Most non-Rubyists, and many active Rubyists, are constantly fighting with Rubygems when using Middleman. Our solution in 2.0 was to allow the use of Bundler Gemfiles to lock down the Middleman environment. This was great, but only Ruby developers knew how to use it. In 3.0, Bundler in built directly into Middleman. All new projects generate a Gemfile. In the future, we hope to provide CLI commands for managing a Middleman project, such as: <code>middleman upgrade</code>, to rebundle a project with a newer release of Middleman. </p></li> <li><h4>i18n Built-in</h4> <p>The <code>middleman-i18n</code> extension has been merged into core. We hope to further expand its functionality to make Middleman the best possible solution for building multi-lingual websites.</p></li> <li><h4><code>gzip</code> and <code>asset_hash</code> extensions</h4> <p>Two new optimization extensions are available in Beta 2. </p> <p><code>gzip</code> will compress your assets during a build, but it will be up to you to serve them. </p> <p><code>asset_hash</code> is an alternative cache-busting scheme, targeting CDNs. The current <code>cache_buster</code> extension simply adds a querystring to asset paths, which busts the cache in browsers. CDNs actually require that the name of the file is changed. <code>asset_hash</code> will insert a hash of the file into the file names of your assets during build.</p></li> <li><h4>Implied output extensions</h4> <p>Templating engines can now set a default output extension. For example, <code>.erb</code> now implies <code>.html</code> so <code>my-template.erb</code> will ouput to <code>my-template.html</code>. The 2.0 functionality, of including both the template extension and the output extension in the file name is still prefered. </p></li> <li><h4>Miscellaneous Changes</h4> <ul> <li>Activate mobile html5boilerplate template</li> <li>Update html5boilerplate template to version 3</li> <li>Don&#39;t re-minify files with &quot;.min&quot; in their name</li> <li>Automatically load helper modules in helpers/ directory</li> <li>Add pid for cleanup</li> <li>Use guard/listen for file watching</li> <li>Errors stop the build and print a stacktrace rather than silently getting printed into files.</li> <li><code>with_layout</code> works with globs or regexes.</li> <li>Setting <code>directory_index</code> from <code>page</code> with a glob or regex now works.</li> <li>Properly output Compass-generated sprited images.</li> <li>Include vendored assets in sprockets path.</li> <li>Switch built-in CSS compressor to Rainpress.</li> <li>Automatically load helper modules from <code>helpers/</code>, like Rails.</li> <li><code>ignore</code> and <code>page</code> both work with file globs or regexes.</li> <li><code>layout</code>, <code>ignore</code>, and <code>directory_index</code> can be set from front matter.</li> <li>JavaScript and CSS are minified no matter where they are in the site, including in inline code blocks.</li> </ul></li> </ul> </article> <footer> <p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p> <p> <a href="http://twitter.com/tdreyno">Twitter</a> &bull; <a href="mailto:me@tdreyno.com">Email</a> &bull; <a href="https://github.com/tdreyno">Github</a> &bull; <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a> </p> </footer> </div> <script>
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-90027-9']);
   _gaq.push(['_trackPageview']);
@@ -132,7 +12,7 @@
   ga.setAttribute('async', 'true');
   document.documentElement.firstChild.appendChild(ga);
   })();
-</script><script type="text/javascript">
+</script> <script>
   var _gauges = _gauges || [];
   (function() {
     var t   = document.createElement('script');
@@ -144,6 +24,4 @@
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(t, s);
   })();
-</script>
-</body>
-</html>
+</script> <script src="/javascripts/highlight.pack.js?1335916790" type="text/javascript"></script> <link href="/stylesheets/solarized_light.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <script>hljs.initHighlightingOnLoad();</script> </body> </html>
