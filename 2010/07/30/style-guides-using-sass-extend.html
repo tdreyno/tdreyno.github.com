@@ -1,16 +1,86 @@
-<!doctype html> <html> <head> <meta charset="utf-8"> <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'> <meta name="author" content="Thomas Reynolds"> <meta name="HandheldFriendly" content="True"> <meta name="MobileOptimized" content="320"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <meta http-equiv="cleartype" content="on"> <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'> <link href='http://www.myopenid.com/server' rel='openid.server'> <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'> <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'> <link href='http://www.myopenid.com/server' rel='openid2.provider'> <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'> <title>Style Guides Using Sass @extend &laquo; Thomas Reynolds</title> <link href="/stylesheets/new.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'> </head> <body> <header> <h1> <a href="/">Award-Winning Fjords</a> <span class="sub">Thomas Reynolds</span> </header> </header> <div id="frame"> <article> <h2>Style Guides Using Sass @extend</h2> <time>Jul 30 2010</time> <p>There are some very common front-end development patterns that drive me crazy. CSS with every style related to a specific selector on one line and IE-only stylesheets with conditional comments are both common place and even encouraged by some. But the worst, in my opinion, is breaking our CSS into multiple files in an attempt to make them &quot;themable.&quot; Usually this results in something like a <tt>main.css</tt> and a <tt>fonts.css</tt> or <tt>colors.css</tt>. Having a go-to file for designers to manipulate fonts and colors is very useful, but usually the structure of this secondary file mirrors the primary file and you end up with a lot of repetition. Furthermore, if your DOM structure changes, then you will need to update multiple files (<tt>ie.css</tt> results in a similar problem).</p> <p>Sass&#39; @extend feature allows us to have a <tt>style-guide.sass</tt> in which designers can run free, but is not dependent on DOM structure. Let&#39;s take a look at how I setup my style guides.</p> <h2>The Style Guide</h2> <p>The designer on the project has put together a wonderful style guide PDF which I will be implementing in Sass. Here is what it looks like:</p> <p><img src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/style-guide-full.png"/></p> <p>As you can see, each style has a title and some specifics for the text treatment.</p> <p>First I setup variables for our color palatte.</p> <pre><code>$primary-orange:   #fe8a16
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'>
+    <meta name="author" content="Thomas Reynolds">
+    
+    <!-- Mobile viewport optimization http://goo.gl/b9SaQ -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+    
+    <!-- Google Setup -->
+    <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'>
+    
+    <!-- OpenID Setup -->
+    <link href='http://www.myopenid.com/server' rel='openid.server'>
+    <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'>
+    <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'>
+    <link href='http://www.myopenid.com/server' rel='openid2.provider'>
+    <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'>
+    
+    
+      <title>Style Guides Using Sass @extend &laquo; Thomas Reynolds</title>
+    
+    
+    <!-- Stylesheet -->
+    <link href="/stylesheets/new.css?1336499856" media="screen" rel="stylesheet" type="text/css" />
+    
+    <!-- RSS -->
+    <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'>
+  </head>
+  <body>
+    <header>
+      <h1>
+        <a href="/">Award-Winning Fjords</a>
+        <span class="sub">Thomas Reynolds</span>
+      </header>
+    </header>
+    
+    <div id="frame">
+      
+        <article>
+          <h2>Style Guides Using Sass @extend</h2>
+          <time>Jul 30 2010</time>
+          <p>There are some very common front-end development patterns that drive me crazy. CSS with every style related to a specific selector on one line and IE-only stylesheets with conditional comments are both common place and even encouraged by some. But the worst, in my opinion, is breaking our CSS into multiple files in an attempt to make them &quot;themable.&quot; Usually this results in something like a <tt>main.css</tt> and a <tt>fonts.css</tt> or <tt>colors.css</tt>. Having a go-to file for designers to manipulate fonts and colors is very useful, but usually the structure of this secondary file mirrors the primary file and you end up with a lot of repetition. Furthermore, if your DOM structure changes, then you will need to update multiple files (<tt>ie.css</tt> results in a similar problem).</p>
+
+<p>Sass&#39; @extend feature allows us to have a <tt>style-guide.sass</tt> in which designers can run free, but is not dependent on DOM structure. Let&#39;s take a look at how I setup my style guides.</p>
+
+<h2>The Style Guide</h2>
+
+<p>The designer on the project has put together a wonderful style guide PDF which I will be implementing in Sass. Here is what it looks like:</p>
+
+<p><img src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/style-guide-full.png" /></p>
+
+<p>As you can see, each style has a title and some specifics for the text treatment.</p>
+
+<p>First I setup variables for our color palatte.</p>
+
+<pre><code>$primary-orange:   #fe8a16
 $hover-orange:     #f67502
 $steel-blue:       #303b41 
 $bright-blue:      #4892bc
 $dark-grey:        #4b4b48
-</code></pre> <p>Next I create some simple mixins to handle usage of custom fonts.</p> <pre><code>=custom-font
+</code></pre>
+
+<p>Next I create some simple mixins to handle usage of custom fonts.</p>
+
+<pre><code>=custom-font
   font-family: &quot;Droid Sans&quot;
   font-weight: normal
 
 =bold-custom-font
   font-family: &quot;Droid Sans Bold&quot;
   font-weight: bold
-</code></pre> <p>Finally, I start defining the styles as classes. As you can see, I am using @extend to avoid repeating myself. I&#39;m going to omit some of the styles in the guide for the sake of brevity.</p> <pre><code>.sg-heading-1
+</code></pre>
+
+<p>Finally, I start defining the styles as classes. As you can see, I am using @extend to avoid repeating myself. I&#39;m going to omit some of the styles in the guide for the sake of brevity.</p>
+
+<pre><code>.sg-heading-1
   +custom-font
   font-size: 32px
   line-height: 36px
@@ -42,7 +112,13 @@ $dark-grey:        #4b4b48
   text-decoration: none
   &amp;:hover
     color: $hover-orange
-</code></pre> <h2>Referencing the Style Guide</h2> <p>Now, when I go to implement a specific portion of the site, I can be concise by referencing the style guide. </p> <pre><code>.info-box
+</code></pre>
+
+<h2>Referencing the Style Guide</h2>
+
+<p>Now, when I go to implement a specific portion of the site, I can be concise by referencing the style guide. </p>
+
+<pre><code>.info-box
   h2
     @extend .sg-heading-2
   ul li
@@ -51,7 +127,11 @@ $dark-grey:        #4b4b48
     @extend .sg-main-body
   dl
     @extend .sg-secondary-body
-</code></pre> <p>Here&#39;s the resulting CSS output:</p> <pre><code>.sg-heading-1, .sg-heading-2, .sg-heading-3, .info-box h2 {
+</code></pre>
+
+<p>Here&#39;s the resulting CSS output:</p>
+
+<pre><code>.sg-heading-1, .sg-heading-2, .sg-heading-3, .info-box h2 {
   font-family: &quot;Droid Sans&quot;;
   font-weight: normal;
   font-size: 32px;
@@ -81,7 +161,34 @@ $dark-grey:        #4b4b48
   text-decoration: none; }
   .sg-text-link-1:hover, .info-box ul li:hover {
     color: #f67502; }
-</code></pre> <h2>Conclusion</h2> <p>I have been incredibly happy with this approach. It has all the independence of the external <tt>fonts-and-colors.css</tt> method, but is more flexible, uses less code and is more readable in both the Sass and CSS forms.</p> <p>I highly suggest getting your designer to build a style guide. It enforces consistency and keeps the randomness out of coding. Why should a site use every font size between 12px and 22px? Just pick a few sizes and standardize on them.</p> </article> <footer> <p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p> <p> <a href="http://twitter.com/tdreyno">Twitter</a> &bull; <a href="mailto:me@tdreyno.com">Email</a> &bull; <a href="https://github.com/tdreyno">Github</a> &bull; <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a> </p> </footer> </div> <script>
+</code></pre>
+
+<h2>Conclusion</h2>
+
+<p>I have been incredibly happy with this approach. It has all the independence of the external <tt>fonts-and-colors.css</tt> method, but is more flexible, uses less code and is more readable in both the Sass and CSS forms.</p>
+
+<p>I highly suggest getting your designer to build a style guide. It enforces consistency and keeps the randomness out of coding. Why should a site use every font size between 12px and 22px? Just pick a few sizes and standardize on them.</p>
+
+        </article>
+      
+    
+      <footer>
+        <p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p>
+    
+        <p>
+          <a href="http://twitter.com/tdreyno">Twitter</a> &bull;
+          <a href="mailto:me@tdreyno.com">Email</a> &bull;
+          <a href="https://github.com/tdreyno">Github</a> &bull;
+          <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a>
+        </p>
+      </footer>
+    </div>
+    
+    <script src="/javascripts/highlight.pack.js?1336499856" type="text/javascript"></script>
+    <link href="/stylesheets/solarized_light.css?1336499856" media="screen" rel="stylesheet" type="text/css" />
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+    <script>
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-90027-9']);
   _gaq.push(['_trackPageview']);
@@ -94,7 +201,9 @@ $dark-grey:        #4b4b48
   ga.setAttribute('async', 'true');
   document.documentElement.firstChild.appendChild(ga);
   })();
-</script> <script>
+</script>
+
+<script>
   var _gauges = _gauges || [];
   (function() {
     var t   = document.createElement('script');
@@ -106,4 +215,6 @@ $dark-grey:        #4b4b48
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(t, s);
   })();
-</script> <script src="/javascripts/highlight.pack.js?1335916790" type="text/javascript"></script> <link href="/stylesheets/solarized_light.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <script>hljs.initHighlightingOnLoad();</script> </body> </html>
+</script>
+  </body>
+</html>

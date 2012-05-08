@@ -1,16 +1,84 @@
-<!doctype html> <html> <head> <meta charset="utf-8"> <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'> <meta name="author" content="Thomas Reynolds"> <meta name="HandheldFriendly" content="True"> <meta name="MobileOptimized" content="320"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <meta http-equiv="cleartype" content="on"> <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'> <link href='http://www.myopenid.com/server' rel='openid.server'> <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'> <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'> <link href='http://www.myopenid.com/server' rel='openid2.provider'> <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'> <title>Don't repeat yourself, use Sass mixins &laquo; Thomas Reynolds</title> <link href="/stylesheets/new.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'> </head> <body> <header> <h1> <a href="/">Award-Winning Fjords</a> <span class="sub">Thomas Reynolds</span> </header> </header> <div id="frame"> <article> <h2>Don't repeat yourself, use Sass mixins</h2> <time>Apr 2 2009</time> <p><strong>Update (2011-08-23): Use to Sass 3 syntax</strong></p> <p>There are quite a few situations in CSS where you are simply copy &amp; pasting the same set of styles in multiple places. If at some point, you want to tweak these styles, you&#39;ll need to track down and update each set of styles. Sass introduces the concept of mixins which are blocks of nested Sass code which can be applied to any selector in your Sass document. Think of them as variables which can hold multiple levels of information. The syntax for defining a module is simple:</p> <pre><code>=module-name
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'>
+    <meta name="author" content="Thomas Reynolds">
+    
+    <!-- Mobile viewport optimization http://goo.gl/b9SaQ -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+    
+    <!-- Google Setup -->
+    <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'>
+    
+    <!-- OpenID Setup -->
+    <link href='http://www.myopenid.com/server' rel='openid.server'>
+    <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'>
+    <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'>
+    <link href='http://www.myopenid.com/server' rel='openid2.provider'>
+    <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'>
+    
+    
+      <title>Don't repeat yourself, use Sass mixins &laquo; Thomas Reynolds</title>
+    
+    
+    <!-- Stylesheet -->
+    <link href="/stylesheets/new.css?1336499856" media="screen" rel="stylesheet" type="text/css" />
+    
+    <!-- RSS -->
+    <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'>
+  </head>
+  <body>
+    <header>
+      <h1>
+        <a href="/">Award-Winning Fjords</a>
+        <span class="sub">Thomas Reynolds</span>
+      </header>
+    </header>
+    
+    <div id="frame">
+      
+        <article>
+          <h2>Don't repeat yourself, use Sass mixins</h2>
+          <time>Apr  2 2009</time>
+          <p><strong>Update (2011-08-23): Use to Sass 3 syntax</strong></p>
+
+<p>There are quite a few situations in CSS where you are simply copy &amp; pasting the same set of styles in multiple places. If at some point, you want to tweak these styles, you&#39;ll need to track down and update each set of styles. Sass introduces the concept of mixins which are blocks of nested Sass code which can be applied to any selector in your Sass document. Think of them as variables which can hold multiple levels of information. The syntax for defining a module is simple:</p>
+
+<pre><code>=module-name
   style1: value1
   style2: value2
   .wrapper
     style3: value3
-</code></pre> <p>Then you can inject this module into a selector:</p> <pre><code>#frame #left
+</code></pre>
+
+<p>Then you can inject this module into a selector:</p>
+
+<pre><code>#frame #left
   +module-name
-</code></pre> <p>Which will generate CSS that looks like this:</p> <pre><code>#frame #left {
+</code></pre>
+
+<p>Which will generate CSS that looks like this:</p>
+
+<pre><code>#frame #left {
   style1: value1;
   style2: value2; }
   #frame #left .wrapper {
     style3: value3; }
-</code></pre> <p>In my opinion, this is Sass&#39; killer feature. The repetition so common in large CSS files can be extracted into reusable functions. To illustrate this point, I&#39;m going to take two of the most-frequently repeated blocks of CSS: the clearfix and the replacement of text with an image.</p> <h2>Clearfix</h2> <p>The Sass definition for clearfix—pulled from the Compass project—is declared as such:</p> <pre><code>=clearfix
+</code></pre>
+
+<p>In my opinion, this is Sass&#39; killer feature. The repetition so common in large CSS files can be extracted into reusable functions. To illustrate this point, I&#39;m going to take two of the most-frequently repeated blocks of CSS: the clearfix and the replacement of text with an image.</p>
+
+<h2>Clearfix</h2>
+
+<p>The Sass definition for clearfix—pulled from the Compass project—is declared as such:</p>
+
+<pre><code>=clearfix
   overflow: auto
   overflow: -moz-scrollbars-none
   // This makes ie6 get layout
@@ -18,13 +86,25 @@
   // and this puts it back to block
   &amp;amp;
     display: block
-</code></pre> <p>Many developers create a .clearfix class and apply it on the HTML-side to blocks which need the hack. I&#39;ve never been a huge fan of this as you are making presentational changes to the content-side of the equation. The old-school .clearfix class can be accomplished pretty simply though, so it is worth showing:</p> <pre><code>.clearfix
+</code></pre>
+
+<p>Many developers create a .clearfix class and apply it on the HTML-side to blocks which need the hack. I&#39;ve never been a huge fan of this as you are making presentational changes to the content-side of the equation. The old-school .clearfix class can be accomplished pretty simply though, so it is worth showing:</p>
+
+<pre><code>.clearfix
   +clearfix
-</code></pre> <p>On the other hand, I prefer to include the clearfix directly on the selectors that need it:</p> <pre><code>#left
+</code></pre>
+
+<p>On the other hand, I prefer to include the clearfix directly on the selectors that need it:</p>
+
+<pre><code>#left
   +clearfix
   div
     float: left
-</code></pre> <p>And since this is a new concept, here is the CSS which will be generated:</p> <pre><code>#left {
+</code></pre>
+
+<p>And since this is a new concept, here is the CSS which will be generated:</p>
+
+<pre><code>#left {
   overflow: auto;
   overflow: -moz-scrollbars-none;
   display: inline-block; }
@@ -32,22 +112,63 @@
   display: block; }
   #left div {
     float: left; }
-</code></pre> <p>This actually results in a lot of duplication in the <em>rendered</em> CSS over the .clearfix method. I guess it depends what you want to optimize your development for. If you develop entirely in Sass, then it is a non-issue. However, if you generate CSS and hand it over to a client or another developer, they may not like this kind of repetition.</p> <h2>Module parameters</h2> <p>Sass mixins can also take parameters that are used when generating the CSS. Here is the Sass definition for the often-used trick of displaying an image behind text (usually a H1-H6 tag) and shifting the text out of view.</p> <pre><code>=replace-text( $img, $x: 50%, $y: 50% )
+</code></pre>
+
+<p>This actually results in a lot of duplication in the <em>rendered</em> CSS over the .clearfix method. I guess it depends what you want to optimize your development for. If you develop entirely in Sass, then it is a non-issue. However, if you generate CSS and hand it over to a client or another developer, they may not like this kind of repetition.</p>
+
+<h2>Module parameters</h2>
+
+<p>Sass mixins can also take parameters that are used when generating the CSS. Here is the Sass definition for the often-used trick of displaying an image behind text (usually a H1-H6 tag) and shifting the text out of view.</p>
+
+<pre><code>=replace-text( $img, $x: 50%, $y: 50% )
   text-indent: -9999em
   overflow:    hidden
   background:
     image: url($img)
     repeat: no-repeat
     position: $x $y
-</code></pre> <p>As you can see, we must pass in the location of the replacement image and optionally the background position. The simplest usage of this module looks something like this:</p> <pre><code>#header h1
+</code></pre>
+
+<p>As you can see, we must pass in the location of the replacement image and optionally the background position. The simplest usage of this module looks something like this:</p>
+
+<pre><code>#header h1
   +replace-text(&quot;/images/welcome.jpg&quot;)
-</code></pre> <p>And for completeness, here is the generated CSS:</p> <pre><code>#header h1 {
+</code></pre>
+
+<p>And for completeness, here is the generated CSS:</p>
+
+<pre><code>#header h1 {
   text-indent: -9999em;
   overflow: hidden;
   background-image: url(&quot;/images/welcome.jpg&quot;);
   background-repeat: no-repeat;
   background-position: 50% 50%; }
-</code></pre> <h2>Mixin libraries</h2> <p>In the next article, I&#39;ll go through a number of Sass mixins which are distributed with the Compass project.</p> </article> <footer> <p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p> <p> <a href="http://twitter.com/tdreyno">Twitter</a> &bull; <a href="mailto:me@tdreyno.com">Email</a> &bull; <a href="https://github.com/tdreyno">Github</a> &bull; <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a> </p> </footer> </div> <script>
+</code></pre>
+
+<h2>Mixin libraries</h2>
+
+<p>In the next article, I&#39;ll go through a number of Sass mixins which are distributed with the Compass project.</p>
+
+        </article>
+      
+    
+      <footer>
+        <p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p>
+    
+        <p>
+          <a href="http://twitter.com/tdreyno">Twitter</a> &bull;
+          <a href="mailto:me@tdreyno.com">Email</a> &bull;
+          <a href="https://github.com/tdreyno">Github</a> &bull;
+          <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a>
+        </p>
+      </footer>
+    </div>
+    
+    <script src="/javascripts/highlight.pack.js?1336499856" type="text/javascript"></script>
+    <link href="/stylesheets/solarized_light.css?1336499856" media="screen" rel="stylesheet" type="text/css" />
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+    <script>
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-90027-9']);
   _gaq.push(['_trackPageview']);
@@ -60,7 +181,9 @@
   ga.setAttribute('async', 'true');
   document.documentElement.firstChild.appendChild(ga);
   })();
-</script> <script>
+</script>
+
+<script>
   var _gauges = _gauges || [];
   (function() {
     var t   = document.createElement('script');
@@ -72,4 +195,6 @@
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(t, s);
   })();
-</script> <script src="/javascripts/highlight.pack.js?1335916790" type="text/javascript"></script> <link href="/stylesheets/solarized_light.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <script>hljs.initHighlightingOnLoad();</script> </body> </html>
+</script>
+  </body>
+</html>

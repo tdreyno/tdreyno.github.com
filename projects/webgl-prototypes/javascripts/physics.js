@@ -1,3 +1,662 @@
 /* Allows safe, dyamic creation of namespaces.
 */
-var Attraction,Behaviour,Collision,ConstantForce,EdgeBounce,EdgeWrap,Particle,Physics,Random,Spring,Vector,Wander,namespace,__hasProp=Object.prototype.hasOwnProperty,__extends=function(a,b){function d(){this.constructor=a}for(var c in b)__hasProp.call(b,c)&&(a[c]=b[c]);return d.prototype=b.prototype,a.prototype=new d,a.__super__=b.prototype,a};namespace=function(a){var b,c,d,e,f,g,h;c=self,f=a.split("."),h=[];for(d=0,e=f.length;d<e;d++)b=f[d],h.push(c=(g=c[b])!=null?g:c[b]={});return h},function(){var a,b,c,d,e;a=0,c=["ms","moz","webkit","o"];for(d=0,e=c.length;d<e;d++){b=c[d];if(!!window.requestAnimationFrame)continue;window.requestAnimationFrame=window[b+"RequestAnimationFrame"],window.cancelRequestAnimationFrame=window[b+"CancelRequestAnimationFrame"]}window.requestAnimationFrame||(window.requestAnimationFrame=function(b,c){var d,e,f;return e=(new Date).getTime(),d=Math.max(0,16-(e-f)),setTimeout(function(){return b(a+d)},d),f=e+d});if(!window.cancelAnimationFrame)return window.cancelAnimationFrame=function(a){return clearTimeout(a)}}(),Random=function(a,b){return b==null&&(b=a,a=0),a+Math.random()*(b-a)},Random.int=function(a,b){return b==null&&(b=a,a=0),Math.floor(a+Math.random()*(b-a))},Random.sign=function(a){return a==null&&(a=.5),Math.random()<a?1:-1},Random.bool=function(a){return a==null&&(a=.5),Math.random()<a},Random.item=function(a){return a[Math.floor(Math.random()*a.length)]},Vector=function(){function a(a,b,c){this.x=a!=null?a:0,this.y=b!=null?b:0,this.z=c!=null?c:0}return a.add=function(b,c){return new a(b.x+c.x,b.y+c.y,b.z+c.z)},a.sub=function(b,c){return new a(b.x-c.x,b.y-c.y,b.z-c.z)},a.project=function(a,b){return a.clone().scale(a.dot(b)/a.magSq())},a.prototype.set=function(a,b,c){return this.x=a,this.y=b,this.z=c,this},a.prototype.add=function(a){return this.x+=a.x,this.y+=a.y,this.z+=a.z,this},a.prototype.sub=function(a){return this.x-=a.x,this.y-=a.y,this.z-=a.z,this},a.prototype.scale=function(a){return this.x*=a,this.y*=a,this.z*=a,this},a.prototype.dot=function(a){return this.x*a.x+this.y*a.y+this.z*a.z},a.prototype.cross=function(a){return this.x*a.y-this.y*a.x-this.y*a.y},a.prototype.mag=function(){return Math.sqrt(this.x*this.x+this.y*this.y+this.z*this.z)},a.prototype.magSq=function(){return this.x*this.x+this.y*this.y+this.z*this.z},a.prototype.dist=function(a){var b,c,d;return b=a.x-this.x,c=a.y-this.y,d=a.z-this.z,Math.sqrt(b*b+c*c+d*d)},a.prototype.distSq=function(a){var b,c,d;return b=a.x-this.x,c=a.y-this.y,d=a.z-this.z,b*b+c*c+d*d},a.prototype.norm=function(){var a;return a=Math.sqrt(this.x*this.x+this.y*this.y+this.z*this.z),this.x/=a,this.y/=a,this.z/=a,this},a.prototype.limit=function(a){var b,c;c=this.x*this.x+this.y*this.y+this.z*this.z;if(c>a*a)return b=Math.sqrt(c),this.x/=b,this.y/=b,this.z/=b,this.x*=a,this.y*=a,this.z*=a,this},a.prototype.copy=function(a){return this.x=a.x,this.y=a.y,this.z=a.z,this},a.prototype.clone=function(){return new a(this.x,this.y,this.z)},a.prototype.clear=function(){return this.x=0,this.y=0,this.z=0,this},a}(),Particle=function(){function a(a){this.mass=a!=null?a:1,this.setMass(this.mass),this.setRadius(1),this.fixed=!1,this.behaviours=[],this.pos=new Vector,this.vel=new Vector,this.acc=new Vector,this.old={pos:new Vector,vel:new Vector,acc:new Vector}}return a.prototype.moveTo=function(a){return this.pos.copy(a),this.old.pos.copy(a)},a.prototype.setMass=function(a){return this.mass=a!=null?a:1,this.massInv=1/this.mass},a.prototype.setRadius=function(a){return this.radius=a!=null?a:1,this.radiusSq=this.radius*this.radius},a.prototype.update=function(a,b){var c,d,e,f,g;if(!this.fixed){f=this.behaviours,g=[];for(d=0,e=f.length;d<e;d++)c=f[d],g.push(c.apply(this,a,b));return g}},a}(),Spring=function(){function a(a,b,c,d){this.p1=a,this.p2=b,this.restLength=c!=null?c:100,this.stiffness=d!=null?d:1,this._delta=new Vector}return a.prototype.apply=function(){var a,b;this._delta.copy(this.p2.pos).sub(this.p1.pos),a=this._delta.mag()+1e-6,b=(a-this.restLength)/(a*(this.p1.massInv+this.p2.massInv))*this.stiffness,this.p1.fixed||this.p1.pos.add(this._delta.clone().scale(b*this.p1.massInv));if(!this.p2.fixed)return this.p2.pos.add(this._delta.scale(-b*this.p2.massInv))},a}(),Physics=function(){function a(a){this.integrator=a!=null?a:new Euler,this.timestep=1/60,this.viscosity=.005,this.behaviours=[],this._time=0,this._step=0,this._clock=null,this._buffer=0,this._maxSteps=4,this.particles=[],this.springs=[]}return a.prototype.integrate=function(a){var b,c,d,e,f,g,h,i,j,k,l,m,n,o;c=1-this.viscosity,l=this.particles;for(d=0,i=l.length;d<i;d++){e=l[d],m=this.behaviours;for(g=0,j=m.length;g<j;g++)b=m[g],b.apply(e,a,d);e.update(a,d)}this.integrator.integrate(this.particles,a,c),n=this.springs,o=[];for(h=0,k=n.length;h<k;h++)f=n[h],o.push(f.apply());return o},a.prototype.step=function(){var a,b,c;this._clock==null&&(this._clock=(new Date).getTime()),c=(new Date).getTime(),a=c-this._clock;if(a<=0)return;a*=.001,this._clock=c,this._buffer+=a,b=0;while(this._buffer>=this.timestep&&++b<this._maxSteps)this.integrate(this.timestep),this._buffer-=this.timestep,this._time+=this.timestep;return this._step=(new Date).getTime()-c},a.prototype.destroy=function(){return this.integrator=null,this.particles=null,this.springs=null},a}(),Behaviour=function(){function a(){this.GUID=a.GUID++,this.interval=1}return a.GUID=0,a.prototype.apply=function(a,b,c){var d,e;return((e=a[d="__behaviour"+this.GUID])!=null?e:a[d]={counter:0}).counter++},a}(),Attraction=function(a){function b(a,c,d){this.target=a!=null?a:new Vector,this.radius=c!=null?c:1e3,this.strength=d!=null?d:100,this._delta=new Vector,this.setRadius(this.radius),b.__super__.constructor.apply(this,arguments)}return __extends(b,a),b.prototype.setRadius=function(a){return this.radius=a,this.radiusSq=a*a},b.prototype.apply=function(a,b,c){var d;this._delta.copy(this.target).sub(a.pos),d=this._delta.magSq();if(d<this.radiusSq&&d>1e-6)return this._delta.norm().scale(1-d/this.radiusSq),a.acc.add(this._delta.scale(this.strength))},b}(Behaviour),Collision=function(a){function b(a,c){this.useMass=a!=null?a:!0,this.callback=c!=null?c:null,this.pool=[],this._delta=new Vector,b.__super__.constructor.apply(this,arguments)}return __extends(b,a),b.prototype.apply=function(a,b,c){var d,e,f,g,h,i,j,k,l,m,n;n=[];for(f=c,m=this.pool.length-1;c<=m?f<=m:f>=m;c<=m?f++:f--)h=this.pool[f],h!==a?(this._delta.copy(h.pos).sub(a.pos),e=this._delta.magSq(),l=a.radius+h.radius,e<=l*l?(d=Math.sqrt(e),i=a.radius+h.radius-d,i+=.5,g=a.mass+h.mass,j=this.useMass?h.mass/g:.5,k=this.useMass?a.mass/g:.5,a.pos.add(this._delta.clone().norm().scale(i*-j)),h.pos.add(this._delta.norm().scale(i*k)),n.push(typeof this.callback=="function"?this.callback(a,h,i):void 0)):n.push(void 0)):n.push(void 0);return n},b}(Behaviour),ConstantForce=function(a){function b(a){this.force=a!=null?a:new Vector,b.__super__.constructor.apply(this,arguments)}return __extends(b,a),b.prototype.apply=function(a,b,c){return a.acc.add(this.force)},b}(Behaviour),EdgeBounce=function(a){function b(a,c){this.min=a!=null?a:new Vector,this.max=c!=null?c:new Vector,b.__super__.constructor.apply(this,arguments)}return __extends(b,a),b.prototype.apply=function(a,b,c){a.pos.x-a.radius<this.min.x?a.pos.x=this.min.x+a.radius:a.pos.x+a.radius>this.max.x&&(a.pos.x=this.max.x-a.radius);if(a.pos.y-a.radius<this.min.y)return a.pos.y=this.min.y+a.radius;if(a.pos.y+a.radius>this.max.y)return a.pos.y=this.max.y-a.radius},b}(Behaviour),EdgeWrap=function(a){function b(a,c){this.min=a!=null?a:new Vector,this.max=c!=null?c:new Vector,b.__super__.constructor.apply(this,arguments)}return __extends(b,a),b.prototype.apply=function(a,b,c){a.pos.x+a.radius<this.min.x?(a.pos.x=this.max.x+a.radius,a.old.pos.x=a.pos.x):a.pos.x-a.radius>this.max.x&&(a.pos.x=this.min.x-a.radius,a.old.pos.x=a.pos.x);if(a.pos.y+a.radius<this.min.y)return a.pos.y=this.max.y+a.radius,a.old.pos.y=a.pos.y;if(a.pos.y-a.radius>this.max.y)return a.pos.y=this.min.y-a.radius,a.old.pos.y=a.pos.y},b}(Behaviour),Wander=function(a){function b(a,c,d){this.jitter=a!=null?a:.5,this.radius=c!=null?c:100,this.strength=d!=null?d:1,this.theta=Math.random()*Math.PI*2,b.__super__.constructor.apply(this,arguments)}return __extends(b,a),b.prototype.apply=function(a,b,c){return this.theta+=(Math.random()-.5)*this.jitter*Math.PI*2,a.acc.x+=Math.cos(this.theta)*this.radius*this.strength,a.acc.y+=Math.sin(this.theta)*this.radius*this.strength},b}(Behaviour);
+
+var Attraction, Behaviour, Collision, ConstantForce, EdgeBounce, EdgeWrap, Particle, Physics, Random, Spring, Vector, Wander, namespace,
+  __hasProp = Object.prototype.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
+
+namespace = function(id) {
+  var path, root, _i, _len, _ref, _ref2, _results;
+  root = self;
+  _ref = id.split('.');
+  _results = [];
+  for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+    path = _ref[_i];
+    _results.push(root = (_ref2 = root[path]) != null ? _ref2 : root[path] = {});
+  }
+  return _results;
+};
+
+/* RequestAnimationFrame shim.
+*/
+
+(function() {
+  var time, vendor, vendors, _i, _len;
+  time = 0;
+  vendors = ['ms', 'moz', 'webkit', 'o'];
+  for (_i = 0, _len = vendors.length; _i < _len; _i++) {
+    vendor = vendors[_i];
+    if (!(!window.requestAnimationFrame)) continue;
+    window.requestAnimationFrame = window[vendor + 'RequestAnimationFrame'];
+    window.cancelRequestAnimationFrame = window[vendor + 'CancelRequestAnimationFrame'];
+  }
+  if (!window.requestAnimationFrame) {
+    window.requestAnimationFrame = function(callback, element) {
+      var delta, now, old;
+      now = new Date().getTime();
+      delta = Math.max(0, 16 - (now - old));
+      setTimeout((function() {
+        return callback(time + delta);
+      }), delta);
+      return old = now + delta;
+    };
+  }
+  if (!window.cancelAnimationFrame) {
+    return window.cancelAnimationFrame = function(id) {
+      return clearTimeout(id);
+    };
+  }
+})();
+
+/* Random
+*/
+
+Random = function(min, max) {
+  if (!(max != null)) {
+    max = min;
+    min = 0;
+  }
+  return min + Math.random() * (max - min);
+};
+
+Random.int = function(min, max) {
+  if (!(max != null)) {
+    max = min;
+    min = 0;
+  }
+  return Math.floor(min + Math.random() * (max - min));
+};
+
+Random.sign = function(prob) {
+  if (prob == null) prob = 0.5;
+  if (Math.random() < prob) {
+    return 1;
+  } else {
+    return -1;
+  }
+};
+
+Random.bool = function(prob) {
+  if (prob == null) prob = 0.5;
+  return Math.random() < prob;
+};
+
+Random.item = function(list) {
+  return list[Math.floor(Math.random() * list.length)];
+};
+
+/* 2D Vector
+*/
+
+Vector = (function() {
+  /* Adds two vectors and returns the product.
+  */
+  Vector.add = function(v1, v2) {
+    return new Vector(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
+  };
+
+  /* Subtracts v2 from v1 and returns the product.
+  */
+
+  Vector.sub = function(v1, v2) {
+    return new Vector(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
+  };
+
+  /* Projects one vector (v1) onto another (v2)
+  */
+
+  Vector.project = function(v1, v2) {
+    return v1.clone().scale((v1.dot(v2)) / v1.magSq());
+  };
+
+  /* Creates a new Vector instance.
+  */
+
+  function Vector(x, y, z) {
+    this.x = x != null ? x : 0.0;
+    this.y = y != null ? y : 0.0;
+    this.z = z != null ? z : 0.0;
+  }
+
+  /* Sets the components of this vector.
+  */
+
+  Vector.prototype.set = function(x, y, z) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    return this;
+  };
+
+  /* Add a vector to this one.
+  */
+
+  Vector.prototype.add = function(v) {
+    this.x += v.x;
+    this.y += v.y;
+    this.z += v.z;
+    return this;
+  };
+
+  /* Subtracts a vector from this one.
+  */
+
+  Vector.prototype.sub = function(v) {
+    this.x -= v.x;
+    this.y -= v.y;
+    this.z -= v.z;
+    return this;
+  };
+
+  /* Scales this vector by a value.
+  */
+
+  Vector.prototype.scale = function(f) {
+    this.x *= f;
+    this.y *= f;
+    this.z *= f;
+    return this;
+  };
+
+  /* Computes the dot product between vectors.
+  */
+
+  Vector.prototype.dot = function(v) {
+    return this.x * v.x + this.y * v.y + this.z * v.z;
+  };
+
+  /* Computes the cross product between vectors.
+  */
+
+  Vector.prototype.cross = function(v) {
+    return (this.x * v.y) - (this.y * v.x) - (this.y * v.y);
+  };
+
+  /* Computes the magnitude (length).
+  */
+
+  Vector.prototype.mag = function() {
+    return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+  };
+
+  /* Computes the squared magnitude (length).
+  */
+
+  Vector.prototype.magSq = function() {
+    return this.x * this.x + this.y * this.y + this.z * this.z;
+  };
+
+  /* Computes the distance to another vector.
+  */
+
+  Vector.prototype.dist = function(v) {
+    var dx, dy, dz;
+    dx = v.x - this.x;
+    dy = v.y - this.y;
+    dz = v.z - this.z;
+    return Math.sqrt(dx * dx + dy * dy + dz * dz);
+  };
+
+  /* Computes the squared distance to another vector.
+  */
+
+  Vector.prototype.distSq = function(v) {
+    var dx, dy, dz;
+    dx = v.x - this.x;
+    dy = v.y - this.y;
+    dz = v.z - this.z;
+    return dx * dx + dy * dy + dz * dz;
+  };
+
+  /* Normalises the vector, making it a unit vector (of length 1).
+  */
+
+  Vector.prototype.norm = function() {
+    var m;
+    m = Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+    this.x /= m;
+    this.y /= m;
+    this.z /= m;
+    return this;
+  };
+
+  /* Limits the vector length to a given amount.
+  */
+
+  Vector.prototype.limit = function(l) {
+    var m, mSq;
+    mSq = this.x * this.x + this.y * this.y + this.z * this.z;
+    if (mSq > l * l) {
+      m = Math.sqrt(mSq);
+      this.x /= m;
+      this.y /= m;
+      this.z /= m;
+      this.x *= l;
+      this.y *= l;
+      this.z *= l;
+      return this;
+    }
+  };
+
+  /* Copies components from another vector.
+  */
+
+  Vector.prototype.copy = function(v) {
+    this.x = v.x;
+    this.y = v.y;
+    this.z = v.z;
+    return this;
+  };
+
+  /* Clones this vector to a new itentical one.
+  */
+
+  Vector.prototype.clone = function() {
+    return new Vector(this.x, this.y, this.z);
+  };
+
+  /* Resets the vector to zero.
+  */
+
+  Vector.prototype.clear = function() {
+    this.x = 0.0;
+    this.y = 0.0;
+    this.z = 0.0;
+    return this;
+  };
+
+  return Vector;
+
+})();
+
+/* Particle
+*/
+
+Particle = (function() {
+
+  function Particle(mass) {
+    this.mass = mass != null ? mass : 1.0;
+    this.setMass(this.mass);
+    this.setRadius(1.0);
+    this.fixed = false;
+    this.behaviours = [];
+    this.pos = new Vector();
+    this.vel = new Vector();
+    this.acc = new Vector();
+    this.old = {
+      pos: new Vector(),
+      vel: new Vector(),
+      acc: new Vector()
+    };
+  }
+
+  /* Moves the particle to a given location vector.
+  */
+
+  Particle.prototype.moveTo = function(pos) {
+    this.pos.copy(pos);
+    return this.old.pos.copy(pos);
+  };
+
+  /* Sets the mass of the particle.
+  */
+
+  Particle.prototype.setMass = function(mass) {
+    this.mass = mass != null ? mass : 1.0;
+    return this.massInv = 1.0 / this.mass;
+  };
+
+  /* Sets the radius of the particle.
+  */
+
+  Particle.prototype.setRadius = function(radius) {
+    this.radius = radius != null ? radius : 1.0;
+    return this.radiusSq = this.radius * this.radius;
+  };
+
+  /* Applies all behaviours to derive new force.
+  */
+
+  Particle.prototype.update = function(dt, index) {
+    var behaviour, _i, _len, _ref, _results;
+    if (!this.fixed) {
+      _ref = this.behaviours;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        behaviour = _ref[_i];
+        _results.push(behaviour.apply(this, dt, index));
+      }
+      return _results;
+    }
+  };
+
+  return Particle;
+
+})();
+
+/* Spring
+*/
+
+Spring = (function() {
+
+  function Spring(p1, p2, restLength, stiffness) {
+    this.p1 = p1;
+    this.p2 = p2;
+    this.restLength = restLength != null ? restLength : 100;
+    this.stiffness = stiffness != null ? stiffness : 1.0;
+    this._delta = new Vector();
+  }
+
+  Spring.prototype.apply = function() {
+    var dist, force;
+    (this._delta.copy(this.p2.pos)).sub(this.p1.pos);
+    dist = this._delta.mag() + 0.000001;
+    force = (dist - this.restLength) / (dist * (this.p1.massInv + this.p2.massInv)) * this.stiffness;
+    if (!this.p1.fixed) {
+      this.p1.pos.add(this._delta.clone().scale(force * this.p1.massInv));
+    }
+    if (!this.p2.fixed) {
+      return this.p2.pos.add(this._delta.scale(-force * this.p2.massInv));
+    }
+  };
+
+  return Spring;
+
+})();
+
+/* Physics Engine
+*/
+
+Physics = (function() {
+
+  function Physics(integrator) {
+    this.integrator = integrator != null ? integrator : new Euler();
+    this.timestep = 1.0 / 60;
+    this.viscosity = 0.005;
+    this.behaviours = [];
+    this._time = 0.0;
+    this._step = 0.0;
+    this._clock = null;
+    this._buffer = 0.0;
+    this._maxSteps = 4;
+    this.particles = [];
+    this.springs = [];
+  }
+
+  /* Performs a numerical integration step.
+  */
+
+  Physics.prototype.integrate = function(dt) {
+    var behaviour, drag, index, particle, spring, _i, _j, _len, _len2, _len3, _ref, _ref2, _ref3, _results;
+    drag = 1.0 - this.viscosity;
+    _ref = this.particles;
+    for (index = 0, _len = _ref.length; index < _len; index++) {
+      particle = _ref[index];
+      _ref2 = this.behaviours;
+      for (_i = 0, _len2 = _ref2.length; _i < _len2; _i++) {
+        behaviour = _ref2[_i];
+        behaviour.apply(particle, dt, index);
+      }
+      particle.update(dt, index);
+    }
+    this.integrator.integrate(this.particles, dt, drag);
+    _ref3 = this.springs;
+    _results = [];
+    for (_j = 0, _len3 = _ref3.length; _j < _len3; _j++) {
+      spring = _ref3[_j];
+      _results.push(spring.apply());
+    }
+    return _results;
+  };
+
+  /* Steps the system.
+  */
+
+  Physics.prototype.step = function() {
+    var delta, i, time;
+    if (this._clock == null) this._clock = new Date().getTime();
+    time = new Date().getTime();
+    delta = time - this._clock;
+    if (delta <= 0.0) return;
+    delta *= 0.001;
+    this._clock = time;
+    this._buffer += delta;
+    i = 0;
+    while (this._buffer >= this.timestep && ++i < this._maxSteps) {
+      this.integrate(this.timestep);
+      this._buffer -= this.timestep;
+      this._time += this.timestep;
+    }
+    return this._step = new Date().getTime() - time;
+  };
+
+  /* Clean up after yourself.
+  */
+
+  Physics.prototype.destroy = function() {
+    this.integrator = null;
+    this.particles = null;
+    return this.springs = null;
+  };
+
+  return Physics;
+
+})();
+
+/* Behaviour
+*/
+
+Behaviour = (function() {
+
+  Behaviour.GUID = 0;
+
+  function Behaviour() {
+    this.GUID = Behaviour.GUID++;
+    this.interval = 1;
+  }
+
+  Behaviour.prototype.apply = function(p, dt, index) {
+    var _name, _ref;
+    return ((_ref = p[_name = '__behaviour' + this.GUID]) != null ? _ref : p[_name] = {
+      counter: 0
+    }).counter++;
+  };
+
+  return Behaviour;
+
+})();
+
+/* Attraction Behaviour
+*/
+
+Attraction = (function(_super) {
+
+  __extends(Attraction, _super);
+
+  function Attraction(target, radius, strength) {
+    this.target = target != null ? target : new Vector();
+    this.radius = radius != null ? radius : 1000;
+    this.strength = strength != null ? strength : 100.0;
+    this._delta = new Vector();
+    this.setRadius(this.radius);
+    Attraction.__super__.constructor.apply(this, arguments);
+  }
+
+  /* Sets the effective radius of the bahavious.
+  */
+
+  Attraction.prototype.setRadius = function(radius) {
+    this.radius = radius;
+    return this.radiusSq = radius * radius;
+  };
+
+  Attraction.prototype.apply = function(p, dt, index) {
+    var distSq;
+    (this._delta.copy(this.target)).sub(p.pos);
+    distSq = this._delta.magSq();
+    if (distSq < this.radiusSq && distSq > 0.000001) {
+      this._delta.norm().scale(1.0 - distSq / this.radiusSq);
+      return p.acc.add(this._delta.scale(this.strength));
+    }
+  };
+
+  return Attraction;
+
+})(Behaviour);
+
+/* Collision Behaviour
+*/
+
+Collision = (function(_super) {
+
+  __extends(Collision, _super);
+
+  function Collision(useMass, callback) {
+    this.useMass = useMass != null ? useMass : true;
+    this.callback = callback != null ? callback : null;
+    this.pool = [];
+    this._delta = new Vector();
+    Collision.__super__.constructor.apply(this, arguments);
+  }
+
+  Collision.prototype.apply = function(p, dt, index) {
+    var dist, distSq, i, mt, o, overlap, r1, r2, radii, _ref, _results;
+    _results = [];
+    for (i = index, _ref = this.pool.length - 1; index <= _ref ? i <= _ref : i >= _ref; index <= _ref ? i++ : i--) {
+      o = this.pool[i];
+      if (o !== p) {
+        (this._delta.copy(o.pos)).sub(p.pos);
+        distSq = this._delta.magSq();
+        radii = p.radius + o.radius;
+        if (distSq <= radii * radii) {
+          dist = Math.sqrt(distSq);
+          overlap = (p.radius + o.radius) - dist;
+          overlap += 0.5;
+          mt = p.mass + o.mass;
+          r1 = this.useMass ? o.mass / mt : 0.5;
+          r2 = this.useMass ? p.mass / mt : 0.5;
+          p.pos.add(this._delta.clone().norm().scale(overlap * -r1));
+          o.pos.add(this._delta.norm().scale(overlap * r2));
+          _results.push(typeof this.callback === "function" ? this.callback(p, o, overlap) : void 0);
+        } else {
+          _results.push(void 0);
+        }
+      } else {
+        _results.push(void 0);
+      }
+    }
+    return _results;
+  };
+
+  return Collision;
+
+})(Behaviour);
+
+/* Constant Force Behaviour
+*/
+
+ConstantForce = (function(_super) {
+
+  __extends(ConstantForce, _super);
+
+  function ConstantForce(force) {
+    this.force = force != null ? force : new Vector();
+    ConstantForce.__super__.constructor.apply(this, arguments);
+  }
+
+  ConstantForce.prototype.apply = function(p, dt, index) {
+    return p.acc.add(this.force);
+  };
+
+  return ConstantForce;
+
+})(Behaviour);
+
+/* Edge Bounce Behaviour
+*/
+
+EdgeBounce = (function(_super) {
+
+  __extends(EdgeBounce, _super);
+
+  function EdgeBounce(min, max) {
+    this.min = min != null ? min : new Vector();
+    this.max = max != null ? max : new Vector();
+    EdgeBounce.__super__.constructor.apply(this, arguments);
+  }
+
+  EdgeBounce.prototype.apply = function(p, dt, index) {
+    if (p.pos.x - p.radius < this.min.x) {
+      p.pos.x = this.min.x + p.radius;
+    } else if (p.pos.x + p.radius > this.max.x) {
+      p.pos.x = this.max.x - p.radius;
+    }
+    if (p.pos.y - p.radius < this.min.y) {
+      return p.pos.y = this.min.y + p.radius;
+    } else if (p.pos.y + p.radius > this.max.y) {
+      return p.pos.y = this.max.y - p.radius;
+    }
+  };
+
+  return EdgeBounce;
+
+})(Behaviour);
+
+/* Edge Wrap Behaviour
+*/
+
+EdgeWrap = (function(_super) {
+
+  __extends(EdgeWrap, _super);
+
+  function EdgeWrap(min, max) {
+    this.min = min != null ? min : new Vector();
+    this.max = max != null ? max : new Vector();
+    EdgeWrap.__super__.constructor.apply(this, arguments);
+  }
+
+  EdgeWrap.prototype.apply = function(p, dt, index) {
+    if (p.pos.x + p.radius < this.min.x) {
+      p.pos.x = this.max.x + p.radius;
+      p.old.pos.x = p.pos.x;
+    } else if (p.pos.x - p.radius > this.max.x) {
+      p.pos.x = this.min.x - p.radius;
+      p.old.pos.x = p.pos.x;
+    }
+    if (p.pos.y + p.radius < this.min.y) {
+      p.pos.y = this.max.y + p.radius;
+      return p.old.pos.y = p.pos.y;
+    } else if (p.pos.y - p.radius > this.max.y) {
+      p.pos.y = this.min.y - p.radius;
+      return p.old.pos.y = p.pos.y;
+    }
+  };
+
+  return EdgeWrap;
+
+})(Behaviour);
+
+/* Wander Behaviour
+*/
+
+Wander = (function(_super) {
+
+  __extends(Wander, _super);
+
+  function Wander(jitter, radius, strength) {
+    this.jitter = jitter != null ? jitter : 0.5;
+    this.radius = radius != null ? radius : 100;
+    this.strength = strength != null ? strength : 1.0;
+    this.theta = Math.random() * Math.PI * 2;
+    Wander.__super__.constructor.apply(this, arguments);
+  }
+
+  Wander.prototype.apply = function(p, dt, index) {
+    this.theta += (Math.random() - 0.5) * this.jitter * Math.PI * 2;
+    p.acc.x += Math.cos(this.theta) * this.radius * this.strength;
+    return p.acc.y += Math.sin(this.theta) * this.radius * this.strength;
+  };
+
+  return Wander;
+
+})(Behaviour);

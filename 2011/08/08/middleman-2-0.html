@@ -1,24 +1,177 @@
-<!doctype html> <html> <head> <meta charset="utf-8"> <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'> <meta name="author" content="Thomas Reynolds"> <meta name="HandheldFriendly" content="True"> <meta name="MobileOptimized" content="320"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <meta http-equiv="cleartype" content="on"> <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'> <link href='http://www.myopenid.com/server' rel='openid.server'> <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'> <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'> <link href='http://www.myopenid.com/server' rel='openid2.provider'> <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'> <title>Middleman 2.0 &laquo; Thomas Reynolds</title> <link href="/stylesheets/new.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'> </head> <body> <header> <h1> <a href="/">Award-Winning Fjords</a> <span class="sub">Thomas Reynolds</span> </header> </header> <div id="frame"> <article> <h2>Middleman 2.0</h2> <time>Aug 8 2011</time> <p>Middleman 2.0 is a huge release featuring a refactored core, a unified source folder, a unified command line, tons of new features and a <a href="http://middlemanapp.com">full documentation website</a>.</p> <p>As always, install via RubyGems:</p> <pre><code>gem install middleman
-</code></pre> <p>For more information, read the <a href="http://middlemanapp.com/guides/getting-started">Getting Started</a> guide.</p> <p>Here&#39;s an overview of everything that&#39;s changed.</p> <p></p> <h2>Unified Source Folder</h2> <p>The <code>public</code> and <code>views</code> folders have been combined into a single <code>source</code> folder which contains all of your files. Use the <a href="http://middlemanapp.com/guides/migrating">migration tool</a> to quickly update your folder structure, or manually combine the folders.</p> <h2>Unified Command</h2> <p>The old commands, <code>mm-init</code>, <code>mm-server</code> and <code>mm-build</code>, have been combined into a single <code>middleman</code> command with the following subcommands:</p> <ul> <li><code>middleman init</code></li> <li><code>middleman server</code></li> <li><code>middleman build</code></li> </ul> <h2>New Features</h2> <p>Here are the most interesting new features of Middleman 2.0.</p> <h3>Sprockets</h3> <p>Sprockets is a tool for Javascript dependency management. Using Sprockets you can include other Javascript and CoffeeScript files into your scripts. </p> <pre><code>//= require &quot;another_file&quot;
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'>
+    <meta name="author" content="Thomas Reynolds">
+    
+    <!-- Mobile viewport optimization http://goo.gl/b9SaQ -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+    
+    <!-- Google Setup -->
+    <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'>
+    
+    <!-- OpenID Setup -->
+    <link href='http://www.myopenid.com/server' rel='openid.server'>
+    <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'>
+    <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'>
+    <link href='http://www.myopenid.com/server' rel='openid2.provider'>
+    <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'>
+    
+    
+      <title>Middleman 2.0 &laquo; Thomas Reynolds</title>
+    
+    
+    <!-- Stylesheet -->
+    <link href="/stylesheets/new.css?1336499856" media="screen" rel="stylesheet" type="text/css" />
+    
+    <!-- RSS -->
+    <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'>
+  </head>
+  <body>
+    <header>
+      <h1>
+        <a href="/">Award-Winning Fjords</a>
+        <span class="sub">Thomas Reynolds</span>
+      </header>
+    </header>
+    
+    <div id="frame">
+      
+        <article>
+          <h2>Middleman 2.0</h2>
+          <time>Aug  8 2011</time>
+          <p>Middleman 2.0 is a huge release featuring a refactored core, a unified source folder, a unified command line, tons of new features and a <a href="http://middlemanapp.com">full documentation website</a>.</p>
+
+<p>As always, install via RubyGems:</p>
+
+<pre><code>gem install middleman
+</code></pre>
+
+<p>For more information, read the <a href="http://middlemanapp.com/guides/getting-started">Getting Started</a> guide.</p>
+
+<p>Here&#39;s an overview of everything that&#39;s changed.</p>
+
+<p></p>
+
+<h2>Unified Source Folder</h2>
+
+<p>The <code>public</code> and <code>views</code> folders have been combined into a single <code>source</code> folder which contains all of your files. Use the <a href="http://middlemanapp.com/guides/migrating">migration tool</a> to quickly update your folder structure, or manually combine the folders.</p>
+
+<h2>Unified Command</h2>
+
+<p>The old commands, <code>mm-init</code>, <code>mm-server</code> and <code>mm-build</code>, have been combined into a single <code>middleman</code> command with the following subcommands:</p>
+
+<ul>
+<li><code>middleman init</code></li>
+<li><code>middleman server</code></li>
+<li><code>middleman build</code></li>
+</ul>
+
+<h2>New Features</h2>
+
+<p>Here are the most interesting new features of Middleman 2.0.</p>
+
+<h3>Sprockets</h3>
+
+<p>Sprockets is a tool for Javascript dependency management. Using Sprockets you can include other Javascript and CoffeeScript files into your scripts. </p>
+
+<pre><code>//= require &quot;another_file&quot;
 
 function my_javascript() {
 
 }
-</code></pre> <p>Read more in the <a href="http://middlemanapp.com/guides/coffeescript-sprockets">Javascript, CoffeeScript and Sprockets</a> guide.</p> <h3>Dynamic Pages</h3> <p>Dynamic pages allow you to generate HTML for files which share a single template. </p> <pre><code>[&quot;tom&quot;, &quot;dick&quot;, &quot;harry&quot;].each do |name|
+</code></pre>
+
+<p>Read more in the <a href="http://middlemanapp.com/guides/coffeescript-sprockets">Javascript, CoffeeScript and Sprockets</a> guide.</p>
+
+<h3>Dynamic Pages</h3>
+
+<p>Dynamic pages allow you to generate HTML for files which share a single template. </p>
+
+<pre><code>[&quot;tom&quot;, &quot;dick&quot;, &quot;harry&quot;].each do |name|
   page &quot;/about/#{name}.html&quot;, :proxy =&gt; &quot;/about/template.html&quot; do
     @person_name = name
   end
 end
-</code></pre> <p>Read more in the <a href="http://middlemanapp.com/guides/dynamic-pages">Dynamic Pages</a> guide.</p> <h3>Pretty URLs</h3> <p>Pretty URLs (aka Directory Indexes) let you generate folders for each HTML file in your project which results in a pretty, extension-less URL in common web-servers.</p> <pre><code>activate :directory_indexes
-</code></pre> <p>Now <code>source/my-page.html</code> will generate <code>build/my-page/index.html</code>.</p> <p>Read more in the <a href="http://middlemanapp.com/guides/pretty-urls">Pretty URLs</a> guide.</p> <h3>YAML Frontmatter</h3> <p>YAML Frontmatter lets you add in-template variables at the top of a page, which are also available in the layout, and to configure which layout the page uses.</p> <pre><code>---
+</code></pre>
+
+<p>Read more in the <a href="http://middlemanapp.com/guides/dynamic-pages">Dynamic Pages</a> guide.</p>
+
+<h3>Pretty URLs</h3>
+
+<p>Pretty URLs (aka Directory Indexes) let you generate folders for each HTML file in your project which results in a pretty, extension-less URL in common web-servers.</p>
+
+<pre><code>activate :directory_indexes
+</code></pre>
+
+<p>Now <code>source/my-page.html</code> will generate <code>build/my-page/index.html</code>.</p>
+
+<p>Read more in the <a href="http://middlemanapp.com/guides/pretty-urls">Pretty URLs</a> guide.</p>
+
+<h3>YAML Frontmatter</h3>
+
+<p>YAML Frontmatter lets you add in-template variables at the top of a page, which are also available in the layout, and to configure which layout the page uses.</p>
+
+<pre><code>---
 layout: &quot;login&quot;
 page_name: &quot;Login&quot;
 ---
 
 &lt;h1&gt;&lt;%= data.page.page_name %&gt;&lt;/h1&gt;
-</code></pre> <p>The above <code>login.html.erb</code> file will be rendered using the <code>login.erb</code> layout file.</p> <p>Read more in the <a href="http://middlemanapp.com/guides/individual-page-configuration">Individual Page Configuration</a> guide.</p> <h3>LiveReload</h3> <p>By default, LiveReload will monitor your <code>config.rb</code> file and automatically restart the Middleman server if it changes. This means, activating new features no longer requires a server restart.</p> <p>In addition, you can have LiveReload monitor your project files as well and instruct the web-browser to reload when they change using the <a href="https://github.com/mockko/livereload#readme">LiveReload Extension</a> and the <code>--livereload</code> flag.</p> <pre><code>middleman server --livereload
-</code></pre> <h2>Migrating to 2.0</h2> <p>Updating old projects to Middleman 2.0 is very easy. Simply use the new <code>migrate</code> command:</p> <pre><code>middleman migrate
-</code></pre> <p>Read more about the migration edge cases in the <a href="http://middlemanapp.com/guides/migrating">Migrating to Middleman 2.0</a> guide.</p> <h2>Support</h2> <p>If there are any issues or regressions, please log bugs on the <a href="https://github.com/middleman/middleman/issues">Github Issue Tracker</a>.</p> </article> <footer> <p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p> <p> <a href="http://twitter.com/tdreyno">Twitter</a> &bull; <a href="mailto:me@tdreyno.com">Email</a> &bull; <a href="https://github.com/tdreyno">Github</a> &bull; <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a> </p> </footer> </div> <script>
+</code></pre>
+
+<p>The above <code>login.html.erb</code> file will be rendered using the <code>login.erb</code> layout file.</p>
+
+<p>Read more in the <a href="http://middlemanapp.com/guides/individual-page-configuration">Individual Page Configuration</a> guide.</p>
+
+<h3>LiveReload</h3>
+
+<p>By default, LiveReload will monitor your <code>config.rb</code> file and automatically restart the Middleman server if it changes. This means, activating new features no longer requires a server restart.</p>
+
+<p>In addition, you can have LiveReload monitor your project files as well and instruct the web-browser to reload when they change using the <a href="https://github.com/mockko/livereload#readme">LiveReload Extension</a> and the <code>--livereload</code> flag.</p>
+
+<pre><code>middleman server --livereload
+</code></pre>
+
+<h2>Migrating to 2.0</h2>
+
+<p>Updating old projects to Middleman 2.0 is very easy. Simply use the new <code>migrate</code> command:</p>
+
+<pre><code>middleman migrate
+</code></pre>
+
+<p>Read more about the migration edge cases in the <a href="http://middlemanapp.com/guides/migrating">Migrating to Middleman 2.0</a> guide.</p>
+
+<h2>Support</h2>
+
+<p>If there are any issues or regressions, please log bugs on the <a href="https://github.com/middleman/middleman/issues">Github Issue Tracker</a>.</p>
+
+        </article>
+      
+    
+      <footer>
+        <p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p>
+    
+        <p>
+          <a href="http://twitter.com/tdreyno">Twitter</a> &bull;
+          <a href="mailto:me@tdreyno.com">Email</a> &bull;
+          <a href="https://github.com/tdreyno">Github</a> &bull;
+          <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a>
+        </p>
+      </footer>
+    </div>
+    
+    <script src="/javascripts/highlight.pack.js?1336499856" type="text/javascript"></script>
+    <link href="/stylesheets/solarized_light.css?1336499856" media="screen" rel="stylesheet" type="text/css" />
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+    <script>
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-90027-9']);
   _gaq.push(['_trackPageview']);
@@ -31,7 +184,9 @@ page_name: &quot;Login&quot;
   ga.setAttribute('async', 'true');
   document.documentElement.firstChild.appendChild(ga);
   })();
-</script> <script>
+</script>
+
+<script>
   var _gauges = _gauges || [];
   (function() {
     var t   = document.createElement('script');
@@ -43,4 +198,6 @@ page_name: &quot;Login&quot;
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(t, s);
   })();
-</script> <script src="/javascripts/highlight.pack.js?1335916790" type="text/javascript"></script> <link href="/stylesheets/solarized_light.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <script>hljs.initHighlightingOnLoad();</script> </body> </html>
+</script>
+  </body>
+</html>

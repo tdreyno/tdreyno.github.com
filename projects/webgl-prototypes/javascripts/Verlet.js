@@ -1,3 +1,37 @@
 /* Velocity Verlet Integrator
 */
-var Verlet,__hasProp=Object.prototype.hasOwnProperty,__extends=function(a,b){function d(){this.constructor=a}for(var c in b)__hasProp.call(b,c)&&(a[c]=b[c]);return d.prototype=b.prototype,a.prototype=new d,a.__super__=b.prototype,a};Verlet=function(a){function b(){b.__super__.constructor.apply(this,arguments)}return __extends(b,a),b.prototype.integrate=function(a,b,c){var d,e,f,g,h,i;f=new Vector,d=b*b,i=[];for(g=0,h=a.length;g<h;g++){e=a[g];if(!!e.fixed)continue;e.acc.scale(e.massInv),e.vel.copy(e.pos).sub(e.old.pos),c&&e.vel.scale(c),f.copy(e.pos).add(e.vel.add(e.acc.scale(d))),e.old.pos.copy(e.pos),e.pos.copy(f),i.push(e.acc.clear())}return i},b}(Integrator);
+
+var Verlet,
+  __hasProp = Object.prototype.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
+
+Verlet = (function(_super) {
+
+  __extends(Verlet, _super);
+
+  function Verlet() {
+    Verlet.__super__.constructor.apply(this, arguments);
+  }
+
+  Verlet.prototype.integrate = function(particles, dt, drag) {
+    var dtSq, p, pos, _i, _len, _results;
+    pos = new Vector();
+    dtSq = dt * dt;
+    _results = [];
+    for (_i = 0, _len = particles.length; _i < _len; _i++) {
+      p = particles[_i];
+      if (!(!p.fixed)) continue;
+      p.acc.scale(p.massInv);
+      (p.vel.copy(p.pos)).sub(p.old.pos);
+      if (drag) p.vel.scale(drag);
+      (pos.copy(p.pos)).add(p.vel.add(p.acc.scale(dtSq)));
+      p.old.pos.copy(p.pos);
+      p.pos.copy(pos);
+      _results.push(p.acc.clear());
+    }
+    return _results;
+  };
+
+  return Verlet;
+
+})(Integrator);

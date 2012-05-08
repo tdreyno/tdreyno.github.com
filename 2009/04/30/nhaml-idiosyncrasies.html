@@ -1,17 +1,99 @@
-<!doctype html> <html> <head> <meta charset="utf-8"> <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'> <meta name="author" content="Thomas Reynolds"> <meta name="HandheldFriendly" content="True"> <meta name="MobileOptimized" content="320"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <meta http-equiv="cleartype" content="on"> <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'> <link href='http://www.myopenid.com/server' rel='openid.server'> <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'> <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'> <link href='http://www.myopenid.com/server' rel='openid2.provider'> <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'> <title>NHaml idiosyncrasies &laquo; Thomas Reynolds</title> <link href="/stylesheets/new.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'> </head> <body> <header> <h1> <a href="/">Award-Winning Fjords</a> <span class="sub">Thomas Reynolds</span> </header> </header> <div id="frame"> <article> <h2>NHaml idiosyncrasies</h2> <time>Apr 30 2009</time> <p><a href="http://code.google.com/p/nhaml/">NHaml</a> is an implementation of Haml for the .NET runtime. Specifically it runs inside .NET&#39;s new MVC architecture. This implementation is missing quite a few Haml niceties and the language has actually been altered in many places to be more C#-like. Personally, I think this is a poor decision. Imagine if Javascript had different syntax depending on the browser it was running in? Well... I guess Microsoft has JScript and VBScript so maybe this is just how Windows programmers operate. But, I digress. Here are some gotchas should you contemplate using NHaml.</p> <h2>Instead of Ruby hashes, parameters are C# Key-Value pairs</h2> <p>This means Ruby&#39;s symbols (prefixed with a colon) are now just plain keys. Similarly, the hashrocket (=&gt;) becomes a normal equals sign</p> <pre><code>Before: %link{ :type =&gt; &quot;text/css&quot;, :rel =&gt; &quot;stylesheet&quot;, :src =&gt; &quot;style.css&quot; }
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'>
+    <meta name="author" content="Thomas Reynolds">
+    
+    <!-- Mobile viewport optimization http://goo.gl/b9SaQ -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+    
+    <!-- Google Setup -->
+    <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'>
+    
+    <!-- OpenID Setup -->
+    <link href='http://www.myopenid.com/server' rel='openid.server'>
+    <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'>
+    <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'>
+    <link href='http://www.myopenid.com/server' rel='openid2.provider'>
+    <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'>
+    
+    
+      <title>NHaml idiosyncrasies &laquo; Thomas Reynolds</title>
+    
+    
+    <!-- Stylesheet -->
+    <link href="/stylesheets/new.css?1336499856" media="screen" rel="stylesheet" type="text/css" />
+    
+    <!-- RSS -->
+    <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'>
+  </head>
+  <body>
+    <header>
+      <h1>
+        <a href="/">Award-Winning Fjords</a>
+        <span class="sub">Thomas Reynolds</span>
+      </header>
+    </header>
+    
+    <div id="frame">
+      
+        <article>
+          <h2>NHaml idiosyncrasies</h2>
+          <time>Apr 30 2009</time>
+          <p><a href="http://code.google.com/p/nhaml/">NHaml</a> is an implementation of Haml for the .NET runtime. Specifically it runs inside .NET&#39;s new MVC architecture. This implementation is missing quite a few Haml niceties and the language has actually been altered in many places to be more C#-like. Personally, I think this is a poor decision. Imagine if Javascript had different syntax depending on the browser it was running in? Well... I guess Microsoft has JScript and VBScript so maybe this is just how Windows programmers operate. But, I digress. Here are some gotchas should you contemplate using NHaml.</p>
+
+<h2>Instead of Ruby hashes, parameters are C# Key-Value pairs</h2>
+
+<p>This means Ruby&#39;s symbols (prefixed with a colon) are now just plain keys. Similarly, the hashrocket (=&gt;) becomes a normal equals sign</p>
+
+<pre><code>Before: %link{ :type =&gt; &quot;text/css&quot;, :rel =&gt; &quot;stylesheet&quot;, :src =&gt; &quot;style.css&quot; }
 After:  %link{ type=&quot;text/css&quot;, rel=&quot;stylesheet&quot;, src=&quot;style.css&quot; }
-</code></pre> <p><strong>[Edit: As of NHaml 2.0 beta 2, the syntax for attributes has changed and now appears exactly like normal HTML attributes (no commas are used). The above code would now be written is as follows:]</strong></p> <pre><code>%link{ type=&quot;text/css&quot; rel=&quot;stylesheet&quot; src=&quot;style.css&quot; }
-</code></pre> <h2>Single-quotes are not allowed</h2> <p>C# apparently uses single-quotes to denote a character, not a string.</p> <pre><code>Before: %input{ :type =&gt; &#39;text&#39; }
+</code></pre>
+
+<p><strong>[Edit: As of NHaml 2.0 beta 2, the syntax for attributes has changed and now appears exactly like normal HTML attributes (no commas are used). The above code would now be written is as follows:]</strong></p>
+
+<pre><code>%link{ type=&quot;text/css&quot; rel=&quot;stylesheet&quot; src=&quot;style.css&quot; }
+</code></pre>
+
+<h2>Single-quotes are not allowed</h2>
+
+<p>C# apparently uses single-quotes to denote a character, not a string.</p>
+
+<pre><code>Before: %input{ :type =&gt; &#39;text&#39; }
 After:  %input{ type=&quot;text&quot; }
-</code></pre> <h2>Lines cannot be started with an ampersand (&amp;) character</h2> <p>NHaml has a special meaning for lines like this. Apparently it is for automatically escaping the contents of that line. You will need to escape the ampersand:</p> <pre><code>Before: &amp;ldquo;Hi&amp;rdquo;
+</code></pre>
+
+<h2>Lines cannot be started with an ampersand (&amp;) character</h2>
+
+<p>NHaml has a special meaning for lines like this. Apparently it is for automatically escaping the contents of that line. You will need to escape the ampersand:</p>
+
+<pre><code>Before: &amp;ldquo;Hi&amp;rdquo;
 After:  \&amp;ldquo;Hi&amp;rdquo;
-</code></pre> <h2>NHaml HATES white-space-only lines</h2> <p>Basically, if you&#39;re using empty lines to space out your code, NHaml requires that they contain as much indentation as the section they are supposed to be a part of or else they will clear out your nesting.</p> <p>Given the following Haml</p> <pre><code>%ul
+</code></pre>
+
+<h2>NHaml HATES white-space-only lines</h2>
+
+<p>Basically, if you&#39;re using empty lines to space out your code, NHaml requires that they contain as much indentation as the section they are supposed to be a part of or else they will clear out your nesting.</p>
+
+<p>Given the following Haml</p>
+
+<pre><code>%ul
   %li
     Text
 
   %li
     Text2
-</code></pre> <p>NHaml will render this as:</p> <pre><code>&lt;ul&gt;
+</code></pre>
+
+<p>NHaml will render this as:</p>
+
+<pre><code>&lt;ul&gt;
   &lt;li&gt;
     Text
   &lt;/li&gt;
@@ -19,7 +101,36 @@ After:  \&amp;ldquo;Hi&amp;rdquo;
 &lt;li&gt;
   Text2
 &lt;/li&gt;
-</code></pre> <p>So remember to remove white-space-only lines until this issue is resolved.</p> <h2>Conclusion</h2> <p>All in all, I&#39;m still really happy to be able to use Haml in the .NET environment. It took me 5 hours yesterday to build a relatively complicated 20-page site in Haml. Today it took me 8 hours to get it working in NHaml, but this is a one-time penalty. Next time I can write my Haml with NHaml in mind.</p> <p>I want to say thanks to the NHaml team. I hope the project is a success because it still needs some love and I would really like Sass support. I kind of feel sorry for C# programmers. The culture doesn&#39;t flock to open source like it does in the open source languages (Python, Ruby, etc). There seem to be fewer C# developers who live in HTML and are interested improving the front-end side of the .NET stack. However, it looks like things are improving.</p> </article> <footer> <p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p> <p> <a href="http://twitter.com/tdreyno">Twitter</a> &bull; <a href="mailto:me@tdreyno.com">Email</a> &bull; <a href="https://github.com/tdreyno">Github</a> &bull; <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a> </p> </footer> </div> <script>
+</code></pre>
+
+<p>So remember to remove white-space-only lines until this issue is resolved.</p>
+
+<h2>Conclusion</h2>
+
+<p>All in all, I&#39;m still really happy to be able to use Haml in the .NET environment. It took me 5 hours yesterday to build a relatively complicated 20-page site in Haml. Today it took me 8 hours to get it working in NHaml, but this is a one-time penalty. Next time I can write my Haml with NHaml in mind.</p>
+
+<p>I want to say thanks to the NHaml team. I hope the project is a success because it still needs some love and I would really like Sass support. I kind of feel sorry for C# programmers. The culture doesn&#39;t flock to open source like it does in the open source languages (Python, Ruby, etc). There seem to be fewer C# developers who live in HTML and are interested improving the front-end side of the .NET stack. However, it looks like things are improving.</p>
+
+        </article>
+      
+    
+      <footer>
+        <p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p>
+    
+        <p>
+          <a href="http://twitter.com/tdreyno">Twitter</a> &bull;
+          <a href="mailto:me@tdreyno.com">Email</a> &bull;
+          <a href="https://github.com/tdreyno">Github</a> &bull;
+          <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a>
+        </p>
+      </footer>
+    </div>
+    
+    <script src="/javascripts/highlight.pack.js?1336499856" type="text/javascript"></script>
+    <link href="/stylesheets/solarized_light.css?1336499856" media="screen" rel="stylesheet" type="text/css" />
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+    <script>
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-90027-9']);
   _gaq.push(['_trackPageview']);
@@ -32,7 +143,9 @@ After:  \&amp;ldquo;Hi&amp;rdquo;
   ga.setAttribute('async', 'true');
   document.documentElement.firstChild.appendChild(ga);
   })();
-</script> <script>
+</script>
+
+<script>
   var _gauges = _gauges || [];
   (function() {
     var t   = document.createElement('script');
@@ -44,4 +157,6 @@ After:  \&amp;ldquo;Hi&amp;rdquo;
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(t, s);
   })();
-</script> <script src="/javascripts/highlight.pack.js?1335916790" type="text/javascript"></script> <link href="/stylesheets/solarized_light.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <script>hljs.initHighlightingOnLoad();</script> </body> </html>
+</script>
+  </body>
+</html>

@@ -1,1 +1,34 @@
-function drawFrame(a,b,c,d,e){var f=0,g=e*d;a.drawImage(b,f,g,c,d,0,0,c,d)}var img=new Image;img.onload=function(){var a=30,b=0,c=60,d=document.getElementById("canvas"),e=d.getContext("2d"),f=(new Date).getTime();(function g(d){var h=(d-f)/1e3;b+=h*a;var i=Math.floor(b);i>=c&&(b=i=0),requestAnimationFrame(g),drawFrame(e,img,104,124,i),f=d})(f)},img.src="/projects/sequence/particle-hover-frames.jpg";
+function drawFrame(ctx, image, width, height, num) {
+  var offsetX = 0,
+      offsetY = num * height;
+  
+  ctx.drawImage(image, offsetX, offsetY, width, height, 0, 0, width, height);
+}
+
+var img = new Image();
+img.onload = function() {
+  var fps          = 30,
+      currentFrame = 0,
+      totalFrames  = 60,
+      canvas       = document.getElementById("canvas"),
+      ctx          = canvas.getContext("2d"),
+      currentTime  = new Date().getTime();
+  
+  (function animloop(time){
+    var delta = (time - currentTime) / 1000;
+    
+    currentFrame += (delta * fps);
+    
+    var frameNum = Math.floor(currentFrame);
+    
+    if (frameNum >= totalFrames) {
+      currentFrame = frameNum = 0;
+    }
+    
+    requestAnimationFrame(animloop);
+    
+    drawFrame(ctx, img, 104, 124, frameNum);
+    currentTime = time;
+  })(currentTime);
+};
+img.src = "/projects/sequence/particle-hover-frames.jpg";

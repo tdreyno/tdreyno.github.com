@@ -1,6 +1,84 @@
-<!doctype html> <html> <head> <meta charset="utf-8"> <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'> <meta name="author" content="Thomas Reynolds"> <meta name="HandheldFriendly" content="True"> <meta name="MobileOptimized" content="320"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <meta http-equiv="cleartype" content="on"> <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'> <link href='http://www.myopenid.com/server' rel='openid.server'> <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'> <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'> <link href='http://www.myopenid.com/server' rel='openid2.provider'> <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'> <title>HTML5 localStorage for JavascriptMVC &laquo; Thomas Reynolds</title> <link href="/stylesheets/new.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'> </head> <body> <header> <h1> <a href="/">Award-Winning Fjords</a> <span class="sub">Thomas Reynolds</span> </header> </header> <div id="frame"> <article> <h2>HTML5 localStorage for JavascriptMVC</h2> <time>May 21 2010</time> <p><strong>[Updated]: The new Github repository location is: http://github.com/secondstory/secondstoryjs-html5storage. The new class names are SS.Model.HTML5Store.Local and SS.Model.HTML5Store.Session</strong></p> <p>For those who don&#39;t know, JavascriptMVC 3 is a framework for building complex web applications based on jQuery. jQuery is a wonderful tool for manipulating the DOM, but it doesn&#39;t provide any system for dependency resolution, file organization or a separation of concerns. JavascriptMVC 3, which is currently in a very solid alpha form, provides a strong MVC foundation for oragnizing your code.</p> <p>The View component supports Ejs (a javascript variant of Erb), Jaml (a javascript templating system inspired by Haml) and a basic template implementation based on <a href="http://ejohn.org/blog/javascript-micro-templating/">John Resig&#39;s blog post</a> called Micro.</p> <p>The Controller layer is based on responding to events, both normal jQuery DOM events (and special events) as well as OpenAjax events.</p> <p>Finally, the Model component is basically just a Class which you can wire into your existing REST API with the help of some plugins and a little code. The Model component comes with a backing data store that can be swapped out. The default is an in-memory object that&#39;s provided as a placeholder for future data stores.</p> <p>I suggest reading this <a href="http://jupiterjs.com/pages/javascriptmvc#news/too-enterprisey">blog post on JavascriptMVC&#39;s impressed unit/functional testing system</a>.</p> <p>HTML5 is the new hotness and so I&#39;ve implemented <tt>localStorage</tt> and <tt>sessionStorage</tt> backends for the JavascriptMVC 3 Model system. This means that once data is loaded into your model (via Ajax) it can be cached on the local machine until the end of the session or &quot;forever&quot; (until the localStorage cache is cleared). The difference between <tt>sessionStorage</tt> and browser cookies is that cookies are sent on every request so they are not well suited for storing lots of data. </p> <h2>How Do I Use It?</h2> <p>First, get the <a href="http://v3.javascriptmvc.com/index.html">current version of JavascriptMVC 3 from their site</a>.</p> <p>Second, grab the code using JavascriptMVC&#39;s built-in <tt>getjs</tt> command:</p> <pre><code>./steal/js steal/getjs ss/model/html5store
-</code></pre> <p>Next, create a Site and a Model (see the <a href="http://v3.javascriptmvc.com/index.html#&amp;who=getstarted">JavascriptMVC Getting Started Guide</a>).</p> <p>We need to add our new plugin to the site. In appname.js, add the following to your <tt>steal</tt> command:</p> <pre><code>.plugins(&quot;ss/model/html5store&quot;)
-</code></pre> <p>Okay, so we have a model and now we need to add the new store system:</p> <pre><code>jQuery.Model.extend(&quot;MyModel&quot;,
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'>
+    <meta name="author" content="Thomas Reynolds">
+    
+    <!-- Mobile viewport optimization http://goo.gl/b9SaQ -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+    
+    <!-- Google Setup -->
+    <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'>
+    
+    <!-- OpenID Setup -->
+    <link href='http://www.myopenid.com/server' rel='openid.server'>
+    <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'>
+    <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'>
+    <link href='http://www.myopenid.com/server' rel='openid2.provider'>
+    <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'>
+    
+    
+      <title>HTML5 localStorage for JavascriptMVC &laquo; Thomas Reynolds</title>
+    
+    
+    <!-- Stylesheet -->
+    <link href="/stylesheets/new.css?1336499856" media="screen" rel="stylesheet" type="text/css" />
+    
+    <!-- RSS -->
+    <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'>
+  </head>
+  <body>
+    <header>
+      <h1>
+        <a href="/">Award-Winning Fjords</a>
+        <span class="sub">Thomas Reynolds</span>
+      </header>
+    </header>
+    
+    <div id="frame">
+      
+        <article>
+          <h2>HTML5 localStorage for JavascriptMVC</h2>
+          <time>May 21 2010</time>
+          <p><strong>[Updated]: The new Github repository location is: http://github.com/secondstory/secondstoryjs-html5storage. The new class names are SS.Model.HTML5Store.Local and SS.Model.HTML5Store.Session</strong></p>
+
+<p>For those who don&#39;t know, JavascriptMVC 3 is a framework for building complex web applications based on jQuery. jQuery is a wonderful tool for manipulating the DOM, but it doesn&#39;t provide any system for dependency resolution, file organization or a separation of concerns. JavascriptMVC 3, which is currently in a very solid alpha form, provides a strong MVC foundation for oragnizing your code.</p>
+
+<p>The View component supports Ejs (a javascript variant of Erb), Jaml (a javascript templating system inspired by Haml) and a basic template implementation based on <a href="http://ejohn.org/blog/javascript-micro-templating/">John Resig&#39;s blog post</a> called Micro.</p>
+
+<p>The Controller layer is based on responding to events, both normal jQuery DOM events (and special events) as well as OpenAjax events.</p>
+
+<p>Finally, the Model component is basically just a Class which you can wire into your existing REST API with the help of some plugins and a little code. The Model component comes with a backing data store that can be swapped out. The default is an in-memory object that&#39;s provided as a placeholder for future data stores.</p>
+
+<p>I suggest reading this <a href="http://jupiterjs.com/pages/javascriptmvc#news/too-enterprisey">blog post on JavascriptMVC&#39;s impressed unit/functional testing system</a>.</p>
+
+<p>HTML5 is the new hotness and so I&#39;ve implemented <tt>localStorage</tt> and <tt>sessionStorage</tt> backends for the JavascriptMVC 3 Model system. This means that once data is loaded into your model (via Ajax) it can be cached on the local machine until the end of the session or &quot;forever&quot; (until the localStorage cache is cleared). The difference between <tt>sessionStorage</tt> and browser cookies is that cookies are sent on every request so they are not well suited for storing lots of data. </p>
+
+<h2>How Do I Use It?</h2>
+
+<p>First, get the <a href="http://v3.javascriptmvc.com/index.html">current version of JavascriptMVC 3 from their site</a>.</p>
+
+<p>Second, grab the code using JavascriptMVC&#39;s built-in <tt>getjs</tt> command:</p>
+
+<pre><code>./steal/js steal/getjs ss/model/html5store
+</code></pre>
+
+<p>Next, create a Site and a Model (see the <a href="http://v3.javascriptmvc.com/index.html#&amp;who=getstarted">JavascriptMVC Getting Started Guide</a>).</p>
+
+<p>We need to add our new plugin to the site. In appname.js, add the following to your <tt>steal</tt> command:</p>
+
+<pre><code>.plugins(&quot;ss/model/html5store&quot;)
+</code></pre>
+
+<p>Okay, so we have a model and now we need to add the new store system:</p>
+
+<pre><code>jQuery.Model.extend(&quot;MyModel&quot;,
 {
   setup: function(){
     // Alternatively, use SS.Model.HTML5Store.Local
@@ -11,7 +89,11 @@
 {
 }
 );
-</code></pre> <p>Now, whenever you create a MyModel with a unique id, it will be added to the HTML5 sessionStorage. You&#39;re responsible for updating the store if the model changes and for querying the store to see if it has a copy of the model we&#39;re looking for. Here&#39;s some boilerplate code to do that:</p> <pre><code>function updateModel(params) {
+</code></pre>
+
+<p>Now, whenever you create a MyModel with a unique id, it will be added to the HTML5 sessionStorage. You&#39;re responsible for updating the store if the model changes and for querying the store to see if it has a copy of the model we&#39;re looking for. Here&#39;s some boilerplate code to do that:</p>
+
+<pre><code>function updateModel(params) {
   MyModel.store.destroy(params.id);
   MyModel.store.create(params);
 }
@@ -19,7 +101,38 @@
 function isInStore(id) {
   return MyModel.store.findOne(id);
 }
-</code></pre> <p>Using this plugin, I&#39;ve been able to decrease the number of Ajax requests in my data-heavy webapp to 0 after the initial load. You could also preload data in the background using this technique to vastly improve the speed of your site.</p> <h2>Browser Support</h2> <p>HTML5 localStorage is supported in IE8, Firefox 3.5+, Safari 4+, Chrome 4+ and Opera 10.50+. If localStorage is unavailable, the plugin will degrade to the default in-memory store.</p> <h2>jQuery-offline</h2> <p>For a framework-agnostic version of this plugin, please take a look at <a href="http://github.com/wycats/jquery-offline">Yahuda Katz&#39; jquery-offline</a>.</p> </article> <footer> <p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p> <p> <a href="http://twitter.com/tdreyno">Twitter</a> &bull; <a href="mailto:me@tdreyno.com">Email</a> &bull; <a href="https://github.com/tdreyno">Github</a> &bull; <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a> </p> </footer> </div> <script>
+</code></pre>
+
+<p>Using this plugin, I&#39;ve been able to decrease the number of Ajax requests in my data-heavy webapp to 0 after the initial load. You could also preload data in the background using this technique to vastly improve the speed of your site.</p>
+
+<h2>Browser Support</h2>
+
+<p>HTML5 localStorage is supported in IE8, Firefox 3.5+, Safari 4+, Chrome 4+ and Opera 10.50+. If localStorage is unavailable, the plugin will degrade to the default in-memory store.</p>
+
+<h2>jQuery-offline</h2>
+
+<p>For a framework-agnostic version of this plugin, please take a look at <a href="http://github.com/wycats/jquery-offline">Yahuda Katz&#39; jquery-offline</a>.</p>
+
+        </article>
+      
+    
+      <footer>
+        <p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p>
+    
+        <p>
+          <a href="http://twitter.com/tdreyno">Twitter</a> &bull;
+          <a href="mailto:me@tdreyno.com">Email</a> &bull;
+          <a href="https://github.com/tdreyno">Github</a> &bull;
+          <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a>
+        </p>
+      </footer>
+    </div>
+    
+    <script src="/javascripts/highlight.pack.js?1336499856" type="text/javascript"></script>
+    <link href="/stylesheets/solarized_light.css?1336499856" media="screen" rel="stylesheet" type="text/css" />
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+    <script>
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-90027-9']);
   _gaq.push(['_trackPageview']);
@@ -32,7 +145,9 @@ function isInStore(id) {
   ga.setAttribute('async', 'true');
   document.documentElement.firstChild.appendChild(ga);
   })();
-</script> <script>
+</script>
+
+<script>
   var _gauges = _gauges || [];
   (function() {
     var t   = document.createElement('script');
@@ -44,4 +159,6 @@ function isInStore(id) {
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(t, s);
   })();
-</script> <script src="/javascripts/highlight.pack.js?1335916790" type="text/javascript"></script> <link href="/stylesheets/solarized_light.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <script>hljs.initHighlightingOnLoad();</script> </body> </html>
+</script>
+  </body>
+</html>

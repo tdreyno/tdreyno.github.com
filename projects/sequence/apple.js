@@ -1,1 +1,23 @@
-var fps=30,currentFrame=0,totalFrames=60,img=document.getElementById("myImage"),currentTime=(new Date).getTime();(function a(b){var c=(b-currentTime)/1e3;currentFrame+=c*fps;var d=Math.floor(currentFrame);d>=totalFrames&&(currentFrame=d=0),requestAnimationFrame(a),img.src="/projects/sequence/particle-hover/particle_hover_04_000"+(d<10?"0":"")+d+".png",currentTime=b})(currentTime);
+var fps          = 30,
+    currentFrame = 0,
+    totalFrames  = 60,
+    img          = document.getElementById("myImage"),
+    currentTime  = new Date().getTime();
+
+(function animloop(time){
+  var delta = (time - currentTime) / 1000;
+
+  currentFrame += (delta * fps);
+
+  var frameNum = Math.floor(currentFrame);
+
+  if (frameNum >= totalFrames) {
+    currentFrame = frameNum = 0;
+  }
+
+  requestAnimationFrame(animloop);
+  
+  img.src = "/projects/sequence/particle-hover/particle_hover_04_000" + (frameNum < 10 ? "0" : "") + frameNum + ".png";
+  
+  currentTime = time;
+})(currentTime);

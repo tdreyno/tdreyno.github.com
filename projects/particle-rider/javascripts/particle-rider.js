@@ -1,1 +1,130 @@
-var addParticle,debugPaths,gui,onFrame,onMouseMove,particles,path,self;path=new Path,path.add(view.center),path.strokeColor="black",path.strokeWidth=1,this.totalParticles=50,this.lineLength=50,particles=[],addParticle=function(){var a,b,c;return c=view.center+Size.random()*view.size-view.size/2,b=Math.random()*11+2,a=new Path.Circle(c,b),a.fillColor=new HsbColor(Math.random()*360,1,1),a.strokeColor="black",a.strokeWidth=1,particles.push({view:a,speed:.01+Math.random()*.05,target:c,offset:Point.random()*100-50})},debugPaths=[],onFrame=function(a){var b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t;if(particles.length<totalParticles){for(d=p=particles.length;p<=totalParticles?d<totalParticles:d>totalParticles;p<=totalParticles?d++:d--)addParticle();boom()}else if(totalParticles<particles.length){for(d=totalParticles,q=particles.length;totalParticles<=q?d<q:d>q;totalParticles<=q?d++:d--)particles[0].view.remove(),particles[0].view=null,particles.shift();boom()}for(f=0,r=debugPaths.length;0<=r?f<r:f>r;0<=r?f++:f--)debugPaths[f].remove(),debugPaths[f]=null;debugPaths=[],t=[];for(m=0,n=particles.length;m<n;m++){k=particles[m],b=k.view.position,h=null,g=Infinity,s=path.segments;for(e=0,o=s.length;e<o;e++)l=s[e],c=l.getPoint().getDistance(k.view.position),c<g&&(g=c,h=e);if(g>200)continue;h!=null&&(i=path.segments[h].getPoint(),b+=i-k.view.position,h<path.segments.length-1&&(j=path.segments[h+1].getPoint(),b+=(j-k.view.position)*2),h+1<path.segments.length-1&&(j=path.segments[h+2].getPoint(),b+=(j-k.view.position)*3),h+2<path.segments.length-1&&(j=path.segments[h+3].getPoint(),b+=(j-k.view.position)*4)),t.push(k.view.position+=(b+k.offset-k.view.position)*k.speed)}return t},tool.fixedDistance=30,self=this,onMouseMove=function(a){var b,c;path.add(a.point),b=path.segments.length-self.lineLength;if(b>1)for(c=0;0<=b?c<b:c>b;0<=b?c++:c--)path.removeSegment(0);return path.smooth()},this.boom=function(){var a,b,c,d,e,f,g,h;for(a=g=path.segments.length;g<=0?a<=0:a>=0;g<=0?a++:a--)path.removeSegment(a);h=[];for(e=0,f=particles.length;e<f;e++)b=particles[e],d=view.center+Size.random()*view.size-view.size/2,c=Math.random()*11+2,b.view.position=d,h.push(b.view.size=c);return h},gui=new dat.GUI,gui.add(this,"boom"),gui.add(this,"totalParticles").min(1),gui.add(this,"lineLength").min(2);
+var addParticle, debugPaths, gui, onFrame, onMouseMove, particles, path, self;
+
+path = new Path();
+
+path.add(view.center);
+
+path.strokeColor = "black";
+
+path.strokeWidth = 1;
+
+this.totalParticles = 50;
+
+this.lineLength = 50;
+
+particles = [];
+
+addParticle = function() {
+  var circle, randomSize, targetPoint;
+  targetPoint = view.center + (Size.random() * view.size) - (view.size / 2);
+  randomSize = (Math.random() * 11.0) + 2.0;
+  circle = new Path.Circle(targetPoint, randomSize);
+  circle.fillColor = new HsbColor(Math.random() * 360, 1, 1);
+  circle.strokeColor = "black";
+  circle.strokeWidth = 1;
+  return particles.push({
+    view: circle,
+    speed: 0.01 + Math.random() * 0.05,
+    target: targetPoint,
+    offset: (Point.random() * 100.0) - 50.0
+  });
+};
+
+debugPaths = [];
+
+onFrame = function(event) {
+  var direction, distance, i, j, k, nearestDist, nearestIndex, nearestPoint, nextPoint, particle, segment, _i, _len, _len2, _ref, _ref2, _ref3, _ref4, _results;
+  if (particles.length < totalParticles) {
+    for (i = _ref = particles.length; _ref <= totalParticles ? i < totalParticles : i > totalParticles; _ref <= totalParticles ? i++ : i--) {
+      addParticle();
+    }
+    boom();
+  } else if (totalParticles < particles.length) {
+    for (i = totalParticles, _ref2 = particles.length; totalParticles <= _ref2 ? i < _ref2 : i > _ref2; totalParticles <= _ref2 ? i++ : i--) {
+      particles[0].view.remove();
+      particles[0].view = null;
+      particles.shift();
+    }
+    boom();
+  }
+  for (k = 0, _ref3 = debugPaths.length; 0 <= _ref3 ? k < _ref3 : k > _ref3; 0 <= _ref3 ? k++ : k--) {
+    debugPaths[k].remove();
+    debugPaths[k] = null;
+  }
+  debugPaths = [];
+  _results = [];
+  for (_i = 0, _len = particles.length; _i < _len; _i++) {
+    particle = particles[_i];
+    direction = particle.view.position;
+    nearestIndex = null;
+    nearestDist = Infinity;
+    _ref4 = path.segments;
+    for (j = 0, _len2 = _ref4.length; j < _len2; j++) {
+      segment = _ref4[j];
+      distance = segment.getPoint().getDistance(particle.view.position);
+      if (distance < nearestDist) {
+        nearestDist = distance;
+        nearestIndex = j;
+      }
+    }
+    if (nearestDist > 200) continue;
+    if (nearestIndex != null) {
+      nearestPoint = path.segments[nearestIndex].getPoint();
+      direction += nearestPoint - particle.view.position;
+      if (nearestIndex < path.segments.length - 1) {
+        nextPoint = path.segments[nearestIndex + 1].getPoint();
+        direction += (nextPoint - particle.view.position) * 2;
+      }
+      if (nearestIndex + 1 < path.segments.length - 1) {
+        nextPoint = path.segments[nearestIndex + 2].getPoint();
+        direction += (nextPoint - particle.view.position) * 3;
+      }
+      if (nearestIndex + 2 < path.segments.length - 1) {
+        nextPoint = path.segments[nearestIndex + 3].getPoint();
+        direction += (nextPoint - particle.view.position) * 4;
+      }
+    }
+    _results.push(particle.view.position += (direction + particle.offset - particle.view.position) * particle.speed);
+  }
+  return _results;
+};
+
+tool.fixedDistance = 30;
+
+self = this;
+
+onMouseMove = function(event) {
+  var diff, i;
+  path.add(event.point);
+  diff = path.segments.length - self.lineLength;
+  if (diff > 1) {
+    for (i = 0; 0 <= diff ? i < diff : i > diff; 0 <= diff ? i++ : i--) {
+      path.removeSegment(0);
+    }
+  }
+  return path.smooth();
+};
+
+this.boom = function() {
+  var i, particle, randomSize, targetPoint, _i, _len, _ref, _results;
+  for (i = _ref = path.segments.length; _ref <= 0 ? i <= 0 : i >= 0; _ref <= 0 ? i++ : i--) {
+    path.removeSegment(i);
+  }
+  _results = [];
+  for (_i = 0, _len = particles.length; _i < _len; _i++) {
+    particle = particles[_i];
+    targetPoint = view.center + (Size.random() * view.size) - (view.size / 2);
+    randomSize = (Math.random() * 11.0) + 2.0;
+    particle.view.position = targetPoint;
+    _results.push(particle.view.size = randomSize);
+  }
+  return _results;
+};
+
+gui = new dat.GUI();
+
+gui.add(this, "boom");
+
+gui.add(this, "totalParticles").min(1);
+
+gui.add(this, "lineLength").min(2);

@@ -1,4 +1,66 @@
-<!doctype html> <html> <head> <meta charset="utf-8"> <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'> <meta name="author" content="Thomas Reynolds"> <meta name="HandheldFriendly" content="True"> <meta name="MobileOptimized" content="320"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <meta http-equiv="cleartype" content="on"> <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'> <link href='http://www.myopenid.com/server' rel='openid.server'> <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'> <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'> <link href='http://www.myopenid.com/server' rel='openid2.provider'> <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'> <title>State Machine Controller for JavascriptMVC &laquo; Thomas Reynolds</title> <link href="/stylesheets/new.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'> </head> <body> <header> <h1> <a href="/">Award-Winning Fjords</a> <span class="sub">Thomas Reynolds</span> </header> </header> <div id="frame"> <article> <h2>State Machine Controller for JavascriptMVC</h2> <time>May 27 2010</time> <p><strong>[Updated]: The repository has moved to http://github.com/secondstory/secondstoryjs-statemachine. The main class has been renamed to SS.Controller.StateMachine</strong></p> <p><strong>[Edit]: The SecondStoryJS State Machine now has a documentation website at <a href="http://secondstory.github.com/secondstoryjs-statemachine/">http://secondstory.github.com/secondstoryjs-statemachine/</a></strong></p> <p>I&#39;ve been attempting to write this article for a week, but I&#39;ve been unable to justify the usefulness of Finite State Machines in words. I tried written up some typical examples, such as the classic vending machine, but it kept getting very obtuse very quickly. Instead, let me just say, that I love Finite State Machines. I think they are the only technique I learned at school and when I am able to replace dozens of <tt>if</tt> statements with a Finite State Machine, it makes me very happy and feel secure. Being able to monitor an object&#39;s state, rather than just querying its instance variables, makes testing simpler and helps me find bugs.</p> <p>If you need a Finite State Machine for JavascriptMVC, I&#39;ve got one for you. In fact, every controller in my application uses it. The most common use-case is asyncronous loading, rendering and eventually interaction. Here&#39;s an example:</p> <h2>Finite State Machine Implementation</h2> <p>The goal of the following controller is to have widgets or panels which are made visible by clicking a link. Only one of the widgets may be visible at the same time and if you click the link for the currently open widget, it should toggle off. Each widget also contains a link for closing itself (<tt>a.close</tt>).</p> <p>A state machine can respond to jQuery events, global OpenAjax messages and internal &quot;publishState&quot; commands. The destination states define which state we are moved into on an event. Finally, &quot;onEnter&quot; and &quot;onExit&quot; can point to either instance methods or global OpenAjax messages.</p> <pre><code>SS.Controller.StateMachine.extend(&quot;MyNavigation&quot;, {}, {
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'>
+    <meta name="author" content="Thomas Reynolds">
+    
+    <!-- Mobile viewport optimization http://goo.gl/b9SaQ -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+    
+    <!-- Google Setup -->
+    <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'>
+    
+    <!-- OpenID Setup -->
+    <link href='http://www.myopenid.com/server' rel='openid.server'>
+    <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'>
+    <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'>
+    <link href='http://www.myopenid.com/server' rel='openid2.provider'>
+    <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'>
+    
+    
+      <title>State Machine Controller for JavascriptMVC &laquo; Thomas Reynolds</title>
+    
+    
+    <!-- Stylesheet -->
+    <link href="/stylesheets/new.css?1336499856" media="screen" rel="stylesheet" type="text/css" />
+    
+    <!-- RSS -->
+    <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'>
+  </head>
+  <body>
+    <header>
+      <h1>
+        <a href="/">Award-Winning Fjords</a>
+        <span class="sub">Thomas Reynolds</span>
+      </header>
+    </header>
+    
+    <div id="frame">
+      
+        <article>
+          <h2>State Machine Controller for JavascriptMVC</h2>
+          <time>May 27 2010</time>
+          <p><strong>[Updated]: The repository has moved to http://github.com/secondstory/secondstoryjs-statemachine. The main class has been renamed to SS.Controller.StateMachine</strong></p>
+
+<p><strong>[Edit]: The SecondStoryJS State Machine now has a documentation website at <a href="http://secondstory.github.com/secondstoryjs-statemachine/">http://secondstory.github.com/secondstoryjs-statemachine/</a></strong></p>
+
+<p>I&#39;ve been attempting to write this article for a week, but I&#39;ve been unable to justify the usefulness of Finite State Machines in words. I tried written up some typical examples, such as the classic vending machine, but it kept getting very obtuse very quickly. Instead, let me just say, that I love Finite State Machines. I think they are the only technique I learned at school and when I am able to replace dozens of <tt>if</tt> statements with a Finite State Machine, it makes me very happy and feel secure. Being able to monitor an object&#39;s state, rather than just querying its instance variables, makes testing simpler and helps me find bugs.</p>
+
+<p>If you need a Finite State Machine for JavascriptMVC, I&#39;ve got one for you. In fact, every controller in my application uses it. The most common use-case is asyncronous loading, rendering and eventually interaction. Here&#39;s an example:</p>
+
+<h2>Finite State Machine Implementation</h2>
+
+<p>The goal of the following controller is to have widgets or panels which are made visible by clicking a link. Only one of the widgets may be visible at the same time and if you click the link for the currently open widget, it should toggle off. Each widget also contains a link for closing itself (<tt>a.close</tt>).</p>
+
+<p>A state machine can respond to jQuery events, global OpenAjax messages and internal &quot;publishState&quot; commands. The destination states define which state we are moved into on an event. Finally, &quot;onEnter&quot; and &quot;onExit&quot; can point to either instance methods or global OpenAjax messages.</p>
+
+<pre><code>SS.Controller.StateMachine.extend(&quot;MyNavigation&quot;, {}, {
   states: {
     // Any click of the a.close element will close everything
     global:         { &quot;a.close click&quot;:            &quot;initial&quot; },
@@ -28,12 +90,57 @@
     $(&quot;#thread, #timeline&quot;).hide();
   }
 });
-</code></pre> <p>Clicking on #header-thread, #header-timeline and then #header-timeline again will print the following debug output:</p> <pre><code>steal.js INFO: FSM (MyNavigation.instance0): initial -&gt; threadsOpen
+</code></pre>
+
+<p>Clicking on #header-thread, #header-timeline and then #header-timeline again will print the following debug output:</p>
+
+<pre><code>steal.js INFO: FSM (MyNavigation.instance0): initial -&gt; threadsOpen
 steal.js INFO: FSM (MyNavigation.instance0): threadsOpen -&gt; timelineOpen
 steal.js INFO: FSM (MyNavigation.instance0): timelineOpen -&gt; initial
-</code></pre> <h2>How Do I Get It?</h2> <p>First, get the <a href="http://v3.javascriptmvc.com/index.html">current version of JavascriptMVC 3 from their site</a>.</p> <p>Second, grab the code using JavascriptMVC&#39;s built-in <tt>getjs</tt> command:</p> <pre><code>./steal/js steal/getjs ss/state_machine
-</code></pre> <p>Next, create a Site and a Controller (see the <a href="http://v3.javascriptmvc.com/index.html#&amp;who=getstarted">JavascriptMVC Getting Started Guide</a>).</p> <p>We need to add our new plugin to the site. In appname.js, add the following to your <tt>steal</tt> command:</p> <pre><code>.plugins(&quot;ss/controller/state_machine&quot;)
-</code></pre> <p>Now you can extend your Controllers from <tt>SS.Controller.StateMachine</tt>.</p> <h2>Other/Better Examples?</h2> <p>I would love a chance to show how this works will a less contrived example. If you&#39;ve a complex controller and think something like this would be useful, then please email me and I&#39;ll port your code to using a state machine.</p> </article> <footer> <p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p> <p> <a href="http://twitter.com/tdreyno">Twitter</a> &bull; <a href="mailto:me@tdreyno.com">Email</a> &bull; <a href="https://github.com/tdreyno">Github</a> &bull; <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a> </p> </footer> </div> <script>
+</code></pre>
+
+<h2>How Do I Get It?</h2>
+
+<p>First, get the <a href="http://v3.javascriptmvc.com/index.html">current version of JavascriptMVC 3 from their site</a>.</p>
+
+<p>Second, grab the code using JavascriptMVC&#39;s built-in <tt>getjs</tt> command:</p>
+
+<pre><code>./steal/js steal/getjs ss/state_machine
+</code></pre>
+
+<p>Next, create a Site and a Controller (see the <a href="http://v3.javascriptmvc.com/index.html#&amp;who=getstarted">JavascriptMVC Getting Started Guide</a>).</p>
+
+<p>We need to add our new plugin to the site. In appname.js, add the following to your <tt>steal</tt> command:</p>
+
+<pre><code>.plugins(&quot;ss/controller/state_machine&quot;)
+</code></pre>
+
+<p>Now you can extend your Controllers from <tt>SS.Controller.StateMachine</tt>.</p>
+
+<h2>Other/Better Examples?</h2>
+
+<p>I would love a chance to show how this works will a less contrived example. If you&#39;ve a complex controller and think something like this would be useful, then please email me and I&#39;ll port your code to using a state machine.</p>
+
+        </article>
+      
+    
+      <footer>
+        <p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p>
+    
+        <p>
+          <a href="http://twitter.com/tdreyno">Twitter</a> &bull;
+          <a href="mailto:me@tdreyno.com">Email</a> &bull;
+          <a href="https://github.com/tdreyno">Github</a> &bull;
+          <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a>
+        </p>
+      </footer>
+    </div>
+    
+    <script src="/javascripts/highlight.pack.js?1336499856" type="text/javascript"></script>
+    <link href="/stylesheets/solarized_light.css?1336499856" media="screen" rel="stylesheet" type="text/css" />
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+    <script>
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-90027-9']);
   _gaq.push(['_trackPageview']);
@@ -46,7 +153,9 @@ steal.js INFO: FSM (MyNavigation.instance0): timelineOpen -&gt; initial
   ga.setAttribute('async', 'true');
   document.documentElement.firstChild.appendChild(ga);
   })();
-</script> <script>
+</script>
+
+<script>
   var _gauges = _gauges || [];
   (function() {
     var t   = document.createElement('script');
@@ -58,4 +167,6 @@ steal.js INFO: FSM (MyNavigation.instance0): timelineOpen -&gt; initial
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(t, s);
   })();
-</script> <script src="/javascripts/highlight.pack.js?1335916790" type="text/javascript"></script> <link href="/stylesheets/solarized_light.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <script>hljs.initHighlightingOnLoad();</script> </body> </html>
+</script>
+  </body>
+</html>

@@ -1,9 +1,81 @@
-<!doctype html> <html> <head> <meta charset="utf-8"> <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'> <meta name="author" content="Thomas Reynolds"> <meta name="HandheldFriendly" content="True"> <meta name="MobileOptimized" content="320"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <meta http-equiv="cleartype" content="on"> <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'> <link href='http://www.myopenid.com/server' rel='openid.server'> <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'> <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'> <link href='http://www.myopenid.com/server' rel='openid2.provider'> <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'> <title>Adjustable Animations with Sliders &laquo; Thomas Reynolds</title> <link href="/stylesheets/new.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'> </head> <body> <header> <h1> <a href="/">Award-Winning Fjords</a> <span class="sub">Thomas Reynolds</span> </header> </header> <div id="frame"> <article> <h2>Adjustable Animations with Sliders</h2> <time>Apr 13 2011</time> <p>Quick question? What is the perfect amount of time to animate an element on a page? jQuery defaults to 400ms, which sounds short, but ends up being pretty perfect for most occasions. It gets the job done and then it gets out of the way. </p> <p>However, it shouldn&#39;t surprise you that designers have opinions on motion and we&#39;re just now reaching the point where motion is becoming important on the web. Back in the day, 37Signals would just set the background of an element to yellow and call it a day. If you take a look at <a href="http://getflow.com">Flow</a>, you&#39;ll see some very designed motion. Closing a task results in the checkbox animating to a state, then it picks up and animates along an arc to drop into the &quot;completed&quot; box in your sidebar.</p> <p>Okay, so, what&#39;s the perfect timing for that animation? There are tools for prototyping motion, most notably Adobe Flash, but usually you&#39;re designer is going to want to look over your shoulder and tweak the animation until it &quot;feels right.&quot;</p> <p>The solution is something I&#39;ve seen friends in the old-school OpenGL motion build into their dev workflow. Every time they&#39;ve got a motion variable (duration, size, color, wobble, randomness, etc), they setup a control to adjust the variable. Who wants to change integers in OpenGL and recompile? Like so many things, it&#39;s time to re-learn tricks from the desktop world if we&#39;re going to move forward.</p> <p>Here, below is the most basic example. I have a square that is animating back and forth and changing width and height. In a more complicated example, it might arc or have several animations queued up. I&#39;ve used a shiny new HTML5 <tt>range</tt> element and each time the animation loops, it checks the value to define it&#39;s duration.</p> <pre><code>&lt;!-- Ranges from 0-4000, with integer steps. Defaults to 400 --&gt;
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'>
+    <meta name="author" content="Thomas Reynolds">
+    
+    <!-- Mobile viewport optimization http://goo.gl/b9SaQ -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+    
+    <!-- Google Setup -->
+    <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'>
+    
+    <!-- OpenID Setup -->
+    <link href='http://www.myopenid.com/server' rel='openid.server'>
+    <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'>
+    <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'>
+    <link href='http://www.myopenid.com/server' rel='openid2.provider'>
+    <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'>
+    
+    
+      <title>Adjustable Animations with Sliders &laquo; Thomas Reynolds</title>
+    
+    
+    <!-- Stylesheet -->
+    <link href="/stylesheets/new.css?1336499856" media="screen" rel="stylesheet" type="text/css" />
+    
+    <!-- RSS -->
+    <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'>
+  </head>
+  <body>
+    <header>
+      <h1>
+        <a href="/">Award-Winning Fjords</a>
+        <span class="sub">Thomas Reynolds</span>
+      </header>
+    </header>
+    
+    <div id="frame">
+      
+        <article>
+          <h2>Adjustable Animations with Sliders</h2>
+          <time>Apr 13 2011</time>
+          <p>Quick question? What is the perfect amount of time to animate an element on a page? jQuery defaults to 400ms, which sounds short, but ends up being pretty perfect for most occasions. It gets the job done and then it gets out of the way. </p>
+
+<p>However, it shouldn&#39;t surprise you that designers have opinions on motion and we&#39;re just now reaching the point where motion is becoming important on the web.  Back in the day, 37Signals would just set the background of an element to yellow and call it a day. If you take a look at <a href="http://getflow.com">Flow</a>, you&#39;ll see some very designed motion. Closing a task results in the checkbox animating to a state, then it picks up and animates along an arc to drop into the &quot;completed&quot; box in your sidebar.</p>
+
+<p>Okay, so, what&#39;s the perfect timing for that animation? There are tools for prototyping motion, most notably Adobe Flash, but usually you&#39;re designer is going to want to look over your shoulder and tweak the animation until it &quot;feels right.&quot;</p>
+
+<p>The solution is something I&#39;ve seen friends in the old-school OpenGL motion build into their dev workflow. Every time they&#39;ve got a motion variable (duration, size, color, wobble, randomness, etc), they setup a control to adjust the variable. Who wants to change integers in OpenGL and recompile? Like so many things, it&#39;s time to re-learn tricks from the desktop world if we&#39;re going to move forward.</p>
+
+<p>Here, below is the most basic example. I have a square that is animating back and forth and changing width and height. In a more complicated example, it might arc or have several animations queued up. I&#39;ve used a shiny new HTML5 <tt>range</tt> element and each time the animation loops, it checks the value to define it&#39;s duration.</p>
+
+<pre><code>&lt;!-- Ranges from 0-4000, with integer steps. Defaults to 400 --&gt;
 &lt;input type=&quot;range&quot; min=&quot;0&quot; max=&quot;4000&quot; step=&quot;1&quot; value=&quot;400&quot;&gt;
-</code></pre> <p>The animation looks like:</p> <pre><code>$elem.animate({ left: 480, width: 100, height: 100 }, {
+</code></pre>
+
+<p>The animation looks like:</p>
+
+<pre><code>$elem.animate({ left: 480, width: 100, height: 100 }, {
   duration: $(&quot;input[type=range]&quot;).val()
 });
-</code></pre> <p>Simple enough. If I were implementing an animation, vaguely defined in a PSD, I&#39;d setup something like this and then let the designer have a field day. Developers love round numbers and math, but the &quot;best&quot; timing may actually be the combination of an esoteric easing function and a duration of 962.</p> <p>This gets even more interesting if you&#39;re using something like WebGL, Three.js or Box2d.js. Adjust physics engines on the fly makes finding the perfect balance a cinch.</p> <h1>Demo</h1> <p>Here we have a little animating square, a slider to control the duration and a bunch of easing options. Go ahead, play around and find the &quot;sweet spot.&quot;</p> <p><script type="text/javascript" charset="utf-8">
+</code></pre>
+
+<p>Simple enough. If I were implementing an animation, vaguely defined in a PSD, I&#39;d setup something like this and then let the designer have a field day. Developers love round numbers and math, but the &quot;best&quot; timing may actually be the combination of an esoteric easing function and a duration of 962.</p>
+
+<p>This gets even more interesting if you&#39;re using something like WebGL, Three.js or Box2d.js. Adjust physics engines on the fly makes finding the perfect balance a cinch.</p>
+
+<h1>Demo</h1>
+
+<p>Here we have a little animating square, a slider to control the duration and a bunch of easing options. Go ahead, play around and find the &quot;sweet spot.&quot;</p>
+
+<p><script type="text/javascript" charset="utf-8">
   $.getScript(&quot;/javascripts/jquery.easing.1.3.js&quot;, function() {</p>
 
 <pre><code>$(function($) {
@@ -44,7 +116,67 @@
 </code></pre>
 
 <p>});
-</script> <div class="demo" style="width: 600px; height: 300px; position: relative; overflow: hidden;"> Duration: <span class="speed"></span><br/> <input class="range" type="range" min="0" max="4000" step="1" value="1400" style="width: 300;"/><br/> Easing: <select class="easing"> <option>swing</option> <option>easeInQuad</option> <option>easeOutQuad</option> <option>easeInOutQuad</option> <option>easeInCubic</option> <option>easeOutCubic</option> <option>easeInOutCubic</option> <option>easeInQuart</option> <option>easeOutQuart</option> <option>easeInOutQuart</option> <option>easeInQuint</option> <option>easeOutQuint</option> <option>easeInOutQuint</option> <option>easeInSine</option> <option>easeOutSine</option> <option>easeInOutSine</option> <option>easeInExpo</option> <option>easeOutExpo</option> <option>easeInOutExpo</option> <option>easeInCirc</option> <option>easeOutCirc</option> <option>easeInOutCirc</option> <option>easeInElastic</option> <option>easeOutElastic</option> <option>easeInOutElastic</option> <option>easeInBack</option> <option>easeOutBack</option> <option>easeInOutBack</option> <option>easeInBounce</option> <option selected>easeOutBounce</option> <option>easeInOutBounce</option> </select><br/></p> <p><div class="box" style="width: 50px; height: 50px; background: red; position: absolute; top: 75px; left: 10px;"></div> </div></p> </article> <footer> <p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p> <p> <a href="http://twitter.com/tdreyno">Twitter</a> &bull; <a href="mailto:me@tdreyno.com">Email</a> &bull; <a href="https://github.com/tdreyno">Github</a> &bull; <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a> </p> </footer> </div> <script>
+</script>
+<div class="demo" style="width: 600px; height: 300px; position: relative; overflow: hidden;">
+  Duration: <span class="speed"></span><br />
+  <input class="range" type="range" min="0" max="4000" step="1" value="1400" style="width: 300;" /><br />
+  Easing: <select class="easing">
+    <option>swing</option>
+    <option>easeInQuad</option>
+    <option>easeOutQuad</option>
+    <option>easeInOutQuad</option>
+    <option>easeInCubic</option>
+    <option>easeOutCubic</option>
+    <option>easeInOutCubic</option>
+    <option>easeInQuart</option>
+    <option>easeOutQuart</option>
+    <option>easeInOutQuart</option>
+    <option>easeInQuint</option>
+    <option>easeOutQuint</option>
+    <option>easeInOutQuint</option>
+    <option>easeInSine</option>
+    <option>easeOutSine</option>
+    <option>easeInOutSine</option>
+    <option>easeInExpo</option>
+    <option>easeOutExpo</option>
+    <option>easeInOutExpo</option>
+    <option>easeInCirc</option>
+    <option>easeOutCirc</option>
+    <option>easeInOutCirc</option>
+    <option>easeInElastic</option>
+    <option>easeOutElastic</option>
+    <option>easeInOutElastic</option>
+    <option>easeInBack</option>
+    <option>easeOutBack</option>
+    <option>easeInOutBack</option>
+    <option>easeInBounce</option>
+    <option selected>easeOutBounce</option>
+    <option>easeInOutBounce</option>
+  </select><br /></p>
+
+<p><div class="box" style="width: 50px; height: 50px; background: red; position: absolute; top: 75px; left: 10px;"></div>
+</div></p>
+
+        </article>
+      
+    
+      <footer>
+        <p class="descr">My name is Thomas Reynolds. I'm a developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p>
+    
+        <p>
+          <a href="http://twitter.com/tdreyno">Twitter</a> &bull;
+          <a href="mailto:me@tdreyno.com">Email</a> &bull;
+          <a href="https://github.com/tdreyno">Github</a> &bull;
+          <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a>
+        </p>
+      </footer>
+    </div>
+    
+    <script src="/javascripts/highlight.pack.js?1336499856" type="text/javascript"></script>
+    <link href="/stylesheets/solarized_light.css?1336499856" media="screen" rel="stylesheet" type="text/css" />
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+    <script>
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-90027-9']);
   _gaq.push(['_trackPageview']);
@@ -57,7 +189,9 @@
   ga.setAttribute('async', 'true');
   document.documentElement.firstChild.appendChild(ga);
   })();
-</script> <script>
+</script>
+
+<script>
   var _gauges = _gauges || [];
   (function() {
     var t   = document.createElement('script');
@@ -69,4 +203,6 @@
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(t, s);
   })();
-</script> <script src="/javascripts/highlight.pack.js?1335916790" type="text/javascript"></script> <link href="/stylesheets/solarized_light.css?1335916770" media="screen" rel="stylesheet" type="text/css"/> <script>hljs.initHighlightingOnLoad();</script> </body> </html>
+</script>
+  </body>
+</html>
