@@ -75,48 +75,48 @@
 
 <p>Here we have a little animating square, a slider to control the duration and a bunch of easing options. Go ahead, play around and find the &quot;sweet spot.&quot;</p>
 
-<p><script type="text/javascript" charset="utf-8">
-  $.getScript(&quot;/javascripts/jquery.easing.1.3.js&quot;, function() {</p>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+<script>
+  $.getScript("/javascripts/jquery.easing.1.3.js", function() {
 
-<pre><code>$(function($) {
-  $(&quot;.range&quot;).change(function() {
-    $(&quot;.speed&quot;).text($(this).val());
-  }).change();
+    $(function($) {
+      $(".range").change(function() {
+        $(".speed").text($(this).val());
+      }).change();
 
-  function getEasing() {
-    return $(&quot;.easing&quot;).val();
-  }
-
-  function getSliderValue() {
-    return parseInt($(&quot;.range&quot;).val(), 10);
-  }
-
-  function animateRight() {
-    $(&quot;.box&quot;).stop().animate({ left: 380, width: 100, height: 100 }, {
-      duration: getSliderValue(), 
-      easing:   getEasing(),
-      complete: function() {
-        setTimeout(animateLeft, 750);
+      function getEasing() {
+        return $(".easing").val();
       }
-    });
-  }
 
-  function animateLeft() {
-    $(&quot;.box&quot;).stop().animate({ left: 0, width: 50, height: 50 }, {
-      duration: getSliderValue(), 
-      easing:   getEasing(),
-      complete: function() {
-        setTimeout(animateRight, 750);
+      function getSliderValue() {
+        return parseInt($(".range").val(), 10);
       }
+
+      function animateRight() {
+        $(".box").stop().animate({ left: 380, width: 100, height: 100 }, {
+          duration: getSliderValue(), 
+          easing:   getEasing(),
+          complete: function() {
+            setTimeout(animateLeft, 750);
+          }
+        });
+      }
+
+      function animateLeft() {
+        $(".box").stop().animate({ left: 0, width: 50, height: 50 }, {
+          duration: getSliderValue(), 
+          easing:   getEasing(),
+          complete: function() {
+            setTimeout(animateRight, 750);
+          }
+        });
+      }
+
+      animateRight();
     });
-  }
-
-  animateRight();
-});
-</code></pre>
-
-<p>});
+  });
 </script>
+
 <div class="demo" style="width: 600px; height: 300px; position: relative; overflow: hidden;">
   Duration: <span class="speed"></span><br />
   <input class="range" type="range" min="0" max="4000" step="1" value="1400" style="width: 300;" /><br />
@@ -152,10 +152,10 @@
     <option>easeInBounce</option>
     <option selected>easeOutBounce</option>
     <option>easeInOutBounce</option>
-  </select><br /></p>
+  </select><br />
 
-<p><div class="box" style="width: 50px; height: 50px; background: red; position: absolute; top: 75px; left: 10px;"></div>
-</div></p>
+  <div class="box" style="width: 50px; height: 50px; background: red; position: absolute; top: 75px; left: 10px;"></div>
+</div>
 
         </article>
       

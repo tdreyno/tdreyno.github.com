@@ -2134,48 +2134,48 @@ run Middleman::Server
 
 &lt;p&gt;Here we have a little animating square, a slider to control the duration and a bunch of easing options. Go ahead, play around and find the &amp;quot;sweet spot.&amp;quot;&lt;/p&gt;
 
-&lt;p&gt;&lt;script type="text/javascript" charset="utf-8"&gt;
-  $.getScript(&amp;quot;/javascripts/jquery.easing.1.3.js&amp;quot;, function() {&lt;/p&gt;
+&lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  $.getScript("/javascripts/jquery.easing.1.3.js", function() {
 
-&lt;pre&gt;&lt;code&gt;$(function($) {
-  $(&amp;quot;.range&amp;quot;).change(function() {
-    $(&amp;quot;.speed&amp;quot;).text($(this).val());
-  }).change();
+    $(function($) {
+      $(".range").change(function() {
+        $(".speed").text($(this).val());
+      }).change();
 
-  function getEasing() {
-    return $(&amp;quot;.easing&amp;quot;).val();
-  }
-
-  function getSliderValue() {
-    return parseInt($(&amp;quot;.range&amp;quot;).val(), 10);
-  }
-
-  function animateRight() {
-    $(&amp;quot;.box&amp;quot;).stop().animate({ left: 380, width: 100, height: 100 }, {
-      duration: getSliderValue(), 
-      easing:   getEasing(),
-      complete: function() {
-        setTimeout(animateLeft, 750);
+      function getEasing() {
+        return $(".easing").val();
       }
-    });
-  }
 
-  function animateLeft() {
-    $(&amp;quot;.box&amp;quot;).stop().animate({ left: 0, width: 50, height: 50 }, {
-      duration: getSliderValue(), 
-      easing:   getEasing(),
-      complete: function() {
-        setTimeout(animateRight, 750);
+      function getSliderValue() {
+        return parseInt($(".range").val(), 10);
       }
+
+      function animateRight() {
+        $(".box").stop().animate({ left: 380, width: 100, height: 100 }, {
+          duration: getSliderValue(), 
+          easing:   getEasing(),
+          complete: function() {
+            setTimeout(animateLeft, 750);
+          }
+        });
+      }
+
+      function animateLeft() {
+        $(".box").stop().animate({ left: 0, width: 50, height: 50 }, {
+          duration: getSliderValue(), 
+          easing:   getEasing(),
+          complete: function() {
+            setTimeout(animateRight, 750);
+          }
+        });
+      }
+
+      animateRight();
     });
-  }
-
-  animateRight();
-});
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;});
+  });
 &lt;/script&gt;
+
 &lt;div class="demo" style="width: 600px; height: 300px; position: relative; overflow: hidden;"&gt;
   Duration: &lt;span class="speed"&gt;&lt;/span&gt;&lt;br /&gt;
   &lt;input class="range" type="range" min="0" max="4000" step="1" value="1400" style="width: 300;" /&gt;&lt;br /&gt;
@@ -2211,10 +2211,10 @@ run Middleman::Server
     &lt;option&gt;easeInBounce&lt;/option&gt;
     &lt;option selected&gt;easeOutBounce&lt;/option&gt;
     &lt;option&gt;easeInOutBounce&lt;/option&gt;
-  &lt;/select&gt;&lt;br /&gt;&lt;/p&gt;
+  &lt;/select&gt;&lt;br /&gt;
 
-&lt;p&gt;&lt;div class="box" style="width: 50px; height: 50px; background: red; position: absolute; top: 75px; left: 10px;"&gt;&lt;/div&gt;
-&lt;/div&gt;&lt;/p&gt;
+  &lt;div class="box" style="width: 50px; height: 50px; background: red; position: absolute; top: 75px; left: 10px;"&gt;&lt;/div&gt;
+&lt;/div&gt;
 </content>
   </entry>
   <entry>
