@@ -58,7 +58,7 @@
 
 <p>See my previous article about avoiding the creation of unnecessary, intermediate objects when using CoffeeScript. The principle applies in regular Javascript as well.</p>
 
-<p>A common source of unnecessary objects in animation is the simple Vector class which models an element&#39;s x and y position. Paper.js&#39; Point class is a good example. Basically, elements in the system have a Vector position which can be manipulated, rotated, scaled, et cetera. However, doing this kind of math creates object on every frame which will quickly pile up. Ashley Gullen&#39;s article, <a href="http://www.scirra.com/blog/76/how-to-write-low-garbage-real-time-javascript">How to write low garbage real-time Javascript</a>, covers the issue in depth.</p>
+<p>A common source of unnecessary objects in animation is the simple Vector class which models an element&#39;s x and y position. The <a href="https://github.com/paperjs/paper.js/blob/master/src/basic/Point.js">Paper.js Point class</a> is a good example of this approach. Basically, elements in the system have a Vector position which can be manipulated, rotated, scaled, et cetera. However, doing this kind of math creates object on every frame which will quickly pile up. Ashley Gullen&#39;s article, <a href="http://www.scirra.com/blog/76/how-to-write-low-garbage-real-time-javascript">How to write low garbage real-time Javascript</a>, covers the issue in depth.</p>
 
 <p>The solution is simply to add x and y parameters directly to your elements, avoiding the intermediate Vector class. To facilitate this, I&#39;ve extracted a small library from some code I&#39;ve been writing which let&#39;s you mixin x/y values to existing classes, and have access to basic Vector math operations.</p>
 
