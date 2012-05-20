@@ -5,10 +5,73 @@
   <id>http://awardwinningfjords.com/</id>
   <link href="http://awardwinningfjords.com/"/>
   <link href="http://awardwinningfjords.com/feed.xml" rel="self"/>
-  <updated>2012-05-19T00:00:00+00:00T00:00:00-08:00</updated>
+  <updated>2012-05-20T00:00:00+00:00T00:00:00-08:00</updated>
   <author>
     <name>Thomas Reynolds</name>
   </author>
+  <entry>
+    <title>Front-end Performance Tools: Canvas Matrix</title>
+    <link rel="alternate" href="/2012/05/20/simple-canvas-matrix.html"/>
+    <id>/2012/05/20/simple-canvas-matrix.html</id>
+    <published>2012-05-20T00:00:00+00:00T00:00:00-08:00</published>
+    <updated>2012-05-20T00:00:00+00:00T00:00:00-08:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;p&gt;I really don&amp;#39;t want to be the one to write an article about Matrices and how useful they are, so here is the short version. &lt;/p&gt;
+
+&lt;p&gt;A matrix is a way of representing the position (translation), rotation and scale of a point (Vector). What&amp;#39;s better, both CSS and HTML5 Canvas can accept matrix values.&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;I really don&amp;#39;t want to be the one to write an article about Matrices and how useful they are, so here is the short version. &lt;/p&gt;
+
+&lt;p&gt;A matrix is a way of representing the position (translation), rotation and scale of a point (Vector). What&amp;#39;s better, both CSS and HTML5 Canvas can accept matrix values.&lt;/p&gt;
+
+&lt;p&gt;There are plenty of great Matrix implementations in Javascript, such as:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://sylvester.jcoglan.com"&gt;Sylvester&lt;/a&gt; - includes a Vector class too&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://code.google.com/p/closure-library/source/browse/trunk/closure/goog/vec/mat3.js?r=1175"&gt;Closure Mat3&lt;/a&gt; - very Google-y API&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/toji/gl-matrix"&gt;gl-matrix&lt;/a&gt; - Optimized for WebGL and 3d&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;These libraries are great, but I wanted something small and simple. I&amp;#39;ve written &lt;a href="https://github.com/tdreyno/canvas-mat3/blob/master/mat3.js.coffee"&gt;canvas-mat3&lt;/a&gt;, a short, 57 line Matrix in CoffeeScript which only tracks translation, rotation &amp;amp; scale and which includes support for sending this data to HTML5 Canvas.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="https://github.com/tdreyno/canvas-mat3"&gt;View the full library on Github&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2&gt;Usage&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;function CanvasImage(src) {
+  this.src = src;
+  this.mat3 = new Mat3();
+}
+
+CanvasImage.prototype.draw = function(ctx) {
+  ctx.save();
+  this.mat3.applyToContext(ctx);
+  ctx.drawImage(this.src, 0, 0);
+  ctx.restore();
+};
+
+var myImage = new CanvasImage(document.getElementById(&amp;quot;img&amp;quot;));
+myImage.mat3.translate(100, 100); // Move to 100x100
+
+// Rotate 90 degrees, around point 100x100
+myImage.mat3.rotate(90 * RAD_TO_DEGREE, 100, 100);
+
+// Scale X, Flip Y, around point 100x100x
+myImage.mat3.scale(2.0, -1.0, 100, 100);
+
+var canvas = document.getElementById(&amp;quot;canvas&amp;quot;);
+var ctx    = canvas.getContext2d();
+
+myImage.draw(ctx);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Embedded?&lt;/h3&gt;
+
+&lt;p&gt;Like the &lt;a href="/2012/05/19/embedded-vector.html"&gt;Embedded Vector&lt;/a&gt; class, it might make sense to store and manipulate matrix values directly on an object, instead of having one Mat3 instance per object. If there is interest, I may adapt this code to providing a mixing as well.&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Front-end Performance Tools: Embedded Vector</title>
     <link rel="alternate" href="/2012/05/19/embedded-vector.html"/>

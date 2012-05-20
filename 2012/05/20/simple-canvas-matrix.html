@@ -24,7 +24,7 @@
     <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'>
     
     
-      <title>Award Winning Fjords &laquo; Thomas Reynolds</title>
+      <title>Front-end Performance Tools: Canvas Matrix &laquo; Thomas Reynolds</title>
     
     
     <!-- Stylesheet -->
@@ -43,80 +43,59 @@
     
     <div id="frame">
       
-        <section id="recent">
-  <h2>
-    Recent Articles
-    <a href="/archives">Archive</a>
-  </h2>
-  <ul class="disc">
-    
-      <li><a href="/2012/05/20/simple-canvas-matrix.html">Front-end Performance Tools: Canvas Matrix</a> <time>May 20</time></li>
-    
-      <li><a href="/2012/05/19/embedded-vector.html">Front-end Performance Tools: Embedded Vector</a> <time>May 19</time></li>
-    
-      <li><a href="/2012/05/08/beware-coffeescript-comprehensions.html">Beware of CoffeeScript Comprehensions</a> <time>May  8</time></li>
-    
-      <li><a href="/2012/04/23/middleman-3-beta-2.html">Middleman 3.0 Beta 2</a> <time>Apr 23</time></li>
-    
-      <li><a href="/2012/03/21/canvas-hit-tracking.html">Canvas Hit Tracking</a> <time>Mar 21</time></li>
-    
-      <li><a href="/2012/03/08/image-sequences.html">Image Sequences: Let Me Count The Ways</a> <time>Mar  8</time></li>
-    
-      <li><a href="/2012/01/07/best-albums-of-the-year-2011.html">Best Albums of the Year: 2011</a> <time>Jan  7</time></li>
-    
-      <li><a href="/2012/01/03/middleman-3-beta.html">Middleman 3.0 Beta</a> <time>Jan  3</time></li>
-    
-      <li><a href="/2011/12/27/emberjs-collections.html">Ember.js Live Collections</a> <time>Dec 27</time></li>
-    
-      <li><a href="/2011/12/26/the-tweets-they-are-a-changin.html">The Tweets They Are A-Changin'</a> <time>Dec 26</time></li>
-    
-      <li><a href="/2011/12/25/kindle-dots.html">Kindle Dots</a> <time>Dec 25</time></li>
-    
-      <li><a href="/2011/11/30/particle-rider-experiment.html">Experiment: Particle Rider</a> <time>Nov 30</time></li>
-    
-  </ul>
-</section>
+        <article>
+          <h2>Front-end Performance Tools: Canvas Matrix</h2>
+          <time>May 20 2012</time>
+          <p>I really don&#39;t want to be the one to write an article about Matrices and how useful they are, so here is the short version. </p>
 
-<section id="projects">
-  <h2>
-    Projects
-    <a href="http://github.com/tdreyno">GitHub</a>
-  </h2>
-  <ul class="disc">
-    <li>
-      <a href="http://middlemanapp.com">Middleman</a>
-      Hand-crafted frontend development framework
-    </li>
-    <li>
-      <a href="https://github.com/tdreyno/iphone-style-checkboxes">iPhone-style Checkboxes</a>
-      Converts inputs into iPhone sliders
-    </li>
-    <li>
-      <a href="http://secondstory.github.com/secondstoryjs-statemachine/">State Machine for JavascriptMVC</a>
-      Finite State Machine for JavascriptMVC
-    </li>
-    <li>
-      <a href="http://secondstory.github.com/secondstoryjs-router/">Router for JavascriptMVC</a>
-      Frontend Router with hashbang (#!) and pushState URLs
-    </li>
-    <li>
-      <a href="https://github.com/tdreyno/mustache-javascriptmvc">Mustache templates for JavascriptMVC</a>
-      Use Mustache templates in JavascriptMVC
-    </li>
-    <li>
-      <a href="http://secondstory.github.com/jqueryChop/">jQuery Image Chop</a>
-      Break up images into many squares
-    </li>
-    <li>
-      <a href="https://github.com/tdreyno/compass-slickmap">Slickmap for Compass</a>
-      Slickmap sitemaps for Compass and Sass
-    </li>
-    <li>
-      <a href="https://github.com/tdreyno/compass-baseline">Baseline for Compass</a>
-      Baseline grid for Compass and Sass
-    </li>
-  </ul>
-</section>
+<p>A matrix is a way of representing the position (translation), rotation and scale of a point (Vector). What&#39;s better, both CSS and HTML5 Canvas can accept matrix values.</p>
+
+<p>There are plenty of great Matrix implementations in Javascript, such as:</p>
+
+<ul>
+<li><a href="http://sylvester.jcoglan.com">Sylvester</a> - includes a Vector class too</li>
+<li><a href="http://code.google.com/p/closure-library/source/browse/trunk/closure/goog/vec/mat3.js?r=1175">Closure Mat3</a> - very Google-y API</li>
+<li><a href="https://github.com/toji/gl-matrix">gl-matrix</a> - Optimized for WebGL and 3d</li>
+</ul>
+
+<p>These libraries are great, but I wanted something small and simple. I&#39;ve written <a href="https://github.com/tdreyno/canvas-mat3/blob/master/mat3.js.coffee">canvas-mat3</a>, a short, 57 line Matrix in CoffeeScript which only tracks translation, rotation &amp; scale and which includes support for sending this data to HTML5 Canvas.</p>
+
+<p><a href="https://github.com/tdreyno/canvas-mat3">View the full library on Github</a>.</p>
+
+<h2>Usage</h2>
+
+<pre><code>function CanvasImage(src) {
+  this.src = src;
+  this.mat3 = new Mat3();
+}
+
+CanvasImage.prototype.draw = function(ctx) {
+  ctx.save();
+  this.mat3.applyToContext(ctx);
+  ctx.drawImage(this.src, 0, 0);
+  ctx.restore();
+};
+
+var myImage = new CanvasImage(document.getElementById(&quot;img&quot;));
+myImage.mat3.translate(100, 100); // Move to 100x100
+
+// Rotate 90 degrees, around point 100x100
+myImage.mat3.rotate(90 * RAD_TO_DEGREE, 100, 100);
+
+// Scale X, Flip Y, around point 100x100x
+myImage.mat3.scale(2.0, -1.0, 100, 100);
+
+var canvas = document.getElementById(&quot;canvas&quot;);
+var ctx    = canvas.getContext2d();
+
+myImage.draw(ctx);
+</code></pre>
+
+<h3>Embedded?</h3>
+
+<p>Like the <a href="/2012/05/19/embedded-vector.html">Embedded Vector</a> class, it might make sense to store and manipulate matrix values directly on an object, instead of having one Mat3 instance per object. If there is interest, I may adapt this code to providing a mixing as well.</p>
+
+        </article>
       
     
       <footer>
