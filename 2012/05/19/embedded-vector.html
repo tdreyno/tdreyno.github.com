@@ -24,7 +24,7 @@
     <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'>
     
     
-      <title>Easy Google Maps with jQuery &laquo; Thomas Reynolds</title>
+      <title>Front-end Performance Tools: Embedded Vector &laquo; Thomas Reynolds</title>
     
     
     <!-- Stylesheet -->
@@ -44,51 +44,69 @@
     <div id="frame">
       
         <article>
-          <h2>Easy Google Maps with jQuery</h2>
-          <time>Jul 22 2009</time>
-          <p>The other day I needed a simple way to include a Google Map, so I wrote this jQuery function.</p>
+          <h2>Front-end Performance Tools: Embedded Vector</h2>
+          <time>May 19 2012</time>
+          <p>Recently, I&#39;ve been working on quite a few animation projects in Javascript. Traditional web applications are evented. The browser and application wait or user (or network) input and adjust the displayed content accordingly. Animation is different. Animation needs to run 60 frames-per-second, every second that the viewer is on the page. This create two problems.</p>
 
-<pre><code>$.fn.googleMap = function(address, options) {
-  var defaults = {
-    lat: 44.081996,
-    long: -123.0286928,
-    zoom: 14,
-    mapTypeId: google.maps.MapTypeId.HYBRID
-  };
+<p>One, every piece of code in your runloop is being executed repeatedly. Small errors and inefficiencies quickly pile up, leak memory, trigger garbage collection and slow down execution.</p>
 
-  options = $.extend(defaults, options || {});
+<p>And two, since the browser uses the same thread for animation, execution and garbage collection, errors and inefficiencies will negatively effect the smoothness of the animation. An animation is only as good as its framerate.</p>
 
-  var center = new google.maps.LatLng(options.lat, options.long);
-  var map = new google.maps.Map(this.get(0), $.extend(options, { center: center }));
+<p>Here are a collection of tools I&#39;ve been working on avoid common performance problems.</p>
 
-  var geocoder = new google.maps.Geocoder();
-  geocoder.geocode({ address: address }, function(results, status) {
-    if (status == google.maps.GeocoderStatus.OK &amp;&amp; results.length) {
-      if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
-        map.setCenter(results[0].geometry.location);
-        var marker = new google.maps.Marker({
-            position: results[0].geometry.location,
-            map: map
-        });
-      }
-    }
-  });
-};
+<h2>Avoid Creating Unnecessary Objects</h2>
+
+<p>See my previous article about avoiding the creation of unnecessary, intermediate objects when using CoffeeScript. The principle applies in regular Javascript as well.</p>
+
+<p>A common source of unnecessary objects in animation is the simple Vector class which models an element&#39;s x and y position. Paper.js&#39; Point class is a good example. Basically, elements in the system have a Vector position which can be manipulated, rotated, scaled, et cetera. However, doing this kind of math creates object on every frame which will quickly pile up. Ashley Gullen&#39;s article, <a href="http://www.scirra.com/blog/76/how-to-write-low-garbage-real-time-javascript">How to write low garbage real-time Javascript</a>, covers the issue in depth.</p>
+
+<p>The solution is simply to add x and y parameters directly to your elements, avoiding the intermediate Vector class. To facilitate this, I&#39;ve extracted a small library from some code I&#39;ve been writing which let&#39;s you mixin x/y values to existing classes, and have access to basic Vector math operations.</p>
+
+<p><a href="https://github.com/tdreyno/embeded-vector">You can view the library, embedded-vector, here</a>.</p>
+
+<p>Here&#39;s an example:</p>
+
+<pre><code>// Particle constructor
+function Particle() {}
+
+Vector.mixinTo(Particle);
+
+var p1 = new Particle();
+
+p1.getX(); // 0
+p1.getY(); // 0
+
+var p2 = new Particle();
+p2.set(10, 10)
+p2.getX(); // 10
+p2.get(); // 10
+
+p1.distance(p2); // 14.1421356
 </code></pre>
 
-<p>Basically, the lat &amp; long are default coordinates, but you pass in an address which Google focuses the map on.</p>
+<p>You can also namespace the methods, so you have have multiple x/y pairs.</p>
 
-<p>This requires the latest (v3) version of the Google Map API.</p>
+<pre><code>// Ball constructor
+function Ball() {}
 
-<h2>Usage</h2>
+Vector.mixinTo(Particle, &quot;position&quot;);
+Vector.mixinTo(Particle, &quot;velocity&quot;);
 
-<pre><code>&lt;script src=&#39;http://maps.google.com/maps/api/js?sensor=false&#39; type=&#39;text/javascript&#39;&gt;
-&lt;/script&gt;
-&lt;script type=&#39;text/javascript&#39;&gt;
-  $(document).ready(function() {
-    $(&#39;#map-container&#39;).googleMap(&quot;3333 RiverBend Drive, Springfield, OR&quot;);
-  });
-&lt;/script&gt;
+var b = new Ball();
+
+b.getPositionX(); // 0
+b.getPositionY(); // 0
+b.getVelocityX(); // 0
+b.getVelocityY(); // 0
+
+function onFrame(delta) {
+  // Fake gravity
+  b.addVelocity(0, -9.8 * delta)
+  b.addPosition(
+    b.getVelocityX() * delta
+    b.getVelocityY() * delta
+  );
+}
 </code></pre>
 
         </article>

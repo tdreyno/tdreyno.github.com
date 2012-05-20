@@ -5,10 +5,85 @@
   <id>http://awardwinningfjords.com/</id>
   <link href="http://awardwinningfjords.com/"/>
   <link href="http://awardwinningfjords.com/feed.xml" rel="self"/>
-  <updated>2012-05-08T00:00:00-08:00</updated>
+  <updated>2012-05-19T00:00:00+00:00T00:00:00-08:00</updated>
   <author>
     <name>Thomas Reynolds</name>
   </author>
+  <entry>
+    <title>Front-end Performance Tools: Embedded Vector</title>
+    <link rel="alternate" href="/2012/05/19/embedded-vector.html"/>
+    <id>/2012/05/19/embedded-vector.html</id>
+    <published>2012-05-19T00:00:00+00:00T00:00:00-08:00</published>
+    <updated>2012-05-19T00:00:00+00:00T00:00:00-08:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;p&gt;Recently, I&amp;#39;ve been working on quite a few animation projects in Javascript. Traditional web applications are evented. The browser and application wait or user (or network) input and adjust the displayed content accordingly. Animation is different. Animation needs to run 60 frames-per-second, every second that the viewer is on the page. This create two problems.&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;Recently, I&amp;#39;ve been working on quite a few animation projects in Javascript. Traditional web applications are evented. The browser and application wait or user (or network) input and adjust the displayed content accordingly. Animation is different. Animation needs to run 60 frames-per-second, every second that the viewer is on the page. This create two problems.&lt;/p&gt;
+
+&lt;p&gt;One, every piece of code in your runloop is being executed repeatedly. Small errors and inefficiencies quickly pile up, leak memory, trigger garbage collection and slow down execution.&lt;/p&gt;
+
+&lt;p&gt;And two, since the browser uses the same thread for animation, execution and garbage collection, errors and inefficiencies will negatively effect the smoothness of the animation. An animation is only as good as its framerate.&lt;/p&gt;
+
+&lt;p&gt;Here are a collection of tools I&amp;#39;ve been working on avoid common performance problems.&lt;/p&gt;
+
+&lt;h2&gt;Avoid Creating Unnecessary Objects&lt;/h2&gt;
+
+&lt;p&gt;See my previous article about avoiding the creation of unnecessary, intermediate objects when using CoffeeScript. The principle applies in regular Javascript as well.&lt;/p&gt;
+
+&lt;p&gt;A common source of unnecessary objects in animation is the simple Vector class which models an element&amp;#39;s x and y position. Paper.js&amp;#39; Point class is a good example. Basically, elements in the system have a Vector position which can be manipulated, rotated, scaled, et cetera. However, doing this kind of math creates object on every frame which will quickly pile up. Ashley Gullen&amp;#39;s article, &lt;a href="http://www.scirra.com/blog/76/how-to-write-low-garbage-real-time-javascript"&gt;How to write low garbage real-time Javascript&lt;/a&gt;, covers the issue in depth.&lt;/p&gt;
+
+&lt;p&gt;The solution is simply to add x and y parameters directly to your elements, avoiding the intermediate Vector class. To facilitate this, I&amp;#39;ve extracted a small library from some code I&amp;#39;ve been writing which let&amp;#39;s you mixin x/y values to existing classes, and have access to basic Vector math operations.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="https://github.com/tdreyno/embeded-vector"&gt;You can view the library, embedded-vector, here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;#39;s an example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// Particle constructor
+function Particle() {}
+
+Vector.mixinTo(Particle);
+
+var p1 = new Particle();
+
+p1.getX(); // 0
+p1.getY(); // 0
+
+var p2 = new Particle();
+p2.set(10, 10)
+p2.getX(); // 10
+p2.get(); // 10
+
+p1.distance(p2); // 14.1421356
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can also namespace the methods, so you have have multiple x/y pairs.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// Ball constructor
+function Ball() {}
+
+Vector.mixinTo(Particle, &amp;quot;position&amp;quot;);
+Vector.mixinTo(Particle, &amp;quot;velocity&amp;quot;);
+
+var b = new Ball();
+
+b.getPositionX(); // 0
+b.getPositionY(); // 0
+b.getVelocityX(); // 0
+b.getVelocityY(); // 0
+
+function onFrame(delta) {
+  // Fake gravity
+  b.addVelocity(0, -9.8 * delta)
+  b.addPosition(
+    b.getVelocityX() * delta
+    b.getVelocityY() * delta
+  );
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+  </entry>
   <entry>
     <title>Beware of CoffeeScript Comprehensions</title>
     <link rel="alternate" href="/2012/05/08/beware-coffeescript-comprehensions.html"/>
@@ -496,7 +571,7 @@ theWorld.hitTestObjects(150, 50) # =&amp;gt; [c2, c3]
 
 &lt;p&gt;I could go further and try things out with arcs, empty stroked rectangles, donuts and semi-transparent images, but it would work exactly the same.&lt;/p&gt;
 
-&lt;p&gt;There&amp;#39;s plenty of room for caching, memorization and other optimizations in this system, but conceptually this is common approach. I hope this was enlightening.&lt;/p&gt;
+&lt;p&gt;There&amp;#39;s plenty of room for caching, memoization and other optimizations in this system, but conceptually this is common approach. I hope this was enlightening.&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -952,7 +1027,7 @@ category: internal
 
 &lt;ul&gt;
 &lt;li&gt;Rewritten to work directly with Rack (Sinatra apps can still be mounted)&lt;/li&gt;
-&lt;li&gt;Yard code docs: http://rubydoc.info/github/middleman/middleman&lt;/li&gt;
+&lt;li&gt;Yard code docs: &lt;a href="http://rubydoc.info/github/middleman/middleman"&gt;http://rubydoc.info/github/middleman/middleman&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;3rd Party Command Line Tools&lt;/li&gt;
 &lt;li&gt;Activate mobile html5boilerplate template&lt;/li&gt;
 &lt;li&gt;Support for placekitten.com&lt;/li&gt;
@@ -1202,24 +1277,77 @@ $.getJSON(&amp;quot;http://search.twitter.com/search.json?q=cats&amp;amp;callbac
 
 &lt;p&gt;I read a lot of long books this year, mostly fantasy, some sci-fi and some steampunk. I decided to check Amazon for the actual printed page lengths of these books.&lt;/p&gt;
 
-&lt;p&gt;Title                          | Pages
--------------------------------|------
-A Storm of Swords              | 1216
-A Feast for Crows              |  784
-A Dance with Dragons           | 1040
-The Windup Girl                |  300
-The Half-Made World            |  480
-The Magicians                  |  416
-The Magician King              |  416
-The Black Company              |  320
-Shadows Linger                 |  319
-The White Rose                 |  320
-The Name of the Wind           |  672
-The Dresden Files: Storm Front |  384
-Old Man&amp;#39;s War                  |  320
-Wise Man&amp;#39;s Fear                |  993
-The Hunger Games               |  384
-Catching Fire                  |  391&lt;/p&gt;
+&lt;table&gt;&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Title&lt;/th&gt;
+&lt;th&gt;Pages&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;A Storm of Swords&lt;/td&gt;
+&lt;td&gt;1216&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;A Feast for Crows&lt;/td&gt;
+&lt;td&gt;784&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;A Dance with Dragons&lt;/td&gt;
+&lt;td&gt;1040&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Windup Girl&lt;/td&gt;
+&lt;td&gt;300&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Half-Made World&lt;/td&gt;
+&lt;td&gt;480&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Magicians&lt;/td&gt;
+&lt;td&gt;416&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Magician King&lt;/td&gt;
+&lt;td&gt;416&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Black Company&lt;/td&gt;
+&lt;td&gt;320&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Shadows Linger&lt;/td&gt;
+&lt;td&gt;319&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The White Rose&lt;/td&gt;
+&lt;td&gt;320&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Name of the Wind&lt;/td&gt;
+&lt;td&gt;672&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Dresden Files: Storm Front&lt;/td&gt;
+&lt;td&gt;384&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Old Man&amp;#39;s War&lt;/td&gt;
+&lt;td&gt;320&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Wise Man&amp;#39;s Fear&lt;/td&gt;
+&lt;td&gt;993&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Hunger Games&lt;/td&gt;
+&lt;td&gt;384&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Catching Fire&lt;/td&gt;
+&lt;td&gt;391&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Total Pages: &lt;strong&gt;8755&lt;/strong&gt;&lt;/li&gt;
@@ -1692,7 +1820,7 @@ $(&amp;#39;.left&amp;#39;).click(function() {
 
 &lt;h2&gt;Full Implementation&lt;/h2&gt;
 
-&lt;p&gt;Download: https://gist.github.com/959860&lt;/p&gt;
+&lt;p&gt;Download: &lt;a href="https://gist.github.com/959860"&gt;https://gist.github.com/959860&lt;/a&gt;&lt;/p&gt;
 
 &lt;script src="https://gist.github.com/959860.js?file=isoTransform.js"&gt;&lt;/script&gt;
 </content>
@@ -1902,7 +2030,7 @@ It’s with a whole lot of pride that we announce today the launch of Pixel Unio
 
 &lt;p&gt;It&amp;#39;s been a long time since &lt;a href="/2009/10/22/middleman"&gt;I introduced Middleman on this blog&lt;/a&gt; in 2009. Since then, RubyGems reports that there have been 27,518 downloads, &lt;a href="https://github.com/middleman/middleman/contributors"&gt;several great contributors&lt;/a&gt; to the source code and even a mention in a printed book.&lt;/p&gt;
 
-&lt;p&gt;I&amp;#39;ve been working hard on documentation as it was the most requested feature from the &lt;a href="/2011/02/06/future-of-middleman-survey"&gt;&amp;quot;Future of Middleman Survey&amp;quot;&lt;/a&gt;. I&amp;#39;m a developer and I&amp;#39;m sorry to admit that my first documentation target is the code and generated documentation. Available at: &lt;a href="http://middlemanapp.com/"&gt;http://middlemanapp.com/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I&amp;#39;ve been working hard on documentation as it was the most requested feature from the &lt;a href="/2011/02/06/future-of-middleman-survey"&gt;&amp;quot;Future of Middleman Survey&amp;quot;&lt;/a&gt;. I&amp;#39;m a developer and I&amp;#39;m sorry to admit that my first documentation target is the code and generated documentation. Available at: &lt;a href="http://middlemanapp.com/"&gt;&lt;a href="http://middlemanapp.com/"&gt;http://middlemanapp.com/&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;I know, I need better, more tutorial-style written documentation for actual people. I&amp;#39;ll be working on it as time permits, but I&amp;#39;d also love any assistance.&lt;/p&gt;
 
@@ -1927,7 +2055,7 @@ It’s with a whole lot of pride that we announce today the launch of Pixel Unio
 
 &lt;p&gt;It&amp;#39;s been a long time since &lt;a href="/2009/10/22/middleman"&gt;I introduced Middleman on this blog&lt;/a&gt; in 2009. Since then, RubyGems reports that there have been 27,518 downloads, &lt;a href="https://github.com/middleman/middleman/contributors"&gt;several great contributors&lt;/a&gt; to the source code and even a mention in a printed book.&lt;/p&gt;
 
-&lt;p&gt;I&amp;#39;ve been working hard on documentation as it was the most requested feature from the &lt;a href="/2011/02/06/future-of-middleman-survey"&gt;&amp;quot;Future of Middleman Survey&amp;quot;&lt;/a&gt;. I&amp;#39;m a developer and I&amp;#39;m sorry to admit that my first documentation target is the code and generated documentation. Available at: &lt;a href="http://middlemanapp.com/"&gt;http://middlemanapp.com/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I&amp;#39;ve been working hard on documentation as it was the most requested feature from the &lt;a href="/2011/02/06/future-of-middleman-survey"&gt;&amp;quot;Future of Middleman Survey&amp;quot;&lt;/a&gt;. I&amp;#39;m a developer and I&amp;#39;m sorry to admit that my first documentation target is the code and generated documentation. Available at: &lt;a href="http://middlemanapp.com/"&gt;&lt;a href="http://middlemanapp.com/"&gt;http://middlemanapp.com/&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;I know, I need better, more tutorial-style written documentation for actual people. I&amp;#39;ll be working on it as time permits, but I&amp;#39;d also love any assistance.&lt;/p&gt;
 
@@ -2090,7 +2218,7 @@ run Middleman::Server
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Please direct all questions and bugs to Github:
-&lt;a href="https://github.com/middleman/middleman"&gt;https://github.com/middleman/middleman&lt;/a&gt;&lt;/p&gt;
+&lt;a href="https://github.com/middleman/middleman"&gt;&lt;a href="https://github.com/middleman/middleman"&gt;https://github.com/middleman/middleman&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -2450,11 +2578,11 @@ newProject.save();
     </author>
     <summary type="html">&lt;p&gt;I&amp;#39;ve created a brief survey about &lt;a href="http://middlemanapp.com"&gt;Middleman&lt;/a&gt;. If you&amp;#39;ve used the project, I would love your input. Thanks!&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="http://www.surveymonkey.com/s/5P9B92Q"&gt;http://www.surveymonkey.com/s/5P9B92Q&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.surveymonkey.com/s/5P9B92Q"&gt;&lt;a href="http://www.surveymonkey.com/s/5P9B92Q"&gt;http://www.surveymonkey.com/s/5P9B92Q&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;I&amp;#39;ve created a brief survey about &lt;a href="http://middlemanapp.com"&gt;Middleman&lt;/a&gt;. If you&amp;#39;ve used the project, I would love your input. Thanks!&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="http://www.surveymonkey.com/s/5P9B92Q"&gt;http://www.surveymonkey.com/s/5P9B92Q&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.surveymonkey.com/s/5P9B92Q"&gt;&lt;a href="http://www.surveymonkey.com/s/5P9B92Q"&gt;http://www.surveymonkey.com/s/5P9B92Q&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -2557,11 +2685,11 @@ ProjectList.fetch(function(data) {
     </author>
     <summary type="html">&lt;p&gt;You can now learn everything you wanted to know about the JavascriptMVC3 state machine on the project website at:&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-statemachine/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;You can now learn everything you wanted to know about the JavascriptMVC3 state machine on the project website at:&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-statemachine/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/SecondStoryJS-StateMachine.png" alt="SecondStoryJS State Machine" /&gt;&lt;/p&gt;
 </content>
@@ -2869,11 +2997,11 @@ $.ajax({
     </author>
     <summary type="html">&lt;p&gt;Like the title says, you can now learn everything you wanted to know about the JavascriptMVC3 router on the project website at:&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;Like the title says, you can now learn everything you wanted to know about the JavascriptMVC3 router on the project website at:&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/SecondStoryJS-Router.png" alt="SecondStoryJS Router" /&gt;&lt;/p&gt;
 </content>
@@ -3335,11 +3463,9 @@ $dark-grey:        #4b4b48
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS Router now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Modern web applications should function as naturally as their static page-based predecessors. As developers, we may need to store state in the location bar, but the user shouldn&amp;#39;t be able to tell the difference, except, hopefully, the Ajaxified version should be faster and smoother.&lt;/p&gt;
+    <summary type="html">&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS Router now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 </summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS Router now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS Router now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;Modern web applications should function as naturally as their static page-based predecessors. As developers, we may need to store state in the location bar, but the user shouldn&amp;#39;t be able to tell the difference, except, hopefully, the Ajaxified version should be faster and smoother.&lt;/p&gt;
 
@@ -3481,13 +3607,11 @@ controller.popPanel();
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The repository has moved to http://github.com/secondstory/secondstoryjs-statemachine. The main class has been renamed to SS.Controller.StateMachine&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS State Machine now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-statemachine/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+    <summary type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The repository has moved to &lt;a href="http://github.com/secondstory/secondstoryjs-statemachine"&gt;http://github.com/secondstory/secondstoryjs-statemachine&lt;/a&gt;. The main class has been renamed to SS.Controller.StateMachine&lt;/strong&gt;&lt;/p&gt;
 </summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The repository has moved to http://github.com/secondstory/secondstoryjs-statemachine. The main class has been renamed to SS.Controller.StateMachine&lt;/strong&gt;&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The repository has moved to &lt;a href="http://github.com/secondstory/secondstoryjs-statemachine"&gt;http://github.com/secondstory/secondstoryjs-statemachine&lt;/a&gt;. The main class has been renamed to SS.Controller.StateMachine&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS State Machine now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-statemachine/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS State Machine now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-statemachine/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-statemachine/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;I&amp;#39;ve been attempting to write this article for a week, but I&amp;#39;ve been unable to justify the usefulness of Finite State Machines in words. I tried written up some typical examples, such as the classic vending machine, but it kept getting very obtuse very quickly. Instead, let me just say, that I love Finite State Machines. I think they are the only technique I learned at school and when I am able to replace dozens of &lt;tt&gt;if&lt;/tt&gt; statements with a Finite State Machine, it makes me very happy and feel secure. Being able to monitor an object&amp;#39;s state, rather than just querying its instance variables, makes testing simpler and helps me find bugs.&lt;/p&gt;
 
@@ -3570,11 +3694,9 @@ steal.js INFO: FSM (MyNavigation.instance0): timelineOpen -&amp;gt; initial
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The new Github repository location is: http://github.com/secondstory/secondstoryjs-html5storage. The new class names are SS.Model.HTML5Store.Local and SS.Model.HTML5Store.Session&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;For those who don&amp;#39;t know, JavascriptMVC 3 is a framework for building complex web applications based on jQuery. jQuery is a wonderful tool for manipulating the DOM, but it doesn&amp;#39;t provide any system for dependency resolution, file organization or a separation of concerns. JavascriptMVC 3, which is currently in a very solid alpha form, provides a strong MVC foundation for oragnizing your code.&lt;/p&gt;
+    <summary type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The new Github repository location is: &lt;a href="http://github.com/secondstory/secondstoryjs-html5storage"&gt;http://github.com/secondstory/secondstoryjs-html5storage&lt;/a&gt;. The new class names are SS.Model.HTML5Store.Local and SS.Model.HTML5Store.Session&lt;/strong&gt;&lt;/p&gt;
 </summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The new Github repository location is: http://github.com/secondstory/secondstoryjs-html5storage. The new class names are SS.Model.HTML5Store.Local and SS.Model.HTML5Store.Session&lt;/strong&gt;&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The new Github repository location is: &lt;a href="http://github.com/secondstory/secondstoryjs-html5storage"&gt;http://github.com/secondstory/secondstoryjs-html5storage&lt;/a&gt;. The new class names are SS.Model.HTML5Store.Local and SS.Model.HTML5Store.Session&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;For those who don&amp;#39;t know, JavascriptMVC 3 is a framework for building complex web applications based on jQuery. jQuery is a wonderful tool for manipulating the DOM, but it doesn&amp;#39;t provide any system for dependency resolution, file organization or a separation of concerns. JavascriptMVC 3, which is currently in a very solid alpha form, provides a strong MVC foundation for oragnizing your code.&lt;/p&gt;
 
