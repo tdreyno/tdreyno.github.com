@@ -5,10 +5,39 @@
   <id>http://awardwinningfjords.com/</id>
   <link href="http://awardwinningfjords.com/"/>
   <link href="http://awardwinningfjords.com/feed.xml" rel="self"/>
-  <updated>2012-05-20T00:00:00+00:00T00:00:00-08:00</updated>
+  <updated>2012-05-21T00:00:00+00:00T00:00:00-08:00</updated>
   <author>
     <name>Thomas Reynolds</name>
   </author>
+  <entry>
+    <title>WebGL Prototypes</title>
+    <link rel="alternate" href="/2012/05/21/webgl-prototypes.html"/>
+    <id>/2012/05/21/webgl-prototypes.html</id>
+    <published>2012-05-21T00:00:00+00:00T00:00:00-08:00</published>
+    <updated>2012-05-21T00:00:00+00:00T00:00:00-08:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;p&gt;For posterity, here are a couple prototypes I put together to see if WebGL was appropriate for a recent project (more on this later).&lt;/p&gt;
+
+&lt;p&gt;Check it out, let me know what you think:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="/projects/webgl-prototypes/triangles.html"&gt;Break an image into triangles, which can be rotated individually&lt;/a&gt;&lt;/li&gt;
+</summary>
+    <content type="html">&lt;p&gt;For posterity, here are a couple prototypes I put together to see if WebGL was appropriate for a recent project (more on this later).&lt;/p&gt;
+
+&lt;p&gt;Check it out, let me know what you think:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="/projects/webgl-prototypes/triangles.html"&gt;Break an image into triangles, which can be rotated individually&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="/projects/webgl-prototypes/columns.html"&gt;Break an image into columns, which animate along with the camera&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="/projects/webgl-prototypes/cloth-blinds.html"&gt;Map an image to cloth, double-click to fold&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="/projects/webgl-prototypes/cloth-wind.html"&gt;Map an image to cloth, blow it around with wind&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="/projects/webgl-prototypes/cloth-drag.html"&gt;Map an image to cloth, drag the bottom-center with the mouse&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+  </entry>
   <entry>
     <title>Front-end Performance Tools: Canvas Matrix</title>
     <link rel="alternate" href="/2012/05/20/simple-canvas-matrix.html"/>
