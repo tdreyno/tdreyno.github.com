@@ -5,10 +5,28 @@
   <id>http://awardwinningfjords.com/</id>
   <link href="http://awardwinningfjords.com/"/>
   <link href="http://awardwinningfjords.com/feed.xml" rel="self"/>
-  <updated>2012-05-21T00:00:00+00:00T00:00:00-08:00</updated>
+  <updated>2012-05-22T00:00:00+00:00T00:00:00-08:00</updated>
   <author>
     <name>Thomas Reynolds</name>
   </author>
+  <entry>
+    <title>Just Launched: SketchUp Showcase</title>
+    <link rel="alternate" href="/2012/05/22/just-launched-sketchup-showcase.html"/>
+    <id>/2012/05/22/just-launched-sketchup-showcase.html</id>
+    <published>2012-05-22T00:00:00+00:00T00:00:00-08:00</published>
+    <updated>2012-05-22T00:00:00+00:00T00:00:00-08:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;p&gt;The talented team at &lt;a href="http://weareinstrument.com"&gt;Instrument&lt;/a&gt; has just launched the &lt;a href="http://www.google.com/sketchup/showcase"&gt;SketchUp Showcase&lt;/a&gt;. The showcase is a place for SketchUp users to share their fabulous work, view 3d models in WebGL and promote both the projects and the ecosystem.&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;The talented team at &lt;a href="http://weareinstrument.com"&gt;Instrument&lt;/a&gt; has just launched the &lt;a href="http://www.google.com/sketchup/showcase"&gt;SketchUp Showcase&lt;/a&gt;. The showcase is a place for SketchUp users to share their fabulous work, view 3d models in WebGL and promote both the projects and the ecosystem.&lt;/p&gt;
+
+&lt;p&gt;Go ahead and check it out!&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="http://www.google.com/sketchup/showcase"&gt;&lt;img src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/sketchup.jpg"&gt;&lt;/a&gt;&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>WebGL Prototypes</title>
     <link rel="alternate" href="/2012/05/21/webgl-prototypes.html"/>
