@@ -1,0 +1,287 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'>
+    <meta name="author" content="Thomas Reynolds">
+    
+    <!-- Mobile viewport optimization http://goo.gl/b9SaQ -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+    
+    <!-- Google Setup -->
+    <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'>
+    
+    <!-- OpenID Setup -->
+    <link href='http://www.myopenid.com/server' rel='openid.server'>
+    <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'>
+    <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'>
+    <link href='http://www.myopenid.com/server' rel='openid2.provider'>
+    <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'>
+    
+    
+      <title>3D CSS Accordions &laquo; Thomas Reynolds</title>
+    
+    
+    <!-- Stylesheet -->
+    <link href="/stylesheets/new.css?1336499856" media="screen" rel="stylesheet" type="text/css" />
+    
+    <!-- RSS -->
+    <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'>
+  </head>
+  <body>
+    <header>
+      <h1>
+        <a href="/">Award-Winning Fjords</a>
+        <span class="sub">Thomas Reynolds</span>
+      </header>
+    </header>
+    
+    <div id="frame">
+      
+        <article>
+          <h2>3D CSS Accordions</h2>
+          <time>May 23 2012</time>
+          <p><a href="/2012/05/22/just-launched-sketchup-showcase.html">A recent project</a> required a little extra 3D &quot;pop&quot;. <a href="/2012/05/21/webgl-prototypes.html">WebGL was experimented with</a>, but it ended up being too heavy and not supported in enough browsers. Instead, we ended up going with a quick, 3D accordion effect accomplished entirely in CSS.</p>
+
+<p>On mouse over, the thumbnail image folds up revealing metadata beneath. The effect is enhanced with special gradients and layers simulating lighting sources and shadows.</p>
+
+<p>This article describes the technique and shows how it was implemented.</p>
+
+<h2>Example (Hover Over Image)</h2>
+
+<p></p>
+  <link href="/stylesheets/3d-accordion.css?1337812017" media="screen" rel="stylesheet" type="text/css" />
+  <a href="" class="accordion_container">
+    <div class="accordion_wrapper">
+      <div class="panel panel1" style="background-image: url(/images/accordion-background.jpg?1337812017);"><div class="accordion_overlay"></div></div>
+      <div class="panel panel2" style="background-image: url(/images/accordion-background.jpg?1337812017);"><div class="accordion_overlay"></div></div>
+      <div class="panel panel3" style="background-image: url(/images/accordion-background.jpg?1337812017);"><div class="accordion_overlay"></div></div>
+      <div class="panel panel4shadow"></div>
+      <div class="panel panel4" style="background-image: url(/images/accordion-background.jpg?1337812017);"><div class="accordion_overlay"></div></div>
+    </div>
+  </a>
+<p></p>
+
+<h2>Implementation</h2>
+
+<p>To create the illusion that a single image is folding, we actually must create four different slices. Each slice has the same background image, but its position is offset so when laid out horizontally, they reproduce the original image.</p>
+
+<p>Here&#39;s what each slice looks like:</p>
+
+<p></p>
+  <link href="/stylesheets/3d-accordion.css?1337812017" media="screen" rel="stylesheet" type="text/css" />
+  <a href="" class="accordion_container">
+    <div class="accordion_wrapper">
+      <div class="panel panel1" style="background-color: red;"><div class="accordion_overlay"></div></div>
+      <div class="panel panel2" style="background-color: green;"><div class="accordion_overlay"></div></div>
+      <div class="panel panel3" style="background-color: blue;"><div class="accordion_overlay"></div></div>
+      <div class="panel panel4shadow"></div>
+      <div class="panel panel4" style="background-color: purple;"><div class="accordion_overlay"></div></div>
+    </div>
+  </a>
+<p></p>
+
+<h3>HTML</h3>
+
+<p>In the HTML, we create our slices and add some wrapper elements.</p>
+
+<pre><code>&lt;a href=&quot;&quot; class=&quot;accordion_container&quot;&gt;
+  &lt;div class=&quot;accordion_wrapper&quot;&gt;
+    &lt;div class=&quot;panel panel1&quot; style=&quot;background-color: red;&quot;&gt;
+      &lt;div class=&quot;accordion_overlay&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;panel panel2&quot; style=&quot;background-color: green;&quot;&gt;
+      &lt;div class=&quot;accordion_overlay&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;panel panel3&quot; style=&quot;background-color: blue;&quot;&gt;
+      &lt;div class=&quot;accordion_overlay&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;panel panel4shadow&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;panel panel4&quot; style=&quot;background-color: purple;&quot;&gt;
+      &lt;div class=&quot;accordion_overlay&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/a&gt;
+</code></pre>
+
+<h3>CSS</h3>
+
+<p>Most of the action is in CSS, so I&#39;ll go over it piece by piece. Note: the source below is in a prefix-free syntax for clarity sake. In a real project, you&#39;ll need to setup the correct vendor prefixes.</p>
+
+<p>First we setup are container size and style the background which will be revealed on hover:</p>
+
+<pre><code>.accordion_container {
+  padding: 0;
+  margin: 0;
+  width: 308px;
+  height: 172px; }
+.accordion_wrapper {
+  width: 306px;
+  height: 172px;
+  position: relative;
+  background: linear-gradient(top, #535353, #373737);
+  box-shadow: rgba(0, 0, 0, 0.1) -2px 2px 10px inset;
+  perspective: 400px; }
+</code></pre>
+
+<p>Next we setup some generic styles and positions on each slice:</p>
+
+<pre><code>.panel {
+  top: 0;
+  bottom: 0;
+  background: #eaeaea no-repeat 0 50%;
+  position: absolute; 
+  transition-duration: 100ms; }
+.accordion_overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: all 100ms linear;
+  opacity: 0; }
+</code></pre>
+
+<p>Then we set specific sizes and positions on each slice. We&#39;re also setting up the gradients used for the fake lighting highlights:</p>
+
+<pre><code>.panel2, .panel3, .panel4, .panel4shadow {
+  width: 68px; }
+.panel1 {
+  left: 0;
+  width: 102px; }
+  .panel1 .accordion_overlay {
+    left: 50%;
+    background: linear-gradient(left, rgba(0, 0, 0, 0), 
+                                      rgba(0, 0, 0, 0.15)); }
+.panel2 {  
+  transform-origin: 0 0;
+  left: 102px;
+  background-position: -102px 50%; }
+  .panel2 .accordion_overlay {
+    background: linear-gradient(left, rgba(255, 255, 255, 0), 
+                                      rgba(255, 255, 255, 0.4)); }
+.panel3 {
+  transform-origin: 68px 0;
+  left: 170px;
+  background-position: -170px 50%; }
+  .panel3 .accordion_overlay {
+    border-right: 1px solid black;
+    background: linear-gradient(left, rgba(0, 0, 0, 0), 
+                                      rgba(0, 0, 0, 0.2) 10%, 
+                                      rgba(0, 0, 0, 0.7)); }
+.panel4, .panel4shadow {
+  transform-origin: 0 0;
+  left: 238px;
+  background-position: -238px 50%; }
+  .panel4 .accordion_overlay {
+    background: linear-gradient(right, rgba(0, 0, 0, 0), 
+                                       rgba(0, 0, 0, 0.6)); }
+</code></pre>
+
+<p>These are the transitions returning from a hover a event:</p>
+
+<pre><code>.accordion_container .panel2 {
+  transform: rotateY(0deg);
+  transition-property: transform;
+  transition-timing-function: linear; }
+.accordion_container .panel3 {
+  transform: translateX(0) rotateY(0);
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.25, 0.45, 0.65, 1); }
+.accordion_container .panel4 {
+  transform: translateX(0) rotateY(0);
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.25, 0.45, 0.65, 1); }
+.accordion_container .panel4shadow {
+  opacity: 0;
+  background: rgba(0,0,0,0.3);
+  transform: translateX(0) rotateY(0);
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.25, 0.45, 0.65, 1); }
+</code></pre>
+
+<p>Finally, we setup the transitions to take place on hover:</p>
+
+<pre><code>.accordion_container:hover .panel .accordion_overlay {
+  opacity: 1; }
+.accordion_container:hover .panel2 {
+  transform: rotateY(-70deg);
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0, 0.05, 1, 1); }
+.accordion_container:hover .panel3 {
+  transform: translateX(-90px) rotateY(70deg);
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.42, 0, 1, 1); }
+.accordion_container:hover .panel4 {
+  transform: translateX(-90px) rotateY(-70deg);
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.42, 0, 1, 1); }
+.accordion_container:hover .panel4shadow {
+  opacity: 1;
+  transform: translateX(-84px) rotateY(-70deg);
+  transition-property: transform, opacity;
+  transition-timing-function: cubic-bezier(0.42, 0, 1, 1); }
+</code></pre>
+
+<h3>Manual Timing Functions</h3>
+
+<p>The most important part of the illusion it to make it appear as if the image is folding. If our slices animate out of sync, gaps and breaks will appear between them, shattering the illusion.</p>
+
+<p>We <strong>could</strong> write complex Javascript to calculate the correct 3D rotation and position throughout the animation, but since we&#39;re doing CSS-only, we have to fake it.</p>
+
+<p>The <code>transition-timing-function: cubic-bezier</code> option allows use to manually time each transition. I slowed the animation down, by setting the duration to 5000ms, and slowly tweaked each slice&#39;s timing until they animated without gaps. Lots of trial and error, but the result is fantastic.</p>
+
+        </article>
+      
+    
+      <footer>
+        <p class="descr">My name is Thomas Reynolds. I'm a senior developer at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p>
+    
+        <p>
+          <a href="http://twitter.com/tdreyno">Twitter</a> &bull;
+          <a href="mailto:me@tdreyno.com">Email</a> &bull;
+          <a href="https://github.com/tdreyno">Github</a> &bull;
+          <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a>
+        </p>
+      </footer>
+    </div>
+    
+    <script src="/javascripts/highlight.pack.js?1336499856" type="text/javascript"></script>
+    <link href="/stylesheets/solarized_light.css?1336499856" media="screen" rel="stylesheet" type="text/css" />
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+    <script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-90027-9']);
+  _gaq.push(['_trackPageview']);
+  _gaq.push(['_trackPageLoadTime']);
+
+  (function() {
+  var ga = document.createElement('script');
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 
+    'http://www') + '.google-analytics.com/ga.js';
+  ga.setAttribute('async', 'true');
+  document.documentElement.firstChild.appendChild(ga);
+  })();
+</script>
+
+<script>
+  var _gauges = _gauges || [];
+  (function() {
+    var t   = document.createElement('script');
+    t.type  = 'text/javascript';
+    t.async = true;
+    t.id    = 'gauges-tracker';
+    t.setAttribute('data-site-id', '4d770721192b0c4ab6000002');
+    t.src = '//secure.gaug.es/track.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
+  })();
+</script>
+  </body>
+</html>
