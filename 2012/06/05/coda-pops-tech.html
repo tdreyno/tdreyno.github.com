@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'>
+    <meta name="author" content="Thomas Reynolds">
+    
+    <!-- Mobile viewport optimization http://goo.gl/b9SaQ -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+    
+    <!-- Google Setup -->
+    <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'>
+    
+    <!-- OpenID Setup -->
+    <link href='http://www.myopenid.com/server' rel='openid.server'>
+    <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'>
+    <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'>
+    <link href='http://www.myopenid.com/server' rel='openid2.provider'>
+    <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'>
+    
+    
+      <title>Coda Pops Technical Details &laquo; Thomas Reynolds</title>
+    
+    
+    <!-- Stylesheet -->
+    <link href="/stylesheets/new-a944c940.css" media="screen" rel="stylesheet" type="text/css" />
+    
+    <!-- RSS -->
+    <link href='http://feeds2.feedburner.com/awf-allposts' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'>
+  </head>
+  <body>
+    <header>
+      <h1>
+        <a href="/">Award-Winning Fjords</a>
+        <span class="sub">Thomas Reynolds</span>
+      </header>
+    </header>
+    
+    <div id="frame">
+      
+        <article>
+          <h2>Coda Pops Technical Details</h2>
+          <time>Jun  5 2012</time>
+          <p>First and foremost, Coda 2 is out! Get it from <a href="https://panic.com/coda/">Panic&#39;s site</a> or <a href="http://itunes.apple.com/us/app/coda-2/id499340368?mt=12">the Mac App Store</a>.</p>
+
+<p>Now, what are Coda Pops? Coda 1 has an integrated CSS editor sidebar which provided some simple form elements for editing CSS styles. This sidebar has gone away in version 2, but the void has been filled by Coda Pops which are context-aware UI popups that provide controls for generating CSS. There are 10 of them in the current release and they look like this:</p>
+
+<p><a href="/projects/coda/radius.png"><img src="/projects/coda/radius-small.png" alt="Border Radius" align="left"></a>
+<a href="/projects/coda/border-width.png"><img src="/projects/coda/border-width-small.png" alt="Border Width" align="left"></a>
+<a href="/projects/coda/margin.png"><img src="/projects/coda/margin-small.png" alt="Margin" align="left"></a>
+<a href="/projects/coda/padding.png"><img src="/projects/coda/padding-small.png" alt="Padding" align="left"></a>
+<br clear="all"></p>
+
+<p><a href="/projects/coda/border.png"><img src="/projects/coda/border-small.png" alt="Border" align="left"></a>
+<a href="/projects/coda/box-shadow.png"><img src="/projects/coda/box-shadow-small.png" alt="Box Shadow" align="left"></a>
+<a href="/projects/coda/text-shadow.png"><img src="/projects/coda/text-shadow-small.png" alt="Text Shadow" align="left"></a>
+<br clear="all"></p>
+
+<p><a href="/projects/coda/color.png"><img src="/projects/coda/color-small.png" alt="Color" align="left"></a>
+<a href="/projects/coda/gradient.png"><img src="/projects/coda/gradient-small.png" alt="Color" align="left"></a>
+<a href="/projects/coda/styles.png"><img src="/projects/coda/styles-small.png" alt="Style List" align="left"></a>
+<br clear="all"></p>
+
+<h2>Technical Details</h2>
+
+<p>Each Pop is implemented in HTML/CSS/Javascript and lives within the Coda application bundle. An included <code>.plist</code> file tells Coda in which contexts a Pop should be presented.</p>
+
+<p>The Coda application provides several methods to the Javascript environment to read-in the string contents being passed in from Coda, notify Coda of a string change in response to changes in the Pop UI, read/write Pop-specific preferences and finally dismiss the Pop.</p>
+
+<p>To encapsulate these interactions and provide common utilities for all Pops, a library was created known as PopKit.js. This library is neither public or supported at this time, but Panic has plans to make Pops user-expandable in the future. For the curious, here are the details.</p>
+
+<h2>PopKit.js</h2>
+
+<p>PopKit.js is built upon:</p>
+
+<ul>
+<li><a href="http://jquery.com">jQuery</a> 1.7.2</li>
+<li><a href="http://jqueryui.com">jQuery UI</a> 1.9 Alpha</li>
+<li><a href="http://emberjs.com">EmberJS</a> 0.9.7.1</li>
+</ul>
+
+<p>jQuery and jQuery UI provide a foundation most web developers would be comfortable working with. EmberJS is my preferred frameworks for Javascript applications which have interactive UI elements, must respond quickly and condense the state of the application. What this means is, EmberJS allows me to create controllers for every UI element and have their individual updates processed into a single string, the output CSS, quickly and easily. The Color and Gradient Pops are probably the most complex, with Hue, Opacity sliders interacting in real-time with the mouse loupe color picker.</p>
+
+<p>The actual PopKit library is only 500 LOC. It provides a thin wrapper around the communication with the Coda App, a root &quot;Application&quot; class for Pops to extend from, Color parsing and manipulation, and UI controls for slider controls and buttons.</p>
+
+<p>I&#39;ve provides the HTML and Javascript contents of the Border Pop below. I&#39;m personally proud of their brevity and readability, given that they create complex and beautiful UI.</p>
+
+<script src="https://gist.github.com/2848655.js?file=border.html"></script>
+
+<script src="https://gist.github.com/2848655.js?file=border.js"></script>
+
+<h2>Moving Forward</h2>
+
+<p>Going forward, I&#39;d like to see this library become a foundation for user-created Pops, but that&#39;s going to require some additional work.</p>
+
+<h4>Consistent Code Style</h4>
+
+<p>I used CoffeeScript to quickly build the library, but if it were to become a public library, I would refactor away the cruft left behind by the CoffeeScript compiler. We only need to support WebKit so some shims could be removed and we could standardize our variable names and other basics.</p>
+
+<h4>Code Documentation</h4>
+
+<p>There is inline-docs in my source CoffeeScript version, but these are stripped by the compiler.</p>
+
+<h4>Depend on non-beta Libraries</h4>
+
+<p>This would mean waiting until Ember 1.0 and jQuery UI 1.9 are released.</p>
+
+<h4>Centrally Host Libraries</h4>
+
+<p>Right now, each pop contains uncompressed versions of the entire stack. This isn&#39;t great for file size or re-usability. Once this is a supported library, it can be moved into a central location, compressed and made available to all Pops.</p>
+
+<h3>Future Pop Ideas</h3>
+
+<ul>
+<li>Expanding Pops outside of CSS</li>
+<li>A Style Guide Pop, which lets you setup themes and apply them.</li>
+<li>Sass color manipulation preview Pop</li>
+<li>Sprite image preview/picker Pop</li>
+<li>Multi-prefix editing (or prefix-free previewing)</li>
+<li>Diet Coda support?</li>
+</ul>
+
+<h2>Thanks</h2>
+
+<p>Finally, I just want to say thanks to Panic for letting me be part of this amazing app. They&#39;re great guys and it&#39;s wonderful to finally see Coda 2 in the wild.</p>
+
+        </article>
+      
+    
+      <footer>
+        <p class="descr">My name is Thomas Reynolds. I'm a Technical Lead at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p>
+    
+        <p>
+          <a href="http://twitter.com/tdreyno">Twitter</a> &bull;
+          <a href="mailto:me@tdreyno.com">Email</a> &bull;
+          <a href="https://github.com/tdreyno">Github</a> &bull;
+          <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a>
+        </p>
+      </footer>
+    </div>
+    
+    <script src="/javascripts/highlight.pack.js" type="text/javascript"></script>
+    <link href="/stylesheets/solarized_light.css" media="screen" rel="stylesheet" type="text/css" />
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+    <script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-90027-9']);
+  _gaq.push(['_trackPageview']);
+  _gaq.push(['_trackPageLoadTime']);
+
+  (function() {
+  var ga = document.createElement('script');
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 
+    'http://www') + '.google-analytics.com/ga.js';
+  ga.setAttribute('async', 'true');
+  document.documentElement.firstChild.appendChild(ga);
+  })();
+</script>
+
+<script>
+  var _gauges = _gauges || [];
+  (function() {
+    var t   = document.createElement('script');
+    t.type  = 'text/javascript';
+    t.async = true;
+    t.id    = 'gauges-tracker';
+    t.setAttribute('data-site-id', '4d770721192b0c4ab6000002');
+    t.src = '//secure.gaug.es/track.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
+  })();
+</script>
+  </body>
+</html>
