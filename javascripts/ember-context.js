@@ -1,7 +1,7 @@
 
   ENV = {
     CP_DEFAULT_CACHEABLE:   true,
-    VIEW_PRESERVES_CONTEXT: false,
+    VIEW_PRESERVES_CONTEXT: true,
     USE_ACCESSORS:          false
   };
   
