@@ -900,7 +900,7 @@ footer {
 /* line 132, new.css.scss */
 .albums {
   list-style: none; }
-  /* line 11, ../../../../.rbenv/versions/1.9.3-p0/lib/ruby/gems/1.9.1/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/typography/lists/_bullets.scss */
+  /* line 11, ../../../../.rbenv/versions/1.9.3-p194/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/lists/_bullets.scss */
   .albums li {
     list-style-image: none;
     list-style-type: none;
@@ -909,7 +909,7 @@ footer {
     /* line 135, new.css.scss */
     .albums li {
       *zoom: 1; }
-      /* line 38, ../../../../.rbenv/versions/1.9.3-p0/lib/ruby/gems/1.9.1/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+      /* line 38, ../../../../.rbenv/versions/1.9.3-p194/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
       .albums li:after {
         content: "";
         display: table;

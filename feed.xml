@@ -5,10 +5,34 @@
   <id>http://awardwinningfjords.com/</id>
   <link href="http://awardwinningfjords.com/"/>
   <link href="http://awardwinningfjords.com/feed.xml" rel="self"/>
-  <updated>2012-06-05T00:00:00+00:00T00:00:00-08:00</updated>
+  <updated>2012-07-24T00:00:00+00:00T00:00:00-08:00</updated>
   <author>
     <name>Thomas Reynolds</name>
   </author>
+  <entry>
+    <title>Ember.js PDX: July 31, 2012 at Instrument</title>
+    <link rel="alternate" href="/2012/07/24/ember-pdx.html"/>
+    <id>/2012/07/24/ember-pdx.html</id>
+    <published>2012-07-24T00:00:00+00:00T00:00:00-08:00</published>
+    <updated>2012-07-24T00:00:00+00:00T00:00:00-08:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;p&gt;I&amp;#39;m excited to announce the inaugural Portland Ember.js meetup!&lt;/p&gt;
+
+&lt;p&gt;Starts at &lt;strong&gt;7pm&lt;/strong&gt; at &lt;strong&gt;Instrument&lt;/strong&gt;: &lt;a href="https://maps.google.com/maps?ie=UTF8&amp;f=d&amp;daddr=Instrument,+419+Northeast+10th+Avenue,+Portland,+OR+97232&amp;geocode=CZ3b9koLUqYZFVGstgIdEGyw-CG_ObMAL6bQkw&amp;gl=US&amp;hl=en"&gt;419 NE 10th Ave. Portland, OR 97232&lt;/a&gt;&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;I&amp;#39;m excited to announce the inaugural Portland Ember.js meetup!&lt;/p&gt;
+
+&lt;p&gt;Starts at &lt;strong&gt;7pm&lt;/strong&gt; at &lt;strong&gt;Instrument&lt;/strong&gt;: &lt;a href="https://maps.google.com/maps?ie=UTF8&amp;f=d&amp;daddr=Instrument,+419+Northeast+10th+Avenue,+Portland,+OR+97232&amp;geocode=CZ3b9koLUqYZFVGstgIdEGyw-CG_ObMAL6bQkw&amp;gl=US&amp;hl=en"&gt;419 NE 10th Ave. Portland, OR 97232&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I&amp;#39;ll be giving an introductory talk which will walk-through the creation of a Github Issues app and touch on topics such as: Ember philosophy, views, templates, AJAX and REST APIs.&lt;/p&gt;
+
+&lt;p&gt;Not sure if there will be time for Q/A, but feel free to join me immediately after at &lt;a href="http://www.rontoms.net"&gt;Rontoms&lt;/a&gt; for yelling, debating and drinking.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="https://www.facebook.com/events/326976370721351/"&gt;RSVP and share the Facebook event&lt;/a&gt;&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Coda Pops Technical Details</title>
     <link rel="alternate" href="/2012/06/05/coda-pops-tech.html"/>
@@ -758,7 +782,7 @@ printI([1, 2, 3]);
 ctx.fill()
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;img src="/projects/hit-tracking/one.png" alt="Single Circle"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Single Circle" src="/projects/hit-tracking/one.png" /&gt;&lt;/p&gt;
 
 &lt;p&gt;That code will draw the circle on the canvas immediately, but there is no link between what is displayed and what code caused it to be drawn.&lt;/p&gt;
 
@@ -976,7 +1000,7 @@ theWorld.hitTestObjects(100, 50) # =&amp;gt; [c1, c2, c3]
 theWorld.hitTestObjects(150, 50) # =&amp;gt; [c2, c3]
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;img src="/projects/hit-tracking/three.png" alt="Three Circles"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Three Circles" src="/projects/hit-tracking/three.png" /&gt;&lt;/p&gt;
 
 &lt;p&gt;I could go further and try things out with arcs, empty stroked rectangles, donuts and semi-transparent images, but it would work exactly the same.&lt;/p&gt;
 
@@ -2361,7 +2385,7 @@ It’s with a whole lot of pride that we announce today the launch of Pixel Unio
 
 &lt;p&gt;Most of these gyms are run in small, garage-like buildings filled with barbells and weights. The limited space encourages small communities and direct interaction between the clients and the owners. They are the ultimate startup. Small, focused, unable to afford fancy offices, but dedicated to their small (but growing) group of users. It&amp;#39;s hard to describe the incredibly tight sense of community at every CrossFit gym (or &amp;quot;box&amp;quot;) I&amp;#39;ve visited. &lt;/p&gt;
 
-&lt;p&gt;Interestingly, these gyms/communities follow &lt;a href="http://en.wikipedia.org/wiki/Dunbar&amp;#x27;s_number"&gt;Dunbar&amp;#39;s number&lt;/a&gt; pretty closely. About the time a gym nears 150 members, usually some segment will break off and start another gym to return the community to a smaller, more focused state.&lt;/p&gt;
+&lt;p&gt;Interestingly, these gyms/communities follow &lt;a href="http://en.wikipedia.org/wiki/Dunbar's_number"&gt;Dunbar&amp;#39;s number&lt;/a&gt; pretty closely. About the time a gym nears 150 members, usually some segment will break off and start another gym to return the community to a smaller, more focused state.&lt;/p&gt;
 
 &lt;h2&gt;Stats, Charts &amp;amp; Data-points&lt;/h2&gt;
 
@@ -2385,7 +2409,7 @@ It’s with a whole lot of pride that we announce today the launch of Pixel Unio
 
 &lt;h2&gt;Conclusion&lt;/h2&gt;
 
-&lt;p&gt;In my opinion, working out isn&amp;#39;t about being some roided-out Jersey Shore reject. It&amp;#39;s about improving yourself one little data-point at a time. It can &lt;a href="http://www.uclahealth.org/body.cfm?id=502&amp;amp;action=detail&amp;amp;ref=134"&gt;increase productivity, while decreasing stress&lt;/a&gt;. It provides a sense of community and it will slowly give you more and more &amp;quot;dumb human tricks&amp;quot; like handstands.&lt;/p&gt;
+&lt;p&gt;In my opinion, working out isn&amp;#39;t about being some roided-out Jersey Shore reject. It&amp;#39;s about improving yourself one little data-point at a time. It can &lt;a href="http://www.uclahealth.org/body.cfm?id=502&amp;action=detail&amp;ref=134"&gt;increase productivity, while decreasing stress&lt;/a&gt;. It provides a sense of community and it will slowly give you more and more &amp;quot;dumb human tricks&amp;quot; like handstands.&lt;/p&gt;
 
 &lt;h2&gt;Footnotes&lt;/h2&gt;
 
@@ -2397,9 +2421,9 @@ It’s with a whole lot of pride that we announce today the launch of Pixel Unio
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="Designer/Dev"&gt;@pixelmatrix&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="Flash%20Guru"&gt;@heavilyinvolved&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="iOS%20Master"&gt;@matt_tuzzolo&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="iOS%20dude,%20Clean%20&amp;amp;%20Jerk%20monster"&gt;@cschep&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="Flash Guru"&gt;@heavilyinvolved&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="iOS Master"&gt;@matt_tuzzolo&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="iOS dude, Clean &amp; Jerk monster"&gt;@cschep&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </content>
@@ -3376,7 +3400,7 @@ $.ajax({
 
 &lt;p&gt;There are several available libraries for handling PubSub in javascript. The simplest jQuery form is what I&amp;#39;ve used here. &lt;a href="http://weblog.bocoup.com/publishsubscribe-with-jquery-custom-events"&gt;This article on the Bocoup blog&lt;/a&gt; compares the speed of the approach I&amp;#39;ve used above with a dedicated jq.pubsup library. Not surprisingly, anything dealing with the DOM is going to be slower than handling the events in memory.&lt;/p&gt;
 
-&lt;p&gt;I personally use the &lt;a href="http://www.openajax.org/member/wiki/OpenAjax_Hub_1.0_Specification"&gt;OpenAjax Hub implementation&lt;/a&gt; in conjunction with the &lt;a href="http://v3.javascriptmvc.com/index.html#&amp;amp;who=jQuery.Controller"&gt;JavascriptMVC Controller&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I personally use the &lt;a href="http://www.openajax.org/member/wiki/OpenAjax_Hub_1.0_Specification"&gt;OpenAjax Hub implementation&lt;/a&gt; in conjunction with the &lt;a href="http://v3.javascriptmvc.com/index.html#&amp;who=jQuery.Controller"&gt;JavascriptMVC Controller&lt;/a&gt;.&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -4080,7 +4104,7 @@ steal.js INFO: FSM (MyNavigation.instance0): timelineOpen -&amp;gt; initial
 &lt;pre&gt;&lt;code&gt;./steal/js steal/getjs ss/state_machine
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Next, create a Site and a Controller (see the &lt;a href="http://v3.javascriptmvc.com/index.html#&amp;amp;who=getstarted"&gt;JavascriptMVC Getting Started Guide&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;Next, create a Site and a Controller (see the &lt;a href="http://v3.javascriptmvc.com/index.html#&amp;who=getstarted"&gt;JavascriptMVC Getting Started Guide&lt;/a&gt;).&lt;/p&gt;
 
 &lt;p&gt;We need to add our new plugin to the site. In appname.js, add the following to your &lt;tt&gt;steal&lt;/tt&gt; command:&lt;/p&gt;
 
@@ -4128,7 +4152,7 @@ steal.js INFO: FSM (MyNavigation.instance0): timelineOpen -&amp;gt; initial
 &lt;pre&gt;&lt;code&gt;./steal/js steal/getjs ss/model/html5store
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Next, create a Site and a Model (see the &lt;a href="http://v3.javascriptmvc.com/index.html#&amp;amp;who=getstarted"&gt;JavascriptMVC Getting Started Guide&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;Next, create a Site and a Model (see the &lt;a href="http://v3.javascriptmvc.com/index.html#&amp;who=getstarted"&gt;JavascriptMVC Getting Started Guide&lt;/a&gt;).&lt;/p&gt;
 
 &lt;p&gt;We need to add our new plugin to the site. In appname.js, add the following to your &lt;tt&gt;steal&lt;/tt&gt; command:&lt;/p&gt;
 
@@ -5843,9 +5867,9 @@ or in &lt;a href="http://cloud.github.com/downloads/tdreyno/pageSlider/pageSlide
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;It&amp;#39;s late notice, but I&amp;#39;ll be speaking on Sass and Compass at &lt;a href="http://refreshpdx.org/"&gt;Refresh Portland&lt;/a&gt;  on Thursday, July 23rd at  &lt;a href="http://maps.google.com/maps?f=q&amp;amp;hl=en&amp;amp;q=915+SW+Stark+St,+Portland,+Multnomah,+Oregon+97205,+United+States&amp;amp;sll=37.0625,-95.677068&amp;amp;sspn=49.176833,77.519531&amp;amp;ie=UTF8&amp;amp;cd=1&amp;amp;geocode=0,45.521796,-122.680205&amp;amp;ll=45.521804,-122.680206&amp;amp;spn=0.021408,0.037851&amp;amp;t=p&amp;amp;z=15&amp;amp;iwloc=addr"&gt;Jive Software&lt;/a&gt;.&lt;/p&gt;
+    <summary type="html">&lt;p&gt;It&amp;#39;s late notice, but I&amp;#39;ll be speaking on Sass and Compass at &lt;a href="http://refreshpdx.org/"&gt;Refresh Portland&lt;/a&gt;  on Thursday, July 23rd at  &lt;a href="http://maps.google.com/maps?f=q&amp;hl=en&amp;q=915+SW+Stark+St,+Portland,+Multnomah,+Oregon+97205,+United+States&amp;sll=37.0625,-95.677068&amp;sspn=49.176833,77.519531&amp;ie=UTF8&amp;cd=1&amp;geocode=0,45.521796,-122.680205&amp;ll=45.521804,-122.680206&amp;spn=0.021408,0.037851&amp;t=p&amp;z=15&amp;iwloc=addr"&gt;Jive Software&lt;/a&gt;.&lt;/p&gt;
 </summary>
-    <content type="html">&lt;p&gt;It&amp;#39;s late notice, but I&amp;#39;ll be speaking on Sass and Compass at &lt;a href="http://refreshpdx.org/"&gt;Refresh Portland&lt;/a&gt;  on Thursday, July 23rd at  &lt;a href="http://maps.google.com/maps?f=q&amp;amp;hl=en&amp;amp;q=915+SW+Stark+St,+Portland,+Multnomah,+Oregon+97205,+United+States&amp;amp;sll=37.0625,-95.677068&amp;amp;sspn=49.176833,77.519531&amp;amp;ie=UTF8&amp;amp;cd=1&amp;amp;geocode=0,45.521796,-122.680205&amp;amp;ll=45.521804,-122.680206&amp;amp;spn=0.021408,0.037851&amp;amp;t=p&amp;amp;z=15&amp;amp;iwloc=addr"&gt;Jive Software&lt;/a&gt;.&lt;/p&gt;
+    <content type="html">&lt;p&gt;It&amp;#39;s late notice, but I&amp;#39;ll be speaking on Sass and Compass at &lt;a href="http://refreshpdx.org/"&gt;Refresh Portland&lt;/a&gt;  on Thursday, July 23rd at  &lt;a href="http://maps.google.com/maps?f=q&amp;hl=en&amp;q=915+SW+Stark+St,+Portland,+Multnomah,+Oregon+97205,+United+States&amp;sll=37.0625,-95.677068&amp;sspn=49.176833,77.519531&amp;ie=UTF8&amp;cd=1&amp;geocode=0,45.521796,-122.680205&amp;ll=45.521804,-122.680206&amp;spn=0.021408,0.037851&amp;t=p&amp;z=15&amp;iwloc=addr"&gt;Jive Software&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;The presentation should be streamed (and then archived) on Ustream and I&amp;#39;ll post the slides here on Friday.&lt;/p&gt;
 </content>

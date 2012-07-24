@@ -23,7 +23,6 @@
  *   * http://davecardwell.co.uk/javascript/jquery/plugins/jquery-widont/
  */
 
-
 new function() {
     /**
      * The following functions and attributes form the Public interface of the
