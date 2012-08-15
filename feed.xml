@@ -5,10 +5,59 @@
   <id>http://awardwinningfjords.com/</id>
   <link href="http://awardwinningfjords.com/"/>
   <link href="http://awardwinningfjords.com/feed.xml" rel="self"/>
-  <updated>2012-07-24T00:00:00+00:00T00:00:00-08:00</updated>
+  <updated>2012-08-15T00:00:00+00:00T00:00:00-08:00</updated>
   <author>
     <name>Thomas Reynolds</name>
   </author>
+  <entry>
+    <title>Reticulating Splines</title>
+    <link rel="alternate" href="/2012/08/15/splines.html"/>
+    <id>/2012/08/15/splines.html</id>
+    <published>2012-08-15T00:00:00+00:00T00:00:00-08:00</published>
+    <updated>2012-08-15T00:00:00+00:00T00:00:00-08:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;p&gt;The Javascript community is at a huge disadvantage. For some reason, the experience, code and community of Flash developers never quite transferred over. Maybe living in an Adobe ecosystem stifled their open source contributions, maybe we were too new to understand or maybe we just don&amp;#39;t travel in the same circles.&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;The Javascript community is at a huge disadvantage. For some reason, the experience, code and community of Flash developers never quite transferred over. Maybe living in an Adobe ecosystem stifled their open source contributions, maybe we were too new to understand or maybe we just don&amp;#39;t travel in the same circles.&lt;/p&gt;
+
+&lt;p&gt;Regardless of the reason, HTML5 animators are mostly having to reinvent the wheel. The new cornerstones of our work, projects like &lt;a href="http://paperjs.org/"&gt;Paper.js&lt;/a&gt;, &lt;a href="http://mrdoob.github.com/three.js/"&gt;Three.js&lt;/a&gt; and &lt;a href="https://github.com/sole/tween.js/"&gt;Tween.js&lt;/a&gt;, are written by former Flash developers and often assume familiarity with their techniques. That&amp;#39;s why, today I had to learn something new.&lt;/p&gt;
+
+&lt;p&gt;Today, I was snooping around the code of &lt;a href="http://www.google.com/green/storyofsend/desktop/"&gt;The Story of Send&lt;/a&gt;, a fantastic, animated HTML5 experience by B-Reel for Google. I found some interesting techniques:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.google.com/doubleclick/studio/swiffy/"&gt;Swiffy&lt;/a&gt; to convert from Flash to SVG animations.&lt;/li&gt;
+&lt;li&gt;Strange overflow and visibility hacks to manipulate the scroll bar&lt;/li&gt;
+&lt;li&gt;The requirement of the entirety of Three.js for a single class: &lt;a href="https://github.com/mrdoob/three.js/blob/master/src/core/Spline.js"&gt;THREE.Spline&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;That last item piqued my interest. Obviously, these guys know their business and are quite comfortable with animation. What the hell is a Spline?&lt;/p&gt;
+
+&lt;p&gt;Googling did me no good. All I got were Wikipedia articles about math and 3d-rendering software forums. Digging back into the obfuscated Story of Send code revealed their purpose: Splines used x/y coordinates for individual points that the camera stopped along the animation.&lt;/p&gt;
+
+&lt;p&gt;Their use became apparent:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Given that we want to Tween between specific points, Splines let us
+calculate smooth transitions.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A naive HTML5 animator, given the same problem, might simply animate linearly, in a straight line, from point A to point B. Then, his former Flash-developing boss would smack him on the head for the resulting animation being too rigid and boring. Here&amp;#39;s an example (it&amp;#39;s interactive, grab the points to explore):&lt;/p&gt;
+
+&lt;iframe src="/projects/spline/linear.html" width="601" height="410" style="overflow: hidden"&gt;&lt;/iframe&gt;
+
+&lt;p&gt;&lt;br&gt;
+Now, let&amp;#39;s run our points through &lt;a href="https://github.com/mrdoob/three.js/blob/master/src/core/Spline.js"&gt;THREE.Spline&lt;/a&gt; and see what the line looks like (this one&amp;#39;s interactive too):&lt;/p&gt;
+
+&lt;iframe src="/projects/spline/index.html" width="601" height="410" style="overflow: hidden"&gt;&lt;/iframe&gt;
+
+&lt;p&gt;Very good! As you can see, the pace of the line is now smoothed around the points. When we use this as the path for our Tween, we will have a fun, and natural &amp;quot;roller-coaster&amp;quot; feeling.&lt;/p&gt;
+
+&lt;h3&gt;Caveat&lt;/h3&gt;
+
+&lt;p&gt;I figured this out entirely through code inspection and reading un-documented libraries. I may WAAAAAAY off-base. If you know better, shoot me an email.&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Ember.js PDX: July 31, 2012 at Instrument</title>
     <link rel="alternate" href="/2012/07/24/ember-pdx.html"/>
