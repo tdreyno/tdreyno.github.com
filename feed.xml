@@ -5,16 +5,101 @@
   <id>http://awardwinningfjords.com/</id>
   <link href="http://awardwinningfjords.com/"/>
   <link href="http://awardwinningfjords.com/feed.xml" rel="self"/>
-  <updated>2012-08-15T00:00:00+00:00T00:00:00-08:00</updated>
+  <updated>2012-09-23T00:00:00ZT00:00:00-08:00</updated>
   <author>
     <name>Thomas Reynolds</name>
   </author>
   <entry>
+    <title>Nike+ FuelStream</title>
+    <link rel="alternate" href="/2012/09/23/fuelstream.html"/>
+    <id>/2012/09/23/fuelstream.html</id>
+    <published>2012-09-23T00:00:00ZT00:00:00-08:00</published>
+    <updated>2012-09-23T00:00:00ZT00:00:00-08:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;p&gt;The &lt;a href="http://gameonworld.nike.com/#en_US/fuelstream"&gt;Nike+ FuelStream&lt;/a&gt; is a curated social media experience hosted, currently, on Nike&amp;#39;s &amp;quot;Game On, World&amp;quot; site. I apologize for the marketing-speak of that last sentence, but it&amp;#39;s a fair description of the site, even if it makes me feel dirty.&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;The &lt;a href="http://gameonworld.nike.com/#en_US/fuelstream"&gt;Nike+ FuelStream&lt;/a&gt; is a curated social media experience hosted, currently, on Nike&amp;#39;s &amp;quot;Game On, World&amp;quot; site. I apologize for the marketing-speak of that last sentence, but it&amp;#39;s a fair description of the site, even if it makes me feel dirty.&lt;/p&gt;
+
+&lt;p&gt;The site, actually an iframe meant to be embedded across multiple Nike sites, is a never-ending stream of Instagram photos, tweets and Nike promotional material.&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt="FuelStream" src="/images/fuelstream.jpg" /&gt;&lt;/p&gt;
+
+&lt;p&gt;While I&amp;#39;m exceptional proud of the site, even though I forgot to blog about it for 3 months, what I&amp;#39;d really like to talk about is the process we used during development and the software &amp;amp; testing stack.&lt;/p&gt;
+
+&lt;h2&gt;Software Stack&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Ember.js as the core library&lt;/li&gt;
+&lt;li&gt;Tween.js for Tweening&lt;/li&gt;
+&lt;li&gt;PxLoader for asset loading&lt;/li&gt;
+&lt;li&gt;TransformJS for 3d transitions&lt;/li&gt;
+&lt;li&gt;Rake-Pipeline for Dependencies &amp;amp; Compilation&lt;/li&gt;
+&lt;li&gt;Cucumber/RSpec/PhantomJS/Jenkins for testing&lt;/li&gt;
+&lt;li&gt;Sass &amp;amp; Compass for CSS Styles&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Ember.js&lt;/h2&gt;
+
+&lt;p&gt;As you many already know, I really love Ember.js. The FuelStream project has many different &amp;quot;views&amp;quot; which are reused often and constantly refilled with new data. Ember makes it a breeze to setup the core views and let controllers manage how many we need and what their contents are.&lt;/p&gt;
+
+&lt;p&gt;The controller abstraction let&amp;#39;s use separate the views from the specifics of their data. In our case, we wrote &lt;a href="https://gist.github.com/3773229"&gt;custom collection pools&lt;/a&gt; to handle the specifics of how content flows from the backend into the stream.&lt;/p&gt;
+
+&lt;p&gt;While I&amp;#39;m throwing around free code, here&amp;#39;s &lt;a href="https://gist.github.com/3773238"&gt;an implementation of &amp;quot;Single Table Inheritance&amp;quot; for Ember.js&lt;/a&gt;. This basically means you have a column in your data, say &amp;quot;type&amp;quot;, which tells Ember which Model to use for the given record. And here&amp;#39;s its View-related cousin, &lt;a href="https://gist.github.com/3773259"&gt;a collection which renders different views depending on which &amp;quot;type&amp;quot; each row is&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3&gt;State Charts&lt;/h3&gt;
+
+&lt;p&gt;I&amp;#39;ve yet to find a good way to talk about State Machines (or State Charts), but I&amp;#39;ll keep rambling about them anyways.&lt;/p&gt;
+
+&lt;p&gt;Ember.js has one of the best State Machine implementations on the client side. I should know, I wrote the &lt;a href="https://github.com/tdreyno/javascriptmvc-statemachine"&gt;JavascriptMVC/CanJS implementation&lt;/a&gt;. I also love the pure JS version of the Ember.js state machine, known as &lt;a href="https://github.com/etgryphon/stativus"&gt;Stativus&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The FuelStream uses two separate State Charts. The first is a global state chart which controls the flow of the entire application. It handles loading, animating, interaction and the detail modals.&lt;/p&gt;
+
+&lt;p&gt;The second state chart is per-view and used only for complex animation. I&amp;#39;m a state chart junkie, so I use them to manage state, even in the middle of complex, multi-tween animations. The FuelStream has an animation that takes a 2-square tall view (top square is an image, the bottom square text referring to the image), collapses it onto itself, flips around to reveal a new image, then expands back out to reveal the new image&amp;#39;s text content. Each view uses an instance of the same state chart, so we can track where each view thinks it is in its lifecycle. That&amp;#39;s super handy for debugging. Here&amp;#39;s an outline of the state chart:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;facingForward -&amp;gt;&lt;/li&gt;
+&lt;li&gt;collapsingFromForward -&amp;gt;&lt;/li&gt;
+&lt;li&gt;rotatingToBack -&amp;gt;&lt;/li&gt;
+&lt;li&gt;expandingBack -&amp;gt;&lt;/li&gt;
+&lt;li&gt;facingBackwards -&amp;gt;&lt;/li&gt;
+&lt;li&gt;collapsingBack -&amp;gt;&lt;/li&gt;
+&lt;li&gt;rotatingToFront -&amp;gt;&lt;/li&gt;
+&lt;li&gt;expandingFront -&amp;gt;&lt;/li&gt;
+&lt;li&gt;facingForward … and repeat.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2&gt;Testing&lt;/h2&gt;
+
+&lt;p&gt;The thing that makes this project so special, in my mind, is our test-driven development of the frontend. I&amp;#39;ve got a strong Ruby background, and abhor anything related to Node.js, so we used Cucumber and RSpec to write our tests. PhantomJS is a headless version of Webkit which can be used to simulate a browser environment in which to run the tests.&lt;/p&gt;
+
+&lt;p&gt;Each View get it&amp;#39;s own &amp;quot;preview&amp;quot; file. This is an HTML page which contains several instances of the View and different data sources to test. Then we write our tests, for example, if we wanted to test the top navigation which shows which &amp;quot;time segment&amp;quot; we are currently showing:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Feature: Time Segment
+    Scenario: Regular View  
+        Given the &amp;quot;time_segment&amp;quot; preview is loaded
+        When targeting the time segment view at position 1
+        Then it has the class: .segment
+        And it does not have the class: .is-active
+        And it does not have the class: .is-hover
+        And the segment width is 200
+        And the segment flag says &amp;quot;testing1&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;On commit to GitHub, our staging/testing server (Jenkins) runs all the tests and lets us know if anything has gone wrong. With this approach, we were about to have several front-end developers working in tandem without breaking each others&amp;#39; code. Well… they still broke each others&amp;#39; code, but the immediate email from Jenkins made sure they felt guilty enough to quickly fix the problem.&lt;/p&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;This project accomplished two things which I don&amp;#39;t think many front-end developers attempt: test-driven development &amp;amp; heavily animated experiences. On both counts, I&amp;#39;m really proud of what we&amp;#39;ve accomplished. Kudos to Jared Moran &amp;amp; Zach Doe, the other two members of the front-end team.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
     <title>Reticulating Splines</title>
     <link rel="alternate" href="/2012/08/15/splines.html"/>
     <id>/2012/08/15/splines.html</id>
-    <published>2012-08-15T00:00:00+00:00T00:00:00-08:00</published>
-    <updated>2012-08-15T00:00:00+00:00T00:00:00-08:00</updated>
+    <published>2012-08-15T00:00:00ZT00:00:00-08:00</published>
+    <updated>2012-08-15T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -62,8 +147,8 @@ Now, let&amp;#39;s run our points through &lt;a href="https://github.com/mrdoob/
     <title>Ember.js PDX: July 31, 2012 at Instrument</title>
     <link rel="alternate" href="/2012/07/24/ember-pdx.html"/>
     <id>/2012/07/24/ember-pdx.html</id>
-    <published>2012-07-24T00:00:00+00:00T00:00:00-08:00</published>
-    <updated>2012-07-24T00:00:00+00:00T00:00:00-08:00</updated>
+    <published>2012-07-24T00:00:00ZT00:00:00-08:00</published>
+    <updated>2012-07-24T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -86,14 +171,12 @@ Now, let&amp;#39;s run our points through &lt;a href="https://github.com/mrdoob/
     <title>Coda Pops Technical Details</title>
     <link rel="alternate" href="/2012/06/05/coda-pops-tech.html"/>
     <id>/2012/06/05/coda-pops-tech.html</id>
-    <published>2012-06-05T00:00:00+00:00T00:00:00-08:00</published>
-    <updated>2012-06-05T00:00:00+00:00T00:00:00-08:00</updated>
+    <published>2012-06-05T00:00:00ZT00:00:00-08:00</published>
+    <updated>2012-06-05T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html">&lt;p&gt;First and foremost, Coda 2 is out! Get it from &lt;a href="https://panic.com/coda/"&gt;Panic&amp;#39;s site&lt;/a&gt; or &lt;a href="http://itunes.apple.com/us/app/coda-2/id499340368?mt=12"&gt;the Mac App Store&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Now, what are Coda Pops? Coda 1 has an integrated CSS editor sidebar which provided some simple form elements for editing CSS styles. This sidebar has gone away in version 2, but the void has been filled by Coda Pops which are context-aware UI popups that provide controls for generating CSS. There are 10 of them in the current release and they look like this:&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;First and foremost, Coda 2 is out! Get it from &lt;a href="https://panic.com/coda/"&gt;Panic&amp;#39;s site&lt;/a&gt; or &lt;a href="http://itunes.apple.com/us/app/coda-2/id499340368?mt=12"&gt;the Mac App Store&lt;/a&gt;.&lt;/p&gt;
 
@@ -183,12 +266,15 @@ Now, let&amp;#39;s run our points through &lt;a href="https://github.com/mrdoob/
     <title>3D CSS Accordions</title>
     <link rel="alternate" href="/2012/05/23/3d-css-accordion.html"/>
     <id>/2012/05/23/3d-css-accordion.html</id>
-    <published>2012-05-23T00:00:00+00:00T00:00:00-08:00</published>
-    <updated>2012-05-23T00:00:00+00:00T00:00:00-08:00</updated>
+    <published>2012-05-23T00:00:00ZT00:00:00-08:00</published>
+    <updated>2012-05-23T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;&lt;a href="/2012/05/22/just-launched-sketchup-showcase.html"&gt;A recent project&lt;/a&gt; required a little extra 3D &amp;quot;pop&amp;quot;. &lt;a href="/2012/05/21/webgl-prototypes.html"&gt;WebGL was experimented with&lt;/a&gt;, but it ended up being too heavy and not supported in enough browsers. Instead, we ended up going with a quick, 3D accordion effect accomplished entirely in CSS.&lt;/p&gt;
+    <summary type="html">[A recent project]: /2012/05/22/just-launched-sketchup-showcase.html
+[WebGL was experimented with]: /2012/05/21/webgl-prototypes.html
+
+[A recent project] required a little extra 3D "pop". [WebGL was experimented with], but it ended up being too heavy and not supported in enough browsers. Instead, we ended up going with a quick, 3D accordion effect accomplished entirely in CSS.
 </summary>
     <content type="html">&lt;p&gt;&lt;a href="/2012/05/22/just-launched-sketchup-showcase.html"&gt;A recent project&lt;/a&gt; required a little extra 3D &amp;quot;pop&amp;quot;. &lt;a href="/2012/05/21/webgl-prototypes.html"&gt;WebGL was experimented with&lt;/a&gt;, but it ended up being too heavy and not supported in enough browsers. Instead, we ended up going with a quick, 3D accordion effect accomplished entirely in CSS.&lt;/p&gt;
 
@@ -385,8 +471,8 @@ Now, let&amp;#39;s run our points through &lt;a href="https://github.com/mrdoob/
     <title>Just Launched: SketchUp Showcase</title>
     <link rel="alternate" href="/2012/05/22/just-launched-sketchup-showcase.html"/>
     <id>/2012/05/22/just-launched-sketchup-showcase.html</id>
-    <published>2012-05-22T00:00:00+00:00T00:00:00-08:00</published>
-    <updated>2012-05-22T00:00:00+00:00T00:00:00-08:00</updated>
+    <published>2012-05-22T00:00:00ZT00:00:00-08:00</published>
+    <updated>2012-05-22T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -403,18 +489,12 @@ Now, let&amp;#39;s run our points through &lt;a href="https://github.com/mrdoob/
     <title>WebGL Prototypes</title>
     <link rel="alternate" href="/2012/05/21/webgl-prototypes.html"/>
     <id>/2012/05/21/webgl-prototypes.html</id>
-    <published>2012-05-21T00:00:00+00:00T00:00:00-08:00</published>
-    <updated>2012-05-21T00:00:00+00:00T00:00:00-08:00</updated>
+    <published>2012-05-21T00:00:00ZT00:00:00-08:00</published>
+    <updated>2012-05-21T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;For posterity, here are a couple prototypes I put together to see if WebGL was appropriate for a recent project (more on this later).&lt;/p&gt;
-
-&lt;p&gt;Check it out, let me know what you think:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="/projects/webgl-prototypes/triangles.html"&gt;Break an image into triangles, which can be rotated individually&lt;/a&gt;&lt;/li&gt;
-</summary>
+    <summary type="html"/>
     <content type="html">&lt;p&gt;For posterity, here are a couple prototypes I put together to see if WebGL was appropriate for a recent project (more on this later).&lt;/p&gt;
 
 &lt;p&gt;Check it out, let me know what you think:&lt;/p&gt;
@@ -432,15 +512,12 @@ Now, let&amp;#39;s run our points through &lt;a href="https://github.com/mrdoob/
     <title>Front-end Performance Tools: Canvas Matrix</title>
     <link rel="alternate" href="/2012/05/20/simple-canvas-matrix.html"/>
     <id>/2012/05/20/simple-canvas-matrix.html</id>
-    <published>2012-05-20T00:00:00+00:00T00:00:00-08:00</published>
-    <updated>2012-05-20T00:00:00+00:00T00:00:00-08:00</updated>
+    <published>2012-05-20T00:00:00ZT00:00:00-08:00</published>
+    <updated>2012-05-20T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;I really don&amp;#39;t want to be the one to write an article about Matrices and how useful they are, so here is the short version. &lt;/p&gt;
-
-&lt;p&gt;A matrix is a way of representing the position (translation), rotation and scale of a point (Vector). What&amp;#39;s better, both CSS and HTML5 Canvas can accept matrix values.&lt;/p&gt;
-</summary>
+    <summary type="html"/>
     <content type="html">&lt;p&gt;I really don&amp;#39;t want to be the one to write an article about Matrices and how useful they are, so here is the short version. &lt;/p&gt;
 
 &lt;p&gt;A matrix is a way of representing the position (translation), rotation and scale of a point (Vector). What&amp;#39;s better, both CSS and HTML5 Canvas can accept matrix values.&lt;/p&gt;
@@ -495,13 +572,12 @@ myImage.draw(ctx);
     <title>Front-end Performance Tools: Embedded Vector</title>
     <link rel="alternate" href="/2012/05/19/embedded-vector.html"/>
     <id>/2012/05/19/embedded-vector.html</id>
-    <published>2012-05-19T00:00:00+00:00T00:00:00-08:00</published>
-    <updated>2012-05-19T00:00:00+00:00T00:00:00-08:00</updated>
+    <published>2012-05-19T00:00:00ZT00:00:00-08:00</published>
+    <updated>2012-05-19T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;Recently, I&amp;#39;ve been working on quite a few animation projects in Javascript. Traditional web applications are evented. The browser and application wait or user (or network) input and adjust the displayed content accordingly. Animation is different. Animation needs to run 60 frames-per-second, every second that the viewer is on the page. This create two problems.&lt;/p&gt;
-</summary>
+    <summary type="html"/>
     <content type="html">&lt;p&gt;Recently, I&amp;#39;ve been working on quite a few animation projects in Javascript. Traditional web applications are evented. The browser and application wait or user (or network) input and adjust the displayed content accordingly. Animation is different. Animation needs to run 60 frames-per-second, every second that the viewer is on the page. This create two problems.&lt;/p&gt;
 
 &lt;p&gt;One, every piece of code in your runloop is being executed repeatedly. Small errors and inefficiencies quickly pile up, leak memory, trigger garbage collection and slow down execution.&lt;/p&gt;
@@ -570,14 +646,12 @@ function onFrame(delta) {
     <title>Beware of CoffeeScript Comprehensions</title>
     <link rel="alternate" href="/2012/05/08/beware-coffeescript-comprehensions.html"/>
     <id>/2012/05/08/beware-coffeescript-comprehensions.html</id>
-    <published>2012-05-08T00:00:00-08:00</published>
-    <updated>2012-05-08T00:00:00-08:00</updated>
+    <published>2012-05-08T00:00:00ZT00:00:00-08:00</published>
+    <updated>2012-05-08T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html">&lt;p&gt;I&amp;#39;ve recently spent some time addressing bugs and speed issues with the first large CoffeeScript project (nearly 10,000 lines of code) I&amp;#39;ve worked on with multiple developers.&lt;/p&gt;
-
-&lt;p&gt;For the most part, the process was painless. CoffeeScript hides a great deal of complexity beneath it&amp;#39;s glossy syntax, which is great for writing simple and readable code. But there is always tension between high-level languages and raw performance. If you&amp;#39;re an experienced Javascript developer, the compiled output of a snippet of CoffeeScript code should be recognizable, readable and pretty much what you&amp;#39;d write if you wrote Javascript directly.&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;I&amp;#39;ve recently spent some time addressing bugs and speed issues with the first large CoffeeScript project (nearly 10,000 lines of code) I&amp;#39;ve worked on with multiple developers.&lt;/p&gt;
 
@@ -730,8 +804,8 @@ printI([1, 2, 3]);
     <title>Middleman 3.0 Beta 2</title>
     <link rel="alternate" href="/2012/04/23/middleman-3-beta-2.html"/>
     <id>/2012/04/23/middleman-3-beta-2.html</id>
-    <published>2012-04-23T00:00:00-08:00</published>
-    <updated>2012-04-23T00:00:00-08:00</updated>
+    <published>2012-04-23T00:00:00ZT00:00:00-08:00</published>
+    <updated>2012-04-23T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -812,8 +886,8 @@ printI([1, 2, 3]);
     <title>Canvas Hit Tracking</title>
     <link rel="alternate" href="/2012/03/21/canvas-hit-tracking.html"/>
     <id>/2012/03/21/canvas-hit-tracking.html</id>
-    <published>2012-03-21T00:00:00-08:00</published>
-    <updated>2012-03-21T00:00:00-08:00</updated>
+    <published>2012-03-21T00:00:00ZT00:00:00-08:00</published>
+    <updated>2012-03-21T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -1060,13 +1134,12 @@ theWorld.hitTestObjects(150, 50) # =&amp;gt; [c2, c3]
     <title>Image Sequences: Let Me Count The Ways</title>
     <link rel="alternate" href="/2012/03/08/image-sequences.html"/>
     <id>/2012/03/08/image-sequences.html</id>
-    <published>2012-03-08T00:00:00-08:00</published>
-    <updated>2012-03-08T00:00:00-08:00</updated>
+    <published>2012-03-08T00:00:00ZT00:00:00-08:00</published>
+    <updated>2012-03-08T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;Everyone&amp;#39;s very excited by their &amp;quot;Pure CSS&amp;quot; &lt;a href="http://lab.victorcoulon.fr/css/path-menu/"&gt;this&lt;/a&gt; and &amp;quot;Pure CSS&amp;quot; &lt;a href="http://clear.youyuxi.com/"&gt;that&lt;/a&gt;, but if we are front-end developers really want to start taking on traditionally Flash use-cases, we&amp;#39;re going to need to step out animation game up a notch.&lt;/p&gt;
-</summary>
+    <summary type="html"/>
     <content type="html">&lt;p&gt;Everyone&amp;#39;s very excited by their &amp;quot;Pure CSS&amp;quot; &lt;a href="http://lab.victorcoulon.fr/css/path-menu/"&gt;this&lt;/a&gt; and &amp;quot;Pure CSS&amp;quot; &lt;a href="http://clear.youyuxi.com/"&gt;that&lt;/a&gt;, but if we are front-end developers really want to start taking on traditionally Flash use-cases, we&amp;#39;re going to need to step out animation game up a notch.&lt;/p&gt;
 
 &lt;p&gt;Enter the Image Sequence. An Image Sequence is exactly what it sounds like, a series of images, each representing a single frame of an animation. Usually these will be exported from a high-level application like Adobe After Effects. For memory and performance reasons, these images are usually combined into a single Sprite Sheet. You may have heard of this technique, because &lt;a href="http://en.wikipedia.org/wiki/Sprite_(computer_graphics)"&gt;we&amp;#39;ve been using it for decades&lt;/a&gt;.&lt;/p&gt;
@@ -1292,8 +1365,8 @@ theWorld.hitTestObjects(150, 50) # =&amp;gt; [c2, c3]
     <title>Best Albums of the Year: 2011</title>
     <link rel="alternate" href="/2012/01/07/best-albums-of-the-year-2011.html"/>
     <id>/2012/01/07/best-albums-of-the-year-2011.html</id>
-    <published>2012-01-07T00:00:00-08:00</published>
-    <updated>2012-01-07T00:00:00-08:00</updated>
+    <published>2012-01-07T00:00:00ZT00:00:00-08:00</published>
+    <updated>2012-01-07T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -1301,9 +1374,10 @@ theWorld.hitTestObjects(150, 50) # =&amp;gt; [c2, c3]
 
 &lt;h2&gt;Top 7:&lt;/h2&gt;
 
-&lt;ul class="albums"&gt;
+&lt;p&gt;&lt;ul class="albums"&gt;
   &lt;li&gt;
     &lt;div class='cover'&gt;
+      &lt;img src='/albums/2011/7.jpg' /&gt;&lt;div&gt;&lt;/div&gt;&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;I almost didn&amp;#39;t write this article because I was so disappointed in 2011. Here it is anyways for posterity, I couldn&amp;#39;t even manage to find 10 albums I like enough to list.&lt;/p&gt;
 
@@ -1408,8 +1482,8 @@ theWorld.hitTestObjects(150, 50) # =&amp;gt; [c2, c3]
     <title>Middleman 3.0 Beta</title>
     <link rel="alternate" href="/2012/01/03/middleman-3-beta.html"/>
     <id>/2012/01/03/middleman-3-beta.html</id>
-    <published>2012-01-03T00:00:00-08:00</published>
-    <updated>2012-01-03T00:00:00-08:00</updated>
+    <published>2012-01-03T00:00:00ZT00:00:00-08:00</published>
+    <updated>2012-01-03T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -1525,8 +1599,8 @@ category: internal
     <title>Ember.js Live Collections</title>
     <link rel="alternate" href="/2011/12/27/emberjs-collections.html"/>
     <id>/2011/12/27/emberjs-collections.html</id>
-    <published>2011-12-27T00:00:00-08:00</published>
-    <updated>2011-12-27T00:00:00-08:00</updated>
+    <published>2011-12-27T00:00:00ZT00:00:00-08:00</published>
+    <updated>2011-12-27T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -1676,8 +1750,8 @@ $.getJSON(&amp;quot;http://search.twitter.com/search.json?q=cats&amp;amp;callbac
     <title>The Tweets They Are A-Changin'</title>
     <link rel="alternate" href="/2011/12/26/the-tweets-they-are-a-changin.html"/>
     <id>/2011/12/26/the-tweets-they-are-a-changin.html</id>
-    <published>2011-12-26T00:00:00-08:00</published>
-    <updated>2011-12-26T00:00:00-08:00</updated>
+    <published>2011-12-26T00:00:00ZT00:00:00-08:00</published>
+    <updated>2011-12-26T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -1740,8 +1814,8 @@ $.getJSON(&amp;quot;http://search.twitter.com/search.json?q=cats&amp;amp;callbac
     <title>Kindle Dots</title>
     <link rel="alternate" href="/2011/12/25/kindle-dots.html"/>
     <id>/2011/12/25/kindle-dots.html</id>
-    <published>2011-12-25T00:00:00-08:00</published>
-    <updated>2011-12-25T00:00:00-08:00</updated>
+    <published>2011-12-25T00:00:00ZT00:00:00-08:00</published>
+    <updated>2011-12-25T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -1841,8 +1915,8 @@ $.getJSON(&amp;quot;http://search.twitter.com/search.json?q=cats&amp;amp;callbac
     <title>Experiment: Particle Rider</title>
     <link rel="alternate" href="/2011/11/30/particle-rider-experiment.html"/>
     <id>/2011/11/30/particle-rider-experiment.html</id>
-    <published>2011-11-30T00:00:00-08:00</published>
-    <updated>2011-11-30T00:00:00-08:00</updated>
+    <published>2011-11-30T00:00:00ZT00:00:00-08:00</published>
+    <updated>2011-11-30T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -1859,8 +1933,8 @@ $.getJSON(&amp;quot;http://search.twitter.com/search.json?q=cats&amp;amp;callbac
     <title>Just Launched: The License Lab</title>
     <link rel="alternate" href="/2011/11/03/just-launched-thelicenselab.html"/>
     <id>/2011/11/03/just-launched-thelicenselab.html</id>
-    <published>2011-11-03T00:00:00-08:00</published>
-    <updated>2011-11-03T00:00:00-08:00</updated>
+    <published>2011-11-03T00:00:00ZT00:00:00-08:00</published>
+    <updated>2011-11-03T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -1871,8 +1945,7 @@ $.getJSON(&amp;quot;http://search.twitter.com/search.json?q=cats&amp;amp;callbac
 &lt;p&gt;Go ahead and check it out!&lt;/p&gt;
 
 &lt;p&gt;&lt;a href="http://licenselab.com/search/"&gt;&lt;img src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/licenselab.jpg"&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;</summary>
+</summary>
     <content type="html">&lt;p&gt;My first project, that I can talk about, with &lt;a href="http://weareinstrument.com"&gt;Instrument&lt;/a&gt; has just launched. &lt;a href="http://licenselab.com"&gt;The License Lab&lt;/a&gt; is a searchable, music catalog which can be licensed for a variety of uses. Vistors can browse and preview hundreds of available songs. Registered users can organize songs into playlists and share them with others.&lt;/p&gt;
 
 &lt;p&gt;As the focus is on the songs, the heart of the website is the music search functionality which includes: type-ahead autocomplete search, graphical tuning knobs and filtering by genre and instruments.&lt;/p&gt;
@@ -1897,8 +1970,8 @@ $.getJSON(&amp;quot;http://search.twitter.com/search.json?q=cats&amp;amp;callbac
     <title>Just Launched: Metalab Design v4</title>
     <link rel="alternate" href="/2011/09/11/just-launched-metalab-v4.html"/>
     <id>/2011/09/11/just-launched-metalab-v4.html</id>
-    <published>2011-09-11T00:00:00-08:00</published>
-    <updated>2011-09-11T00:00:00-08:00</updated>
+    <published>2011-09-11T00:00:00ZT00:00:00-08:00</published>
+    <updated>2011-09-11T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -1907,8 +1980,7 @@ $.getJSON(&amp;quot;http://search.twitter.com/search.json?q=cats&amp;amp;callbac
 &lt;p&gt;Check it out!&lt;/p&gt;
 
 &lt;p&gt;&lt;a href="http://metalabdesign.com"&gt;&lt;img src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/metalab.jpg"&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;</summary>
+</summary>
     <content type="html">&lt;p&gt;I&amp;#39;m happy to announce the latest version of the Metalab Design website is live! I worked on the initial development, interaction and code. Then &lt;a href="http://twitter.com/#!/alibosworth"&gt;Ali Bosworth&lt;/a&gt; and &lt;a href="http://twitter.com/#!/jasonswebster"&gt;Jason Webster&lt;/a&gt;, of &lt;a href="http://www.getflow.com/"&gt;Flow&lt;/a&gt; fame, did the hard work of polishing the animations and getting things looking great cross-browser.&lt;/p&gt;
 
 &lt;p&gt;Check it out!&lt;/p&gt;
@@ -1934,8 +2006,8 @@ $.getJSON(&amp;quot;http://search.twitter.com/search.json?q=cats&amp;amp;callbac
     <title>Middleman 2.0</title>
     <link rel="alternate" href="/2011/08/08/middleman-2-0.html"/>
     <id>/2011/08/08/middleman-2-0.html</id>
-    <published>2011-08-08T00:00:00-08:00</published>
-    <updated>2011-08-08T00:00:00-08:00</updated>
+    <published>2011-08-08T00:00:00ZT00:00:00-08:00</published>
+    <updated>2011-08-08T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -1949,8 +2021,7 @@ $.getJSON(&amp;quot;http://search.twitter.com/search.json?q=cats&amp;amp;callbac
 &lt;p&gt;For more information, read the &lt;a href="http://middlemanapp.com/guides/getting-started"&gt;Getting Started&lt;/a&gt; guide.&lt;/p&gt;
 
 &lt;p&gt;Here&amp;#39;s an overview of everything that&amp;#39;s changed.&lt;/p&gt;
-
-&lt;p&gt;</summary>
+</summary>
     <content type="html">&lt;p&gt;Middleman 2.0 is a huge release featuring a refactored core, a unified source folder, a unified command line, tons of new features and a &lt;a href="http://middlemanapp.com"&gt;full documentation website&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;As always, install via RubyGems:&lt;/p&gt;
@@ -2062,16 +2133,15 @@ page_name: &amp;quot;Login&amp;quot;
     <title>CoffeeScript-specific Style Guide</title>
     <link rel="alternate" href="/2011/05/13/coffeescript-specific-style-guide.html"/>
     <id>/2011/05/13/coffeescript-specific-style-guide.html</id>
-    <published>2011-05-13T00:00:00-08:00</published>
-    <updated>2011-05-13T00:00:00-08:00</updated>
+    <published>2011-05-13T00:00:00ZT00:00:00-08:00</published>
+    <updated>2011-05-13T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html">&lt;p&gt;First, go buy &lt;a href="http://twitter.com/topfunky"&gt;@topfunky&lt;/a&gt;&amp;#39;s new &lt;a href="https://peepcode.com/products/coffeescript"&gt;CoffeeScript PeepCode screencast&lt;/a&gt;. It&amp;#39;s wonderful. All done? Okay.&lt;/p&gt;
 
 &lt;p&gt;One of the most interesting pieces of information to me, as someone who&amp;#39;s been writing a lot of CoffeeScript and has written a ton of Javascript in the past, is the subtle tweaks to style in CoffeeScript. Here are some quick preferred styles.&lt;/p&gt;
-
-&lt;p&gt;</summary>
+</summary>
     <content type="html">&lt;p&gt;First, go buy &lt;a href="http://twitter.com/topfunky"&gt;@topfunky&lt;/a&gt;&amp;#39;s new &lt;a href="https://peepcode.com/products/coffeescript"&gt;CoffeeScript PeepCode screencast&lt;/a&gt;. It&amp;#39;s wonderful. All done? Okay.&lt;/p&gt;
 
 &lt;p&gt;One of the most interesting pieces of information to me, as someone who&amp;#39;s been writing a lot of CoffeeScript and has written a ton of Javascript in the past, is the subtle tweaks to style in CoffeeScript. Here are some quick preferred styles.&lt;/p&gt;
@@ -2119,16 +2189,15 @@ expect(elem.id).toEqual &amp;quot;myselector&amp;quot;
     <title>Javascript Microframeworks and The Future</title>
     <link rel="alternate" href="/2011/05/09/javascript-microframeworks-and-the-future.html"/>
     <id>/2011/05/09/javascript-microframeworks-and-the-future.html</id>
-    <published>2011-05-09T00:00:00-08:00</published>
-    <updated>2011-05-09T00:00:00-08:00</updated>
+    <published>2011-05-09T00:00:00ZT00:00:00-08:00</published>
+    <updated>2011-05-09T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html">&lt;p&gt;Last week at &lt;a href="http://2011.jsconf.us/"&gt;jsconf&lt;/a&gt;, &lt;a href="http://mir.aculo.us/"&gt;Thomas Fuchs&lt;/a&gt; continued his argument for small frameworks with the release of &lt;a href="http://microjs.com/"&gt;MicroJS&lt;/a&gt; which acts as a listing of tiny, single-purpose libraries. The idea being that freedom and choice, combined with optimizing for size will result in a better product than using a larger, monolithic &amp;quot;framework.&amp;quot;&lt;/p&gt;
 
 &lt;p&gt;But what are we talking about when we say &amp;quot;framework&amp;quot; and what kind of applications can be built with microframeworks?  &lt;/p&gt;
-
-&lt;p&gt;</summary>
+</summary>
     <content type="html">&lt;p&gt;Last week at &lt;a href="http://2011.jsconf.us/"&gt;jsconf&lt;/a&gt;, &lt;a href="http://mir.aculo.us/"&gt;Thomas Fuchs&lt;/a&gt; continued his argument for small frameworks with the release of &lt;a href="http://microjs.com/"&gt;MicroJS&lt;/a&gt; which acts as a listing of tiny, single-purpose libraries. The idea being that freedom and choice, combined with optimizing for size will result in a better product than using a larger, monolithic &amp;quot;framework.&amp;quot;&lt;/p&gt;
 
 &lt;p&gt;But what are we talking about when we say &amp;quot;framework&amp;quot; and what kind of applications can be built with microframeworks?  &lt;/p&gt;
@@ -2233,8 +2302,8 @@ expect(elem.id).toEqual &amp;quot;myselector&amp;quot;
     <title>Trigger CSS3 Animations with jQuery</title>
     <link rel="alternate" href="/2011/05/06/trigger-css3-animations-with-jquery.html"/>
     <id>/2011/05/06/trigger-css3-animations-with-jquery.html</id>
-    <published>2011-05-06T00:00:00-08:00</published>
-    <updated>2011-05-06T00:00:00-08:00</updated>
+    <published>2011-05-06T00:00:00ZT00:00:00-08:00</published>
+    <updated>2011-05-06T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -2244,8 +2313,7 @@ expect(elem.id).toEqual &amp;quot;myselector&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;But what about more complicated styles? Complicated polyfills and vendor-prefixed styles? What if you could add a custom handler for &lt;tt&gt;border-radius&lt;/tt&gt;? It&amp;#39;s pretty simple and I&amp;#39;ll show you a strawman example.&lt;/p&gt;
-
-&lt;p&gt;</summary>
+</summary>
     <content type="html">&lt;p&gt;Did you know that jQuery 1.4.3 added a system for adding custom css attributes? For example, any normal style can be applied like so:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;$(elem).css({ background: &amp;#39;red&amp;#39; })
@@ -2311,14 +2379,13 @@ $(&amp;#39;.left&amp;#39;).click(function() {
     <title>jQuery.Deferred Image Preloader</title>
     <link rel="alternate" href="/2011/05/03/jquerydeferred-image-preloader.html"/>
     <id>/2011/05/03/jquerydeferred-image-preloader.html</id>
-    <published>2011-05-03T00:00:00-08:00</published>
-    <updated>2011-05-03T00:00:00-08:00</updated>
+    <published>2011-05-03T00:00:00ZT00:00:00-08:00</published>
+    <updated>2011-05-03T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html">&lt;p&gt;A little wrapper around &lt;tt&gt;&lt;a href="http://api.jquery.com/category/deferred-object/"&gt;jQuery.Deferred&lt;/a&gt;&lt;/tt&gt; for an image preloader.&lt;/p&gt;
-
-&lt;p&gt;</summary>
+</summary>
     <content type="html">&lt;p&gt;A little wrapper around &lt;tt&gt;&lt;a href="http://api.jquery.com/category/deferred-object/"&gt;jQuery.Deferred&lt;/a&gt;&lt;/tt&gt; for an image preloader.&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;
@@ -2354,8 +2421,8 @@ var loadImage = function(imageSrc) {
     <title>Just Launched: PixelUnion v2</title>
     <link rel="alternate" href="/2011/04/26/just-launched-pixelunion-v2.html"/>
     <id>/2011/04/26/just-launched-pixelunion-v2.html</id>
-    <published>2011-04-26T00:00:00-08:00</published>
-    <updated>2011-04-26T00:00:00-08:00</updated>
+    <published>2011-04-26T00:00:00ZT00:00:00-08:00</published>
+    <updated>2011-04-26T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -2363,7 +2430,8 @@ var loadImage = function(imageSrc) {
 
 &lt;blockquote&gt;
 &lt;p&gt;&lt;iframe src="http://player.vimeo.com/video/22873653" width="500" height="281" frameborder="0"&gt;&lt;/iframe&gt;&lt;br /&gt;&lt;br /&gt;
-About a year ago, we teamed up with &lt;a href="http://www.45royale.com/"&gt;45royale&lt;/a&gt; to create &lt;a href="http://pixelunion.net"&gt;Pixel Union&lt;/a&gt;, a premium Tumblr theme marketplace showcasing designs by some of the world’s best designers. It’s been immensely successful. What began as four themes dedicated to better showcasing photographs and videos has rapidly turned into a library of nearly twenty, multipurpose themes. &lt;br /&gt;&lt;br /&gt;
+About a year ago, we teamed up with &lt;a href="http://www.45royale.com/"&gt;45royale&lt;/a&gt; to create &lt;a href="http://pixelunion.net"&gt;Pixel Union&lt;/a&gt;, a premium Tumblr theme marketplace showcasing designs by some of the world’s best designers. It’s been immensely successful. What began as four themes dedicated to better showcasing photographs and videos has rapidly turned into a library of nearly twenty, multipurpose themes. &lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 </summary>
     <content type="html">&lt;p&gt;A project I&amp;#39;ve been working on has just launched. Check out the release post from the Metalab blog below:&lt;/p&gt;
 
@@ -2379,8 +2447,8 @@ It’s with a whole lot of pride that we announce today the launch of Pixel Unio
     <title>Just Give a Damn About Something</title>
     <link rel="alternate" href="/2011/04/26/just-give-a-damn-about-something.html"/>
     <id>/2011/04/26/just-give-a-damn-about-something.html</id>
-    <published>2011-04-26T00:00:00-08:00</published>
-    <updated>2011-04-26T00:00:00-08:00</updated>
+    <published>2011-04-26T00:00:00ZT00:00:00-08:00</published>
+    <updated>2011-04-26T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -2399,8 +2467,8 @@ It’s with a whole lot of pride that we announce today the launch of Pixel Unio
     <title>CrossFit is for Nerds</title>
     <link rel="alternate" href="/2011/04/24/crossfit-is-for-nerds.html"/>
     <id>/2011/04/24/crossfit-is-for-nerds.html</id>
-    <published>2011-04-24T00:00:00-08:00</published>
-    <updated>2011-04-24T00:00:00-08:00</updated>
+    <published>2011-04-24T00:00:00ZT00:00:00-08:00</published>
+    <updated>2011-04-24T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -2481,8 +2549,8 @@ It’s with a whole lot of pride that we announce today the launch of Pixel Unio
     <title>Branching Out, Opening Up and Publishing More</title>
     <link rel="alternate" href="/2011/04/23/branching-out-opening-up-and-publishing-more.html"/>
     <id>/2011/04/23/branching-out-opening-up-and-publishing-more.html</id>
-    <published>2011-04-23T00:00:00-08:00</published>
-    <updated>2011-04-23T00:00:00-08:00</updated>
+    <published>2011-04-23T00:00:00ZT00:00:00-08:00</published>
+    <updated>2011-04-23T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -2503,8 +2571,8 @@ It’s with a whole lot of pride that we announce today the launch of Pixel Unio
     <title>Middleman v1.1</title>
     <link rel="alternate" href="/2011/04/15/middleman-v11.html"/>
     <id>/2011/04/15/middleman-v11.html</id>
-    <published>2011-04-15T00:00:00-08:00</published>
-    <updated>2011-04-15T00:00:00-08:00</updated>
+    <published>2011-04-15T00:00:00ZT00:00:00-08:00</published>
+    <updated>2011-04-15T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -2531,8 +2599,7 @@ It’s with a whole lot of pride that we announce today the launch of Pixel Unio
 &lt;li&gt;RubyGems-test support&lt;/li&gt;
 &lt;li&gt;Using Bundler for packaging&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;</summary>
+</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Update: &lt;a href="/2011/08/08/middleman-2-0.html"&gt;Middleman version 2.0 has been released&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;It&amp;#39;s been a long time since &lt;a href="/2009/10/22/middleman"&gt;I introduced Middleman on this blog&lt;/a&gt; in 2009. Since then, RubyGems reports that there have been 27,518 downloads, &lt;a href="https://github.com/middleman/middleman/contributors"&gt;several great contributors&lt;/a&gt; to the source code and even a mention in a printed book.&lt;/p&gt;
@@ -2707,14 +2774,15 @@ run Middleman::Server
     <title>Adjustable Animations with Sliders</title>
     <link rel="alternate" href="/2011/04/13/adjustable-animations-with-sliders.html"/>
     <id>/2011/04/13/adjustable-animations-with-sliders.html</id>
-    <published>2011-04-13T00:00:00-08:00</published>
-    <updated>2011-04-13T00:00:00-08:00</updated>
+    <published>2011-04-13T00:00:00ZT00:00:00-08:00</published>
+    <updated>2011-04-13T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html">&lt;p&gt;Quick question? What is the perfect amount of time to animate an element on a page? jQuery defaults to 400ms, which sounds short, but ends up being pretty perfect for most occasions. It gets the job done and then it gets out of the way. &lt;/p&gt;
 
-&lt;p&gt;However, it shouldn&amp;#39;t surprise you that designers have opinions on motion and we&amp;#39;re just now reaching the point where motion is becoming important on the web. </summary>
+&lt;p&gt;However, it shouldn&amp;#39;t surprise you that designers have opinions on motion and we&amp;#39;re just now reaching the point where motion is becoming important on the web. &lt;/p&gt;
+</summary>
     <content type="html">&lt;p&gt;Quick question? What is the perfect amount of time to animate an element on a page? jQuery defaults to 400ms, which sounds short, but ends up being pretty perfect for most occasions. It gets the job done and then it gets out of the way. &lt;/p&gt;
 
 &lt;p&gt;However, it shouldn&amp;#39;t surprise you that designers have opinions on motion and we&amp;#39;re just now reaching the point where motion is becoming important on the web.  Back in the day, 37Signals would just set the background of an element to yellow and call it a day. If you take a look at &lt;a href="http://getflow.com"&gt;Flow&lt;/a&gt;, you&amp;#39;ll see some very designed motion. Closing a task results in the checkbox animating to a state, then it picks up and animates along an arc to drop into the &amp;quot;completed&amp;quot; box in your sidebar.&lt;/p&gt;
@@ -2831,8 +2899,8 @@ run Middleman::Server
     <title>Announcing: WouldHire.com</title>
     <link rel="alternate" href="/2011/04/08/announcing-wouldhirecom.html"/>
     <id>/2011/04/08/announcing-wouldhirecom.html</id>
-    <published>2011-04-08T00:00:00-08:00</published>
-    <updated>2011-04-08T00:00:00-08:00</updated>
+    <published>2011-04-08T00:00:00ZT00:00:00-08:00</published>
+    <updated>2011-04-08T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -2845,8 +2913,7 @@ Person A: Ah, man, you should have told me you were looking.
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Somehow, despite all of our constant communication and over-sharing on Twitter, we still like to avoid &amp;quot;serious&amp;quot; conversations about jobs, salaries and what it would take to get your friend/buddy/idol to work with you. So, to scratch this itch, &lt;a href="http://pixelmatrixdesign.com/"&gt;Josh Pyles&lt;/a&gt; and I spent the last weekend putting together &lt;a href="http://wouldhire.com"&gt;WouldHire.com&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;</summary>
+</summary>
     <content type="html">&lt;p&gt;This year at SXSW I was either involved in or overheard the same conversation several times. &lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;Person A: So where do you work now?
@@ -2876,12 +2943,12 @@ Person A: Ah, man, you should have told me you were looking.
     <title>Model and Data Store: JavascriptMVC</title>
     <link rel="alternate" href="/2011/02/18/model-and-data-store-javascriptmvc.html"/>
     <id>/2011/02/18/model-and-data-store-javascriptmvc.html</id>
-    <published>2011-02-18T00:00:00-08:00</published>
-    <updated>2011-02-18T00:00:00-08:00</updated>
+    <published>2011-02-18T00:00:00ZT00:00:00-08:00</published>
+    <updated>2011-02-18T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;Last time, &lt;a href="http://awardwinningfjords.com/2011/01/25/client-side-mvcs-part-1-the-model-and-data-store.html"&gt;I wrote about client-side models&lt;/a&gt; in an abstract way using plain Javascript. Understanding the purpose of models and encapulating model-specific functionality is important for code organization, but you will end up having to write a bunch of code to support your models. For example, converting and parsing JSON values, figuring out how and when to push changes to the server and client-side validations.&lt;/p&gt;
+    <summary type="html">&lt;p&gt;Last time, [I wrote about client-side models] in an abstract way using plain Javascript. Understanding the purpose of models and encapulating model-specific functionality is important for code organization, but you will end up having to write a bunch of code to support your models. For example, converting and parsing JSON values, figuring out how and when to push changes to the server and client-side validations.&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;Last time, &lt;a href="http://awardwinningfjords.com/2011/01/25/client-side-mvcs-part-1-the-model-and-data-store.html"&gt;I wrote about client-side models&lt;/a&gt; in an abstract way using plain Javascript. Understanding the purpose of models and encapulating model-specific functionality is important for code organization, but you will end up having to write a bunch of code to support your models. For example, converting and parsing JSON values, figuring out how and when to push changes to the server and client-side validations.&lt;/p&gt;
 
@@ -3009,13 +3076,14 @@ newProject.save();
     <title>Aaron Quint on Javascript Hash URLs</title>
     <link rel="alternate" href="/2011/02/11/aaron-quint-on-javascript-hash-urls.html"/>
     <id>/2011/02/11/aaron-quint-on-javascript-hash-urls.html</id>
-    <published>2011-02-11T00:00:00-08:00</published>
-    <updated>2011-02-11T00:00:00-08:00</updated>
+    <published>2011-02-11T00:00:00ZT00:00:00-08:00</published>
+    <updated>2011-02-11T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html">&lt;blockquote&gt;
 &lt;p&gt;Sammy and the ‘#’ are for applications. It provides a way to maintain state in a world where you can require JavaScript and even require the presence of certain browsers. If you’re an application, that requires login/signup you can make a number of demands of your users. You also probably dont even want the crawlability. You’re using ‘#’ to maintain state for a specific user in a specific session.&lt;/p&gt;
+&lt;/blockquote&gt;
 </summary>
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;Sammy and the ‘#’ are for applications. It provides a way to maintain state in a world where you can require JavaScript and even require the presence of certain browsers. If you’re an application, that requires login/signup you can make a number of demands of your users. You also probably dont even want the crawlability. You’re using ‘#’ to maintain state for a specific user in a specific session.&lt;/p&gt;
@@ -3033,13 +3101,14 @@ newProject.save();
     <title>Andy Rutledge on Kickstarter</title>
     <link rel="alternate" href="/2011/02/08/andy-rutledge-on-kickstarter.html"/>
     <id>/2011/02/08/andy-rutledge-on-kickstarter.html</id>
-    <published>2011-02-08T00:00:00-08:00</published>
-    <updated>2011-02-08T00:00:00-08:00</updated>
+    <published>2011-02-08T00:00:00ZT00:00:00-08:00</published>
+    <updated>2011-02-08T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;By taking the professional-to-client approach for what should be a merchant-to-customer context, Mr. Chimero has abdicated ownership of his idea/genius and the results that will come of it. Having bought and paid for it, the collective investors now own his genius in this project. By selling out first before he created the product he promises, he’s now working for the investors instead of working for himself.&lt;br /&gt;
+&lt;p&gt;By taking the professional-to-client approach for what should be a merchant-to-customer context, Mr. Chimero has abdicated ownership of his idea/genius and the results that will come of it. Having bought and paid for it, the collective investors now own his genius in this project. By selling out first before he created the product he promises, he’s now working for the investors instead of working for himself.&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 </summary>
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;By taking the professional-to-client approach for what should be a merchant-to-customer context, Mr. Chimero has abdicated ownership of his idea/genius and the results that will come of it. Having bought and paid for it, the collective investors now own his genius in this project. By selling out first before he created the product he promises, he’s now working for the investors instead of working for himself.&lt;br /&gt;
@@ -3053,8 +3122,8 @@ newProject.save();
     <title>Future of Middleman Survey</title>
     <link rel="alternate" href="/2011/02/06/future-of-middleman-survey.html"/>
     <id>/2011/02/06/future-of-middleman-survey.html</id>
-    <published>2011-02-06T00:00:00-08:00</published>
-    <updated>2011-02-06T00:00:00-08:00</updated>
+    <published>2011-02-06T00:00:00ZT00:00:00-08:00</published>
+    <updated>2011-02-06T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -3071,14 +3140,14 @@ newProject.save();
     <title>Model and Data Store: Sencha</title>
     <link rel="alternate" href="/2011/01/28/model-and-data-store-sencha.html"/>
     <id>/2011/01/28/model-and-data-store-sencha.html</id>
-    <published>2011-01-28T00:00:00-08:00</published>
-    <updated>2011-01-28T00:00:00-08:00</updated>
+    <published>2011-01-28T00:00:00ZT00:00:00-08:00</published>
+    <updated>2011-01-28T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html">&lt;p&gt;I&amp;#39;m in the process of writing up how the Model and Data Store works in JavascriptMVC and Sproutcore. In the mean-time, check out Ed Spencer&amp;#39;s fantastic article about the ExtJS/Sencha Data Package on the official Sencha blog.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href="http://www.sencha.com/blog/ext-js-4-anatomy-of-a-model/"&gt;http://www.sencha.com/blog/ext-js-4-anatomy-of-a-model/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;[&lt;a href="http://www.sencha.com/blog/ext-js-4-anatomy-of-a-model/"&gt;http://www.sencha.com/blog/ext-js-4-anatomy-of-a-model/&lt;/a&gt;]&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;I&amp;#39;m in the process of writing up how the Model and Data Store works in JavascriptMVC and Sproutcore. In the mean-time, check out Ed Spencer&amp;#39;s fantastic article about the ExtJS/Sencha Data Package on the official Sencha blog.&lt;/p&gt;
 
@@ -3091,8 +3160,8 @@ newProject.save();
     <title>Client-side MVC+S Part 1: The Model and Data Store</title>
     <link rel="alternate" href="/2011/01/25/client-side-mvcs-part-1-the-model-and-data-store.html"/>
     <id>/2011/01/25/client-side-mvcs-part-1-the-model-and-data-store.html</id>
-    <published>2011-01-25T00:00:00-08:00</published>
-    <updated>2011-01-25T00:00:00-08:00</updated>
+    <published>2011-01-25T00:00:00ZT00:00:00-08:00</published>
+    <updated>2011-01-25T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -3160,14 +3229,16 @@ ProjectList.fetch(function(data) {
     <title>SecondStoryJS State Machine now has a documentation website</title>
     <link rel="alternate" href="/2010/12/31/secondstoryjs-state-machine-now-has-a-documentation-website.html"/>
     <id>/2010/12/31/secondstoryjs-state-machine-now-has-a-documentation-website.html</id>
-    <published>2010-12-31T00:00:00-08:00</published>
-    <updated>2010-12-31T00:00:00-08:00</updated>
+    <published>2010-12-31T00:00:00ZT00:00:00-08:00</published>
+    <updated>2010-12-31T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html">&lt;p&gt;You can now learn everything you wanted to know about the JavascriptMVC3 state machine on the project website at:&lt;/p&gt;
 
 &lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-statemachine/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/SecondStoryJS-StateMachine.png" alt="SecondStoryJS State Machine" /&gt;&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;You can now learn everything you wanted to know about the JavascriptMVC3 state machine on the project website at:&lt;/p&gt;
 
@@ -3180,8 +3251,8 @@ ProjectList.fetch(function(data) {
     <title>Best Albums of the Year: 2010</title>
     <link rel="alternate" href="/2010/12/09/best-albums-of-the-year-2010.html"/>
     <id>/2010/12/09/best-albums-of-the-year-2010.html</id>
-    <published>2010-12-09T00:00:00-08:00</published>
-    <updated>2010-12-09T00:00:00-08:00</updated>
+    <published>2010-12-09T00:00:00ZT00:00:00-08:00</published>
+    <updated>2010-12-09T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -3386,8 +3457,8 @@ ProjectList.fetch(function(data) {
     <title>PubSub, Evented Programming and Javascript</title>
     <link rel="alternate" href="/2010/10/27/pubsub-evented-programming-and-javascript.html"/>
     <id>/2010/10/27/pubsub-evented-programming-and-javascript.html</id>
-    <published>2010-10-27T00:00:00-08:00</published>
-    <updated>2010-10-27T00:00:00-08:00</updated>
+    <published>2010-10-27T00:00:00ZT00:00:00-08:00</published>
+    <updated>2010-10-27T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -3456,8 +3527,8 @@ $.ajax({
     <title>Slides from my jQuery Conference Presentation</title>
     <link rel="alternate" href="/2010/10/18/slides-from-my-jquery-conference-presentation.html"/>
     <id>/2010/10/18/slides-from-my-jquery-conference-presentation.html</id>
-    <published>2010-10-18T00:00:00-08:00</published>
-    <updated>2010-10-18T00:00:00-08:00</updated>
+    <published>2010-10-18T00:00:00ZT00:00:00-08:00</published>
+    <updated>2010-10-18T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -3472,14 +3543,16 @@ $.ajax({
     <title>SecondStoryJS Router now has a documentation website</title>
     <link rel="alternate" href="/2010/10/11/secondstoryjs-router-now-has-a-documentation-website.html"/>
     <id>/2010/10/11/secondstoryjs-router-now-has-a-documentation-website.html</id>
-    <published>2010-10-11T00:00:00-08:00</published>
-    <updated>2010-10-11T00:00:00-08:00</updated>
+    <published>2010-10-11T00:00:00ZT00:00:00-08:00</published>
+    <updated>2010-10-11T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html">&lt;p&gt;Like the title says, you can now learn everything you wanted to know about the JavascriptMVC3 router on the project website at:&lt;/p&gt;
 
 &lt;p&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/SecondStoryJS-Router.png" alt="SecondStoryJS Router" /&gt;&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;Like the title says, you can now learn everything you wanted to know about the JavascriptMVC3 router on the project website at:&lt;/p&gt;
 
@@ -3492,8 +3565,8 @@ $.ajax({
     <title>Middleman Feature: Config.rb can setup Rack middleware</title>
     <link rel="alternate" href="/2010/10/11/middleman-feature-configrb-can-setup-rack-middleware.html"/>
     <id>/2010/10/11/middleman-feature-configrb-can-setup-rack-middleware.html</id>
-    <published>2010-10-11T00:00:00-08:00</published>
-    <updated>2010-10-11T00:00:00-08:00</updated>
+    <published>2010-10-11T00:00:00ZT00:00:00-08:00</published>
+    <updated>2010-10-11T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -3512,15 +3585,12 @@ $.ajax({
     <title>Handling Touch Events in jQuery Tools Scrollable</title>
     <link rel="alternate" href="/2010/09/22/handling-touch-events-in-jquery-tools-scrollable.html"/>
     <id>/2010/09/22/handling-touch-events-in-jquery-tools-scrollable.html</id>
-    <published>2010-09-22T00:00:00-08:00</published>
-    <updated>2010-09-22T00:00:00-08:00</updated>
+    <published>2010-09-22T00:00:00ZT00:00:00-08:00</published>
+    <updated>2010-09-22T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;[EDIT]: Looks like jQuery Tools Scrollable will support touch natively in their next release &lt;a href="http://github.com/jquerytools/jquerytools/commit/d63892b54a85e00bb73ce248f8db29acf327d293"&gt;according to this commit&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Today I was trying to optimize the experience of a website for the Apple iPad. One quick win is to respond to touch events on the device which will make your site feel much smoother and avoid the double tapping which Mobile Safari sometimes requires to activate javascript links. Additionally, your very nice paging controls may not be large enough to comfortably tap on the device (the common wisdom is touch targets need to be at least 40px square). A simple swipe can go a long way towards addressing these issues.&lt;/p&gt;
-</summary>
+    <summary type="html"/>
     <content type="html">&lt;p&gt;&lt;strong&gt;[EDIT]: Looks like jQuery Tools Scrollable will support touch natively in their next release &lt;a href="http://github.com/jquerytools/jquerytools/commit/d63892b54a85e00bb73ce248f8db29acf327d293"&gt;according to this commit&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;Today I was trying to optimize the experience of a website for the Apple iPad. One quick win is to respond to touch events on the device which will make your site feel much smoother and avoid the double tapping which Mobile Safari sometimes requires to activate javascript links. Additionally, your very nice paging controls may not be large enough to comfortably tap on the device (the common wisdom is touch targets need to be at least 40px square). A simple swipe can go a long way towards addressing these issues.&lt;/p&gt;
@@ -3560,14 +3630,12 @@ $.ajax({
     <title>Speaking at jQuery Conference: Boston 2010</title>
     <link rel="alternate" href="/2010/09/08/speaking-at-jquery-conference-boston-2010.html"/>
     <id>/2010/09/08/speaking-at-jquery-conference-boston-2010.html</id>
-    <published>2010-09-08T00:00:00-08:00</published>
-    <updated>2010-09-08T00:00:00-08:00</updated>
+    <published>2010-09-08T00:00:00ZT00:00:00-08:00</published>
+    <updated>2010-09-08T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html">&lt;p&gt;Two big announcements today.&lt;/p&gt;
-
-&lt;p&gt;First, I&amp;#39;ll be speaking at &lt;a href="http://events.jquery.org/2010/boston/"&gt;jQuery Conference: Boston 2010&lt;/a&gt; which is taking place October 16-17. My talk will be on code organization and dependency management with &lt;a href="http://v3.javascriptmvc.com/index.html"&gt;JavascriptMVC 3&lt;/a&gt; and &lt;a href="http://github.com/jupiterjs/steal"&gt;steal&lt;/a&gt; being the two solutions that I&amp;#39;m most fond of.&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;Two big announcements today.&lt;/p&gt;
 
@@ -3582,8 +3650,8 @@ $.ajax({
     <title>Mustache for JavascriptMVC 3</title>
     <link rel="alternate" href="/2010/08/09/mustache-for-javascriptmvc-3.html"/>
     <id>/2010/08/09/mustache-for-javascriptmvc-3.html</id>
-    <published>2010-08-09T00:00:00-08:00</published>
-    <updated>2010-08-09T00:00:00-08:00</updated>
+    <published>2010-08-09T00:00:00ZT00:00:00-08:00</published>
+    <updated>2010-08-09T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -3618,18 +3686,12 @@ $.ajax({
     <title>The jQuery Tools API Pattern</title>
     <link rel="alternate" href="/2010/08/06/the-jquery-tools-api-pattern.html"/>
     <id>/2010/08/06/the-jquery-tools-api-pattern.html</id>
-    <published>2010-08-06T00:00:00-08:00</published>
-    <updated>2010-08-06T00:00:00-08:00</updated>
+    <published>2010-08-06T00:00:00ZT00:00:00-08:00</published>
+    <updated>2010-08-06T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;A common pattern for initializing jQuery plugins is by selecting all the instances of the target in the DOM and running the plugin once. For example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$(&amp;quot;:input&amp;quot;).myPlugin();
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;But what if you need to inspect the plugin later or are only interested in one instance of the plugin. A friend of mine &lt;a href="http://forum.jquery.com/topic/return-customized-default-values-for-each-in-a-plugin"&gt;recently asked this question&lt;/a&gt; and my suggestion was to look at the way the &lt;a href="http://flowplayer.org/tools/"&gt;jQuery Tools&lt;/a&gt; project does it. For each of their plugins, they build an API object which only interacts with one specific element and they attach it to the element once the plugin has been initialized using the jQuery.data method. This also provides a clean way of checking if the plugin has already been initialized on a specific element.&lt;/p&gt;
-</summary>
+    <summary type="html"/>
     <content type="html">&lt;p&gt;A common pattern for initializing jQuery plugins is by selecting all the instances of the target in the DOM and running the plugin once. For example:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;$(&amp;quot;:input&amp;quot;).myPlugin();
@@ -3719,8 +3781,8 @@ $(&amp;quot;:input&amp;quot;).myPlugin();
     <title>Style Guides Using Sass @extend</title>
     <link rel="alternate" href="/2010/07/30/style-guides-using-sass-extend.html"/>
     <id>/2010/07/30/style-guides-using-sass-extend.html</id>
-    <published>2010-07-30T00:00:00-08:00</published>
-    <updated>2010-07-30T00:00:00-08:00</updated>
+    <published>2010-07-30T00:00:00ZT00:00:00-08:00</published>
+    <updated>2010-07-30T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -3854,8 +3916,8 @@ $dark-grey:        #4b4b48
     <title>Sass @extend Introduction</title>
     <link rel="alternate" href="/2010/07/27/sass-extend-introduction.html"/>
     <id>/2010/07/27/sass-extend-introduction.html</id>
-    <published>2010-07-27T00:00:00-08:00</published>
-    <updated>2010-07-27T00:00:00-08:00</updated>
+    <published>2010-07-27T00:00:00ZT00:00:00-08:00</published>
+    <updated>2010-07-27T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -3940,13 +4002,12 @@ $dark-grey:        #4b4b48
     <title>JavascriptMVC Router</title>
     <link rel="alternate" href="/2010/07/23/javascriptmvc-router.html"/>
     <id>/2010/07/23/javascriptmvc-router.html</id>
-    <published>2010-07-23T00:00:00-08:00</published>
-    <updated>2010-07-23T00:00:00-08:00</updated>
+    <published>2010-07-23T00:00:00ZT00:00:00-08:00</published>
+    <updated>2010-07-23T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS Router now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
-</summary>
+    <summary type="html"/>
     <content type="html">&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS Router now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;Modern web applications should function as naturally as their static page-based predecessors. As developers, we may need to store state in the location bar, but the user shouldn&amp;#39;t be able to tell the difference, except, hopefully, the Ajaxified version should be faster and smoother.&lt;/p&gt;
@@ -4038,8 +4099,8 @@ if (foundRoute) {
     <title>UINavigationController implementation for SenchaTouch</title>
     <link rel="alternate" href="/2010/07/02/uinavigationcontroller-implementation-for-senchatouch.html"/>
     <id>/2010/07/02/uinavigationcontroller-implementation-for-senchatouch.html</id>
-    <published>2010-07-02T00:00:00-08:00</published>
-    <updated>2010-07-02T00:00:00-08:00</updated>
+    <published>2010-07-02T00:00:00ZT00:00:00-08:00</published>
+    <updated>2010-07-02T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -4084,13 +4145,12 @@ controller.popPanel();
     <title>State Machine Controller for JavascriptMVC</title>
     <link rel="alternate" href="/2010/05/27/state-machine-controller-for-javascriptmvc.html"/>
     <id>/2010/05/27/state-machine-controller-for-javascriptmvc.html</id>
-    <published>2010-05-27T00:00:00-08:00</published>
-    <updated>2010-05-27T00:00:00-08:00</updated>
+    <published>2010-05-27T00:00:00ZT00:00:00-08:00</published>
+    <updated>2010-05-27T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The repository has moved to &lt;a href="http://github.com/secondstory/secondstoryjs-statemachine"&gt;http://github.com/secondstory/secondstoryjs-statemachine&lt;/a&gt;. The main class has been renamed to SS.Controller.StateMachine&lt;/strong&gt;&lt;/p&gt;
-</summary>
+    <summary type="html"/>
     <content type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The repository has moved to &lt;a href="http://github.com/secondstory/secondstoryjs-statemachine"&gt;http://github.com/secondstory/secondstoryjs-statemachine&lt;/a&gt;. The main class has been renamed to SS.Controller.StateMachine&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS State Machine now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-statemachine/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-statemachine/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
@@ -4171,13 +4231,12 @@ steal.js INFO: FSM (MyNavigation.instance0): timelineOpen -&amp;gt; initial
     <title>HTML5 localStorage for JavascriptMVC</title>
     <link rel="alternate" href="/2010/05/21/html5-localstorage-for-javascriptmvc.html"/>
     <id>/2010/05/21/html5-localstorage-for-javascriptmvc.html</id>
-    <published>2010-05-21T00:00:00-08:00</published>
-    <updated>2010-05-21T00:00:00-08:00</updated>
+    <published>2010-05-21T00:00:00ZT00:00:00-08:00</published>
+    <updated>2010-05-21T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The new Github repository location is: &lt;a href="http://github.com/secondstory/secondstoryjs-html5storage"&gt;http://github.com/secondstory/secondstoryjs-html5storage&lt;/a&gt;. The new class names are SS.Model.HTML5Store.Local and SS.Model.HTML5Store.Session&lt;/strong&gt;&lt;/p&gt;
-</summary>
+    <summary type="html"/>
     <content type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The new Github repository location is: &lt;a href="http://github.com/secondstory/secondstoryjs-html5storage"&gt;http://github.com/secondstory/secondstoryjs-html5storage&lt;/a&gt;. The new class names are SS.Model.HTML5Store.Local and SS.Model.HTML5Store.Session&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;For those who don&amp;#39;t know, JavascriptMVC 3 is a framework for building complex web applications based on jQuery. jQuery is a wonderful tool for manipulating the DOM, but it doesn&amp;#39;t provide any system for dependency resolution, file organization or a separation of concerns. JavascriptMVC 3, which is currently in a very solid alpha form, provides a strong MVC foundation for oragnizing your code.&lt;/p&gt;
@@ -4250,8 +4309,8 @@ function isInStore(id) {
     <title>Apple-style Gradient Text Headlines in SCSS/SASS</title>
     <link rel="alternate" href="/2010/04/13/apple-style-gradient-text-headlines-in-scsssass.html"/>
     <id>/2010/04/13/apple-style-gradient-text-headlines-in-scsssass.html</id>
-    <published>2010-04-13T00:00:00-08:00</published>
-    <updated>2010-04-13T00:00:00-08:00</updated>
+    <published>2010-04-13T00:00:00ZT00:00:00-08:00</published>
+    <updated>2010-04-13T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -4294,15 +4353,12 @@ function isInStore(id) {
     <title>Sass 3 Color Manipulation</title>
     <link rel="alternate" href="/2010/04/12/sass-3-color-manipulation.html"/>
     <id>/2010/04/12/sass-3-color-manipulation.html</id>
-    <published>2010-04-12T00:00:00-08:00</published>
-    <updated>2010-04-12T00:00:00-08:00</updated>
+    <published>2010-04-12T00:00:00ZT00:00:00-08:00</published>
+    <updated>2010-04-12T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;I was going to write about the Compass Colors plugin merging into Sass 3, but it looks like Sass-maintainer Nathan Weizenbaum has already written a great article about it.&lt;/p&gt;
-
-&lt;p&gt;Read about &lt;a href="http://nex-3.com/posts/89-powerful-color-manipulation-with-sass"&gt;Powerful Color Manipulation with Sass&lt;/a&gt; on his blog.&lt;/p&gt;
-</summary>
+    <summary type="html"/>
     <content type="html">&lt;p&gt;I was going to write about the Compass Colors plugin merging into Sass 3, but it looks like Sass-maintainer Nathan Weizenbaum has already written a great article about it.&lt;/p&gt;
 
 &lt;p&gt;Read about &lt;a href="http://nex-3.com/posts/89-powerful-color-manipulation-with-sass"&gt;Powerful Color Manipulation with Sass&lt;/a&gt; on his blog.&lt;/p&gt;
@@ -4329,8 +4385,8 @@ $link-color:         #af512c
     <title>Example SCSS (Sassy CSS) File</title>
     <link rel="alternate" href="/2010/04/09/example-scss-sassy-css-file.html"/>
     <id>/2010/04/09/example-scss-sassy-css-file.html</id>
-    <published>2010-04-09T00:00:00-08:00</published>
-    <updated>2010-04-09T00:00:00-08:00</updated>
+    <published>2010-04-09T00:00:00ZT00:00:00-08:00</published>
+    <updated>2010-04-09T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -4632,14 +4688,12 @@ body {
     <title>Sass 3 Syntax</title>
     <link rel="alternate" href="/2010/03/31/sass-3-syntax.html"/>
     <id>/2010/03/31/sass-3-syntax.html</id>
-    <published>2010-03-31T00:00:00-08:00</published>
-    <updated>2010-03-31T00:00:00-08:00</updated>
+    <published>2010-03-31T00:00:00ZT00:00:00-08:00</published>
+    <updated>2010-03-31T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html">&lt;p&gt;&lt;strong&gt;Edit: Added section on hyphens and underscores as requested by &lt;a href="http://twitter.com/chriseppstein"&gt;Chris Eppstein&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Today a beta for Sass 3 was released. It comes with some interesting new syntax options so let&amp;#39;s get it installed and dive into the new syntax and directives.&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Edit: Added section on hyphens and underscores as requested by &lt;a href="http://twitter.com/chriseppstein"&gt;Chris Eppstein&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 
@@ -4752,13 +4806,12 @@ body
     <title>A Learning Experience. iPhone-style checkboxes in Coffee-Script</title>
     <link rel="alternate" href="/2010/03/01/a-learning-experience-iphone-style-checkboxes-in-coffee-script.html"/>
     <id>/2010/03/01/a-learning-experience-iphone-style-checkboxes-in-coffee-script.html</id>
-    <published>2010-03-01T00:00:00-08:00</published>
-    <updated>2010-03-01T00:00:00-08:00</updated>
+    <published>2010-03-01T00:00:00ZT00:00:00-08:00</published>
+    <updated>2010-03-01T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;According to the &lt;a href="http://jashkenas.github.com/coffee-script/"&gt;Coffee Script website&lt;/a&gt;, &amp;quot;CoffeeScript is a little language that compiles into JavaScript. Think of it as JavaScript&amp;#39;s less ostentatious kid brother — the same genes, roughly the same height, but a different sense of style. Apart from a handful of bonus goodies, statements in CoffeeScript correspond one-to-one with their equivalent in JavaScript, it&amp;#39;s just another way of saying it.&amp;quot;&lt;/p&gt;
-</summary>
+    <summary type="html"/>
     <content type="html">&lt;p&gt;According to the &lt;a href="http://jashkenas.github.com/coffee-script/"&gt;Coffee Script website&lt;/a&gt;, &amp;quot;CoffeeScript is a little language that compiles into JavaScript. Think of it as JavaScript&amp;#39;s less ostentatious kid brother — the same genes, roughly the same height, but a different sense of style. Apart from a handful of bonus goodies, statements in CoffeeScript correspond one-to-one with their equivalent in JavaScript, it&amp;#39;s just another way of saying it.&amp;quot;&lt;/p&gt;
 
 &lt;p&gt;Basically, Coffee Script is compiled into Javascript and attempts to make basic operations simpler and safe. For example, in Ruby you can add a conditional to the end of the current line as a short-hand for a full &lt;tt&gt;if&lt;/tt&gt; statement. In Coffee Script this looks like:&lt;/p&gt;
@@ -4921,8 +4974,8 @@ html = &amp;quot;&amp;lt;strong&amp;gt;\n  cup of coffeescript\n&amp;lt;/strong&
     <title>Using RVM to Manage Multiple Ruby Interpreters</title>
     <link rel="alternate" href="/2010/02/17/using-rvm-to-manage-multiple-ruby-interpreters.html"/>
     <id>/2010/02/17/using-rvm-to-manage-multiple-ruby-interpreters.html</id>
-    <published>2010-02-17T00:00:00-08:00</published>
-    <updated>2010-02-17T00:00:00-08:00</updated>
+    <published>2010-02-17T00:00:00ZT00:00:00-08:00</published>
+    <updated>2010-02-17T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -5009,12 +5062,12 @@ if [[ -s /Users/tdreyno/.rvm/scripts/rvm ]] ; then source /Users/tdreyno/.rvm/sc
     <title>Best Albums of the Decade. Top 25</title>
     <link rel="alternate" href="/2009/12/14/best-of-the-decade-pt2.html"/>
     <id>/2009/12/14/best-of-the-decade-pt2.html</id>
-    <published>2009-12-14T00:00:00-08:00</published>
-    <updated>2009-12-14T00:00:00-08:00</updated>
+    <published>2009-12-14T00:00:00ZT00:00:00-08:00</published>
+    <updated>2009-12-14T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;&lt;p&gt;And now for the top 25.&lt;/p&gt;
+    <summary type="html">&lt;p&gt;And now for the top 25.&lt;/p&gt;
 &lt;ul class="albums"&gt;
   &lt;li&gt;
     &lt;div class='cover'&gt;
@@ -5022,7 +5075,7 @@ if [[ -s /Users/tdreyno/.rvm/scripts/rvm ]] ; then source /Users/tdreyno/.rvm/sc
     &lt;/div&gt;
     &lt;div class='content'&gt;
       &lt;h6&gt;2008&lt;/h6&gt;&lt;h4&gt;Of Montreal - Skeletal Lamping&lt;/h4&gt;
-      &lt;p&gt;I flip-flopped on the position of the two Of Montreal albums several times. As bizarre and cross-genre as the band is, this album feels like &amp;quot;more of the same&amp;quot; from Hissing Fauna. However, it&amp;#39;s also much better and maybe even easier to sing along to if you can parse the words.&lt;/p&gt;
+      &lt;p&gt;I flip-flopped on the position of the two Of Montreal albums several times. As bizarre and cross-genre as the band is, this album feels like "more of the same" from Hissing Fauna. However, it's also much better and maybe even easier to sing along to if you can parse the words.&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;&lt;p&gt;And now for the top 25.&lt;/p&gt;
 &lt;ul class="albums"&gt;
@@ -5336,12 +5389,12 @@ if [[ -s /Users/tdreyno/.rvm/scripts/rvm ]] ; then source /Users/tdreyno/.rvm/sc
     <title>Best Albums of the Decade</title>
     <link rel="alternate" href="/2009/12/04/best-of-the-decade.html"/>
     <id>/2009/12/04/best-of-the-decade.html</id>
-    <published>2009-12-04T00:00:00-08:00</published>
-    <updated>2009-12-04T00:00:00-08:00</updated>
+    <published>2009-12-04T00:00:00ZT00:00:00-08:00</published>
+    <updated>2009-12-04T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;&lt;p&gt;In 1990, I was 7 years old. Needless to say, by 17 I still didn&amp;#39;t have the most refined musical tastes. I&amp;#39;m just now getting into Pavement, Jawbox and My Bloody Valentine. So, this past decade has been my first where I can remember listening to each of the following albums when they were released. Most of the lists I&amp;#39;ve seen so far are exceptionally myopic, with albums mostly from the past 3-4 years and enjoy Radiohead to look cool. My list is hopefully more diverse. I&amp;#39;ve also used my actual listening habits (courtesy of last.fm) for ranking, rather than pretending I actually listened to The White Stripes ever single day like some lists.&lt;/p&gt;
+    <summary type="html">&lt;p&gt;In 1990, I was 7 years old. Needless to say, by 17 I still didn't have the most refined musical tastes. I'm just now getting into Pavement, Jawbox and My Bloody Valentine. So, this past decade has been my first where I can remember listening to each of the following albums when they were released. Most of the lists I've seen so far are exceptionally myopic, with albums mostly from the past 3-4 years and enjoy Radiohead to look cool. My list is hopefully more diverse. I've also used my actual listening habits (courtesy of last.fm) for ranking, rather than pretending I actually listened to The White Stripes ever single day like some lists.&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;&lt;p&gt;In 1990, I was 7 years old. Needless to say, by 17 I still didn&amp;#39;t have the most refined musical tastes. I&amp;#39;m just now getting into Pavement, Jawbox and My Bloody Valentine. So, this past decade has been my first where I can remember listening to each of the following albums when they were released. Most of the lists I&amp;#39;ve seen so far are exceptionally myopic, with albums mostly from the past 3-4 years and enjoy Radiohead to look cool. My list is hopefully more diverse. I&amp;#39;ve also used my actual listening habits (courtesy of last.fm) for ranking, rather than pretending I actually listened to The White Stripes ever single day like some lists.&lt;/p&gt;
 &lt;p&gt;Let&amp;#39;s get started, with numbers 50-26:&lt;/p&gt;
@@ -5653,15 +5706,12 @@ if [[ -s /Users/tdreyno/.rvm/scripts/rvm ]] ; then source /Users/tdreyno/.rvm/sc
     <title>The Middleman. A modular, feature-rich static site generator</title>
     <link rel="alternate" href="/2009/10/22/middleman.html"/>
     <id>/2009/10/22/middleman.html</id>
-    <published>2009-10-22T00:00:00-08:00</published>
-    <updated>2009-10-22T00:00:00-08:00</updated>
+    <published>2009-10-22T00:00:00ZT00:00:00-08:00</published>
+    <updated>2009-10-22T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;Update: &lt;a href="/2011/08/08/middleman-2-0.html"&gt;Middleman version 2.0 has been released&lt;/a&gt;&lt;/strong&gt;&lt;br /&gt;
-&lt;strong&gt;Update: &lt;a href="/2011/04/15/middleman-v11.html"&gt;Middleman version 1.1 has been released&lt;/a&gt;&lt;/strong&gt;&lt;br /&gt;
-&lt;strong&gt;Update: New &lt;a href="https://convore.com/middleman/"&gt;Middleman Support Forum&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
-</summary>
+    <summary type="html"/>
     <content type="html">&lt;p&gt;&lt;strong&gt;Update: &lt;a href="/2011/08/08/middleman-2-0.html"&gt;Middleman version 2.0 has been released&lt;/a&gt;&lt;/strong&gt;&lt;br /&gt;
 &lt;strong&gt;Update: &lt;a href="/2011/04/15/middleman-v11.html"&gt;Middleman version 1.1 has been released&lt;/a&gt;&lt;/strong&gt;&lt;br /&gt;
 &lt;strong&gt;Update: New &lt;a href="https://convore.com/middleman/"&gt;Middleman Support Forum&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
@@ -5817,12 +5867,12 @@ And finally, please report bugs to: &lt;a href="http://github.com/middleman/midd
     <title>Tweetie-style paging with pageSlider</title>
     <link rel="alternate" href="/2009/08/31/pageslider-tweetie-style-pages.html"/>
     <id>/2009/08/31/pageslider-tweetie-style-pages.html</id>
-    <published>2009-08-31T00:00:00-08:00</published>
-    <updated>2009-08-31T00:00:00-08:00</updated>
+    <published>2009-08-31T00:00:00ZT00:00:00-08:00</published>
+    <updated>2009-08-31T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;&lt;a href="http://www.atebits.com/tweetie-mac/"&gt;Tweetie for Mac&lt;/a&gt; is one of my favorite programs. However, it is also one of the least Mac-like applications I use. Instead of standard interactions, such as a tab control, for switching modes, Tweetie uses an iPhone-inspired
+    <summary type="html">&lt;p&gt;&lt;a href="http://www.atebits.com/tweetie-mac/"&gt;Tweetie for Mac&lt;/a&gt; is one of my favorite programs. However, it is also one of the least Mac-like applications I use. Instead of standard interactions, such as a tab control, for switching modes, Tweetie uses an iPhone-inspired&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;&lt;a href="http://www.atebits.com/tweetie-mac/"&gt;Tweetie for Mac&lt;/a&gt; is one of my favorite programs. However, it is also one of the least Mac-like applications I use. Instead of standard interactions, such as a tab control, for switching modes, Tweetie uses an iPhone-inspired
 vertical slide. This is similar to the various carousel scripts around the web, but vertical rather than horizontal.&lt;/p&gt;
@@ -5911,13 +5961,12 @@ or in &lt;a href="http://cloud.github.com/downloads/tdreyno/pageSlider/pageSlide
     <title>Speaking at RefreshPDX on Sass</title>
     <link rel="alternate" href="/2009/07/22/speaking-at-refreshpdx.html"/>
     <id>/2009/07/22/speaking-at-refreshpdx.html</id>
-    <published>2009-07-22T00:00:00-08:00</published>
-    <updated>2009-07-22T00:00:00-08:00</updated>
+    <published>2009-07-22T00:00:00ZT00:00:00-08:00</published>
+    <updated>2009-07-22T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;It&amp;#39;s late notice, but I&amp;#39;ll be speaking on Sass and Compass at &lt;a href="http://refreshpdx.org/"&gt;Refresh Portland&lt;/a&gt;  on Thursday, July 23rd at  &lt;a href="http://maps.google.com/maps?f=q&amp;hl=en&amp;q=915+SW+Stark+St,+Portland,+Multnomah,+Oregon+97205,+United+States&amp;sll=37.0625,-95.677068&amp;sspn=49.176833,77.519531&amp;ie=UTF8&amp;cd=1&amp;geocode=0,45.521796,-122.680205&amp;ll=45.521804,-122.680206&amp;spn=0.021408,0.037851&amp;t=p&amp;z=15&amp;iwloc=addr"&gt;Jive Software&lt;/a&gt;.&lt;/p&gt;
-</summary>
+    <summary type="html"/>
     <content type="html">&lt;p&gt;It&amp;#39;s late notice, but I&amp;#39;ll be speaking on Sass and Compass at &lt;a href="http://refreshpdx.org/"&gt;Refresh Portland&lt;/a&gt;  on Thursday, July 23rd at  &lt;a href="http://maps.google.com/maps?f=q&amp;hl=en&amp;q=915+SW+Stark+St,+Portland,+Multnomah,+Oregon+97205,+United+States&amp;sll=37.0625,-95.677068&amp;sspn=49.176833,77.519531&amp;ie=UTF8&amp;cd=1&amp;geocode=0,45.521796,-122.680205&amp;ll=45.521804,-122.680206&amp;spn=0.021408,0.037851&amp;t=p&amp;z=15&amp;iwloc=addr"&gt;Jive Software&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;The presentation should be streamed (and then archived) on Ustream and I&amp;#39;ll post the slides here on Friday.&lt;/p&gt;
@@ -5927,8 +5976,8 @@ or in &lt;a href="http://cloud.github.com/downloads/tdreyno/pageSlider/pageSlide
     <title>Simplifying CSS with Sass Presentation</title>
     <link rel="alternate" href="/2009/07/22/simplifying-css-presentation.html"/>
     <id>/2009/07/22/simplifying-css-presentation.html</id>
-    <published>2009-07-22T00:00:00-08:00</published>
-    <updated>2009-07-22T00:00:00-08:00</updated>
+    <published>2009-07-22T00:00:00ZT00:00:00-08:00</published>
+    <updated>2009-07-22T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -5936,8 +5985,8 @@ or in &lt;a href="http://cloud.github.com/downloads/tdreyno/pageSlider/pageSlide
 
 &lt;p&gt;&lt;a href="http://www.slideshare.net/tdreyno/simplifying-css-with-sass"&gt;Simplifying CSS With Sass&lt;/a&gt;&lt;/p&gt;
 
-&lt;div class='flash'&gt;
-  &lt;object height='355' style='margin:0px' width='425'&gt;
+&lt;p&gt;&lt;div class='flash'&gt;
+  &lt;object height='355' style='margin:0px' width='425'&gt;&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;Here are my slides from tonight&amp;#39;s Refresh PDX presentation on Sass and Compass.&lt;/p&gt;
 
@@ -5957,8 +6006,8 @@ or in &lt;a href="http://cloud.github.com/downloads/tdreyno/pageSlider/pageSlide
     <title>Easy Google Maps with jQuery</title>
     <link rel="alternate" href="/2009/07/22/google-maps-with-jquery.html"/>
     <id>/2009/07/22/google-maps-with-jquery.html</id>
-    <published>2009-07-22T00:00:00-08:00</published>
-    <updated>2009-07-22T00:00:00-08:00</updated>
+    <published>2009-07-22T00:00:00ZT00:00:00-08:00</published>
+    <updated>2009-07-22T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -5970,6 +6019,7 @@ or in &lt;a href="http://cloud.github.com/downloads/tdreyno/pageSlider/pageSlide
     long: -123.0286928,
     zoom: 14,
     mapTypeId: google.maps.MapTypeId.HYBRID
+&lt;/code&gt;&lt;/pre&gt;
 </summary>
     <content type="html">&lt;p&gt;The other day I needed a simple way to include a Google Map, so I wrote this jQuery function.&lt;/p&gt;
 
@@ -6021,8 +6071,8 @@ or in &lt;a href="http://cloud.github.com/downloads/tdreyno/pageSlider/pageSlide
     <title>Rapha&amp;euml;l. The Return of Browser SVG</title>
     <link rel="alternate" href="/2009/07/13/return-of-svg.html"/>
     <id>/2009/07/13/return-of-svg.html</id>
-    <published>2009-07-13T00:00:00-08:00</published>
-    <updated>2009-07-13T00:00:00-08:00</updated>
+    <published>2009-07-13T00:00:00ZT00:00:00-08:00</published>
+    <updated>2009-07-13T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -6046,13 +6096,12 @@ or in &lt;a href="http://cloud.github.com/downloads/tdreyno/pageSlider/pageSlide
     <title>iPhone-style Checkboxes for Prototype</title>
     <link rel="alternate" href="/2009/06/29/prototype-iphone-style-checkboxes.html"/>
     <id>/2009/06/29/prototype-iphone-style-checkboxes.html</id>
-    <published>2009-06-29T00:00:00-08:00</published>
-    <updated>2009-06-29T00:00:00-08:00</updated>
+    <published>2009-06-29T00:00:00ZT00:00:00-08:00</published>
+    <updated>2009-06-29T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;Big thanks to &lt;a href="http://jqr.github.com/"&gt;Elijah Miller&lt;/a&gt; for stepping up and finishing the work on the Prototype version of the iPhone-style checkboxes. Elijah now has write-access to the official repository at GitHub and will be maintaining it alongside my jQuery version.&lt;/p&gt;
-</summary>
+    <summary type="html"/>
     <content type="html">&lt;p&gt;Big thanks to &lt;a href="http://jqr.github.com/"&gt;Elijah Miller&lt;/a&gt; for stepping up and finishing the work on the Prototype version of the iPhone-style checkboxes. Elijah now has write-access to the official repository at GitHub and will be maintaining it alongside my jQuery version.&lt;/p&gt;
 
 &lt;h2&gt;Examples&lt;/h2&gt;
@@ -6150,13 +6199,12 @@ Both versions are maintained using GitHub: &lt;a href="http://github.com/tdreyno
     <title>Introducing iPhone-style Checkboxes</title>
     <link rel="alternate" href="/2009/06/16/iphone-style-checkboxes.html"/>
     <id>/2009/06/16/iphone-style-checkboxes.html</id>
-    <published>2009-06-16T00:00:00-08:00</published>
-    <updated>2009-06-16T00:00:00-08:00</updated>
+    <published>2009-06-16T00:00:00ZT00:00:00-08:00</published>
+    <updated>2009-06-16T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;Ever wanted those flash iPhone on/off toggle switches on your webpage? Love jQuery? Well then I&amp;#39;ve got something special for you. iphone-style-checkboxes implements the iPhone toggles as replacements for standard HTML checkboxes. Simply run the script and your site will be updated with these specialized controls. Best of all, the underlying checkbox is not touched and backend system will never know the difference. The change is purely visual.&lt;/p&gt;
-</summary>
+    <summary type="html"/>
     <content type="html">&lt;p&gt;Ever wanted those flash iPhone on/off toggle switches on your webpage? Love jQuery? Well then I&amp;#39;ve got something special for you. iphone-style-checkboxes implements the iPhone toggles as replacements for standard HTML checkboxes. Simply run the script and your site will be updated with these specialized controls. Best of all, the underlying checkbox is not touched and backend system will never know the difference. The change is purely visual.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href="/2009/06/29/prototype-iphone-style-checkboxes.html"&gt;UPDATED: Now with Prototype-based version here.&lt;/a&gt;&lt;/p&gt;
@@ -6258,8 +6306,8 @@ Please direct comments, support requests, bug reporting and pull requests to the
     <title>WWDC 2009 Predictions</title>
     <link rel="alternate" href="/2009/06/04/wwdc-2009-predictions.html"/>
     <id>/2009/06/04/wwdc-2009-predictions.html</id>
-    <published>2009-06-04T00:00:00-08:00</published>
-    <updated>2009-06-04T00:00:00-08:00</updated>
+    <published>2009-06-04T00:00:00ZT00:00:00-08:00</published>
+    <updated>2009-06-04T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -6274,7 +6322,7 @@ Please direct comments, support requests, bug reporting and pull requests to the
 &lt;/ul&gt;
 &lt;h2&gt;Snow Leopard&lt;/h2&gt;
 &lt;ul&gt;
-  &lt;li&gt;Secret sauce released: theme updates, ✓ Cocoa/64bit magic, ✓ Safari 4&lt;/li&gt;
+  &lt;li&gt;Secret sauce released: theme updates, ✓ Cocoa/64bit magic, ✓ Safari 4&lt;/li&gt;&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;&lt;h2&gt;iPhone&lt;/h2&gt;
 &lt;ul&gt;
@@ -6304,8 +6352,8 @@ Please direct comments, support requests, bug reporting and pull requests to the
     <title>Simplify image paths with image_url()</title>
     <link rel="alternate" href="/2009/05/11/simplify-image-paths-with-image_url.html"/>
     <id>/2009/05/11/simplify-image-paths-with-image_url.html</id>
-    <published>2009-05-11T00:00:00-08:00</published>
-    <updated>2009-05-11T00:00:00-08:00</updated>
+    <published>2009-05-11T00:00:00ZT00:00:00-08:00</published>
+    <updated>2009-05-11T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -6339,8 +6387,8 @@ Please direct comments, support requests, bug reporting and pull requests to the
     <title>Using Compass to implement the Blueprint grid-system &amp;amp; consistent vertical-rhythm</title>
     <link rel="alternate" href="/2009/05/07/blueprint-grids-vertical-rhythm.html"/>
     <id>/2009/05/07/blueprint-grids-vertical-rhythm.html</id>
-    <published>2009-05-07T00:00:00-08:00</published>
-    <updated>2009-05-07T00:00:00-08:00</updated>
+    <published>2009-05-07T00:00:00ZT00:00:00-08:00</published>
+    <updated>2009-05-07T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -6353,6 +6401,8 @@ body
   background: #F9F3E8
 
 a
+  font-weight: bold
+&lt;/code&gt;&lt;/pre&gt;
 </summary>
     <content type="html">&lt;p&gt;Using Sass &amp;amp; Compass I updated the css on this site to use Blueprint&amp;#39;s 950px grid system and their typography for consistent vertical rhythm. 
 The full Sass is included below:&lt;/p&gt;
@@ -6536,8 +6586,8 @@ hr
     <title>NHaml idiosyncrasies</title>
     <link rel="alternate" href="/2009/04/30/nhaml-idiosyncrasies.html"/>
     <id>/2009/04/30/nhaml-idiosyncrasies.html</id>
-    <published>2009-04-30T00:00:00-08:00</published>
-    <updated>2009-04-30T00:00:00-08:00</updated>
+    <published>2009-04-30T00:00:00ZT00:00:00-08:00</published>
+    <updated>2009-04-30T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -6613,15 +6663,15 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
     <title>A Compass &amp;amp; Sass Screencast via Chris Eppstein</title>
     <link rel="alternate" href="/2009/04/26/a-compass-sass-screencast-via-chris-eppstein.html"/>
     <id>/2009/04/26/a-compass-sass-screencast-via-chris-eppstein.html</id>
-    <published>2009-04-26T00:00:00-08:00</published>
-    <updated>2009-04-26T00:00:00-08:00</updated>
+    <published>2009-04-26T00:00:00ZT00:00:00-08:00</published>
+    <updated>2009-04-26T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html">&lt;p&gt;Compass author—and Sass contributor—Chris Eppstein has put a screencast together showing how to use Compass. Enjoy.&lt;/p&gt;
 
-&lt;div class='flash'&gt;
-  &lt;object data='http://vimeo.com/moogaloop.swf?clip_id=4335944&amp;amp;server=vimeo.com&amp;amp;show_title=1&amp;amp;show_byline=1&amp;amp;show_portrait=0&amp;amp;color=00ADEF&amp;amp;fullscreen=1' height='225' type='application/x-shockwave-flash' width='400'&gt;
+&lt;p&gt;&lt;div class='flash'&gt;
+  &lt;object data='http://vimeo.com/moogaloop.swf?clip_id=4335944&amp;amp;server=vimeo.com&amp;amp;show_title=1&amp;amp;show_byline=1&amp;amp;show_portrait=0&amp;amp;color=00ADEF&amp;amp;fullscreen=1' height='225' type='application/x-shockwave-flash' width='400'&gt;&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;Compass author—and Sass contributor—Chris Eppstein has put a screencast together showing how to use Compass. Enjoy.&lt;/p&gt;
 
@@ -6640,14 +6690,12 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
     <title>Creating bullet-proof HTML emails</title>
     <link rel="alternate" href="/2009/04/06/creating-bullet-proof-html-emails.html"/>
     <id>/2009/04/06/creating-bullet-proof-html-emails.html</id>
-    <published>2009-04-06T00:00:00-08:00</published>
-    <updated>2009-04-06T00:00:00-08:00</updated>
+    <published>2009-04-06T00:00:00ZT00:00:00-08:00</published>
+    <updated>2009-04-06T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html">&lt;p&gt;This screencast will demonstrate how a bullet-proof, table-based email can be sliced and coded using ImageReady CS2. Other versions of Photoshop will work similarly, but I prefer CS2.&lt;/p&gt;
-
-&lt;p&gt;The resulting HTML email will display perfectly in the majority of modern email clients such as gmail, Apple Mail and Outlook.&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;This screencast will demonstrate how a bullet-proof, table-based email can be sliced and coded using ImageReady CS2. Other versions of Photoshop will work similarly, but I prefer CS2.&lt;/p&gt;
 
@@ -6669,15 +6717,15 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
     <title>Sass Introduction slides</title>
     <link rel="alternate" href="/2009/04/02/sass-introduction-slides.html"/>
     <id>/2009/04/02/sass-introduction-slides.html</id>
-    <published>2009-04-02T00:00:00-08:00</published>
-    <updated>2009-04-02T00:00:00-08:00</updated>
+    <published>2009-04-02T00:00:00ZT00:00:00-08:00</published>
+    <updated>2009-04-02T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
     <summary type="html">&lt;p&gt;Here&amp;#39;s the slides I will be presenting at Jive Software:&lt;/p&gt;
 
-&lt;div class='flash'&gt;
-  &lt;object data='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=sass-090402192738-phpapp01&amp;amp;rel=0&amp;amp;stripped_title=sass-introduction' height='355' type='application/x-shockwave-flash' width='425'&gt;
+&lt;p&gt;&lt;div class='flash'&gt;
+  &lt;object data='http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=sass-090402192738-phpapp01&amp;amp;rel=0&amp;amp;stripped_title=sass-introduction' height='355' type='application/x-shockwave-flash' width='425'&gt;&lt;/p&gt;
 </summary>
     <content type="html">&lt;p&gt;Here&amp;#39;s the slides I will be presenting at Jive Software:&lt;/p&gt;
 
@@ -6695,8 +6743,8 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
     <title>Don't repeat yourself, use Sass mixins</title>
     <link rel="alternate" href="/2009/04/02/dont-repeat-yourself-use-sass-modules.html"/>
     <id>/2009/04/02/dont-repeat-yourself-use-sass-modules.html</id>
-    <published>2009-04-02T00:00:00-08:00</published>
-    <updated>2009-04-02T00:00:00-08:00</updated>
+    <published>2009-04-02T00:00:00ZT00:00:00-08:00</published>
+    <updated>2009-04-02T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -6812,8 +6860,8 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
     <title>Refactoring with Sass</title>
     <link rel="alternate" href="/2009/03/14/refactoring-with-sass.html"/>
     <id>/2009/03/14/refactoring-with-sass.html</id>
-    <published>2009-03-14T00:00:00-08:00</published>
-    <updated>2009-03-14T00:00:00-08:00</updated>
+    <published>2009-03-14T00:00:00ZT00:00:00-08:00</published>
+    <updated>2009-03-14T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
@@ -6881,13 +6929,12 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
     <title>Compass, the future of Sass development</title>
     <link rel="alternate" href="/2009/03/11/compass-the-future-of-sass-development.html"/>
     <id>/2009/03/11/compass-the-future-of-sass-development.html</id>
-    <published>2009-03-11T00:00:00-08:00</published>
-    <updated>2009-03-11T00:00:00-08:00</updated>
+    <published>2009-03-11T00:00:00ZT00:00:00-08:00</published>
+    <updated>2009-03-11T00:00:00ZT00:00:00-08:00</updated>
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html">&lt;p&gt;I&amp;#39;ve been a fan of Haml and Sass for a long time. Ever since I ran my mouth in #merb and Hampton Caitlin rightfully put me in my place. If you have no clue what Haml &amp;amp; Sass are—or if you&amp;#39;ve heard the buzz, but never actually checked them out—you can view &lt;a href="http://peepcode.com/products/haml-and-sass"&gt;this excellent PeepCode screencast on the subject&lt;/a&gt;. I currently use both for the initial coding of all the sites I develop. However, I am not lucky enough to work with a Haml-enabled framework on the backend like Rails or Merb so I have to compile to HTML and CSS when I begin integrating the front-end with the back-end¹.&lt;/p&gt;
-</summary>
+    <summary type="html"/>
     <content type="html">&lt;p&gt;I&amp;#39;ve been a fan of Haml and Sass for a long time. Ever since I ran my mouth in #merb and Hampton Caitlin rightfully put me in my place. If you have no clue what Haml &amp;amp; Sass are—or if you&amp;#39;ve heard the buzz, but never actually checked them out—you can view &lt;a href="http://peepcode.com/products/haml-and-sass"&gt;this excellent PeepCode screencast on the subject&lt;/a&gt;. I currently use both for the initial coding of all the sites I develop. However, I am not lucky enough to work with a Haml-enabled framework on the backend like Rails or Merb so I have to compile to HTML and CSS when I begin integrating the front-end with the back-end¹.&lt;/p&gt;
 
 &lt;p&gt;This situation sucks. Sass makes me a faster in my initial development, but it also speeds up tweaking small site-wide issues and overall maintenance. I develop my Sass modularly and try to use variables for site-wide colors, border and fonts. Wouldn&amp;#39;t it be great if I could use Sass throughout the entire development cycle?&lt;/p&gt;
