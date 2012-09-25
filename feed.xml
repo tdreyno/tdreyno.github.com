@@ -26,7 +26,7 @@
 
 &lt;p&gt;&lt;img alt="FuelStream" src="/images/fuelstream.jpg" /&gt;&lt;/p&gt;
 
-&lt;p&gt;While I&amp;#39;m exceptional proud of the site, even though I forgot to blog about it for 3 months, what I&amp;#39;d really like to talk about is the process we used during development and the software &amp;amp; testing stack.&lt;/p&gt;
+&lt;p&gt;While I&amp;#39;m exceptionally proud of the site, even though I forgot to blog about it for 3 months, what I&amp;#39;d really like to talk about is the process we used during development and the software &amp;amp; testing stack.&lt;/p&gt;
 
 &lt;h2&gt;Software Stack&lt;/h2&gt;
 
@@ -92,6 +92,8 @@
 &lt;h2&gt;Conclusion&lt;/h2&gt;
 
 &lt;p&gt;This project accomplished two things which I don&amp;#39;t think many front-end developers attempt: test-driven development &amp;amp; heavily animated experiences. On both counts, I&amp;#39;m really proud of what we&amp;#39;ve accomplished. Kudos to Jared Moran &amp;amp; Zach Doe, the other two members of the front-end team.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="http://ast.roemmich.org/2012/09/25/nike-fuelstream-backend-stack.html"&gt;Ryan Roemmich goes into the backend details on his blog&lt;/a&gt;.&lt;/p&gt;
 </content>
   </entry>
   <entry>
