@@ -5,10 +5,145 @@
   <id>http://awardwinningfjords.com/</id>
   <link href="http://awardwinningfjords.com/"/>
   <link href="http://awardwinningfjords.com/feed.xml" rel="self"/>
-  <updated>2012-09-23T00:00:00ZT00:00:00-08:00</updated>
+  <updated>2012-09-27T00:00:00ZT00:00:00-08:00</updated>
   <author>
     <name>Thomas Reynolds</name>
   </author>
+  <entry>
+    <title>How Do I: Animate</title>
+    <link rel="alternate" href="/2012/09/27/how-do-i-animate.html"/>
+    <id>/2012/09/27/how-do-i-animate.html</id>
+    <published>2012-09-27T00:00:00ZT00:00:00-08:00</published>
+    <updated>2012-09-27T00:00:00ZT00:00:00-08:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;p&gt;This is the first piece in a series of &amp;quot;How Do I&amp;quot; articles. Since that phrase can be taken multiple ways, let me explain: this is how I, Thomas Reynolds, accompish certain tasks. This isn&amp;#39;t about comparing multiple technique or even justifying my prefered approach. This is a brain dump.&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;This is the first piece in a series of &amp;quot;How Do I&amp;quot; articles. Since that phrase can be taken multiple ways, let me explain: this is how I, Thomas Reynolds, accompish certain tasks. This isn&amp;#39;t about comparing multiple technique or even justifying my prefered approach. This is a brain dump.&lt;/p&gt;
+
+&lt;h3&gt;Animation Philosophy&lt;/h3&gt;
+
+&lt;p&gt;When animating, either massive thousand-part experiences or single on-off effects, I prioritize framerate and the ability get the right &amp;quot;feel&amp;quot; from the animation. Both goals are about Control, so I do nearly all of my animations in Javascript instead of CSS.&lt;/p&gt;
+
+&lt;p&gt;Javascript allows me to control all of my animations from a single place, a Tween engine, and run them from a single place, &lt;code&gt;requestAnimationFrame&lt;/code&gt;. Using a Tween engine, instead of CSS, allows me to define very specific timing functions which influence the &amp;quot;feel&amp;quot; of the animation. Does is bounce? Move as if gravity is pulling it down? These are important. Simply defaulting to jQuery&amp;#39;s &amp;quot;swing&amp;quot; or CSS&amp;#39;s &amp;quot;ease-in-out&amp;quot; aren&amp;#39;t good enough.&lt;/p&gt;
+
+&lt;p&gt;You can look at the recent &lt;a href="/2012/09/23/fuelstream.html"&gt;Nike+ Fuelstream&lt;/a&gt; project for an example of a site using tons of Javascript animations.&lt;/p&gt;
+
+&lt;h3&gt;tween.js&lt;/h3&gt;
+
+&lt;p&gt;My preferred Tweening engine is &lt;a href="https://github.com/sole/tween.js/"&gt;tween.js&lt;/a&gt;, but pretty much any of them will do. jQuery&amp;#39;s built-in, generic, &lt;code&gt;$.animate&lt;/code&gt; function is worth a look too.&lt;/p&gt;
+
+&lt;p&gt;Using tween.js, you can construct animations like so:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var elem = document.getElementById(&amp;#39;box&amp;#39;);
+var tween = new TWEEN.Tween({ height: 100 })
+  .to({ height: 200 }, 1000)
+  .easing(TWEEN.Easing.Elastic.InOut)
+  .onUpdate(function() {
+    elem.style.height = this.height + &amp;#39;px&amp;#39;;
+  }).start();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You may notice, I&amp;#39;m using &lt;code&gt;TWEEN.Easing.Elastic.InOut&lt;/code&gt;. Its timing curve looks like:&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt="Elastic.InOut" src="/images/elastic.png" /&gt;&lt;/p&gt;
+
+&lt;p&gt;You can see that it travels below and above the lines, representing 0 and 1. For a long time, this kind of timing was impossible with CSS transitions. That&amp;#39;s changed, but some of the more mathmatically complicated easing methods still have to be done in Javascript. &lt;a href="http://sole.github.com/tween.js/examples/03_graphs.html"&gt;Here are the timing curves for all of tween.js&amp;#39; built-in functions&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3&gt;requestAnimationFrame&lt;/h3&gt;
+
+&lt;p&gt;Of course, if you actually ran this code, nothing would happen. That&amp;#39;s because tween.js needs to be told &amp;quot;what time is it&amp;quot; to know which point in the animation we are at. For that, I use &lt;code&gt;requestAnimationFrame&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;requestAnimationFrame&lt;/code&gt; is a browser feature which will run our code at 60 frames per second. As a nice fallback, if it detects that the browser is too slow to run our animation at 60fps, it will automatically fallback to 30fps. Using a &lt;code&gt;requestAnimationFrame&lt;/code&gt; loop syncs our animations so they all paint at once and at the same frequency as our displays. Simply put, this is the best possible way to run animations if you prioritize framerate.&lt;/p&gt;
+
+&lt;p&gt;We can run the above Tween with &lt;code&gt;requestAnimationFrame&lt;/code&gt; like so:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function animate(timestamp) {
+  if (!timestamp) {
+    timestamp = +(new Date());
+  }
+
+  // Update/draw all Tweens
+  TWEEN.update(timestamp);
+
+  // Next frame
+  requestAnimationFrame(animate);
+}
+
+// Start rAF
+requestAnimationFrame(animate);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;One caveat, with a loop like this, &lt;code&gt;requestAnimationFrame&lt;/code&gt; will always be running and eating up CPU cycles and battery. It&amp;#39;s a better practice to only be using it when you actually need to animate something.&lt;/p&gt;
+
+&lt;h3&gt;One-off Animations&lt;/h3&gt;
+
+&lt;p&gt;Unless you&amp;#39;re doing large, sequenced animations, you probably just want a quick one-off tween. This is how most people using jQuery&amp;#39;s &lt;code&gt;animate&lt;/code&gt;. I&amp;#39;ve written a simple function which abstracts the Tween engine, sets up the tween and runs &lt;code&gt;requestAnimationFrame&lt;/code&gt; for the duration of the animation, then exits.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function oneOffAnimation(from, to, duration, 
+                          easing, onUpdate,
+                          onComplete) {
+  var t = new TWEEN.Tween(from)
+    .to(to, duration)
+    .easing(easing)
+    .onUpdate(onUpdate)
+    .onComplete(function _onComplete() {
+      t.done = true;
+    });
+
+  var self = this;
+  function tick(ts) {
+    if (!ts) {
+      ts = +(new Date());
+    }
+
+    t.update(ts);
+
+    if (t.done) {
+      onComplete();
+    } else {
+      requestAnimationFrame(tick);
+    }
+  }
+
+  t.start();
+  requestAnimationFrame(tick);
+
+  return t;
+};
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Which would make the above tween look like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var elem = document.getElementById(&amp;#39;box&amp;#39;);
+oneOffAnimation(
+  { height: 100 },
+  { height: 200 },
+  1000,
+  TWEEN.Easing.Elastic.InOut,
+  function _onUpdate() {
+    elem.style.height = this.height + &amp;#39;px&amp;#39;;
+  },
+  function _onComplete() {
+    // All done!
+  }
+);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;CSS Animations&lt;/h3&gt;
+
+&lt;p&gt;The only place I would use CSS transitions are for simple, reversable hover effects. Changing the color of links or adding hover states to &amp;quot;clickable&amp;quot; elements. However, given the move to touch-based devices, I&amp;#39;d still do many interaction animations in Javascript which allows touch and gesture detection code to respond with the correct animation. It seems Android and iOS treat &lt;code&gt;:hover&lt;/code&gt; differently. iOS makes you touch once to activate &lt;code&gt;:hover&lt;/code&gt; then touch again to activate &lt;code&gt;click&lt;/code&gt;. Android seems to request holding down to activate &lt;code&gt;:hover&lt;/code&gt; and a single touch causes &lt;code&gt;click&lt;/code&gt;. Doing this kind of work in Javascript also keeps things consistent.&lt;/p&gt;
+
+&lt;h3&gt;Past Problems, Future Bug Fixes&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;In the past, I&amp;#39;ve seen speed conflicts between CSS animations and &lt;code&gt;requestAnimationFrame&lt;/code&gt;. For some reason, using both at the same time (I was animating a game and using CSS Animations for UI), caused massive loss of framerate. I&amp;#39;m sure this will be, or alread is, resolved.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;requestAnimationFrame&lt;/code&gt; is relatively new, oldIE and older versions of Safari don&amp;#39;t support it. Using the &lt;a href="http://paulirish.com/2011/requestanimationframe-for-smart-animating/"&gt;standard requestAnimationFrame polyfill&lt;/a&gt; will fallback to &lt;code&gt;setInterval&lt;/code&gt; for scheduling frames. This isn&amp;#39;t great for consistent timing. Additionally, older browsers are also likely to have slower Javascript engines so the resulting effect is even further degraded.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;When you run a bunch of Tweens at 60fps, there is a very strong possibility of creating either memory leaks or &lt;a href="https://www.scirra.com/blog/76/how-to-write-low-garbage-real-time-javascript"&gt;Garbage Collector slowdowns&lt;/a&gt;. Be careful. Brush up on your understanding of Javascript memory management. Use a battle-hardened Tween engine.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+  </entry>
   <entry>
     <title>Nike+ FuelStream</title>
     <link rel="alternate" href="/2012/09/23/fuelstream.html"/>
