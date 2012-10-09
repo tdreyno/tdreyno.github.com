@@ -1,0 +1,226 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'>
+    <meta name="author" content="Thomas Reynolds">
+    
+    <!-- Mobile viewport optimization http://goo.gl/b9SaQ -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+    
+    <!-- Google Setup -->
+    <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'>
+    
+    <!-- OpenID Setup -->
+    <link href='http://www.myopenid.com/server' rel='openid.server'>
+    <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'>
+    <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'>
+    <link href='http://www.myopenid.com/server' rel='openid2.provider'>
+    <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'>
+    
+    
+      <title>How Do I: Structure Applications &laquo; Thomas Reynolds</title>
+    
+    
+    <!-- Stylesheet -->
+    <link href="/stylesheets/new-c13f1549.css" media="screen" rel="stylesheet" type="text/css" />
+    
+    <!-- RSS -->
+    <link href='/feed.xml' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'>
+  </head>
+  <body>
+    <header>
+      <h1>
+        <a href="/">Award-Winning Fjords</a>
+        <span class="sub">Thomas Reynolds</span>
+      </header>
+    </header>
+    
+    <div id="frame">
+      
+        <article>
+          <h2>How Do I: Structure Applications</h2>
+          <time>Oct  9 2012</time>
+          <p>This is part two in a series of &quot;How Do I&quot; articles (<a href="/2012/10/01/how-do-i-animate.html">part one, Animation, is here</a>). These are how I, Thomas Reynolds, accompish certain tasks. This isn&#39;t about comparing multiple technique or even justifying my prefered approach. This is a brain dump.</p>
+
+<h3>Structure Philosophy</h3>
+
+<p>These days, I think the difference between a &quot;Site&quot; and an &quot;Application&quot; is very small. Sites may start small, be less interactive and have less state than Applications, so they don&#39;t necessarily need tools and libraries to handle those advanced issues. But it certainly doesn&#39;t hurt.</p>
+
+<p>Site or Application, I try to start with the same tools and structure.</p>
+
+<h3>Build System &amp; Dependency Management</h3>
+
+<p>These two systems are often bundled together. I use <a href="http://middlemanapp.com">Middleman</a>, which is perfect for my needs because I wrote it. For the Ruby-adverse, or Javascript-masochists, <a href="http://yeoman.io">Yeoman</a> is gaining traction.</p>
+
+<p>Modern applications include many libraries and, of course, developers should be modularizing their code into many, independent files as well. You <em>could</em> simply include a bunch of <code>script</code> tags in your HTML and make sure they stay in the right order, but that&#39;s immature and doesn&#39;t scale. Instead, the modules need to define what their dependencies are and let some other system make sure they load in the correct order.</p>
+
+<p>Middleman includes <a href="https://github.com/sstephenson/sprockets">Sprockets</a> and <a href="https://github.com/livingsocial/rake-pipeline">Rake-Pipeline</a>. I flip flop on which one I use and I&#39;m not really happy with either of them. That said, they do their job and get out of the way.</p>
+
+<p>The Build step is very important. It takes your code, libraries and file layout&mdash;which are optimized for your development process and speed&mdash;and converts them into fewer, smaller files optimized for bandwidth and load time.</p>
+
+<p>Middleman makes this step simple. In my config, I add:</p>
+
+<pre><code>configure :build do
+    activate :minify_css
+    activate :minify_js
+end
+</code></pre>
+
+<p>And we&#39;re done. In more complicated projects, this step can also compress images, generate pre-gzipped assets and automatically run tests.</p>
+
+<p>Regarding Javascript compilation and minification, Middleman defaults to <a href="https://github.com/mishoo/UglifyJS">UglifyJS</a>, which is pretty much the standard for open source Javascript libraries (such as jQuery, HTML5Boilerplate, etc). I still prefer <a href="https://developers.google.com/closure/compiler/">Google&#39;s Closure Compiler</a>, which has long been the best for file size, at the cost of developer happiness and the annoyances of working with a large Java tool. However, these days, Javascript file size is dwarfed my image assets so that&#39;s less important and UglifyJS is rapidly approaching Closure&#39;s efficiency.</p>
+
+<h3>Core Libraries</h3>
+
+<ul>
+<li>DOM Wrapper (<a href="https://developers.google.com/closure/library/">Closure</a> or jQuery)</li>
+<li>Browser Feature Detection (<a href="http://modernizr.com">Modernizr</a>)</li>
+<li>Animation Framework (<a href="https://github.com/sole/tween.js/">tween.js</a>) </li>
+<li>CSS Transform 2d/3d Support (<a href="https://github.com/sproutcore/TransformJS">TransformJS</a>)</li>
+<li>Statechart (<a href="https://github.com/etgryphon/stativus">Stativus</a> or <a href="http://emberjs.com">Ember.js</a>)</li>
+<li>View Layer (Ember.js or something custom)</li>
+<li>URL Router (Ember.js or <a href="https://github.com/joshbuddy/sherpa">Sherpa</a>)</li>
+<li>Templating Library (<a href="https://developers.google.com/closure/templates/">Soy</a> or <a href="http://handlebarsjs.com">Handlebars</a>)</li>
+<li>Asset Loader (<a href="http://thinkpixellab.com/pxloader/">PxLoader</a>)</li>
+</ul>
+
+<h4>DOM Wrapper</h4>
+
+<p>Paves over cross-browser issues with the most basic interactions with the browser. A no-brainer. I use Closure or jQuery, depending on what the client wants, but I prefer jQuery. That said, I don&#39;t use jQuery for animation or code structure (<code>$.fn.plugins</code>).</p>
+
+<h4>Browser Feature Detection</h4>
+
+<p><a href="http://modernizr.com">Modernizr</a> detects available features and makes it easy to fallback to lesser technologies through either a Javascript or CSS interface. It also provides an HTML5 shim for older browsers. Here&#39;s a quick example:</p>
+
+<pre><code>// JS
+if (Modernizr.touch) { $(elem).on(&#39;touchstart&#39;, handler); }
+</code></pre>
+
+<p>Or</p>
+
+<pre><code>/* CSS */
+.svg { background-image: url(bg.svg); }
+.no-svg { background-image: url(bg.png); }
+</code></pre>
+
+<p>Another no-brainer, this should be on every site on the web.</p>
+
+<h4>Animation Framework</h4>
+
+<p>As <a href="/2012/10/01/how-do-i-animate.html">I said before</a>, I use a Tween library to get the animation effects I want. jQuery doesn&#39;t use <code>requestAnimationFrame</code>, so I have to use something third-party. <a href="https://github.com/sole/tween.js/">tween.js</a> is great. See the previous article for examples.</p>
+
+<h4>CSS Transform 2d/3d Support</h4>
+
+<p>If you want to animate rotation and scale, you&#39;re going to need CSS Transforms. Using these transforms also has the side-effect of moving their rendering to the GPU, so replacing animations of position <code>top</code> and <code>left</code> can be faster if transforming <code>translateY</code> and <code>translateX</code> are used instead. <a href="https://github.com/sproutcore/TransformJS">TransformJS</a> is a polyfill that uses the best available technique. 3d transforms for those which support it, falling back to 2d transforms and finally top/left positioning. The API looks like:</p>
+
+<pre><code>$(elem).css({ transformX: 100, scale: 2 });
+</code></pre>
+
+<h4>Statechart</h4>
+
+<p>I love Statecharts. Every single project should have them. They simplify events and messaging, give you a central place for &quot;controller&quot; code and never leave you between states. They also pair wonderfully with a Router (see below). Ember.js has a fantastic implementation, if that&#39;s not available, the <a href="https://github.com/etgryphon/stativus">Stativus</a> project is basically the same code abstracted to be library agnostic.</p>
+
+<p>One of these days, I&#39;m going to be able to write about Statecharts well. Until then, <a href="http://www.itsgotwhatplantscrave.com/2009/02/22/building-sproutcore-apps-with-statecharts-part-2/">try this article</a>.</p>
+
+<h4>View Layer</h4>
+
+<p>Like the Statechart, the View Layer is all about centralizing code related. A view handles what content should be in a HTML area, how to show it, how to hide it and how to handle events in that area. Without a View Layer, you&#39;ll end up with jQuery-itis, spaghetti code which all different parts of your codebase are updating the same DOM elements. This provides a nice simple API to your controllers and Statecharts:</p>
+
+<pre><code>toottipView.refresh();
+tooltipView.show();
+$(document).one(&#39;click&#39;, function() { tooltipView.hide(); });
+</code></pre>
+
+<p>Ember.js has my favorite implementation due to its ability to bind and auto-update elements. Backbone has a less magical, but still very-solid version.</p>
+
+<h4>URL Router</h4>
+
+<p>Applications should be deep-linkable when possible and since many Sites are becoming &quot;single page&quot; site which load other pages dynamically, they both need some mechanism for responding to URL changes on the client-side. Ember.js comes with a great router, if that&#39;s not available, I use <a href="https://github.com/joshbuddy/sherpa">Sherpa</a> which works in both the browser and on NodeJS. It&#39;s got a nice API:</p>
+
+<pre><code>var sherpa = new Sherpa.Router();
+sherpa.add(&#39;/test/:variable&#39;).to(&#39;testing&#39;);
+sherpa.recognize(&#39;/test/hello&#39;); /*=&gt; {
+  &quot;destination&quot;: &quot;testing&quot;,
+  &quot;params&quot;: {
+    &quot;variable&quot;: &quot;hello&quot;
+  }
+}*/
+</code></pre>
+
+<h4>Templating Library</h4>
+
+<p>String concatination is not okay. It&#39;s ugly, hard to update, littered with double quotes, single quotes, escape characters, whitespace and plus signs. <a href="http://handlebarsjs.com">Handlebars</a> is a wonderfully powerful implementation of Mustache templates. Nice clean HTML:</p>
+
+<pre><code>&lt;div class=&quot;entry&quot;&gt;
+  &lt;h1&gt;{{title}}&lt;/h1&gt;
+  &lt;div class=&quot;body&quot;&gt;
+    {{body}}
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>If the project relies on Google Closure, then their Soy templates are the only option.</p>
+
+<h4>Asset Loader</h4>
+
+<p>You <em>could</em> just include normal <code>img</code> tags and CSS <code>background-images</code>, especially if the site was very traditional. But with an Application that has user data or many sections, it is probably a better idea to only load what you need. Multipage Sites would also benefit from waiting to load images on subsequent pages until the visitor actually requests them. Having a place to centralize all this loading (and queueing and prioritizing) is really useful. I use <a href="http://thinkpixellab.com/pxloader/">PxLoader</a>, which came out of the HTML5 version of Cut the Rope. I still use <code>img</code> tags and CSS for items which are always visible, but the Asset Loader can provide niceties like loading percentage bars and a central place for optimization.</p>
+
+<h3>Conclusion</h3>
+
+<p>You might be saying, &quot;that&#39;s quite a bit of stuff!&quot; The nice thing about having a consistent stack is that it can be refined and improved from project to project. You don&#39;t have to be constantly writing some half-broken, untested implementation of a single piece of the stack. Just suck it up and let your dependency management and compiler deal with optimizing out the pieces you aren&#39;t using. We&#39;ve got 500kb Retina images on these sites, don&#39;t let worrying about 5kb of Javascript make your development more difficult than it needs to be.</p>
+
+        </article>
+      
+    
+      <footer>
+        <p class="descr">My name is Thomas Reynolds. I'm a Technical Lead at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p>
+    
+        <p>
+          <a href="http://twitter.com/tdreyno">Twitter</a> &bull;
+          <a href="mailto:me@tdreyno.com">Email</a> &bull;
+          <a href="https://github.com/tdreyno">Github</a> &bull;
+          <a href="http://feeds2.feedburner.com/awf-allposts">RSS</a>
+        </p>
+      </footer>
+    </div>
+    
+    <script src="/javascripts/highlight.pack.js" type="text/javascript"></script>
+    <link href="/stylesheets/solarized_light.css" media="screen" rel="stylesheet" type="text/css" />
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+    <script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-90027-9']);
+  _gaq.push(['_trackPageview']);
+  _gaq.push(['_trackPageLoadTime']);
+
+  (function() {
+  var ga = document.createElement('script');
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 
+    'http://www') + '.google-analytics.com/ga.js';
+  ga.setAttribute('async', 'true');
+  document.documentElement.firstChild.appendChild(ga);
+  })();
+</script>
+
+<script>
+  var _gauges = _gauges || [];
+  (function() {
+    var t   = document.createElement('script');
+    t.type  = 'text/javascript';
+    t.async = true;
+    t.id    = 'gauges-tracker';
+    t.setAttribute('data-site-id', '4d770721192b0c4ab6000002');
+    t.src = '//secure.gaug.es/track.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
+  })();
+</script>
+  </body>
+</html>

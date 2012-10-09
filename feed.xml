@@ -5,10 +5,151 @@
   <id>http://awardwinningfjords.com/</id>
   <link href="http://awardwinningfjords.com/"/>
   <link href="http://awardwinningfjords.com/feed.xml" rel="self"/>
-  <updated>2012-10-04T00:00:00ZT00:00:00-08:00</updated>
+  <updated>2012-10-09T00:00:00ZT00:00:00-08:00</updated>
   <author>
     <name>Thomas Reynolds</name>
   </author>
+  <entry>
+    <title>How Do I: Structure Applications</title>
+    <link rel="alternate" href="/2012/10/09/how-do-i-structure.html"/>
+    <id>/2012/10/09/how-do-i-structure.html</id>
+    <published>2012-10-09T00:00:00ZT00:00:00-08:00</published>
+    <updated>2012-10-09T00:00:00ZT00:00:00-08:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;p&gt;This is part two in a series of &amp;quot;How Do I&amp;quot; articles (&lt;a href="/2012/10/01/how-do-i-animate.html"&gt;part one, Animation, is here&lt;/a&gt;). These are how I, Thomas Reynolds, accompish certain tasks. This isn&amp;#39;t about comparing multiple technique or even justifying my prefered approach. This is a brain dump.&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;This is part two in a series of &amp;quot;How Do I&amp;quot; articles (&lt;a href="/2012/10/01/how-do-i-animate.html"&gt;part one, Animation, is here&lt;/a&gt;). These are how I, Thomas Reynolds, accompish certain tasks. This isn&amp;#39;t about comparing multiple technique or even justifying my prefered approach. This is a brain dump.&lt;/p&gt;
+
+&lt;h3&gt;Structure Philosophy&lt;/h3&gt;
+
+&lt;p&gt;These days, I think the difference between a &amp;quot;Site&amp;quot; and an &amp;quot;Application&amp;quot; is very small. Sites may start small, be less interactive and have less state than Applications, so they don&amp;#39;t necessarily need tools and libraries to handle those advanced issues. But it certainly doesn&amp;#39;t hurt.&lt;/p&gt;
+
+&lt;p&gt;Site or Application, I try to start with the same tools and structure.&lt;/p&gt;
+
+&lt;h3&gt;Build System &amp;amp; Dependency Management&lt;/h3&gt;
+
+&lt;p&gt;These two systems are often bundled together. I use &lt;a href="http://middlemanapp.com"&gt;Middleman&lt;/a&gt;, which is perfect for my needs because I wrote it. For the Ruby-adverse, or Javascript-masochists, &lt;a href="http://yeoman.io"&gt;Yeoman&lt;/a&gt; is gaining traction.&lt;/p&gt;
+
+&lt;p&gt;Modern applications include many libraries and, of course, developers should be modularizing their code into many, independent files as well. You &lt;em&gt;could&lt;/em&gt; simply include a bunch of &lt;code&gt;script&lt;/code&gt; tags in your HTML and make sure they stay in the right order, but that&amp;#39;s immature and doesn&amp;#39;t scale. Instead, the modules need to define what their dependencies are and let some other system make sure they load in the correct order.&lt;/p&gt;
+
+&lt;p&gt;Middleman includes &lt;a href="https://github.com/sstephenson/sprockets"&gt;Sprockets&lt;/a&gt; and &lt;a href="https://github.com/livingsocial/rake-pipeline"&gt;Rake-Pipeline&lt;/a&gt;. I flip flop on which one I use and I&amp;#39;m not really happy with either of them. That said, they do their job and get out of the way.&lt;/p&gt;
+
+&lt;p&gt;The Build step is very important. It takes your code, libraries and file layout&amp;mdash;which are optimized for your development process and speed&amp;mdash;and converts them into fewer, smaller files optimized for bandwidth and load time.&lt;/p&gt;
+
+&lt;p&gt;Middleman makes this step simple. In my config, I add:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;configure :build do
+    activate :minify_css
+    activate :minify_js
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And we&amp;#39;re done. In more complicated projects, this step can also compress images, generate pre-gzipped assets and automatically run tests.&lt;/p&gt;
+
+&lt;p&gt;Regarding Javascript compilation and minification, Middleman defaults to &lt;a href="https://github.com/mishoo/UglifyJS"&gt;UglifyJS&lt;/a&gt;, which is pretty much the standard for open source Javascript libraries (such as jQuery, HTML5Boilerplate, etc). I still prefer &lt;a href="https://developers.google.com/closure/compiler/"&gt;Google&amp;#39;s Closure Compiler&lt;/a&gt;, which has long been the best for file size, at the cost of developer happiness and the annoyances of working with a large Java tool. However, these days, Javascript file size is dwarfed my image assets so that&amp;#39;s less important and UglifyJS is rapidly approaching Closure&amp;#39;s efficiency.&lt;/p&gt;
+
+&lt;h3&gt;Core Libraries&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;DOM Wrapper (&lt;a href="https://developers.google.com/closure/library/"&gt;Closure&lt;/a&gt; or jQuery)&lt;/li&gt;
+&lt;li&gt;Browser Feature Detection (&lt;a href="http://modernizr.com"&gt;Modernizr&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Animation Framework (&lt;a href="https://github.com/sole/tween.js/"&gt;tween.js&lt;/a&gt;) &lt;/li&gt;
+&lt;li&gt;CSS Transform 2d/3d Support (&lt;a href="https://github.com/sproutcore/TransformJS"&gt;TransformJS&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Statechart (&lt;a href="https://github.com/etgryphon/stativus"&gt;Stativus&lt;/a&gt; or &lt;a href="http://emberjs.com"&gt;Ember.js&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;View Layer (Ember.js or something custom)&lt;/li&gt;
+&lt;li&gt;URL Router (Ember.js or &lt;a href="https://github.com/joshbuddy/sherpa"&gt;Sherpa&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Templating Library (&lt;a href="https://developers.google.com/closure/templates/"&gt;Soy&lt;/a&gt; or &lt;a href="http://handlebarsjs.com"&gt;Handlebars&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Asset Loader (&lt;a href="http://thinkpixellab.com/pxloader/"&gt;PxLoader&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4&gt;DOM Wrapper&lt;/h4&gt;
+
+&lt;p&gt;Paves over cross-browser issues with the most basic interactions with the browser. A no-brainer. I use Closure or jQuery, depending on what the client wants, but I prefer jQuery. That said, I don&amp;#39;t use jQuery for animation or code structure (&lt;code&gt;$.fn.plugins&lt;/code&gt;).&lt;/p&gt;
+
+&lt;h4&gt;Browser Feature Detection&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href="http://modernizr.com"&gt;Modernizr&lt;/a&gt; detects available features and makes it easy to fallback to lesser technologies through either a Javascript or CSS interface. It also provides an HTML5 shim for older browsers. Here&amp;#39;s a quick example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// JS
+if (Modernizr.touch) { $(elem).on(&amp;#39;touchstart&amp;#39;, handler); }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Or&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/* CSS */
+.svg { background-image: url(bg.svg); }
+.no-svg { background-image: url(bg.png); }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Another no-brainer, this should be on every site on the web.&lt;/p&gt;
+
+&lt;h4&gt;Animation Framework&lt;/h4&gt;
+
+&lt;p&gt;As &lt;a href="/2012/10/01/how-do-i-animate.html"&gt;I said before&lt;/a&gt;, I use a Tween library to get the animation effects I want. jQuery doesn&amp;#39;t use &lt;code&gt;requestAnimationFrame&lt;/code&gt;, so I have to use something third-party. &lt;a href="https://github.com/sole/tween.js/"&gt;tween.js&lt;/a&gt; is great. See the previous article for examples.&lt;/p&gt;
+
+&lt;h4&gt;CSS Transform 2d/3d Support&lt;/h4&gt;
+
+&lt;p&gt;If you want to animate rotation and scale, you&amp;#39;re going to need CSS Transforms. Using these transforms also has the side-effect of moving their rendering to the GPU, so replacing animations of position &lt;code&gt;top&lt;/code&gt; and &lt;code&gt;left&lt;/code&gt; can be faster if transforming &lt;code&gt;translateY&lt;/code&gt; and &lt;code&gt;translateX&lt;/code&gt; are used instead. &lt;a href="https://github.com/sproutcore/TransformJS"&gt;TransformJS&lt;/a&gt; is a polyfill that uses the best available technique. 3d transforms for those which support it, falling back to 2d transforms and finally top/left positioning. The API looks like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$(elem).css({ transformX: 100, scale: 2 });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4&gt;Statechart&lt;/h4&gt;
+
+&lt;p&gt;I love Statecharts. Every single project should have them. They simplify events and messaging, give you a central place for &amp;quot;controller&amp;quot; code and never leave you between states. They also pair wonderfully with a Router (see below). Ember.js has a fantastic implementation, if that&amp;#39;s not available, the &lt;a href="https://github.com/etgryphon/stativus"&gt;Stativus&lt;/a&gt; project is basically the same code abstracted to be library agnostic.&lt;/p&gt;
+
+&lt;p&gt;One of these days, I&amp;#39;m going to be able to write about Statecharts well. Until then, &lt;a href="http://www.itsgotwhatplantscrave.com/2009/02/22/building-sproutcore-apps-with-statecharts-part-2/"&gt;try this article&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h4&gt;View Layer&lt;/h4&gt;
+
+&lt;p&gt;Like the Statechart, the View Layer is all about centralizing code related. A view handles what content should be in a HTML area, how to show it, how to hide it and how to handle events in that area. Without a View Layer, you&amp;#39;ll end up with jQuery-itis, spaghetti code which all different parts of your codebase are updating the same DOM elements. This provides a nice simple API to your controllers and Statecharts:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;toottipView.refresh();
+tooltipView.show();
+$(document).one(&amp;#39;click&amp;#39;, function() { tooltipView.hide(); });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Ember.js has my favorite implementation due to its ability to bind and auto-update elements. Backbone has a less magical, but still very-solid version.&lt;/p&gt;
+
+&lt;h4&gt;URL Router&lt;/h4&gt;
+
+&lt;p&gt;Applications should be deep-linkable when possible and since many Sites are becoming &amp;quot;single page&amp;quot; site which load other pages dynamically, they both need some mechanism for responding to URL changes on the client-side. Ember.js comes with a great router, if that&amp;#39;s not available, I use &lt;a href="https://github.com/joshbuddy/sherpa"&gt;Sherpa&lt;/a&gt; which works in both the browser and on NodeJS. It&amp;#39;s got a nice API:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var sherpa = new Sherpa.Router();
+sherpa.add(&amp;#39;/test/:variable&amp;#39;).to(&amp;#39;testing&amp;#39;);
+sherpa.recognize(&amp;#39;/test/hello&amp;#39;); /*=&amp;gt; {
+  &amp;quot;destination&amp;quot;: &amp;quot;testing&amp;quot;,
+  &amp;quot;params&amp;quot;: {
+    &amp;quot;variable&amp;quot;: &amp;quot;hello&amp;quot;
+  }
+}*/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4&gt;Templating Library&lt;/h4&gt;
+
+&lt;p&gt;String concatination is not okay. It&amp;#39;s ugly, hard to update, littered with double quotes, single quotes, escape characters, whitespace and plus signs. &lt;a href="http://handlebarsjs.com"&gt;Handlebars&lt;/a&gt; is a wonderfully powerful implementation of Mustache templates. Nice clean HTML:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div class=&amp;quot;entry&amp;quot;&amp;gt;
+  &amp;lt;h1&amp;gt;{{title}}&amp;lt;/h1&amp;gt;
+  &amp;lt;div class=&amp;quot;body&amp;quot;&amp;gt;
+    {{body}}
+  &amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If the project relies on Google Closure, then their Soy templates are the only option.&lt;/p&gt;
+
+&lt;h4&gt;Asset Loader&lt;/h4&gt;
+
+&lt;p&gt;You &lt;em&gt;could&lt;/em&gt; just include normal &lt;code&gt;img&lt;/code&gt; tags and CSS &lt;code&gt;background-images&lt;/code&gt;, especially if the site was very traditional. But with an Application that has user data or many sections, it is probably a better idea to only load what you need. Multipage Sites would also benefit from waiting to load images on subsequent pages until the visitor actually requests them. Having a place to centralize all this loading (and queueing and prioritizing) is really useful. I use &lt;a href="http://thinkpixellab.com/pxloader/"&gt;PxLoader&lt;/a&gt;, which came out of the HTML5 version of Cut the Rope. I still use &lt;code&gt;img&lt;/code&gt; tags and CSS for items which are always visible, but the Asset Loader can provide niceties like loading percentage bars and a central place for optimization.&lt;/p&gt;
+
+&lt;h3&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;You might be saying, &amp;quot;that&amp;#39;s quite a bit of stuff!&amp;quot; The nice thing about having a consistent stack is that it can be refined and improved from project to project. You don&amp;#39;t have to be constantly writing some half-broken, untested implementation of a single piece of the stack. Just suck it up and let your dependency management and compiler deal with optimizing out the pieces you aren&amp;#39;t using. We&amp;#39;ve got 500kb Retina images on these sites, don&amp;#39;t let worrying about 5kb of Javascript make your development more difficult than it needs to be.&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Facebook the Devourer</title>
     <link rel="alternate" href="/2012/10/04/facebook-the-devourer.html"/>
