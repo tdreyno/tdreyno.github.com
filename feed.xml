@@ -863,7 +863,7 @@ Now, let&amp;#39;s run our points through &lt;a href="https://github.com/mrdoob/
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html"/>
+    <summary type="html"></summary>
     <content type="html">&lt;p&gt;For posterity, here are a couple prototypes I put together to see if WebGL was appropriate for a recent project (more on this later).&lt;/p&gt;
 
 &lt;p&gt;Check it out, let me know what you think:&lt;/p&gt;
@@ -886,7 +886,7 @@ Now, let&amp;#39;s run our points through &lt;a href="https://github.com/mrdoob/
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html"/>
+    <summary type="html"></summary>
     <content type="html">&lt;p&gt;I really don&amp;#39;t want to be the one to write an article about Matrices and how useful they are, so here is the short version. &lt;/p&gt;
 
 &lt;p&gt;A matrix is a way of representing the position (translation), rotation and scale of a point (Vector). What&amp;#39;s better, both CSS and HTML5 Canvas can accept matrix values.&lt;/p&gt;
@@ -946,7 +946,7 @@ myImage.draw(ctx);
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html"/>
+    <summary type="html"></summary>
     <content type="html">&lt;p&gt;Recently, I&amp;#39;ve been working on quite a few animation projects in Javascript. Traditional web applications are evented. The browser and application wait or user (or network) input and adjust the displayed content accordingly. Animation is different. Animation needs to run 60 frames-per-second, every second that the viewer is on the page. This create two problems.&lt;/p&gt;
 
 &lt;p&gt;One, every piece of code in your runloop is being executed repeatedly. Small errors and inefficiencies quickly pile up, leak memory, trigger garbage collection and slow down execution.&lt;/p&gt;
@@ -1508,7 +1508,7 @@ theWorld.hitTestObjects(150, 50) # =&amp;gt; [c2, c3]
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html"/>
+    <summary type="html"></summary>
     <content type="html">&lt;p&gt;Everyone&amp;#39;s very excited by their &amp;quot;Pure CSS&amp;quot; &lt;a href="http://lab.victorcoulon.fr/css/path-menu/"&gt;this&lt;/a&gt; and &amp;quot;Pure CSS&amp;quot; &lt;a href="http://clear.youyuxi.com/"&gt;that&lt;/a&gt;, but if we are front-end developers really want to start taking on traditionally Flash use-cases, we&amp;#39;re going to need to step out animation game up a notch.&lt;/p&gt;
 
 &lt;p&gt;Enter the Image Sequence. An Image Sequence is exactly what it sounds like, a series of images, each representing a single frame of an animation. Usually these will be exported from a high-level application like Adobe After Effects. For memory and performance reasons, these images are usually combined into a single Sprite Sheet. You may have heard of this technique, because &lt;a href="http://en.wikipedia.org/wiki/Sprite_(computer_graphics)"&gt;we&amp;#39;ve been using it for decades&lt;/a&gt;.&lt;/p&gt;
@@ -3959,7 +3959,7 @@ $.ajax({
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html"/>
+    <summary type="html"></summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;[EDIT]: Looks like jQuery Tools Scrollable will support touch natively in their next release &lt;a href="http://github.com/jquerytools/jquerytools/commit/d63892b54a85e00bb73ce248f8db29acf327d293"&gt;according to this commit&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;Today I was trying to optimize the experience of a website for the Apple iPad. One quick win is to respond to touch events on the device which will make your site feel much smoother and avoid the double tapping which Mobile Safari sometimes requires to activate javascript links. Additionally, your very nice paging controls may not be large enough to comfortably tap on the device (the common wisdom is touch targets need to be at least 40px square). A simple swipe can go a long way towards addressing these issues.&lt;/p&gt;
@@ -4060,7 +4060,7 @@ $.ajax({
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html"/>
+    <summary type="html"></summary>
     <content type="html">&lt;p&gt;A common pattern for initializing jQuery plugins is by selecting all the instances of the target in the DOM and running the plugin once. For example:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;$(&amp;quot;:input&amp;quot;).myPlugin();
@@ -4376,7 +4376,7 @@ $dark-grey:        #4b4b48
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html"/>
+    <summary type="html"></summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS Router now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-router/"&gt;http://secondstory.github.com/secondstoryjs-router/&lt;/a&gt;&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;Modern web applications should function as naturally as their static page-based predecessors. As developers, we may need to store state in the location bar, but the user shouldn&amp;#39;t be able to tell the difference, except, hopefully, the Ajaxified version should be faster and smoother.&lt;/p&gt;
@@ -4519,7 +4519,7 @@ controller.popPanel();
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html"/>
+    <summary type="html"></summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The repository has moved to &lt;a href="http://github.com/secondstory/secondstoryjs-statemachine"&gt;http://github.com/secondstory/secondstoryjs-statemachine&lt;/a&gt;. The main class has been renamed to SS.Controller.StateMachine&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;[Edit]: The SecondStoryJS State Machine now has a documentation website at &lt;a href="http://secondstory.github.com/secondstoryjs-statemachine/"&gt;&lt;a href="http://secondstory.github.com/secondstoryjs-statemachine/"&gt;http://secondstory.github.com/secondstoryjs-statemachine/&lt;/a&gt;&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
@@ -4605,7 +4605,7 @@ steal.js INFO: FSM (MyNavigation.instance0): timelineOpen -&amp;gt; initial
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html"/>
+    <summary type="html"></summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;[Updated]: The new Github repository location is: &lt;a href="http://github.com/secondstory/secondstoryjs-html5storage"&gt;http://github.com/secondstory/secondstoryjs-html5storage&lt;/a&gt;. The new class names are SS.Model.HTML5Store.Local and SS.Model.HTML5Store.Session&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;For those who don&amp;#39;t know, JavascriptMVC 3 is a framework for building complex web applications based on jQuery. jQuery is a wonderful tool for manipulating the DOM, but it doesn&amp;#39;t provide any system for dependency resolution, file organization or a separation of concerns. JavascriptMVC 3, which is currently in a very solid alpha form, provides a strong MVC foundation for oragnizing your code.&lt;/p&gt;
@@ -4727,7 +4727,7 @@ function isInStore(id) {
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html"/>
+    <summary type="html"></summary>
     <content type="html">&lt;p&gt;I was going to write about the Compass Colors plugin merging into Sass 3, but it looks like Sass-maintainer Nathan Weizenbaum has already written a great article about it.&lt;/p&gt;
 
 &lt;p&gt;Read about &lt;a href="http://nex-3.com/posts/89-powerful-color-manipulation-with-sass"&gt;Powerful Color Manipulation with Sass&lt;/a&gt; on his blog.&lt;/p&gt;
@@ -5180,7 +5180,7 @@ body
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html"/>
+    <summary type="html"></summary>
     <content type="html">&lt;p&gt;According to the &lt;a href="http://jashkenas.github.com/coffee-script/"&gt;Coffee Script website&lt;/a&gt;, &amp;quot;CoffeeScript is a little language that compiles into JavaScript. Think of it as JavaScript&amp;#39;s less ostentatious kid brother — the same genes, roughly the same height, but a different sense of style. Apart from a handful of bonus goodies, statements in CoffeeScript correspond one-to-one with their equivalent in JavaScript, it&amp;#39;s just another way of saying it.&amp;quot;&lt;/p&gt;
 
 &lt;p&gt;Basically, Coffee Script is compiled into Javascript and attempts to make basic operations simpler and safe. For example, in Ruby you can add a conditional to the end of the current line as a short-hand for a full &lt;tt&gt;if&lt;/tt&gt; statement. In Coffee Script this looks like:&lt;/p&gt;
@@ -6080,7 +6080,7 @@ if [[ -s /Users/tdreyno/.rvm/scripts/rvm ]] ; then source /Users/tdreyno/.rvm/sc
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html"/>
+    <summary type="html"></summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Update: &lt;a href="/2011/08/08/middleman-2-0.html"&gt;Middleman version 2.0 has been released&lt;/a&gt;&lt;/strong&gt;&lt;br /&gt;
 &lt;strong&gt;Update: &lt;a href="/2011/04/15/middleman-v11.html"&gt;Middleman version 1.1 has been released&lt;/a&gt;&lt;/strong&gt;&lt;br /&gt;
 &lt;strong&gt;Update: New &lt;a href="https://convore.com/middleman/"&gt;Middleman Support Forum&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
@@ -6335,7 +6335,7 @@ or in &lt;a href="http://cloud.github.com/downloads/tdreyno/pageSlider/pageSlide
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html"/>
+    <summary type="html"></summary>
     <content type="html">&lt;p&gt;It&amp;#39;s late notice, but I&amp;#39;ll be speaking on Sass and Compass at &lt;a href="http://refreshpdx.org/"&gt;Refresh Portland&lt;/a&gt;  on Thursday, July 23rd at  &lt;a href="http://maps.google.com/maps?f=q&amp;hl=en&amp;q=915+SW+Stark+St,+Portland,+Multnomah,+Oregon+97205,+United+States&amp;sll=37.0625,-95.677068&amp;sspn=49.176833,77.519531&amp;ie=UTF8&amp;cd=1&amp;geocode=0,45.521796,-122.680205&amp;ll=45.521804,-122.680206&amp;spn=0.021408,0.037851&amp;t=p&amp;z=15&amp;iwloc=addr"&gt;Jive Software&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;The presentation should be streamed (and then archived) on Ustream and I&amp;#39;ll post the slides here on Friday.&lt;/p&gt;
@@ -6470,7 +6470,7 @@ or in &lt;a href="http://cloud.github.com/downloads/tdreyno/pageSlider/pageSlide
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html"/>
+    <summary type="html"></summary>
     <content type="html">&lt;p&gt;Big thanks to &lt;a href="http://jqr.github.com/"&gt;Elijah Miller&lt;/a&gt; for stepping up and finishing the work on the Prototype version of the iPhone-style checkboxes. Elijah now has write-access to the official repository at GitHub and will be maintaining it alongside my jQuery version.&lt;/p&gt;
 
 &lt;h2&gt;Examples&lt;/h2&gt;
@@ -7225,7 +7225,7 @@ After:  \&amp;amp;ldquo;Hi&amp;amp;rdquo;
     <author>
       <name>Thomas Reynolds</name>
     </author>
-    <summary type="html"/>
+    <summary type="html"></summary>
     <content type="html">&lt;p&gt;I&amp;#39;ve been a fan of Haml and Sass for a long time. Ever since I ran my mouth in #merb and Hampton Caitlin rightfully put me in my place. If you have no clue what Haml &amp;amp; Sass are—or if you&amp;#39;ve heard the buzz, but never actually checked them out—you can view &lt;a href="http://peepcode.com/products/haml-and-sass"&gt;this excellent PeepCode screencast on the subject&lt;/a&gt;. I currently use both for the initial coding of all the sites I develop. However, I am not lucky enough to work with a Haml-enabled framework on the backend like Rails or Merb so I have to compile to HTML and CSS when I begin integrating the front-end with the back-end¹.&lt;/p&gt;
 
 &lt;p&gt;This situation sucks. Sass makes me a faster in my initial development, but it also speeds up tweaking small site-wide issues and overall maintenance. I develop my Sass modularly and try to use variables for site-wide colors, border and fonts. Wouldn&amp;#39;t it be great if I could use Sass throughout the entire development cycle?&lt;/p&gt;
