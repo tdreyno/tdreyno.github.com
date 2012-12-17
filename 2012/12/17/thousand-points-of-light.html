@@ -1,0 +1,188 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1'>
+    <meta name="author" content="Thomas Reynolds">
+    
+    <!-- Mobile viewport optimization http://goo.gl/b9SaQ -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+    
+    <!-- Google Setup -->
+    <meta content='VbyiHsqFIT6NSIBRNw/TAnm+9zy0TAmFRiC68lYCoSw=' name='verify-v1'>
+    
+    <!-- OpenID Setup -->
+    <link href='http://www.myopenid.com/server' rel='openid.server'>
+    <link href='http://tdreyno.myopenid.com/' rel='openid.delegate'>
+    <link href='http://tdreyno.myopenid.com' rel='openid2.local_id'>
+    <link href='http://www.myopenid.com/server' rel='openid2.provider'>
+    <meta content='http://www.myopenid.com/xrds?username=tdreyno.myopenid.com' http-equiv='X-XRDS-Location'>
+    
+    
+      <title>Sparkle Motion: A Thousand Points of Light &laquo; Thomas Reynolds</title>
+    
+    
+    <!-- Stylesheet -->
+    <link href="/stylesheets/new-c13f1549.css" media="screen" rel="stylesheet" type="text/css" />
+    
+    <!-- RSS -->
+    <link href='/feed.xml' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'>
+  </head>
+  <body>
+    <header>
+      <h1>
+        <a href="/">Award-Winning Fjords</a>
+        <span class="sub">Thomas Reynolds</span>
+      </header>
+    </header>
+    
+    <div id="frame">
+      
+        <article>
+          <h2>Sparkle Motion: A Thousand Points of Light</h2>
+          <time>Dec 17 2012</time>
+          <p>This year, we (<a href="http://weareinstrument.com">Instrument</a>) had the opportunity to work on <a href="http://www.google.com/zeitgeist/2012/">Google&#39;s Zeitgeist site</a>. Every year, Google collects the most popular and fastest rising search results and shares them with the world. The site features the results of &quot;The World&quot; &amp; 55 different countries in a multitude of different languages (including several Right-to-Left languages) and is responsive across all browser sizes. Kudos to my teammates <a href="http://twitter.com/stefhatcher">@stefhatcher</a> and <a href="http://twitter.com/waytoocrowded">@waytoocrowded</a> on managing this extraordinary task.</p>
+
+<p>For my part, I worked on building the <a href="http://www.google.com/zeitgeist/2012/#explore">3D Map Explore</a> feature. I&#39;ll write more about what that involved later, but for now I want to discuss the static &quot;twinkling lights&quot; state that you&#39;ll see on the homepage.</p>
+
+<p><img alt="Twinkle" src="http://awardwinningfjords.com/projects/twinkle/twinkle.png" /></p>
+
+<p>Basically, there is a map with &quot;lights&quot; which pulse around the world. Here&#39;s the <a href="/projects/twinkle/twinkles.js">code I used for this</a>, <a href="/projects/twinkle/">along with a demo</a>. But I want to talk about a higher-level question. <strong>How do you draw points which fill in a map?</strong></p>
+
+<h2>Option 1: Plot Data Points</h2>
+
+<p>The first option is to find a dataset which will cover and fill the land portions of the map. There are several good sources of data for plotting where people live.</p>
+
+<p>You could plot the lat/long of every city. You could use a population density map.</p>
+
+<p>Basically you just need a bunch of coordinates and then you draw them. I found cool list of <a href="https://gist.github.com/4278655">airports and converted it to JSON</a>.</p>
+
+<p>Once you have your coordinates, you&#39;ll need to convert them from lat/long to x/y. This is an easy function:</p>
+
+<pre><code>function getXY(lat, lon) {
+  var x = (lon * MAP_WIDTH) / 360;
+  var y = (lat * MAP_HEIGHT) / 180;
+
+  return { x: x, y: y };
+}
+</code></pre>
+
+<h2>Option 2: Read an Image</h2>
+
+<p>Sometimes, however, you&#39;ll need to cheat. When real data doesn&#39;t look quite right, just let a designer draw it and use that information in your visualization. This is the approach we actually used on the site.</p>
+
+<p>The designer makes <a href="/projects/twinkle/pixel-map.png">a map file</a> and we read the coordinates in via canvas:</p>
+
+<pre><code>// Canvas to read pixels from.
+var pixelmapLayer = document.createElement(&#39;canvas&#39;);
+
+// Loadable map.
+var myMapImg = new Image();
+
+// Onload
+myMapImg.onload = function() {
+
+  // Make the canvas and image the same size
+  pixelmapLayer.width = myMapImg.width;
+  pixelmapLayer.height = myMapImg.height;
+
+  // Draw the image on the canvas.
+  var pixelmapCtx = pixelmapLayer.getContext(&#39;2d&#39;);
+  pixelmapCtx.drawImage(myMapImg, 0, 0);
+
+  // Read image data array from canvas
+  var pmapImageData = pixelmapCtx.getImageData(0, 0,
+                      pixelmapLayer.width,
+                      pixelmapLayer.height);
+
+  // Loop over RGBA values 4 at a time
+  var len = pmapImageData.data.length;
+  var mapDots = [];
+  for (var i = 0; i &lt; len; i += 4) {
+    var r = pmapImageData.data[i],
+        g = pmapImageData.data[i + 1],
+        b = pmapImageData.data[i + 2],
+        a = pmapImageData.data[i + 3];
+
+    // If pixel is black and opaque, use it
+    if ((r === 0) &amp;&amp; (g === 0) &amp;&amp; (b === 0) &amp;&amp; (a &gt;= 255)) {
+      var pixel = Math.ceil(i / 4);
+
+      // Map linear pixel number to 2d x/y
+      var x = pixel % pixelmapLayer.width;
+      var y = Math.floor(pixel / pixelmapLayer.width);
+
+      mapDots.push({
+        x: x,
+        y: y
+      });
+    }
+  }
+};
+
+myMapImg.src = &#39;pixel-map.png&#39;;
+</code></pre>
+
+<p>Now the designer can &quot;paint&quot; denser points in certain areas if he wants. For example, this effect could be behind text and the design may want to avoid twinkling lights there for readability.</p>
+
+<h2>Demo &amp; Source</h2>
+
+<ul>
+<li><a href="/projects/twinkle/">Here&#39;s a demo with some fun variables to tweak</a>.</li>
+<li><a href="/projects/twinkle/twinkles.js">Here&#39;s the source code</a></li>
+</ul>
+
+        </article>
+      
+    
+      <footer>
+        <p class="descr">My name is Thomas Reynolds. I'm a Technical Lead at <a href="http://weareinstrument.com">Instrument</a>, lucky denizen of Portland, active Crossfitter, a foodie, a cocktail enthusiast and all-around nerd.</p>
+    
+        <p>
+          <a href="http://twitter.com/tdreyno">Twitter</a> &bull;
+          <a href="mailto:me@tdreyno.com">Email</a> &bull;
+          <a href="https://github.com/tdreyno">Github</a> &bull;
+          <a href="/feed.xml">RSS</a>
+        </p>
+      </footer>
+    </div>
+    
+    <script src="/javascripts/highlight.pack.js" type="text/javascript"></script>
+    <link href="/stylesheets/solarized_light.css" media="screen" rel="stylesheet" type="text/css" />
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+    <script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-90027-9']);
+  _gaq.push(['_trackPageview']);
+  _gaq.push(['_trackPageLoadTime']);
+
+  (function() {
+  var ga = document.createElement('script');
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 
+    'http://www') + '.google-analytics.com/ga.js';
+  ga.setAttribute('async', 'true');
+  document.documentElement.firstChild.appendChild(ga);
+  })();
+</script>
+
+<script>
+  var _gauges = _gauges || [];
+  (function() {
+    var t   = document.createElement('script');
+    t.type  = 'text/javascript';
+    t.async = true;
+    t.id    = 'gauges-tracker';
+    t.setAttribute('data-site-id', '4d770721192b0c4ab6000002');
+    t.src = '//secure.gaug.es/track.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
+  })();
+</script>
+  </body>
+</html>

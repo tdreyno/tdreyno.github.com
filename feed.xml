@@ -5,10 +5,113 @@
   <id>http://awardwinningfjords.com/</id>
   <link href="http://awardwinningfjords.com/"/>
   <link href="http://awardwinningfjords.com/feed.xml" rel="self"/>
-  <updated>2012-10-15T00:00:00ZT00:00:00-08:00</updated>
+  <updated>2012-12-17T00:00:00ZT00:00:00-08:00</updated>
   <author>
     <name>Thomas Reynolds</name>
   </author>
+  <entry>
+    <title>Sparkle Motion: A Thousand Points of Light</title>
+    <link rel="alternate" href="/2012/12/17/thousand-points-of-light.html"/>
+    <id>/2012/12/17/thousand-points-of-light.html</id>
+    <published>2012-12-17T00:00:00ZT00:00:00-08:00</published>
+    <updated>2012-12-17T00:00:00ZT00:00:00-08:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;p&gt;This year, we (&lt;a href="http://weareinstrument.com"&gt;Instrument&lt;/a&gt;) had the opportunity to work on &lt;a href="http://www.google.com/zeitgeist/2012/"&gt;Google&amp;#39;s Zeitgeist site&lt;/a&gt;. Every year, Google collects the most popular and fastest rising search results and shares them with the world. The site features the results of &amp;quot;The World&amp;quot; &amp;amp; 55 different countries in a multitude of different languages (including several Right-to-Left languages) and is responsive across all browser sizes. Kudos to my teammates &lt;a href="http://twitter.com/stefhatcher"&gt;@stefhatcher&lt;/a&gt; and &lt;a href="http://twitter.com/waytoocrowded"&gt;@waytoocrowded&lt;/a&gt; on managing this extraordinary task.&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;This year, we (&lt;a href="http://weareinstrument.com"&gt;Instrument&lt;/a&gt;) had the opportunity to work on &lt;a href="http://www.google.com/zeitgeist/2012/"&gt;Google&amp;#39;s Zeitgeist site&lt;/a&gt;. Every year, Google collects the most popular and fastest rising search results and shares them with the world. The site features the results of &amp;quot;The World&amp;quot; &amp;amp; 55 different countries in a multitude of different languages (including several Right-to-Left languages) and is responsive across all browser sizes. Kudos to my teammates &lt;a href="http://twitter.com/stefhatcher"&gt;@stefhatcher&lt;/a&gt; and &lt;a href="http://twitter.com/waytoocrowded"&gt;@waytoocrowded&lt;/a&gt; on managing this extraordinary task.&lt;/p&gt;
+
+&lt;p&gt;For my part, I worked on building the &lt;a href="http://www.google.com/zeitgeist/2012/#explore"&gt;3D Map Explore&lt;/a&gt; feature. I&amp;#39;ll write more about what that involved later, but for now I want to discuss the static &amp;quot;twinkling lights&amp;quot; state that you&amp;#39;ll see on the homepage.&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt="Twinkle" src="http://awardwinningfjords.com/projects/twinkle/twinkle.png" /&gt;&lt;/p&gt;
+
+&lt;p&gt;Basically, there is a map with &amp;quot;lights&amp;quot; which pulse around the world. Here&amp;#39;s the &lt;a href="/projects/twinkle/twinkles.js"&gt;code I used for this&lt;/a&gt;, &lt;a href="/projects/twinkle/"&gt;along with a demo&lt;/a&gt;. But I want to talk about a higher-level question. &lt;strong&gt;How do you draw points which fill in a map?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2&gt;Option 1: Plot Data Points&lt;/h2&gt;
+
+&lt;p&gt;The first option is to find a dataset which will cover and fill the land portions of the map. There are several good sources of data for plotting where people live.&lt;/p&gt;
+
+&lt;p&gt;You could plot the lat/long of every city. You could use a population density map.&lt;/p&gt;
+
+&lt;p&gt;Basically you just need a bunch of coordinates and then you draw them. I found cool list of &lt;a href="https://gist.github.com/4278655"&gt;airports and converted it to JSON&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Once you have your coordinates, you&amp;#39;ll need to convert them from lat/long to x/y. This is an easy function:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function getXY(lat, lon) {
+  var x = (lon * MAP_WIDTH) / 360;
+  var y = (lat * MAP_HEIGHT) / 180;
+
+  return { x: x, y: y };
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Option 2: Read an Image&lt;/h2&gt;
+
+&lt;p&gt;Sometimes, however, you&amp;#39;ll need to cheat. When real data doesn&amp;#39;t look quite right, just let a designer draw it and use that information in your visualization. This is the approach we actually used on the site.&lt;/p&gt;
+
+&lt;p&gt;The designer makes &lt;a href="/projects/twinkle/pixel-map.png"&gt;a map file&lt;/a&gt; and we read the coordinates in via canvas:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// Canvas to read pixels from.
+var pixelmapLayer = document.createElement(&amp;#39;canvas&amp;#39;);
+
+// Loadable map.
+var myMapImg = new Image();
+
+// Onload
+myMapImg.onload = function() {
+
+  // Make the canvas and image the same size
+  pixelmapLayer.width = myMapImg.width;
+  pixelmapLayer.height = myMapImg.height;
+
+  // Draw the image on the canvas.
+  var pixelmapCtx = pixelmapLayer.getContext(&amp;#39;2d&amp;#39;);
+  pixelmapCtx.drawImage(myMapImg, 0, 0);
+
+  // Read image data array from canvas
+  var pmapImageData = pixelmapCtx.getImageData(0, 0,
+                      pixelmapLayer.width,
+                      pixelmapLayer.height);
+
+  // Loop over RGBA values 4 at a time
+  var len = pmapImageData.data.length;
+  var mapDots = [];
+  for (var i = 0; i &amp;lt; len; i += 4) {
+    var r = pmapImageData.data[i],
+        g = pmapImageData.data[i + 1],
+        b = pmapImageData.data[i + 2],
+        a = pmapImageData.data[i + 3];
+
+    // If pixel is black and opaque, use it
+    if ((r === 0) &amp;amp;&amp;amp; (g === 0) &amp;amp;&amp;amp; (b === 0) &amp;amp;&amp;amp; (a &amp;gt;= 255)) {
+      var pixel = Math.ceil(i / 4);
+
+      // Map linear pixel number to 2d x/y
+      var x = pixel % pixelmapLayer.width;
+      var y = Math.floor(pixel / pixelmapLayer.width);
+
+      mapDots.push({
+        x: x,
+        y: y
+      });
+    }
+  }
+};
+
+myMapImg.src = &amp;#39;pixel-map.png&amp;#39;;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now the designer can &amp;quot;paint&amp;quot; denser points in certain areas if he wants. For example, this effect could be behind text and the design may want to avoid twinkling lights there for readability.&lt;/p&gt;
+
+&lt;h2&gt;Demo &amp;amp; Source&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="/projects/twinkle/"&gt;Here&amp;#39;s a demo with some fun variables to tweak&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href="/projects/twinkle/twinkles.js"&gt;Here&amp;#39;s the source code&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+  </entry>
   <entry>
     <title>Window Location in UIWebView</title>
     <link rel="alternate" href="/2012/10/15/uiwebview-location.html"/>
