@@ -5,10 +5,86 @@
   <id>http://awardwinningfjords.com/</id>
   <link href="http://awardwinningfjords.com/"/>
   <link href="http://awardwinningfjords.com/feed.xml" rel="self"/>
-  <updated>2012-12-31T00:00:00ZT00:00:00-08:00</updated>
+  <updated>2013-01-02T00:00:00ZT00:00:00-08:00</updated>
   <author>
     <name>Thomas Reynolds</name>
   </author>
+  <entry>
+    <title>Middleman Blog Editor</title>
+    <link rel="alternate" href="/2013/01/02/middleman-blog-editor.html"/>
+    <id>/2013/01/02/middleman-blog-editor.html</id>
+    <published>2013-01-02T00:00:00ZT00:00:00-08:00</published>
+    <updated>2013-01-02T00:00:00ZT00:00:00-08:00</updated>
+    <author>
+      <name>Thomas Reynolds</name>
+    </author>
+    <summary type="html">&lt;p&gt;I&amp;#39;m incredibly excited to announce my holiday project: the &lt;a href="http://middleman-blog-editor.awardwinningfjords.com"&gt;Middleman Blog Editor&lt;/a&gt;. This is my first paid extension for &lt;a href="http://middlemanapp.com"&gt;Middleman&lt;/a&gt; and one that I hope will prove that the community is large and mature enough for 3rd-party features and extensions to have become valuable.&lt;/p&gt;
+</summary>
+    <content type="html">&lt;p&gt;I&amp;#39;m incredibly excited to announce my holiday project: the &lt;a href="http://middleman-blog-editor.awardwinningfjords.com"&gt;Middleman Blog Editor&lt;/a&gt;. This is my first paid extension for &lt;a href="http://middlemanapp.com"&gt;Middleman&lt;/a&gt; and one that I hope will prove that the community is large and mature enough for 3rd-party features and extensions to have become valuable.&lt;/p&gt;
+
+&lt;p&gt;Middleman Blog Editor is an extension which uses Middleman Blog to provide a beautiful organizational interface and  WYSIWYG editing. The UI can currently publish/unpublish articles, edit tags, change the article date and URL.&lt;/p&gt;
+
+&lt;p&gt;This extension makes it possible to host a Middleman Blog and give the editor URL to a client so they can add content. Files are modified in-place, so committing those changes to source control or deploying new builds is up to you.&lt;/p&gt;
+
+&lt;h2&gt;&lt;a href="http://register.tdreyno.com"&gt;Purchase&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;Help make this experiment a success, you can purchase the extension for &lt;strong&gt;$6&lt;/strong&gt; at: &lt;a href="http://register.tdreyno.com"&gt;http://register.tdreyno.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;There will be 5 feature releases. Pricing will be a simple multiple of the price (&lt;strong&gt;$30&lt;/strong&gt;), by the current version. &lt;strong&gt;Free updates for the entire 1.0.x line, after initial purchase.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2&gt;Current Features and Roadmap&lt;/h2&gt;
+
+&lt;h3&gt;0.4 ($12)&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Frontmatter Editing&lt;/li&gt;
+&lt;li&gt;Direct link to editor from in the site preview&lt;/li&gt;
+&lt;li&gt;Markdown Preview&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;0.6 ($18)&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Article Searching (Full Text)&lt;/li&gt;
+&lt;li&gt;Article Sorting (By Tags, Date, etc)&lt;/li&gt;
+&lt;li&gt;List Paging&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;0.8 ($24)&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Client Accounts &amp;amp; Permission&lt;/li&gt;
+&lt;li&gt;White-label Admin&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;1.0 ($30)&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Final Polish&lt;/li&gt;
+&lt;li&gt;Full Test-coverage (automated on Travis)&lt;/li&gt;
+&lt;li&gt;Code docs&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;2.0&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Admin Localization&lt;/li&gt;
+&lt;li&gt;Wordpress Importer&lt;/li&gt;
+&lt;li&gt;Disqus Integration&lt;/li&gt;
+&lt;li&gt;Edit non-local (Git Push/Pull)&lt;/li&gt;
+&lt;li&gt;Markdown/Textile Editing&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Official Website&lt;/h2&gt;
+
+&lt;p&gt;Please refer to the official website for documentation and support: &lt;a href="http://middleman-blog-editor.awardwinningfjords.com"&gt;http://middleman-blog-editor.awardwinningfjords.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Here&amp;#39;s what it looks like:&lt;/h2&gt;
+
+&lt;p&gt;&lt;img alt="Article List" src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/blog-editor/list.png" /&gt;
+&lt;img alt="WYSIWYG Editor" src="http://src.sencha.io/-30/http://awardwinningfjords.com/images/blog-editor/wysiwyg.png" /&gt;&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Moar Kindle Dots</title>
     <link rel="alternate" href="/2012/12/31/moar-kindle-dots.html"/>
