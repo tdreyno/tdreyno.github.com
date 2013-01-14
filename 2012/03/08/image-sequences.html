@@ -28,7 +28,7 @@
     
     
     <!-- Stylesheet -->
-    <link href="/stylesheets/new-20731a5f.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/new-4b847056.css" media="screen" rel="stylesheet" type="text/css" />
     
     <!-- RSS -->
     <link href='/feed.xml' rel='alternate' title='Award Winning Fjords' type='application/rss+xml'>
@@ -150,13 +150,21 @@
 
 <p>The above function will take a Canvas context, an Image object, the dimensions of each frame and the frame to draw. We&#39;ll use <a href="http://paulirish.com/2011/requestanimationframe-for-smart-animating/">requestAnimationFrame</a> for smooth animations.</p>
 
-<pre><code>var fps          = 30,
+<pre><code>function rightNow() {
+  if (window[&#39;performance&#39;] &amp;&amp; window[&#39;performance&#39;][&#39;now&#39;]) {
+    return window[&#39;performance&#39;][&#39;now&#39;]();
+  } else {
+    return +(new Date());
+  }
+}
+
+var fps          = 30,
     currentFrame = 0,
     totalFrames  = 60,
     img          = document.getElementById(&quot;frames&quot;),
     canvas       = document.getElementById(&quot;canvas&quot;),
     ctx          = canvas.getContext(&quot;2d&quot;),
-    currentTime  = new Date().getTime();
+    currentTime  = rightNow();
 
 (function animloop(time){
   var delta = (time - currentTime) / 1000;
@@ -191,11 +199,19 @@
 
 <p>Similar CSS, minus the CSS Animation code. Now for the JS (which is similar to the Canvas implementation): </p>
 
-<pre><code>var fps          = 30,
+<pre><code>function rightNow() {
+  if (window[&#39;performance&#39;] &amp;&amp; window[&#39;performance&#39;][&#39;now&#39;]) {
+    return window[&#39;performance&#39;][&#39;now&#39;]();
+  } else {
+    return +(new Date());
+  }
+}
+
+var fps          = 30,
     currentFrame = 0,
     totalFrames  = 60,
     elem         = document.getElementById(&quot;my-particle2&quot;),
-    currentTime  = new Date().getTime();
+    currentTime  = rightNow();
 
 (function animloop(time){
   var delta = (time - currentTime) / 1000;
@@ -226,11 +242,19 @@
 
 <p>Here&#39;s an implementation:</p>
 
-<pre><code>var fps          = 30,
+<pre><code>function rightNow() {
+  if (window[&#39;performance&#39;] &amp;&amp; window[&#39;performance&#39;][&#39;now&#39;]) {
+    return window[&#39;performance&#39;][&#39;now&#39;]();
+  } else {
+    return +(new Date());
+  }
+}
+
+var fps          = 30,
     currentFrame = 0,
     totalFrames  = 60,
     img          = document.getElementById(&quot;myImage&quot;),
-    currentTime  = new Date().getTime();
+    currentTime  = rightNow();
 
 (function animloop(time){
   var delta = (time - currentTime) / 1000;

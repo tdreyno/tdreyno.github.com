@@ -2078,13 +2078,21 @@ theWorld.hitTestObjects(150, 50) # =&amp;gt; [c2, c3]
 
 &lt;p&gt;The above function will take a Canvas context, an Image object, the dimensions of each frame and the frame to draw. We&amp;#39;ll use &lt;a href="http://paulirish.com/2011/requestanimationframe-for-smart-animating/"&gt;requestAnimationFrame&lt;/a&gt; for smooth animations.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;var fps          = 30,
+&lt;pre&gt;&lt;code&gt;function rightNow() {
+  if (window[&amp;#39;performance&amp;#39;] &amp;amp;&amp;amp; window[&amp;#39;performance&amp;#39;][&amp;#39;now&amp;#39;]) {
+    return window[&amp;#39;performance&amp;#39;][&amp;#39;now&amp;#39;]();
+  } else {
+    return +(new Date());
+  }
+}
+
+var fps          = 30,
     currentFrame = 0,
     totalFrames  = 60,
     img          = document.getElementById(&amp;quot;frames&amp;quot;),
     canvas       = document.getElementById(&amp;quot;canvas&amp;quot;),
     ctx          = canvas.getContext(&amp;quot;2d&amp;quot;),
-    currentTime  = new Date().getTime();
+    currentTime  = rightNow();
 
 (function animloop(time){
   var delta = (time - currentTime) / 1000;
@@ -2119,11 +2127,19 @@ theWorld.hitTestObjects(150, 50) # =&amp;gt; [c2, c3]
 
 &lt;p&gt;Similar CSS, minus the CSS Animation code. Now for the JS (which is similar to the Canvas implementation): &lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;var fps          = 30,
+&lt;pre&gt;&lt;code&gt;function rightNow() {
+  if (window[&amp;#39;performance&amp;#39;] &amp;amp;&amp;amp; window[&amp;#39;performance&amp;#39;][&amp;#39;now&amp;#39;]) {
+    return window[&amp;#39;performance&amp;#39;][&amp;#39;now&amp;#39;]();
+  } else {
+    return +(new Date());
+  }
+}
+
+var fps          = 30,
     currentFrame = 0,
     totalFrames  = 60,
     elem         = document.getElementById(&amp;quot;my-particle2&amp;quot;),
-    currentTime  = new Date().getTime();
+    currentTime  = rightNow();
 
 (function animloop(time){
   var delta = (time - currentTime) / 1000;
@@ -2154,11 +2170,19 @@ theWorld.hitTestObjects(150, 50) # =&amp;gt; [c2, c3]
 
 &lt;p&gt;Here&amp;#39;s an implementation:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;var fps          = 30,
+&lt;pre&gt;&lt;code&gt;function rightNow() {
+  if (window[&amp;#39;performance&amp;#39;] &amp;amp;&amp;amp; window[&amp;#39;performance&amp;#39;][&amp;#39;now&amp;#39;]) {
+    return window[&amp;#39;performance&amp;#39;][&amp;#39;now&amp;#39;]();
+  } else {
+    return +(new Date());
+  }
+}
+
+var fps          = 30,
     currentFrame = 0,
     totalFrames  = 60,
     img          = document.getElementById(&amp;quot;myImage&amp;quot;),
-    currentTime  = new Date().getTime();
+    currentTime  = rightNow();
 
 (function animloop(time){
   var delta = (time - currentTime) / 1000;
